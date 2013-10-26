@@ -11,6 +11,10 @@ class ViewListener extends CrudListener {
  * @return void
  */
 	public function initialize() {
+		if ($this->_controller()->name === 'CakeError') {
+			return;
+		}
+
 		$this->_setViewClass();
 		$this->_injectViewSearchPaths();
 	}
@@ -22,7 +26,12 @@ class ViewListener extends CrudListener {
  * @return void
  */
 	public function beforeRender(CakeEvent $event) {
+		if ($this->_controller()->name === 'CakeError') {
+			return;
+		}
+
 		$this->_injectHelpers();
+		$this->_prepopulateFormVariables();
 
 		$Controller = $this->_controller();
 		$Controller->set('title', $this->_getPageTitle());
@@ -30,6 +39,16 @@ class ViewListener extends CrudListener {
 		$Controller->set('actions', $this->_getControllerActions());
 		$Controller->set('associations', $this->_associations());
 		$Controller->set($this->_getPageVariables());
+	}
+
+	protected function _prepopulateFormVariables() {
+		$request = $this->_request();
+
+		if (!$request->is('get')) {
+			return;
+		}
+
+		$request->data[$this->_controller()->modelClass] = $request->query;
 	}
 
 /**
@@ -79,7 +98,8 @@ class ViewListener extends CrudListener {
 			'singularHumanName' => Inflector::humanize(Inflector::underscore($this->_controller()->modelClass)),
 			'pluralHumanName' => Inflector::humanize(Inflector::underscore($this->_controller()->name)),
 			'pluralVar' => Inflector::variable($this->_controller()->name),
-			'primaryKey' => $this->_model()->primaryKey
+			'primaryKey' => $this->_model()->primaryKey,
+			'primaryKeyValue' => $this->_primaryKeyValue()
 		);
 
 		if (method_exists($this->_action(), 'viewVar')) {
@@ -127,10 +147,7 @@ class ViewListener extends CrudListener {
  * @return array
  */
 	protected function _getPageFields() {
-		$fields = $this->_scaffoldFields();
-		// $scaffoldFieldsData = $this->_scaffoldFieldExclude($model, $request, $scaffoldFieldsData, $_sort);
-		// $fields = array_keys($fields);
-		return $fields;
+		return $this->_scaffoldFields();
 	}
 
 /**
@@ -213,17 +230,18 @@ class ViewListener extends CrudListener {
  * @return string
  */
 	protected function _getControllerActions() {
-		$_actions = $this->_crud()->config('actions');
+		$actions = $this->_crud()->config('actions');
 
 		$model = array();
 		$record = array();
-		foreach ($_actions as $_actionName => $_config) {
-			$_action = $this->_action($_actionName);
-			$_type = $_action::ACTION_SCOPE;
-			if ($_type === CrudAction::SCOPE_MODEL) {
-				$model[] = $_actionName;
-			} elseif ($_type === CrudAction::SCOPE_RECORD) {
-				$record[] = $_actionName;
+		foreach ($actions as $actionName => $config) {
+			$action = $this->_action($actionName);
+			$type = $action::ACTION_SCOPE;
+
+			if ($type === CrudAction::SCOPE_MODEL) {
+				$model[] = $actionName;
+			} elseif ($type === CrudAction::SCOPE_RECORD) {
+				$record[] = $actionName;
 			}
 		}
 

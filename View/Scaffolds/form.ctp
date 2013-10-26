@@ -1,5 +1,5 @@
 <div class="<?= $pluralVar; ?> form scaffold-view">
-  <h2>Edit <?= $singularHumanName; ?>: <?= $this->data[$modelClass][$displayField];?></h2>
+  <h2>Manage <?= $singularHumanName; ?></h2>
 
   <?= $this->Form->create(); ?>
   <?= $this->CrudView->redirectUrl(); ?>
@@ -15,5 +15,6 @@
     echo "&nbsp;";
     ?>
   </div>
+
   <?= $this->Form->end(); ?>
 </div>
