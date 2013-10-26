@@ -1,6 +1,6 @@
 <div class="btn-group">
-	<button type="button" class="btn btn-default"><?= __d('crud', 'Actions'); ?></button>
-	<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
+	<button type="button" class="btn btn-default btn-xs"><?= __d('crud', 'Actions'); ?></button>
+	<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
 	<ul class="dropdown-menu">
 		<?php
 		foreach ($actions['record'] as $_action) {

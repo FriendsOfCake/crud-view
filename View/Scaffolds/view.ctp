@@ -1,5 +1,5 @@
 <div class="view scaffold-view">
-	<h2><?= $singularHumanName; ?>: <?= ${$viewVar}[$modelClass][$displayField];?></h2>
+	<h2><?= $this->get('title');?></h2>
 
   <dl>
     <?php

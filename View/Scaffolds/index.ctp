@@ -1,5 +1,5 @@
 <div class="index scaffold-view">
-	<h2><?= $pluralHumanName; ?></h2>
+	<h2><?= $this->get('title');?></h2>
 
 	<table class="table table-bordered table-hover">
 	<thead>

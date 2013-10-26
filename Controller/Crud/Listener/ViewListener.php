@@ -41,14 +41,26 @@ class ViewListener extends CrudListener {
 		$Controller->set($this->_getPageVariables());
 	}
 
+/**
+ * Copy GET arguments into the form data
+ *
+ * Useful for deep linking variables for related models
+ *
+ * @return void
+ */
 	protected function _prepopulateFormVariables() {
 		$request = $this->_request();
 
-		if (!$request->is('get')) {
+		if (!$request->is('get') || empty($request->query)) {
 			return;
 		}
 
-		$request->data[$this->_controller()->modelClass] = $request->query;
+		$modelClass = $this->_controller()->modelClass;
+		if (empty($request->data[$modelClass])) {
+			$request->data[$modelClass] = array();
+		}
+
+		$request->data[$modelClass] = array_merge($request->query, $request->data[$modelClass]);
 	}
 
 /**
@@ -115,27 +127,27 @@ class ViewListener extends CrudListener {
  * @return string
  */
 	protected function _getPageTitle() {
-		$request = $this->_request();
-		$scaffoldTitle = $this->_action()->config('scaffoldPageTitle');
+		$scaffoldTitle = $this->_action()->config('scaffold.page_title');
 
 		if (!empty($scaffoldTitle)) {
 			return $scaffoldTitle;
 		}
 
+		$request = $this->_request();
 		$actionName = Inflector::humanize(Inflector::underscore($request->action));
-		$humanName = $this->_controllerName();
+		$controllerName = $this->_controllerName();
 
 		$primaryKeyValue = $this->_primaryKeyValue();
 		$displayFieldValue = $this->_displayFieldValue();
 
 		if ($primaryKeyValue === null && $displayFieldValue === null) {
-			$scaffoldTitle = sprintf('%s %s', $actionName, $humanName);
+			$scaffoldTitle = sprintf('%s %s', $actionName, $controllerName);
 		} elseif ($displayFieldValue === null) {
-			$scaffoldTitle = sprintf('%s %s #%s', $actionName, $humanName, $primaryKeyValue);
+			$scaffoldTitle = sprintf('%s %s #%s', $actionName, $controllerName, $primaryKeyValue);
 		} elseif ($primaryKeyValue === null) {
-			$scaffoldTitle = sprintf('%s %s %s', $actionName, $humanName, $displayFieldValue);
+			$scaffoldTitle = sprintf('%s %s %s', $actionName, $controllerName, $displayFieldValue);
 		} else {
-			$scaffoldTitle = sprintf('%s %s #%s: %s', $actionName, $humanName, $primaryKeyValue, $displayFieldValue);
+			$scaffoldTitle = sprintf('%s %s #%s: %s', $actionName, $controllerName, $primaryKeyValue, $displayFieldValue);
 		}
 
 		return $scaffoldTitle;
@@ -156,51 +168,24 @@ class ViewListener extends CrudListener {
  * @param boolean $sort Add sort keys to output
  * @return array List of fields
  */
-	protected function _scaffoldFields($sort = true) {
-		$model = $this->_model();
-		$modelSchema = $model->schema();
-		$blacklist = $this->_action()->config('scaffoldFieldExclude');
+	protected function _scaffoldFields() {
+		$Model = $this->_model();
 
-		$fields = array();
-		$scaffoldFields = array_keys($modelSchema);
-		foreach ($scaffoldFields as $scaffoldField) {
-			$fields[$scaffoldField] = array();
+		// Get all available fields from the Schema
+		$modelSchema = $Model->schema();
+		$scaffoldFields = array_fill_keys(array_keys($modelSchema), array());
+
+		// Check for any user configured fields
+		$configuredFields = $this->_action()->config('scaffold.fields');
+		if (!empty($configuredFields)) {
+			$configuredFields = Hash::normalize($configuredFields);
+			$scaffoldFields = array_intersect_key($scaffoldFields, $configuredFields);
 		}
 
-		$scaffoldFields = $fields;
-
-		$_scaffoldFields = $this->_action()->config('scaffoldFields');
-		if (!empty($_scaffoldFields)) {
-			$fields = array();
-			$_scaffoldFields = (array)$_scaffoldFields;
-			foreach ($_scaffoldFields as $name => $options) {
-				if (is_numeric($name) && !is_array($options)) {
-					$name = $options;
-					$options = array();
-				}
-
-				$fields[$name] = $options;
-			}
-
-			$scaffoldFields = array_intersect_key($scaffoldFields, $fields);
-		}
-
+		// Check for blacklisted fields
+		$blacklist = $this->_action()->config('scaffold.field_blacklist');
 		if (!empty($blacklist)) {
 			$scaffoldFields = array_diff_key($scaffoldFields, array_combine($blacklist, $blacklist));
-		}
-
-		if ($sort) {
-			$singularTable = Inflector::singularize($model->table);
-			foreach ($scaffoldFields as $_field => $_options) {
-				$entity = explode('.', $_field);
-				$scaffoldFields[$_field]['__field__'] = $_field;
-				$scaffoldFields[$_field]['__display_field__'] = false;
-				$scaffoldFields[$_field]['__schema__'] = null;
-				if (count($entity) == 1 || current($entity) == $model->alias) {
-					$scaffoldFields[$_field]['__display_field__'] = in_array(end($entity), array($model->displayField, $singularTable));
-					$scaffoldFields[$_field]['__schema__'] = $modelSchema[end($entity)]['type'];
-				}
-			}
 		}
 
 		return $scaffoldFields;
@@ -299,24 +284,25 @@ class ViewListener extends CrudListener {
 
 	protected function _primaryKeyValue() {
 		$controller = $this->_controller();
-    $model = $this->_model();
-    $primaryKeyValue = null;
-    $path = null;
+		$request = $this->_request();
+	    $model = $this->_model();
+	    $primaryKeyValue = null;
+	    $path = null;
 
-    if (!empty($controller->modelClass) && !empty($model->primaryKey)) {
-      $path = "{$controller->modelClass}.{$model->primaryKey}";
-      if (!empty($controller->data)) {
-        $primaryKeyValue = Hash::get($controller->data, $path);
-      }
+	    if (!empty($controller->modelClass) && !empty($model->primaryKey)) {
+	      $path = "{$controller->modelClass}.{$model->primaryKey}";
+	      if (!empty($request->data)) {
+	        $primaryKeyValue = Hash::get($request->data, $path);
+	      }
 
-      $singularVar = Inflector::variable($controller->modelClass);
-      if (!empty($controller->viewVars[$singularVar])) {
-        $primaryKeyValue = Hash::get($controller->viewVars[$singularVar], $path);
-      }
-    }
+	      $singularVar = Inflector::variable($controller->modelClass);
+	      if (!empty($controller->viewVars[$singularVar])) {
+	        $primaryKeyValue = Hash::get($controller->viewVars[$singularVar], $path);
+	      }
+	    }
 
-    return $primaryKeyValue;
-  }
+		return $primaryKeyValue;
+	}
 
   protected function _displayFieldValue() {
     $controller = $this->_controller();
@@ -338,4 +324,5 @@ class ViewListener extends CrudListener {
 
     return $displayFieldValue;
   }
+
 }

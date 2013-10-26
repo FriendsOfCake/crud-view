@@ -1,5 +1,5 @@
 <div class="<?= $pluralVar; ?> form scaffold-view">
-  <h2>Manage <?= $singularHumanName; ?></h2>
+  <h2><?= $this->get('title');?></h2>
 
   <?= $this->Form->create(); ?>
   <?= $this->CrudView->redirectUrl(); ?>
