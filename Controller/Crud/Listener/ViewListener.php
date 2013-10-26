@@ -127,10 +127,10 @@ class ViewListener extends CrudListener {
  * @return string
  */
 	protected function _getPageTitle() {
-		$scaffoldTitle = $this->_action()->config('scaffold.page_title');
+		$title = $this->_action()->config('scaffold.page_title');
 
-		if (!empty($scaffoldTitle)) {
-			return $scaffoldTitle;
+		if (!empty($title)) {
+			return $title;
 		}
 
 		$request = $this->_request();
@@ -141,16 +141,18 @@ class ViewListener extends CrudListener {
 		$displayFieldValue = $this->_displayFieldValue();
 
 		if ($primaryKeyValue === null && $displayFieldValue === null) {
-			$scaffoldTitle = sprintf('%s %s', $actionName, $controllerName);
-		} elseif ($displayFieldValue === null) {
-			$scaffoldTitle = sprintf('%s %s #%s', $actionName, $controllerName, $primaryKeyValue);
-		} elseif ($primaryKeyValue === null) {
-			$scaffoldTitle = sprintf('%s %s %s', $actionName, $controllerName, $displayFieldValue);
-		} else {
-			$scaffoldTitle = sprintf('%s %s #%s: %s', $actionName, $controllerName, $primaryKeyValue, $displayFieldValue);
+			return sprintf('%s %s', $actionName, $controllerName);
 		}
 
-		return $scaffoldTitle;
+		if ($displayFieldValue === null) {
+			return sprintf('%s %s #%s', $actionName, $controllerName, $primaryKeyValue);
+		}
+
+		if ($primaryKeyValue === null) {
+			return sprintf('%s %s %s', $actionName, $controllerName, $displayFieldValue);
+		}
+
+		return sprintf('%s %s #%s: %s', $actionName, $controllerName, $primaryKeyValue, $displayFieldValue);
 	}
 
 /**
@@ -282,47 +284,52 @@ class ViewListener extends CrudListener {
 		return $associations;
 	}
 
+/**
+ * Derive the Model::primaryKey value from the current context
+ *
+ * If no value can be found, NULL is returned
+ *
+ * @return mixed
+ */
 	protected function _primaryKeyValue() {
-		$controller = $this->_controller();
-		$request = $this->_request();
-	    $model = $this->_model();
-	    $primaryKeyValue = null;
-	    $path = null;
-
-	    if (!empty($controller->modelClass) && !empty($model->primaryKey)) {
-	      $path = "{$controller->modelClass}.{$model->primaryKey}";
-	      if (!empty($request->data)) {
-	        $primaryKeyValue = Hash::get($request->data, $path);
-	      }
-
-	      $singularVar = Inflector::variable($controller->modelClass);
-	      if (!empty($controller->viewVars[$singularVar])) {
-	        $primaryKeyValue = Hash::get($controller->viewVars[$singularVar], $path);
-	      }
-	    }
-
-		return $primaryKeyValue;
+		return $this->_derriveFieldFromContext($this->_model()->primaryKey);
 	}
 
-  protected function _displayFieldValue() {
-    $controller = $this->_controller();
-    $model = $this->_model();
-    $displayFieldValue = null;
-    $path = null;
+/**
+ * Derive the Model::displayField value from the current context
+ *
+ * If no value can be found, NULL is returned
+ *
+ * @return string
+ */
+	protected function _displayFieldValue() {
+		return $this->_derriveFieldFromContext($this->_model()->displayField);
+	}
 
-    if (!empty($controller->modelClass) && !empty($model->displayField) && $model->displayField != $model->primaryKey) {
-      $path = "{$controller->modelClass}.{$model->displayField}";
-      if (!empty($controller->data)) {
-        $displayFieldValue = Hash::get($controller->data, $path);
-      }
+/**
+ * Extract a field value from a either the CakeRequest::$data
+ * or Controller::$viewVars for the current model + the supplied field
+ *
+ * @param  string $field
+ * @return mixed
+ */
+	protected function _derriveFieldFromContext($field) {
+		$controller = $this->_controller();
+		$model = $this->_model();
+		$request = $this->_request();
+		$value = null;
 
-      $singularVar = Inflector::variable($controller->modelClass);
-      if (!empty($controller->viewVars[$singularVar])) {
-        $displayFieldValue = Hash::get($controller->viewVars[$singularVar], $path);
-      }
-    }
+		$path = "{$controller->modelClass}.{$field}";
+		if (!empty($request->data)) {
+			$value = Hash::get($request->data, $path);
+		}
 
-    return $displayFieldValue;
-  }
+		$singularVar = Inflector::variable($controller->modelClass);
+		if (!empty($controller->viewVars[$singularVar])) {
+			$value = Hash::get($controller->viewVars[$singularVar], $path);
+		}
+
+		return $value;
+	}
 
 }
