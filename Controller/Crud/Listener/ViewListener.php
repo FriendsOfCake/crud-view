@@ -193,6 +193,11 @@ class ViewListener extends CrudListener {
 		return $scaffoldFields;
 	}
 
+/**
+ * Get the controller name based on the CrudAction scope
+ *
+ * @return string
+ */
 	protected function _controllerName() {
 		$Controller = $this->_controller();
 		$CrudAction = $this->_action();
