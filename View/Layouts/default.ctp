@@ -36,7 +36,7 @@
 		</div>
 	</div>
 
-	<?= $this->Html->script(array('CrudView.jquery.min', 'CrudView.bootstrap.min');?>
+	<?= $this->Html->script(array('CrudView.jquery.min', 'CrudView.bootstrap.min'));?>
 	<?= $this->fetch('script'); ?>
 </body>
 </html>
