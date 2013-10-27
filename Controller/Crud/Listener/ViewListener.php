@@ -394,7 +394,7 @@ class ViewListener extends CrudListener {
  * @return mixed
  */
 	protected function _primaryKeyValue() {
-		return $this->_derriveFieldFromContext($this->_model()->primaryKey);
+		return $this->_deriveFieldFromContext($this->_model()->primaryKey);
 	}
 
 /**
@@ -405,7 +405,7 @@ class ViewListener extends CrudListener {
  * @return string
  */
 	protected function _displayFieldValue() {
-		return $this->_derriveFieldFromContext($this->_model()->displayField);
+		return $this->_deriveFieldFromContext($this->_model()->displayField);
 	}
 
 /**
@@ -415,7 +415,7 @@ class ViewListener extends CrudListener {
  * @param  string $field
  * @return mixed
  */
-	protected function _derriveFieldFromContext($field) {
+	protected function _deriveFieldFromContext($field) {
 		$controller = $this->_controller();
 		$model = $this->_model();
 		$request = $this->_request();
