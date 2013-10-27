@@ -4,7 +4,7 @@
 	<?= $this->Html->charset(); ?>
 	<title><?= $this->get('title');?></title>
 
-	<?= $this->Html->css('CrudView.bootstrap');?>
+	<?= $this->Html->css('CrudView.bootstrap.min');?>
 	<?= $this->Html->css('CrudView.sb-admin');?>
 
 	<?= $this->Html->meta('icon'); ?>
