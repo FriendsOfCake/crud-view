@@ -44,6 +44,19 @@ class ViewListener extends CrudListener {
 	}
 
 /**
+ * beforePaginate callback
+ *
+ * Make sure to inject contains for all relations by default
+ *
+ * @param  CakeEvent $event
+ * @return void
+ */
+	public function beforePaginate(CakeEvent $event) {
+		$this->_ensureContainableLoaded($event->subject->model);
+		$event->subject->paginator->settings['contain'] = $this->_getRelatedModels(['belongsTo']);
+	}
+
+/**
  * Get a list of relevant models to contain using Containable
  *
  * If the user haven't configured any relations for an action
@@ -54,12 +67,20 @@ class ViewListener extends CrudListener {
  *
  * @return array
  */
-	protected function _getRelatedModels() {
+	protected function _getRelatedModels($relations = []) {
 		$models = $this->_action()->config('scaffold.relations');
 
 		if (empty($models)) {
 			$associations = $this->_associations();
-			$models = (array)Hash::extract($associations, '{s}.{s}.model');
+
+			if (empty($relations)) {
+				$relations = array_keys($associations);
+			}
+
+			$models = [];
+			foreach ($relations as $relation) {
+				$models += (array)Hash::extract($associations, "$relation.{s}.model");
+			}
 		}
 
 		$models = Hash::normalize($models);
@@ -69,6 +90,12 @@ class ViewListener extends CrudListener {
 		if (!empty($blacklist)) {
 			$blacklist = \Hash::normalize($blacklist);
 			$models = array_diff_key($models, $blacklist);
+		}
+
+		foreach ($models as $key => $value) {
+			if (!is_array($value)) {
+				$models[$key] = [];
+			}
 		}
 
 		return $models;
