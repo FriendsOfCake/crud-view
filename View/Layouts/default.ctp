@@ -36,7 +36,7 @@
 		</div>
 	</div>
 
-	<?= $this->Html->script('CrudView.jquery');?>
+	<?= $this->Html->script('CrudView.jquery.min');?>
 	<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 	<?= $this->fetch('script'); ?>
 </body>
