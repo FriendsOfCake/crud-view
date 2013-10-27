@@ -1,5 +1,6 @@
 <?php
 $relations = array_merge($associations['hasMany'], $associations['hasAndBelongsToMany']);
+
 $i = 0;
 foreach ($relations as $_alias => $_details):
   $otherSingularVar = Inflector::variable($_alias);

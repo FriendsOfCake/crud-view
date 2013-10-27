@@ -7,6 +7,7 @@ foreach ($associations['hasOne'] as $alias => $details):
 	?>
 <div class="related">
 	<h3><?= __d('crud', "Related %s", Inflector::humanize($details['controller'])); ?></h3>
+
 	<?php
 	if (!empty(${$viewVar}[$alias])) :
 		?>
@@ -15,23 +16,25 @@ foreach ($associations['hasOne'] as $alias => $details):
 			$i = 0;
 			$otherFields = array_keys(${$viewVar}[$alias]);
 			foreach ($otherFields as $field) {
-				echo "\t\t<dt>" . Inflector::humanize($field) . "</dt>\n";
-				echo "\t\t<dd>";
-				echo $this->CrudView->process($field, ${$viewVar}[$alias], $_details);
-				echo "&nbsp;</dd>\n";
+				?>
+				<dt><?= Inflector::humanize($field); ?></dt>
+				<dd><?= $this->CrudView->process($field, ${$viewVar}, $details); ?>&nbsp;</dd>
+				<?php
 			}
 		?>
 		</dl>
-	<?php endif; ?>
+		<?php
+	endif;
+	?>
+
 	<div class="actions">
 		<ul>
-		<li><?php
-			echo $this->Html->link(
-				__d('crud', 'View %s', Inflector::humanize(Inflector::underscore($_alias))),
-				array('plugin' => $_details['plugin'], 'controller' => $_details['controller'], 'action' => 'view', ${$viewVar}[$_alias][$_details['primaryKey']])
+			<li><?= $this->Html->link(
+				__d('crud', 'View %s', Inflector::humanize(Inflector::underscore($alias))),
+				array('plugin' => $details['plugin'], 'controller' => $details['controller'], 'action' => 'view', ${$viewVar}[$alias][$details['primaryKey']])
 			);
-			echo "</li>\n";
 			?>
+			</li>
 		</ul>
 	</div>
 </div>
