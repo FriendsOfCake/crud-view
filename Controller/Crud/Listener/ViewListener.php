@@ -20,6 +20,17 @@ class ViewListener extends CrudListener {
 	}
 
 /**
+ * Make sure flash messages uses the views from BoostCake
+ *
+ * @param CakeEvent $event
+ */
+	public function setFlash(CakeEvent $event) {
+		$event->subject->element = 'alert';
+		$event->subject->params['plugin'] = 'BoostCake';
+		$event->subject->params['class'] = strpos($event->subject->type, 'success') ? 'alert-success' : 'alert-danger';
+	}
+
+/**
  * beforeRender event
  *
  * @param  CakeEvent $event [description]
