@@ -27,7 +27,7 @@ class ViewListener extends CrudListener {
 	public function setFlash(CakeEvent $event) {
 		$event->subject->element = 'alert';
 		$event->subject->params['plugin'] = 'BoostCake';
-		$event->subject->params['class'] = strpos($event->subject->type, 'success') ? 'alert-success' : 'alert-danger';
+		$event->subject->params['class'] = strpos($event->subject->type, '.success') ? 'alert-success' : 'alert-danger';
 	}
 
 /**

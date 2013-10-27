@@ -18,7 +18,7 @@
       } else {
         echo "<dt>" . Inflector::humanize($field) . "</dt>";
         echo "<dd>";
-        echo $this->CrudView->format($field, Hash::get(${$viewVar}, "{$modelClass}.{$field}"), ${$viewVar}, $modelSchema, $associations);
+        echo $this->CrudView->process($field, ${$viewVar}, $options);
         echo "&nbsp;</dd>";
       }
 
