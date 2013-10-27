@@ -33,6 +33,7 @@ class CrudViewHelper extends AppHelper {
 		$this->setEntity(sprintf('%s.%s', $this->currentModel(), $field), true);
 
 		$value = $this->fieldValue();
+		$options += ['formatter' => null];
 
 		switch ($options['formatter']) {
 			case 'element':

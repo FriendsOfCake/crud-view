@@ -3,6 +3,7 @@
 
   <dl>
     <?php
+    $this->CrudView->setContext(${$viewVar});
     foreach ($fields as $field => $options) {
       if (in_array($field, array($primaryKey))) {
         continue;

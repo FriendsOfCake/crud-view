@@ -59,9 +59,7 @@ class ViewListener extends CrudListener {
 
 		if (empty($models)) {
 			$associations = $this->_associations();
-			$models = [];
-			$models += Hash::extract($associations, 'hasMany.{s}.model');
-			$models += Hash::extract($associations, 'hasOne.{s}.model');
+			$models = (array)Hash::extract($associations, '{s}.{s}.model');
 		}
 
 		$models = Hash::normalize($models);
