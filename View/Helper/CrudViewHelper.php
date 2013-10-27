@@ -211,6 +211,21 @@ class CrudViewHelper extends AppHelper {
 		return null;
 	}
 
+	public function createRelationLink($alias, $relation) {
+		return $this->Html->link(
+			__d('crud', "Add %s", Inflector::humanize(Inflector::underscore($alias))),
+			[
+				'plugin' => $relation['plugin'],
+				'controller' => $relation['controller'],
+				'action' => 'add',
+				'?' => [
+					$relation['foreignKey'] => $this->viewVar('primaryKeyValue'),
+					'redirect_url' => $this->request->here
+				]
+			]
+		);
+	}
+
 	public function currentModel() {
 		return $this->getViewVar('modelClass');
 	}
