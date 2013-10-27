@@ -20,10 +20,6 @@ class CrudViewHelper extends AppHelper {
 		return $this->_context;
 	}
 
-	public function sort($field, $options = array()) {
-		return $this->Paginator->sort($field, null, $options);
-	}
-
 /**
  * Process a single field into an output
  *
@@ -46,9 +42,8 @@ class CrudViewHelper extends AppHelper {
 				return $this->relation($field, $value, $options);
 
 			default:
-				return $this->format($field, $value, $options);
+				return $this->introspect($field, $value, $options);
 		}
-
 	}
 
 /**
@@ -81,7 +76,7 @@ class CrudViewHelper extends AppHelper {
  * @param array $associations an array of associations to be used
  * @var string formatted value
  */
-	public function format($field, $value, array $options = array()) {
+	public function introspect($field, $value, array $options = array()) {
 		$output = $this->relation($field, $value, $options);
 
 		if ($output) {
@@ -92,17 +87,65 @@ class CrudViewHelper extends AppHelper {
 		$type = Hash::get($schema, "{$field}.type");
 
 		if ($type === 'boolean') {
-			return !!$value ? '<span class="label label-success">Yes</span>' : '<span class="label label-danger">No</span>';
+			return $this->formatBoolean($field, $value, $options);
 		}
 
 		if (in_array($type, array('datetime', 'date', 'timestamp'))) {
-			return $this->Time->timeAgoInWords($value, $options);
+			return $this->formatDate($field, $value, $options);
 		}
 
 		if ($type == 'time') {
-			return $this->Time->nice($value);
+			return $this->formatTime($field, $value, $options);
 		}
 
+		return $this->formatString($field, $value, $options);
+	}
+
+/**
+ * Format a boolean value for display
+ *
+ * @param  [type] $field   [description]
+ * @param  [type] $value   [description]
+ * @param  array  $options [description]
+ * @return [type]          [description]
+ */
+	public function formatBoolean($field, $value, array $options) {
+		return !!$value ? '<span class="label label-success">Yes</span>' : '<span class="label label-danger">No</span>';
+	}
+
+/**
+ * Format a date for display
+ *
+ * @param  [type] $field   [description]
+ * @param  [type] $value   [description]
+ * @param  array  $options [description]
+ * @return [type]          [description]
+ */
+	public function formatDate($field, $value, array $options) {
+		return $this->Time->timeAgoInWords($value, $options);
+	}
+
+/**
+ * Format a time for display
+ *
+ * @param  [type] $field   [description]
+ * @param  [type] $value   [description]
+ * @param  array  $options [description]
+ * @return [type]          [description]
+ */
+	public function formatTime($field, $value, array $options) {
+		return $this->Time->nice($value, $options);
+	}
+
+/**
+ * Format a string for display
+ *
+ * @param  [type] $field   [description]
+ * @param  [type] $value   [description]
+ * @param  array  $options [description]
+ * @return [type]          [description]
+ */
+	public function formatString($field, $value, array $options) {
 		return h(String::truncate($value, 200));
 	}
 

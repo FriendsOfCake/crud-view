@@ -7,7 +7,7 @@
 			<?php
 			foreach ($fields as $field => $options) :
 				?>
-				<th><?= $this->CrudView->sort($field, $options); ?></th>
+				<th><?= $this->Paginator->sort($field, null, $options); ?></th>
 				<?php
 				endforeach;
 			?>
