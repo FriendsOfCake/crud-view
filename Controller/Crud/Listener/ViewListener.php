@@ -175,19 +175,32 @@ class ViewListener extends CrudListener {
 
 		// Get all available fields from the Schema
 		$modelSchema = $Model->schema();
+
+		// Make the fields
 		$scaffoldFields = array_fill_keys(array_keys($modelSchema), array());
 
 		// Check for any user configured fields
 		$configuredFields = $this->_action()->config('scaffold.fields');
 		if (!empty($configuredFields)) {
 			$configuredFields = Hash::normalize($configuredFields);
-			$scaffoldFields = array_intersect_key($scaffoldFields, $configuredFields);
+			$scaffoldFields = array_intersect_key($configuredFields, $scaffoldFields);
 		}
 
 		// Check for blacklisted fields
-		$blacklist = $this->_action()->config('scaffold.field_blacklist');
+		$blacklist = $this->_action()->config('scaffold.fields_blacklist');
 		if (!empty($blacklist)) {
 			$scaffoldFields = array_diff_key($scaffoldFields, array_combine($blacklist, $blacklist));
+		}
+
+		// Make sure all array values are an array
+		foreach ($scaffoldFields as $field => $options) {
+			if (!is_array($options)) {
+				$scaffoldFields[$field] = (array)$options;
+			}
+
+			$scaffoldFields[$field] += array(
+				'formatter' => null
+			);
 		}
 
 		return $scaffoldFields;

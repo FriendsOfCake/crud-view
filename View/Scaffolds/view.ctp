@@ -4,7 +4,7 @@
   <dl>
     <?php
     foreach ($fields as $field => $options) {
-      if (in_array($field, array($primaryKey, $displayField))) {
+      if (in_array($field, array($primaryKey))) {
         continue;
       }
 

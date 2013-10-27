@@ -5,9 +5,9 @@
 	<thead>
 		<tr>
 			<?php
-			foreach ($fields as $_field => $_options) :
+			foreach ($fields as $field => $options) :
 				?>
-				<th><?= $this->Paginator->sort($_field); ?></th>
+				<th><?= $this->CrudView->sort($field, $options); ?></th>
 				<?php
 				endforeach;
 			?>
