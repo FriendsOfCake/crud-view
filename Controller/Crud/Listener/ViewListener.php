@@ -31,6 +31,52 @@ class ViewListener extends CrudListener {
 	}
 
 /**
+ * beforeFind callback
+ *
+ * Make sure to inject contains for all relations by default
+ *
+ * @param  CakeEvent $event
+ * @return void
+ */
+	public function beforeFind(CakeEvent $event) {
+		$this->_ensureContainableLoaded($event->subject->model);
+		$event->subject->query['contain'] = $this->_getRelatedModels();
+	}
+
+/**
+ * Get a list of relevant models to contain using Containable
+ *
+ * If the user haven't configured any relations for an action
+ * we assume all relations will be used.
+ *
+ * The user can chose to suppress specific relations using the blacklist
+ * functionality.
+ *
+ * @return array
+ */
+	protected function _getRelatedModels() {
+		$models = $this->_action()->config('scaffold.relations');
+
+		if (empty($models)) {
+			$associations = $this->_associations();
+			$models = [];
+			$models += Hash::extract($associations, 'hasMany.{s}.model');
+			$models += Hash::extract($associations, 'hasOne.{s}.model');
+		}
+
+		$models = Hash::normalize($models);
+
+		// Check for blacklisted fields
+		$blacklist = $this->_action()->config('scaffold.relations_blacklist');
+		if (!empty($blacklist)) {
+			$blacklist = \Hash::normalize($blacklist);
+			$models = array_diff_key($models, $blacklist);
+		}
+
+		return $models;
+	}
+
+/**
  * beforeRender event
  *
  * @param  CakeEvent $event [description]
@@ -279,11 +325,13 @@ class ViewListener extends CrudListener {
 				$associations[$type] = array();
 			}
 
-			$assocDataAll = $model->$type;
+			$assocDataAll = $model->{$type};
 
 			$assocData = $assocDataAll[$assocKey];
 			$associatedModel = $model->{$assocKey};
 
+			$associations[$type][$assocKey]['model'] = $assocKey;
+			$associations[$type][$assocKey]['type'] = $type;
 			$associations[$type][$assocKey]['primaryKey'] = $associatedModel->primaryKey;
 			$associations[$type][$assocKey]['displayField'] = $associatedModel->displayField;
 			$associations[$type][$assocKey]['foreignKey'] = $assocData['foreignKey'];
@@ -359,6 +407,16 @@ class ViewListener extends CrudListener {
 		}
 
 		return $value;
+	}
+
+/**
+ * Make sure containable behavior is loaded for a model
+ *
+ * @param  Model  $model
+ * @return void
+ */
+	protected function _ensureContainableLoaded(Model $model) {
+		$model->Behaviors->load('Containable');
 	}
 
 }
