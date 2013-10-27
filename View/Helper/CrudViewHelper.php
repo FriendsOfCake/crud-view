@@ -192,9 +192,9 @@ class CrudViewHelper extends AppHelper {
  * @var array
  */
 	public function redirectUrl() {
-		$redirectUrl = $this->_View->request->query('redirect_url');
-		if (!empty($this->_View->viewVars['redirect_url'])) {
-			$redirectUrl = $this->_View->viewVars['redirect_url'];
+		$redirectUrl = $this->request->query('redirect_url');
+		if (!empty($this->getViewVar('redirect_url'))) {
+			$redirectUrl = $this->getViewVar('redirect_url');
 		} else {
 			$redirectUrl = $this->Form->value('redirect_url');
 		}
@@ -219,7 +219,7 @@ class CrudViewHelper extends AppHelper {
 				'controller' => $relation['controller'],
 				'action' => 'add',
 				'?' => [
-					$relation['foreignKey'] => $this->viewVar('primaryKeyValue'),
+					$relation['foreignKey'] => $this->getViewVar('primaryKeyValue'),
 					'redirect_url' => $this->request->here
 				]
 			]
