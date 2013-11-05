@@ -194,7 +194,7 @@ class CrudViewHelper extends AppHelper {
 	public function redirectUrl() {
 		$redirectUrl = $this->request->query('redirect_url');
 		$redirectUrlViewVar = $this->getViewVar('redirect_url');
-		if (!empty($redirectUrlViewVar))
+		if (!empty($redirectUrlViewVar)) {
 			$redirectUrl = $redirectUrlViewVar;
 		} else {
 			$redirectUrl = $this->Form->value('redirect_url');
