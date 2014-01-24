@@ -413,7 +413,7 @@ class View extends Base {
 
 		$path = "{$controller->modelClass}.{$field}";
 		if (!empty($request->data)) {
-			$value = Hash::get($request->data->toArray(), $path);
+			$value = Hash::get((array)$request->data, $path);
 		}
 
 		$singularVar = Inflector::variable($controller->modelClass);
