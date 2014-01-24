@@ -1,9 +1,15 @@
 <?php
+namespace CrudView\Listener;
 
-App::uses('CrudListener', 'Crud.Controller/Listener');
-App::uses('App', 'Core');
+use Cake\Core\App;
+use Cake\Core\Configure;
+use Cake\Core\Plugin;
+use Cake\Event\Event;
+use Cake\Utility\Hash;
+use Cake\Utility\Inflector;
+use Crud\Listener\Base;
 
-class ViewListener extends CrudListener {
+class View extends Base {
 
 /**
  * Initialize the listener
@@ -15,7 +21,6 @@ class ViewListener extends CrudListener {
 			return;
 		}
 
-		$this->_setViewClass();
 		$this->_injectViewSearchPaths();
 	}
 
@@ -38,9 +43,8 @@ class ViewListener extends CrudListener {
  * @param  CakeEvent $event
  * @return void
  */
-	public function beforeFind(CakeEvent $event) {
-		$this->_ensureContainableLoaded($event->subject->model);
-		$event->subject->query['contain'] = $this->_getRelatedModels();
+	public function beforeFind(Event $event) {
+
 	}
 
 /**
@@ -51,9 +55,8 @@ class ViewListener extends CrudListener {
  * @param  CakeEvent $event
  * @return void
  */
-	public function beforePaginate(CakeEvent $event) {
-		$this->_ensureContainableLoaded($event->subject->model);
-		$event->subject->paginator->settings['contain'] = $this->_getRelatedModels(['belongsTo']);
+	public function beforePaginate(Event $event) {
+
 	}
 
 /**
@@ -68,6 +71,7 @@ class ViewListener extends CrudListener {
  * @return array
  */
 	protected function _getRelatedModels($relations = []) {
+		return [];
 		$models = $this->_action()->config('scaffold.relations');
 
 		if (empty($models)) {
@@ -85,7 +89,6 @@ class ViewListener extends CrudListener {
 
 		$models = Hash::normalize($models);
 
-		// Check for blacklisted fields
 		$blacklist = $this->_action()->config('scaffold.relations_blacklist');
 		if (!empty($blacklist)) {
 			$blacklist = \Hash::normalize($blacklist);
@@ -107,7 +110,7 @@ class ViewListener extends CrudListener {
  * @param  CakeEvent $event [description]
  * @return void
  */
-	public function beforeRender(CakeEvent $event) {
+	public function beforeRender(\Cake\Event\Event $event) {
 		if ($this->_controller()->name === 'CakeError') {
 			return;
 		}
@@ -156,19 +159,6 @@ class ViewListener extends CrudListener {
 	}
 
 /**
- * Set the view class to use for rendering
- *
- * By default we use cake's build in ScaffoldView as it
- * more or less can do what we need
- *
- * @return void
- */
-	protected function _setViewClass() {
-		$Controller = $this->_controller();
-		$Controller->viewClass = 'Scaffold';
-	}
-
-/**
  * Inject the CrudView View path into the views search path
  * so in case the user do not provide their own view, we
  * render our baked in templates first
@@ -176,7 +166,12 @@ class ViewListener extends CrudListener {
  * @return void
  */
 	protected function _injectViewSearchPaths() {
-		App::build(array('View' => array(CakePlugin::path('CrudView') . 'View' . DS)));
+		$this->_controller()->viewPath = 'Scaffolds';
+
+		$existing = Configure::read('App.paths.templates');
+		$existing[] = Plugin::path('CrudView') . 'Template' . DS;
+
+		Configure::write('App.paths.templates', $existing);
 	}
 
 /**
@@ -187,12 +182,12 @@ class ViewListener extends CrudListener {
 	protected function _getPageVariables() {
 		$data = array(
 			'modelClass' => $this->_controller()->modelClass,
-			'modelSchema' => $this->_model()->schema(),
-			'displayField' => $this->_model()->displayField,
-			'singularHumanName' => Inflector::humanize(Inflector::underscore($this->_controller()->modelClass)),
+			'modelSchema' => $this->_repository()->schema(),
+			'displayField' => $this->_repository()->displayField(),
+			'singularHumanName' => Inflector::humanize(Inflector::underscore(Inflector::singularize($this->_controller()->modelClass))),
 			'pluralHumanName' => Inflector::humanize(Inflector::underscore($this->_controller()->name)),
 			'pluralVar' => Inflector::variable($this->_controller()->name),
-			'primaryKey' => $this->_model()->primaryKey,
+			'primaryKey' => $this->_repository()->primaryKey(),
 			'primaryKeyValue' => $this->_primaryKeyValue()
 		);
 
@@ -223,7 +218,7 @@ class ViewListener extends CrudListener {
 		$displayFieldValue = $this->_displayFieldValue();
 
 		if ($primaryKeyValue === null && $displayFieldValue === null) {
-			return sprintf('%s %s', $actionName, $controllerName);
+			return sprintf('%s %s', $controllerName, $actionName);
 		}
 
 		if ($displayFieldValue === null) {
@@ -253,13 +248,14 @@ class ViewListener extends CrudListener {
  * @return array List of fields
  */
 	protected function _scaffoldFields() {
-		$Model = $this->_model();
+		$Model = $this->_repository();
 
 		// Get all available fields from the Schema
 		$modelSchema = $Model->schema();
 
 		// Make the fields
-		$scaffoldFields = array_fill_keys(array_keys($modelSchema), array());
+		$cols = $modelSchema->columns();
+		$scaffoldFields = array_combine(array_values($cols), array_fill(0, sizeof($cols), []));
 
 		// Check for any user configured fields
 		$configuredFields = $this->_action()->config('scaffold.fields');
@@ -296,15 +292,14 @@ class ViewListener extends CrudListener {
 	protected function _controllerName() {
 		$Controller = $this->_controller();
 		$CrudAction = $this->_action();
-		$type = $CrudAction::ACTION_SCOPE;
 
 		$baseName = Inflector::humanize(Inflector::underscore($Controller->name));
 
-		if ($type === CrudAction::SCOPE_MODEL) {
+		if ($CrudAction->scope() === 'repository') {
 			return Inflector::pluralize($baseName);
 		}
 
-		if ($type === CrudAction::SCOPE_RECORD) {
+		if ($CrudAction->scope() === 'entity') {
 			return Inflector::singularize($baseName);
 		}
 
@@ -317,19 +312,18 @@ class ViewListener extends CrudListener {
  * @return string
  */
 	protected function _getControllerActions() {
-		$actions = $this->_crud()->config('actions');
+		$model = $record = [];
 
-		$model = array();
-		$record = array();
+		$actions = $this->_crud()->config('actions');
 		foreach ($actions as $actionName => $config) {
 			$action = $this->_action($actionName);
-			$type = $action::ACTION_SCOPE;
 
-			if ($type === CrudAction::SCOPE_MODEL) {
+			if ($action->scope() === 'repository') {
 				$model[] = $actionName;
-			} elseif ($type === CrudAction::SCOPE_RECORD) {
+			} elseif ($action->scope() === 'entity') {
 				$record[] = $actionName;
 			}
+
 		}
 
 		return compact('model', 'record');
@@ -341,48 +335,44 @@ class ViewListener extends CrudListener {
  * @return array Associations for model
  */
 	protected function _associations() {
-		$model = $this->_model();
-		$associations = array();
+		$model = $this->_repository();
+		$associations = [
+			'oneToOne' => [],
+			'oneToMany' => [],
+			'hasAndBelongsToMany' => []
+		];
 
-		$associated = $model->getAssociated();
-		foreach ($associated as $assocKey => $type) {
+		foreach ($model->associations()->keys() as $associationName) {
+			$association = $model->associations()->get($associationName);
+
+			$type = $association->type();
+
 			if (!isset($associations[$type])) {
-				$associations[$type] = array();
+				$associations[$type] = [];
 			}
 
-			$assocDataAll = $model->{$type};
-
-			$assocData = $assocDataAll[$assocKey];
-			$associatedModel = $model->{$assocKey};
-
+			$assocKey = Inflector::variable(Inflector::underscore($association->name()));
 			$associations[$type][$assocKey]['model'] = $assocKey;
 			$associations[$type][$assocKey]['type'] = $type;
-			$associations[$type][$assocKey]['primaryKey'] = $associatedModel->primaryKey;
-			$associations[$type][$assocKey]['displayField'] = $associatedModel->displayField;
-			$associations[$type][$assocKey]['foreignKey'] = $assocData['foreignKey'];
+			$associations[$type][$assocKey]['primaryKey'] = $association->target()->primaryKey();
+			$associations[$type][$assocKey]['displayField'] = $association->target()->displayField();
+			$associations[$type][$assocKey]['foreignKey'] = $association->foreignKey();
 
-			list($plugin, $modelClass) = pluginSplit($assocData['className']);
+			// list($plugin, $modelClass) = pluginSplit($assocData['className']);
 
-			if ($plugin) {
-				$plugin = Inflector::underscore($plugin);
-			}
+			// if ($plugin) {
+			// 	$plugin = Inflector::underscore($plugin);
+			// }
 
-			$associations[$type][$assocKey]['plugin'] = $plugin;
-			$associations[$type][$assocKey]['controller'] = Inflector::pluralize(Inflector::underscore($modelClass));
+			$associations[$type][$assocKey]['plugin'] = null;
+			$associations[$type][$assocKey]['controller'] = Inflector::pluralize(Inflector::underscore($assocKey));
 
-			if ($type === 'hasAndBelongsToMany') {
-				$associations[$type][$assocKey]['with'] = $assocData['with'];
-			}
+			// if ($type === 'hasAndBelongsToMany') {
+			// 	$associations[$type][$assocKey]['with'] = $assocData['with'];
+			// }
 		}
 
-		if (empty($associations['hasMany'])) {
-			$associations['hasMany'] = array();
-		}
-
-		if (empty($associations['hasAndBelongsToMany'])) {
-			$associations['hasAndBelongsToMany'] = array();
-		}
-
+		// debug($associations);die;
 		return $associations;
 	}
 
@@ -394,7 +384,7 @@ class ViewListener extends CrudListener {
  * @return mixed
  */
 	protected function _primaryKeyValue() {
-		return $this->_deriveFieldFromContext($this->_model()->primaryKey);
+		return $this->_deriveFieldFromContext($this->_repository()->primaryKey());
 	}
 
 /**
@@ -405,7 +395,7 @@ class ViewListener extends CrudListener {
  * @return string
  */
 	protected function _displayFieldValue() {
-		return $this->_deriveFieldFromContext($this->_model()->displayField);
+		return $this->_deriveFieldFromContext($this->_repository()->displayField());
 	}
 
 /**
@@ -417,31 +407,21 @@ class ViewListener extends CrudListener {
  */
 	protected function _deriveFieldFromContext($field) {
 		$controller = $this->_controller();
-		$model = $this->_model();
+		$entity = $this->_entity();
 		$request = $this->_request();
 		$value = null;
 
 		$path = "{$controller->modelClass}.{$field}";
 		if (!empty($request->data)) {
-			$value = Hash::get($request->data, $path);
+			$value = Hash::get($request->data->toArray(), $path);
 		}
 
 		$singularVar = Inflector::variable($controller->modelClass);
 		if (!empty($controller->viewVars[$singularVar])) {
-			$value = Hash::get($controller->viewVars[$singularVar], $path);
+			$value = $entity->get($field);
 		}
 
 		return $value;
-	}
-
-/**
- * Make sure containable behavior is loaded for a model
- *
- * @param  Model  $model
- * @return void
- */
-	protected function _ensureContainableLoaded(Model $model) {
-		$model->Behaviors->load('Containable');
 	}
 
 }

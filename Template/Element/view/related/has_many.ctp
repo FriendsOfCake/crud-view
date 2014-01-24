@@ -1,5 +1,7 @@
 <?php
-$relations = array_merge($associations['hasMany'], $associations['hasAndBelongsToMany']);
+use \Cake\Utility\Inflector;
+
+$relations = array_merge($associations['oneToMany'], $associations['hasAndBelongsToMany']);
 
 $i = 0;
 foreach ($relations as $alias => $details) :
@@ -8,13 +10,13 @@ foreach ($relations as $alias => $details) :
 	<div class="related">
 		<h3><?= __d('crud', "Related %s", Inflector::humanize($details['controller'])); ?></h3>
 		<?php
-		if (!empty(${$viewVar}[$alias])):
+		if (${$viewVar}->{$alias}):
 			?>
 			<table class="table table-bordered table-hover">
 				<thead>
 					<tr>
 						<?php
-						$otherFields = array_keys(${$viewVar}[$alias][0]);
+						$otherFields = array_keys(${$viewVar}->{$alias}[0]->toArray());
 						if (isset($details['with'])) {
 							$index = array_search($details['with'], $otherFields);
 							unset($otherFields[$index]);
@@ -30,13 +32,13 @@ foreach ($relations as $alias => $details) :
 				<tbody>
 					<?php
 					$i = 0;
-					foreach (${$viewVar}[$alias] as ${$otherSingularVar}) :
+					foreach (${$viewVar}->{$alias} as ${$otherSingularVar}) :
 						?>
 						<tr>
 							<?php
 							foreach ($otherFields as $field) {
 								?>
-								<td><?= ${$otherSingularVar}[$field]; ?></td>
+								<td><?= $this->CrudView->process($field, ${$otherSingularVar}); ?></td>
 								<?php
 							}
 							?>

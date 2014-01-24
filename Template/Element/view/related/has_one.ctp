@@ -1,24 +1,27 @@
 <?php
-if (empty($associations['hasOne'])) {
+if (empty($associations['oneToOne'])) {
 	return;
 }
 
-foreach ($associations['hasOne'] as $alias => $details):
+use \Cake\Utility\Inflector;
+
+foreach ($associations['oneToOne'] as $alias => $details):
+	$alias = Inflector::singularize($alias);
 	?>
 <div class="related">
 	<h3><?= __d('crud', "Related %s", Inflector::humanize($details['controller'])); ?></h3>
 
 	<?php
-	if (!empty(${$viewVar}[$alias])) :
+	if (!empty(${$viewVar}->{$alias})) :
 		?>
 		<dl>
 			<?php
 			$i = 0;
-			$otherFields = array_keys(${$viewVar}[$alias]);
+			$otherFields = array_keys(${$viewVar}->{$alias}->toArray());
 			foreach ($otherFields as $field) {
 				?>
 				<dt><?= Inflector::humanize($field); ?></dt>
-				<dd><?= $this->CrudView->process($field, ${$viewVar}, $details); ?>&nbsp;</dd>
+				<dd><?= $this->CrudView->process($field, ${$viewVar}->{$alias}, $details); ?>&nbsp;</dd>
 				<?php
 			}
 		?>

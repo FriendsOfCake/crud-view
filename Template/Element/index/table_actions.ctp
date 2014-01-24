@@ -6,8 +6,8 @@
 		foreach ($actions['record'] as $action) {
 			echo "<li>";
 			echo $this->Html->link(
-				sprintf('%s %s', Inflector::humanize($action), $singularHumanName),
-				array('action' => $action, $singularVar[$modelClass][$primaryKey])
+				sprintf('%s %s', \Cake\Utility\Inflector::humanize($action), $singularHumanName),
+				['action' => $action, $this->CrudView->fieldValue($singularVar, $primaryKey)]
 			);
 			echo " </li>";
 		}
