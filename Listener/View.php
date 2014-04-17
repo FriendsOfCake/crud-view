@@ -34,7 +34,6 @@ class View extends Base {
  * @param CakeEvent $event
  */
 	public function setFlash(\Cake\Event\Event $event) {
-		$event->subject->params['plugin'] = 'BoostCake';
 		$event->subject->params['class'] = 'alert alert-dismissable ';
 		$event->subject->params['class'] .= strpos($event->subject->type, '.success') ? 'alert-success' : 'alert-danger';
 	}
@@ -99,7 +98,6 @@ class View extends Base {
 		}
 
 		$this->_injectHelpers();
-		$this->_prepopulateFormVariables();
 
 		$controller = $this->_controller();
 		$controller->set('title', $this->_getPageTitle());
@@ -112,28 +110,6 @@ class View extends Base {
 
 	protected function _blacklist() {
 		return (array)$this->_action()->config('scaffold.fields_blacklist');
-	}
-
-/**
- * Copy GET arguments into the form data
- *
- * Useful for deep linking variables for related models
- *
- * @return void
- */
-	protected function _prepopulateFormVariables() {
-		$request = $this->_request();
-
-		if (!$request->is('get') || empty($request->query)) {
-			return;
-		}
-
-		$modelClass = $this->_controller()->modelClass;
-		if (empty($request->data[$modelClass])) {
-			$request->data[$modelClass] = array();
-		}
-
-		$request->data[$modelClass] = array_merge($request->query, $request->data[$modelClass]);
 	}
 
 /**
@@ -223,15 +199,6 @@ class View extends Base {
 	}
 
 /**
- * Get fields that should be visible in the view
- *
- * @return array
- */
-	protected function _getPageFields() {
-		return $this->_scaffoldFields();
-	}
-
-/**
  * Returns fields to be displayed on scaffolded view
  *
  * @param boolean $sort Add sort keys to output
@@ -285,7 +252,7 @@ class View extends Base {
 
 		$baseName = Inflector::humanize(Inflector::underscore($Controller->name));
 
-		if ($CrudAction->scope() === 'repository') {
+		if ($CrudAction->scope() === 'table') {
 			return Inflector::pluralize($baseName);
 		}
 
@@ -334,7 +301,6 @@ class View extends Base {
 
 		foreach ($model->associations()->keys() as $associationName) {
 			$association = $model->associations()->get($associationName);
-
 			$type = $association->type();
 
 			if (!isset($associations[$type])) {
@@ -347,22 +313,10 @@ class View extends Base {
 			$associations[$type][$assocKey]['primaryKey'] = $association->target()->primaryKey();
 			$associations[$type][$assocKey]['displayField'] = $association->target()->displayField();
 			$associations[$type][$assocKey]['foreignKey'] = $association->foreignKey();
-
-			// list($plugin, $modelClass) = pluginSplit($assocData['className']);
-
-			// if ($plugin) {
-			// 	$plugin = Inflector::underscore($plugin);
-			// }
-
 			$associations[$type][$assocKey]['plugin'] = null;
 			$associations[$type][$assocKey]['controller'] = Inflector::pluralize(Inflector::underscore($assocKey));
-
-			// if ($type === 'hasAndBelongsToMany') {
-			// 	$associations[$type][$assocKey]['with'] = $assocData['with'];
-			// }
 		}
 
-		// debug($associations);die;
 		return $associations;
 	}
 
