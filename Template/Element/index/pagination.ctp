@@ -1,8 +1,20 @@
-<div class="paging paging-centered">
-	<p>
-		<?= $this->Paginator->counter(array(
-			'format' => __d('crud', 'Page {{page}} of {{pages}}, showing {{current} records out of {{count}} total, starting on record {{start}}, ending on {{end}}')
-		));
+<div class="row">
+	<div class="col-md-12">
+
+		<?php
+		if ($this->Paginator->hasPage(2)) {
+			?>
+			<ul class="pagination">
+				<?= $this->Paginator->prev('PREV'); ?>
+				<?= $this->Paginator->numbers(); ?>
+				<?= $this->Paginator->next('NEXT'); ?>
+			</ul>
+			<?php
+		}
 		?>
-	</p>
+
+		<br />
+
+		<?= $this->Paginator->counter('Page {{page}} of {{pages}}, showing {{current}} records out of {{count}} total.'); ?>
+	</div>
 </div>

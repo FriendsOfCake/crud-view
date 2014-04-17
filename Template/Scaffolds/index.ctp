@@ -1,7 +1,7 @@
 <div class="index scaffold-view">
 	<h2><?= $this->get('title');?></h2>
 
-	<table class="table table-bordered table-hover">
+	<table class="table table-hover">
 	<thead>
 		<tr>
 			<?php

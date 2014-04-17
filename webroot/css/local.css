@@ -1,0 +1,17 @@
+td form {
+	display: inline;
+}
+
+.timepicker-picker, .datepicker {
+	color: white;
+}
+
+div.submit {
+	display: inline
+}
+
+div.input {
+	margin-bottom: 10px
+}
+
+.btn { margin-right: 5px }

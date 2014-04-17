@@ -29,10 +29,10 @@ class View extends Base {
  *
  * @param CakeEvent $event
  */
-	public function setFlash(CakeEvent $event) {
-		$event->subject->element = 'alert';
+	public function setFlash(\Cake\Event\Event $event) {
 		$event->subject->params['plugin'] = 'BoostCake';
-		$event->subject->params['class'] = strpos($event->subject->type, '.success') ? 'alert-success' : 'alert-danger';
+		$event->subject->params['class'] = 'alert alert-dismissable ';
+		$event->subject->params['class'] .= strpos($event->subject->type, '.success') ? 'alert-success' : 'alert-danger';
 	}
 
 /**
@@ -43,7 +43,7 @@ class View extends Base {
  * @param  CakeEvent $event
  * @return void
  */
-	public function beforeFind(Event $event) {
+	public function beforeFind(\Cake\Event\Event $event) {
 
 	}
 
@@ -55,7 +55,7 @@ class View extends Base {
  * @param  CakeEvent $event
  * @return void
  */
-	public function beforePaginate(Event $event) {
+	public function beforePaginate(\Cake\Event\Event $event) {
 
 	}
 
@@ -71,7 +71,6 @@ class View extends Base {
  * @return array
  */
 	protected function _getRelatedModels($relations = []) {
-		return [];
 		$models = $this->_action()->config('scaffold.relations');
 
 		if (empty($models)) {
@@ -118,12 +117,17 @@ class View extends Base {
 		$this->_injectHelpers();
 		$this->_prepopulateFormVariables();
 
-		$Controller = $this->_controller();
-		$Controller->set('title', $this->_getPageTitle());
-		$Controller->set('fields', $this->_getPageFields());
-		$Controller->set('actions', $this->_getControllerActions());
-		$Controller->set('associations', $this->_associations());
-		$Controller->set($this->_getPageVariables());
+		$controller = $this->_controller();
+		$controller->set('title', $this->_getPageTitle());
+		$controller->set('fields', $this->_scaffoldFields());
+		$controller->set('blacklist', $this->_blacklist());
+		$controller->set('actions', $this->_getControllerActions());
+		$controller->set('associations', $this->_associations());
+		$controller->set($this->_getPageVariables());
+	}
+
+	protected function _blacklist() {
+		return $this->_action()->config('scaffold.fields_blacklist');
 	}
 
 /**
@@ -166,8 +170,6 @@ class View extends Base {
  * @return void
  */
 	protected function _injectViewSearchPaths() {
-		$this->_controller()->viewPath = 'Scaffolds';
-
 		$existing = Configure::read('App.paths.templates');
 		$existing[] = Plugin::path('CrudView') . 'Template' . DS;
 
@@ -186,14 +188,15 @@ class View extends Base {
 			'displayField' => $this->_repository()->displayField(),
 			'singularHumanName' => Inflector::humanize(Inflector::underscore(Inflector::singularize($this->_controller()->modelClass))),
 			'pluralHumanName' => Inflector::humanize(Inflector::underscore($this->_controller()->name)),
+			'singularVar' => Inflector::singularize($this->_controller()->name),
 			'pluralVar' => Inflector::variable($this->_controller()->name),
 			'primaryKey' => $this->_repository()->primaryKey(),
 			'primaryKeyValue' => $this->_primaryKeyValue()
 		);
 
-		if (method_exists($this->_action(), 'viewVar')) {
-			$data['viewVar'] = $this->_action()->viewVar();
-		}
+		// if (method_exists($this->_action(), 'viewVar')) {
+		// 	$data['viewVar'] = $this->_action()->viewVar();
+		// }
 
 		return $data;
 	}
@@ -312,21 +315,21 @@ class View extends Base {
  * @return string
  */
 	protected function _getControllerActions() {
-		$model = $record = [];
+		$table = $entity = [];
 
 		$actions = $this->_crud()->config('actions');
 		foreach ($actions as $actionName => $config) {
 			$action = $this->_action($actionName);
 
-			if ($action->scope() === 'repository') {
-				$model[] = $actionName;
+			if ($action->scope() === 'table') {
+				$table[] = $actionName;
 			} elseif ($action->scope() === 'entity') {
-				$record[] = $actionName;
+				$entity[] = $actionName;
 			}
 
 		}
 
-		return compact('model', 'record');
+		return compact('table', 'entity');
 	}
 
 /**
