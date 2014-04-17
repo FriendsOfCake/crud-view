@@ -27,7 +27,7 @@
 </head>
 <body>
 	<nav class="navbar navbar-default navbar-custom" role="navigation">
-		<div class="container">
+		<div class="container-fluid">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
 					<span class="sr-only">Toggle navigation</span>
@@ -45,7 +45,7 @@
 	</nav>
 
 	<div class="bs-docs-header" id="content">
-		<div class="container">
+		<div class="container-fluid">
 			<?= $this->Session->flash(); ?>
 			<?= $this->fetch('content'); ?>
 		</div>
