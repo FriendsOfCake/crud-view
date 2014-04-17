@@ -40,7 +40,6 @@
 
 			<div class="collapse navbar-collapse navbar-ex1-collapse">
 				<?= $this->element('sidebar'); ?>
-				<?= $this->element('topbar'); ?>
 			</div>
 		</div>
 	</nav>

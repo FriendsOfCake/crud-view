@@ -13,7 +13,6 @@ class DateTime extends \Cake\View\Widget\DateTime {
       <script type="text/javascript">
       jQuery(function() {
 				$("#datetimepicker-' . $data['id'] . '").datetimepicker({
-					language: "da",
 					sideBySide: true,
 					useSeconds: false
 				});

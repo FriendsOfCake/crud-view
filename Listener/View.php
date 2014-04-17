@@ -24,6 +24,10 @@ class View extends Base {
 		$this->_injectViewSearchPaths();
 	}
 
+	public function beforeFind(Event $event) {
+		$event->subject->query->contain($this->_getRelatedModels());
+	}
+
 /**
  * Make sure flash messages uses the views from BoostCake
  *
@@ -33,30 +37,6 @@ class View extends Base {
 		$event->subject->params['plugin'] = 'BoostCake';
 		$event->subject->params['class'] = 'alert alert-dismissable ';
 		$event->subject->params['class'] .= strpos($event->subject->type, '.success') ? 'alert-success' : 'alert-danger';
-	}
-
-/**
- * beforeFind callback
- *
- * Make sure to inject contains for all relations by default
- *
- * @param  CakeEvent $event
- * @return void
- */
-	public function beforeFind(\Cake\Event\Event $event) {
-
-	}
-
-/**
- * beforePaginate callback
- *
- * Make sure to inject contains for all relations by default
- *
- * @param  CakeEvent $event
- * @return void
- */
-	public function beforePaginate(\Cake\Event\Event $event) {
-
 	}
 
 /**
@@ -114,6 +94,10 @@ class View extends Base {
 			return;
 		}
 
+		if (!empty($event->subject->entity)) {
+			$this->_entity = $event->subject->entity;
+		}
+
 		$this->_injectHelpers();
 		$this->_prepopulateFormVariables();
 
@@ -127,7 +111,7 @@ class View extends Base {
 	}
 
 	protected function _blacklist() {
-		return $this->_action()->config('scaffold.fields_blacklist');
+		return (array)$this->_action()->config('scaffold.fields_blacklist');
 	}
 
 /**
@@ -208,7 +192,6 @@ class View extends Base {
  */
 	protected function _getPageTitle() {
 		$title = $this->_action()->config('scaffold.page_title');
-
 		if (!empty($title)) {
 			return $title;
 		}
@@ -221,6 +204,10 @@ class View extends Base {
 		$displayFieldValue = $this->_displayFieldValue();
 
 		if ($primaryKeyValue === null && $displayFieldValue === null) {
+			if ($actionName === 'Index') {
+				return $controllerName;
+			}
+
 			return sprintf('%s %s', $controllerName, $actionName);
 		}
 
@@ -387,7 +374,7 @@ class View extends Base {
  * @return mixed
  */
 	protected function _primaryKeyValue() {
-		return $this->_deriveFieldFromContext($this->_repository()->primaryKey());
+		return $this->_deriveFieldFromContext($this->_table()->primaryKey());
 	}
 
 /**
@@ -413,6 +400,10 @@ class View extends Base {
 		$entity = $this->_entity();
 		$request = $this->_request();
 		$value = null;
+
+		if ($value = $entity->get($field)) {
+			return $value;
+		}
 
 		$path = "{$controller->modelClass}.{$field}";
 		if (!empty($request->data)) {
