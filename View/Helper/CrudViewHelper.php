@@ -176,14 +176,14 @@ class CrudViewHelper extends Helper {
 				continue;
 			}
 
-			return array(
+			return [
 				'alias' => $alias,
-				'output' => $this->Html->link($data[$alias][$details['displayField']], array(
+				'output' => $this->Html->link($data[$alias][$details['displayField']], [
 					'controller' => $details['controller'],
 					'action' => 'view',
 					$data[$alias][$details['primaryKey']]
-				))
-			);
+				])
+			];
 		}
 
 		return false;
@@ -198,6 +198,7 @@ class CrudViewHelper extends Helper {
 	public function redirectUrl() {
 		$redirectUrl = $this->request->query('redirect_url');
 		$redirectUrlViewVar = $this->getViewVar('redirect_url');
+
 		if (!empty($redirectUrlViewVar)) {
 			$redirectUrl = $redirectUrlViewVar;
 		} else {

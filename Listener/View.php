@@ -142,21 +142,20 @@ class View extends Base {
  * @return array
  */
 	protected function _getPageVariables() {
-		$data = array(
-			'modelClass' => $this->_controller()->modelClass,
-			'modelSchema' => $this->_repository()->schema(),
-			'displayField' => $this->_repository()->displayField(),
-			'singularHumanName' => Inflector::humanize(Inflector::underscore(Inflector::singularize($this->_controller()->modelClass))),
-			'pluralHumanName' => Inflector::humanize(Inflector::underscore($this->_controller()->name)),
-			'singularVar' => Inflector::singularize($this->_controller()->name),
-			'pluralVar' => Inflector::variable($this->_controller()->name),
-			'primaryKey' => $this->_repository()->primaryKey(),
-			'primaryKeyValue' => $this->_primaryKeyValue()
-		);
+		$table = $this->_table();
+		$controller = $this->_controller();
 
-		// if (method_exists($this->_action(), 'viewVar')) {
-		// 	$data['viewVar'] = $this->_action()->viewVar();
-		// }
+		$data = [
+			'modelClass' => $controller->modelClass,
+			'modelSchema' => $table->schema(),
+			'displayField' => $table->displayField(),
+			'singularHumanName' => Inflector::humanize(Inflector::underscore(Inflector::singularize($controller->modelClass))),
+			'pluralHumanName' => Inflector::humanize(Inflector::underscore($controller->name)),
+			'singularVar' => Inflector::singularize($controller->name),
+			'pluralVar' => Inflector::variable($controller->name),
+			'primaryKey' => $table->primaryKey(),
+			'primaryKeyValue' => $this->_primaryKeyValue()
+		];
 
 		return $data;
 	}
@@ -199,30 +198,23 @@ class View extends Base {
 	}
 
 /**
- * Returns fields to be displayed on scaffolded view
+ * Returns fields to be displayed on scaffolded template
  *
- * @param boolean $sort Add sort keys to output
- * @return array List of fields
+ * @return array
  */
 	protected function _scaffoldFields() {
-		$Model = $this->_repository();
-
-		// Get all available fields from the Schema
-		$modelSchema = $Model->schema();
-
-		// Make the fields
-		$cols = $modelSchema->columns();
+		$cols = $this->_table()->schema()->columns();
 		$scaffoldFields = array_combine(array_values($cols), array_fill(0, sizeof($cols), []));
 
-		// Check for any user configured fields
-		$configuredFields = $this->_action()->config('scaffold.fields');
+		$action = $this->_action();
+		$configuredFields = $action->config('scaffold.fields');
 		if (!empty($configuredFields)) {
 			$configuredFields = Hash::normalize($configuredFields);
 			$scaffoldFields = array_intersect_key($configuredFields, $scaffoldFields);
 		}
 
 		// Check for blacklisted fields
-		$blacklist = $this->_action()->config('scaffold.fields_blacklist');
+		$blacklist = $action->config('scaffold.fields_blacklist');
 		if (!empty($blacklist)) {
 			$scaffoldFields = array_diff_key($scaffoldFields, array_combine($blacklist, $blacklist));
 		}
@@ -233,30 +225,25 @@ class View extends Base {
 				$scaffoldFields[$field] = (array)$options;
 			}
 
-			$scaffoldFields[$field] += array(
-				'formatter' => null
-			);
+			$scaffoldFields[$field] += ['formatter' => null];
 		}
 
 		return $scaffoldFields;
 	}
 
 /**
- * Get the controller name based on the CrudAction scope
+ * Get the controller name based on the Crud Action scope
  *
  * @return string
  */
 	protected function _controllerName() {
-		$Controller = $this->_controller();
-		$CrudAction = $this->_action();
+		$baseName = Inflector::humanize(Inflector::underscore($this->_controller()->name));
 
-		$baseName = Inflector::humanize(Inflector::underscore($Controller->name));
-
-		if ($CrudAction->scope() === 'table') {
+		if ($this->_action()->scope() === 'table') {
 			return Inflector::pluralize($baseName);
 		}
 
-		if ($CrudAction->scope() === 'entity') {
+		if ($this->_action()->scope() === 'entity') {
 			return Inflector::singularize($baseName);
 		}
 
@@ -292,32 +279,30 @@ class View extends Base {
  * @return array Associations for model
  */
 	protected function _associations() {
-		$model = $this->_repository();
-		$associations = [
-			'oneToOne' => [],
-			'oneToMany' => [],
-			'hasAndBelongsToMany' => []
-		];
+		$table = $this->_table();
 
-		foreach ($model->associations()->keys() as $associationName) {
-			$association = $model->associations()->get($associationName);
+		$associationConfiguration = [];
+
+		$associations = $table->associations();
+		foreach ($associations->keys() as $associationName) {
+			$association = $associations->get($associationName);
 			$type = $association->type();
 
-			if (!isset($associations[$type])) {
-				$associations[$type] = [];
+			if (!isset($associationConfiguration[$type])) {
+				$associationConfiguration[$type] = [];
 			}
 
 			$assocKey = Inflector::variable(Inflector::underscore($association->name()));
-			$associations[$type][$assocKey]['model'] = $assocKey;
-			$associations[$type][$assocKey]['type'] = $type;
-			$associations[$type][$assocKey]['primaryKey'] = $association->target()->primaryKey();
-			$associations[$type][$assocKey]['displayField'] = $association->target()->displayField();
-			$associations[$type][$assocKey]['foreignKey'] = $association->foreignKey();
-			$associations[$type][$assocKey]['plugin'] = null;
-			$associations[$type][$assocKey]['controller'] = Inflector::pluralize(Inflector::underscore($assocKey));
+			$associationConfiguration[$type][$assocKey]['model'] = $assocKey;
+			$associationConfiguration[$type][$assocKey]['type'] = $type;
+			$associationConfiguration[$type][$assocKey]['primaryKey'] = $association->target()->primaryKey();
+			$associationConfiguration[$type][$assocKey]['displayField'] = $association->target()->displayField();
+			$associationConfiguration[$type][$assocKey]['foreignKey'] = $association->foreignKey();
+			$associationConfiguration[$type][$assocKey]['plugin'] = null;
+			$associationConfiguration[$type][$assocKey]['controller'] = Inflector::pluralize(Inflector::underscore($assocKey));
 		}
 
-		return $associations;
+		return $associationConfiguration;
 	}
 
 /**

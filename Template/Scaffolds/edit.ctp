@@ -1,7 +1,7 @@
 <div class="row">
 	<div class="col-lg-6">
 		<?php
-		echo $this->Form->create(${$viewVar}, ['class' => 'form-horizontal', 'role' => 'form']);
+		echo $this->Form->create(${$viewVar}, ['role' => 'form', 'class' => 'form-horizontal']);
 		echo $this->Form->inputs($fields, $blacklist);
 		echo $this->Form->submit('Save', ['class' => 'btn btn-success']);
 		echo $this->Html->link('Back', ['action' => 'index'], ['class' => 'btn btn-default']);
