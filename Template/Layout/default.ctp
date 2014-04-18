@@ -26,7 +26,7 @@
 	<?= $this->fetch('css'); ?>
 </head>
 <body>
-	<nav class="navbar navbar-default navbar-custom" role="navigation">
+	<nav class="navbar navbar-default navbar-static-top" role="navigation">
 		<div class="container-fluid">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
@@ -37,17 +37,19 @@
 				</button>
 				<a class="navbar-brand" href="/">Crud View v0.1.0</a>
 			</div>
-
-			<div class="collapse navbar-collapse navbar-ex1-collapse">
-				<?= $this->element('sidebar'); ?>
-			</div>
 		</div>
 	</nav>
 
 	<div class="bs-docs-header" id="content">
 		<div class="container-fluid">
-			<?= $this->Session->flash(); ?>
-			<?= $this->fetch('content'); ?>
+			<div class="row">
+				<div class="col-xs-0 col-sm-2 col-lg-2">
+					<?= $this->element('sidebar'); ?>
+				</div>
+				<div class="col-xs-12 col-sm-10 col-lg-10">
+					<?= $this->Session->flash(); ?>
+					<?= $this->fetch('content'); ?>
+				</div>
 		</div>
 	</div>
 
