@@ -21,6 +21,10 @@
 	<?= $this->Html->css('CrudView./contrib/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min');?>
 	<?= $this->Html->script('CrudView./contrib/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min');?>
 
+	<?= $this->Html->script('CrudView./contrib/icheck/js/icheck.min');?>
+
+	<?= $this->Html->script('CrudView.local');?>
+
 	<?= $this->Html->meta('icon'); ?>
 	<?= $this->fetch('meta'); ?>
 	<?= $this->fetch('css'); ?>

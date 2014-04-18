@@ -8,6 +8,7 @@ class Textarea extends \Cake\View\Widget\Textarea {
 		$data['rows'] = 6;
 
 		return parent::render($data);
+		return $return;
 	}
 
 }

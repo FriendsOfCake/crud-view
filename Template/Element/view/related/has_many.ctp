@@ -1,6 +1,14 @@
 <?php
 use \Cake\Utility\Inflector;
 
+if (empty($associations['hasAndBelongsToMany'])) {
+	$associations['hasAndBelongsToMany'] = [];
+}
+
+if (empty($associations['oneToMany'])) {
+	$associations['oneToMany'] = [];
+}
+
 $relations = array_merge($associations['oneToMany'], $associations['hasAndBelongsToMany']);
 
 $i = 0;

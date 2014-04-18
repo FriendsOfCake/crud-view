@@ -13,7 +13,7 @@ class Basic extends \Cake\View\Widget\Basic {
 		}
 
 		$return = parent::render($data);
-		return '<div class="col-sm-10">' . $return . '</div>';
+		return $return;
 	}
 
 }
