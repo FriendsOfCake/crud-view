@@ -7,7 +7,7 @@
 
 	<!-- Base CSS -->
 	<?= $this->Html->css('CrudView.bootstrap.min');?>
-	<?= $this->Html->css('/bootflat/css/bootflat.min');?>
+	<?= $this->Html->css('CrudView.bootflat.min');?>
 	<?= $this->Html->css('CrudView.local');?>
 
 	<!-- Base JS -->
