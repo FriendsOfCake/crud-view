@@ -324,7 +324,7 @@ class View extends Base {
  * @return string
  */
 	protected function _displayFieldValue() {
-		return $this->_deriveFieldFromContext($this->_repository()->displayField());
+		return $this->_deriveFieldFromContext($this->_table()->displayField());
 	}
 
 /**
