@@ -7,9 +7,9 @@ use Cake\Core\Plugin;
 use Cake\Event\Event;
 use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
-use Crud\Listener\Base;
+use Crud\Listener\BaseListener;
 
-class View extends Base {
+class ViewListener extends BaseListener {
 
 /**
  * Initialize the listener
