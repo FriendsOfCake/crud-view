@@ -1,6 +1,16 @@
 <div class="index scaffold-view">
 	<h2><?= $this->get('title');?></h2>
 
+	<?php
+	$this->startIfEmpty('search');
+		echo $this->element('search');
+	$this->end();
+
+	echo $this->fetch('search');
+	?>
+
+	<br />
+
 	<div class="table-responsive">
 		<table class="table table-hover table-condensed">
 		<thead>
