@@ -54,6 +54,10 @@ class SearchListener extends BaseListener {
 		$table = $this->_table();
 		$request = $this->_request();
 
+		if (!method_exists($table, 'searchConfiguration')) {
+			return [];
+		}
+
 		$filters = $table->searchConfiguration();
 		$currentModel = $table->alias();
 		$schema = $table->schema();
