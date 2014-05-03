@@ -35,7 +35,7 @@ class ViewListener extends BaseListener {
  */
 	public function setFlash(\Cake\Event\Event $event) {
 		$event->subject->params['class'] = 'alert alert-dismissable ';
-		$event->subject->params['class'] .= strpos($event->subject->type, '.success') ? 'alert-success' : 'alert-danger';
+		$event->subject->params['class'] .= (false !== strpos($event->subject->type, '.success')) ? 'alert-success' : 'alert-danger';
 	}
 
 /**
