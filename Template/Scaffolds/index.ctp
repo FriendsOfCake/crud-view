@@ -16,9 +16,9 @@
 		<thead>
 			<tr>
 				<?php
-				foreach ($fields as $field => $options) :
+				foreach ($fields->paginate() as $field) :
 					?>
-					<th><?= $this->Paginator->sort($field, null, $options); ?></th>
+					<th><?= $this->Paginator->sort($field->name(), $field->alias(), $field->paginate()); ?></th>
 					<?php
 					endforeach;
 				?>

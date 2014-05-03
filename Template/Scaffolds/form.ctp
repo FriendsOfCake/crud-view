@@ -3,7 +3,7 @@
 
   <?= $this->Form->create();?>
   <?= $this->CrudView->redirectUrl(); ?>
-  <?= $this->Form->inputs($fields, null, array('legend' => false)); ?>
+  <?= $this->Form->inputs($fields->form(), null, array('legend' => false)); ?>
 
   <div class="form-group">
 		<div class="col col-md-9 col-md-offset-3">

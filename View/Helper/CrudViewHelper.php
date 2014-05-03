@@ -34,12 +34,15 @@ class CrudViewHelper extends Helper {
  * @param  array $options Processing options
  * @return string
  */
-	public function process($field, Entity $data, array $options = []) {
+	public function process($field, Entity $data, $options = []) {
 		$this->setContext($data);
 
 		$value = $this->fieldValue($data, $field);
 
-		$options = (array)$options;
+		if ($field instanceof \CrudView\View\Field) {
+			$options += (array)$field->value();
+		}
+
 		$options += ['formatter' => null];
 
 		switch ($options['formatter']) {
@@ -71,6 +74,10 @@ class CrudViewHelper extends Helper {
 			$data = $this->getContext();
 		}
 
+		if ($field instanceof \CrudView\View\Field) {
+			$field = $field->name();
+		}
+
 		return $data->get($field);
 	}
 
@@ -89,6 +96,10 @@ class CrudViewHelper extends Helper {
 
 		if ($output) {
 			return $output['output'];
+		}
+
+		if ($field instanceof \CrudView\View\Field) {
+			$field = $field->name();
 		}
 
 		$type = $this->schema()->columnType($field);

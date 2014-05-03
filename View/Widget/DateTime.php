@@ -4,6 +4,10 @@ namespace CrudView\View\Widget;
 class DateTime extends \Cake\View\Widget\DateTime {
 
 	public function render(array $data) {
+		if (!($data['val'] instanceof \DateTime)) {
+			$data['val'] = new \DateTime($data['val']);
+		}
+
 		return '
 			<div class="col-sm-10">
 				<div class="input-group date" id="datetimepicker-' . $data['id'] . '" data-date-format="YYYY-MM-DD HH:mm:ss">

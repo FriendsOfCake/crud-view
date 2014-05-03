@@ -1,6 +1,10 @@
 <?php
-foreach ($fields as $field => $options) {
+foreach ($fields as $field) {
+	if ($field->isBlacklisted()) {
+		continue;
+	}
+
 	?>
-	<td><?= $this->CrudView->process($field, $singularVar, $options); ?></td>
+	<td><?= $this->CrudView->process($field, $singularVar); ?></td>
 	<?php
 }
