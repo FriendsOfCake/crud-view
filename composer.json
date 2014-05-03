@@ -1,0 +1,54 @@
+{
+	"name":"friendsofcake/crud-view",
+	"version": "0.0.1",
+	"description":"View layer for CRUD",
+	"type":"cakephp-plugin",
+	"keywords":[
+		"cakephp",
+		"crud",
+		"create",
+		"retrieve",
+		"update",
+		"delete",
+		"bake",
+		"cake",
+		"scaffold",
+		"scaffolding"
+	],
+	"homepage":"https://github.com/FriendsOfCake/crud-view",
+	"license":"MIT",
+	"authors":[
+		{
+			"name":"Christian Winther",
+			"role":"Author",
+			"homepage":"http://cakephp.nu/"
+		}
+	],
+	"require":{
+		"composer/installers":"*",
+		"friendsofcake/crud":"*",
+	},
+	"require-dev": {
+		"cakephp/cakephp": "3.0.*-dev",
+		"cakephp/app": "dev-master",
+		"jippi/cakephp-test-utilities": "dev-master",
+		"phpunit/phpunit": "3.7.33"
+	},
+	"suggest":{
+
+	},
+	"autoload": {
+		"psr-4": {
+			"CrudView\\": "."
+		}
+	},
+	"support":{
+		"source":"https://github.com/FriendsOfCake/crud-view",
+		"issues":"https://github.com/FriendsOfCake/crud-view/issues",
+		"wiki":"http://cakephp.nu/cakephp-crud/",
+		"irc":"irc://irc.freenode.org/friendsofcake"
+	},
+	"extra": {
+		"installer-name": "CrudView"
+	}
+}

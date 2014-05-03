@@ -7,4 +7,51 @@ This project is in very very early stage of development, do not use it productio
 
 Current Twitter Bootstrap 3 template: [sb-admin](http://startbootstrap.com/templates/sb-admin) from [startbootstrap.com](http://startbootstrap.com)
 
-Depends on [BoostCake](https://github.com/slywalker/cakephp-plugin-boost_cake)
+Usage
+=====
+
+1) make sure to follow the normal CRUD install settings
+
+2) change ``AppController::$viewClass`` to ``CrudView\View\CrudView``
+
+3) load the ``CrudView.View``, ``Crud.RelatedModels`` and ``Crud.Redirect`` listeners
+
+4) configure the ``FormHelper`` to look like below
+
+5) hopefully going to ``/<your controller with crud enabled/`` should just work
+
+Example controller
+==================
+
+```php
+<?php
+namespace App\Controller;
+
+class AppController extends \Cake\Controller\Controller {
+
+	use \Crud\Controller\ControllerTrait;
+
+	public $viewClass = 'CrudView\View\CrudView';
+
+	public $components = [
+		'Crud.Crud' => [
+			'actions' => ['Crud.Index', 'Crud.Add', 'Crud.Edit', 'Crud.View', 'Crud.Delete'],
+			'listeners' => ['CrudView.View', 'Crud.RelatedModels', 'Crud.Redirect']
+		]
+	];
+
+	public $helpers = [
+		'Form' => [
+			'templates' => 'CrudView.forms',
+			'widgets' => [
+				'_default' => ['CrudView\View\Widget\Basic'],
+				'textarea' => ['CrudView\View\Widget\Textarea'],
+				'select' => ['CrudView\View\Widget\SelectBox'],
+				'label' => ['CrudView\View\Widget\Label'],
+				'datetime' => ['CrudView\View\Widget\DateTime', 'select']
+			]
+		]
+	];
+
+}
+```

@@ -1,18 +1,24 @@
 <?php
-App::uses('AppHelper', 'View/Helper');
+namespace CrudView\View\Helper;
 
-class CrudViewHelper extends AppHelper {
+use Cake\View\Helper;
+use Cake\ORM\Entity;
+use Cake\Utility\Hash;
+use Cake\Utility\String;
+use \Cake\Utility\Inflector;
+
+class CrudViewHelper extends Helper {
 
 /**
  * List of helpers used by this helper
  *
  * @var array
  */
-	public $helpers = array('Form', 'Html', 'Time', 'Paginator');
+	public $helpers = ['Form', 'Html', 'Time', 'Paginator'];
 
 	protected $_context = array();
 
-	public function setContext(array $record) {
+	public function setContext(Entity $record) {
 		$this->_context = $record;
 	}
 
@@ -28,11 +34,10 @@ class CrudViewHelper extends AppHelper {
  * @param  array $options Processing options
  * @return string
  */
-	public function process($field, array $data, array $options) {
+	public function process($field, Entity $data, array $options = []) {
 		$this->setContext($data);
-		$this->setEntity(sprintf('%s.%s', $this->currentModel(), $field), true);
 
-		$value = $this->fieldValue();
+		$value = $this->fieldValue($data, $field);
 
 		$options = (array)$options;
 		$options += ['formatter' => null];
@@ -57,7 +62,7 @@ class CrudViewHelper extends AppHelper {
  *                       if null, the field from the entity context is used
  * @return mixed
  */
-	public function fieldValue(array $data = null, $field = null) {
+	public function fieldValue(Entity $data = null, $field = null) {
 		if (empty($field)) {
 			$field = $this->field();
 		}
@@ -66,7 +71,7 @@ class CrudViewHelper extends AppHelper {
 			$data = $this->getContext();
 		}
 
-		return Hash::get($data, sprintf('%s.%s', $this->model(), $field));
+		return $data->get($field);
 	}
 
 /**
@@ -86,8 +91,7 @@ class CrudViewHelper extends AppHelper {
 			return $output['output'];
 		}
 
-		$schema = $this->schema();
-		$type = Hash::get($schema, "{$field}.type");
+		$type = $this->schema()->columnType($field);
 
 		if ($type === 'boolean') {
 			return $this->formatBoolean($field, $value, $options);
@@ -160,7 +164,7 @@ class CrudViewHelper extends AppHelper {
  * @param array 	$options
  * @var mixed array of data to output, false if no match found
  */
-	public function relation($field, $value, array $options) {
+	public function relation($field, $value, array $options = []) {
 		$associations = $this->associations();
 		if (empty($associations['belongsTo'])) {
 			return false;
@@ -172,14 +176,14 @@ class CrudViewHelper extends AppHelper {
 				continue;
 			}
 
-			return array(
+			return [
 				'alias' => $alias,
-				'output' => $this->Html->link($data[$alias][$details['displayField']], array(
+				'output' => $this->Html->link($data[$alias][$details['displayField']], [
 					'controller' => $details['controller'],
 					'action' => 'view',
 					$data[$alias][$details['primaryKey']]
-				))
-			);
+				])
+			];
 		}
 
 		return false;
@@ -194,6 +198,7 @@ class CrudViewHelper extends AppHelper {
 	public function redirectUrl() {
 		$redirectUrl = $this->request->query('redirect_url');
 		$redirectUrlViewVar = $this->getViewVar('redirect_url');
+
 		if (!empty($redirectUrlViewVar)) {
 			$redirectUrl = $redirectUrlViewVar;
 		} else {
@@ -203,7 +208,7 @@ class CrudViewHelper extends AppHelper {
 		if (empty($redirectUrl)) {
 			return null;
 		}
-		
+
 		return $this->Form->hidden('redirect_url', array(
 			'name' => 'redirect_url',
 			'value' => $redirectUrl,
