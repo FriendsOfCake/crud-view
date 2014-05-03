@@ -60,6 +60,10 @@ class SearchListener extends BaseListener {
 
 		$fields = [];
 		foreach ($filters->all() as $filter) {
+			if ($filter->config('form') === false) {
+				continue;
+			}
+
 			$field = $filter->field();
 
 			// Ignore multi-field filters for now

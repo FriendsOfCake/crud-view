@@ -19,8 +19,8 @@ class DateTime extends \Cake\View\Widget\DateTime {
 					useSeconds: false
 				});
       });
-  		</script>
-  		';
+  		</script>';
+
 	}
 
 }

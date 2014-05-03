@@ -8,12 +8,15 @@ class Basic extends \Cake\View\Widget\Basic {
 			return parent::render($data);
 		}
 
+		if (empty($data['class'])) {
+			$data['class'] = '';
+		}
+
 		if (in_array($data['type'], ['text', 'number'])) {
 			$data['class'] .= ' form-control';
 		}
 
-		$return = parent::render($data);
-		return $return;
+		return parent::render($data);
 	}
 
 }
