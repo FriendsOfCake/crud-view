@@ -144,6 +144,7 @@ class ViewListener extends BaseListener {
 	protected function _getPageVariables() {
 		$table = $this->_table();
 		$controller = $this->_controller();
+		$scope = $this->_action()->config('scope');
 
 		$data = [
 			'modelClass' => $controller->modelClass,
@@ -154,8 +155,13 @@ class ViewListener extends BaseListener {
 			'singularVar' => Inflector::singularize($controller->name),
 			'pluralVar' => Inflector::variable($controller->name),
 			'primaryKey' => $table->primaryKey(),
-			'primaryKeyValue' => $this->_primaryKeyValue()
 		];
+
+		if ($scope === 'entity') {
+			$data += [
+				'primaryKeyValue' => $this->_primaryKeyValue()
+			];
+		}
 
 		return $data;
 	}
@@ -166,25 +172,29 @@ class ViewListener extends BaseListener {
  * @return string
  */
 	protected function _getPageTitle() {
-		$title = $this->_action()->config('scaffold.page_title');
+		$action = $this->_action();
+
+		$title = $action->config('scaffold.page_title');
 		if (!empty($title)) {
 			return $title;
 		}
+
+		$scope = $action->config('scope');
 
 		$request = $this->_request();
 		$actionName = Inflector::humanize(Inflector::underscore($request->action));
 		$controllerName = $this->_controllerName();
 
-		$primaryKeyValue = $this->_primaryKeyValue();
-		$displayFieldValue = $this->_displayFieldValue();
-
-		if ($primaryKeyValue === null && $displayFieldValue === null) {
+		if ($scope === 'table') {
 			if ($actionName === 'Index') {
 				return $controllerName;
 			}
 
 			return sprintf('%s %s', $controllerName, $actionName);
 		}
+
+		$primaryKeyValue = $this->_primaryKeyValue();
+		$displayFieldValue = $this->_displayFieldValue();
 
 		if ($displayFieldValue === null) {
 			return sprintf('%s %s #%s', $actionName, $controllerName, $primaryKeyValue);
