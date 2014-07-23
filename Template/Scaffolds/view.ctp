@@ -4,10 +4,7 @@
   <dl>
     <?php
     $this->CrudView->setContext(${$viewVar});
-    foreach ($fields as $field => $options) {
-      if (in_array($field, array($primaryKey))) {
-        continue;
-      }
+    foreach ($fields as $field) {
 
       $output = $this->CrudView->relation($field, ${$viewVar}, $associations);
 
@@ -19,7 +16,7 @@
       } else {
         echo "<dt>" . \Cake\Utility\Inflector::humanize($field) . "</dt>";
         echo "<dd>";
-        echo $this->CrudView->process($field, ${$viewVar}, $options);
+        echo $this->CrudView->process($field, ${$viewVar});
         echo "&nbsp;</dd>";
       }
 

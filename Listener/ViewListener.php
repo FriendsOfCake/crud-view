@@ -11,6 +11,8 @@ use Crud\Listener\BaseListener;
 
 class ViewListener extends BaseListener {
 
+	protected $_fieldManager;
+
 /**
  * Initialize the listener
  *
@@ -101,11 +103,18 @@ class ViewListener extends BaseListener {
 
 		$controller = $this->_controller();
 		$controller->set('title', $this->_getPageTitle());
-		$controller->set('fields', $this->_scaffoldFields());
-		$controller->set('blacklist', $this->_blacklist());
+		$controller->set('fields', $this->fields());
 		$controller->set('actions', $this->_getControllerActions());
 		$controller->set('associations', $this->_associations());
 		$controller->set($this->_getPageVariables());
+	}
+
+	public function fields() {
+		if ($this->_fieldManager === null) {
+			$this->_fieldManager = new \CrudView\View\Manager();
+		}
+
+		return $this->_fieldManager;
 	}
 
 	protected function _blacklist() {
@@ -205,40 +214,6 @@ class ViewListener extends BaseListener {
 		}
 
 		return sprintf('%s %s #%s: %s', $actionName, $controllerName, $primaryKeyValue, $displayFieldValue);
-	}
-
-/**
- * Returns fields to be displayed on scaffolded template
- *
- * @return array
- */
-	protected function _scaffoldFields() {
-		$cols = $this->_table()->schema()->columns();
-		$scaffoldFields = array_combine(array_values($cols), array_fill(0, sizeof($cols), []));
-
-		$action = $this->_action();
-		$configuredFields = $action->config('scaffold.fields');
-		if (!empty($configuredFields)) {
-			$configuredFields = Hash::normalize($configuredFields);
-			$scaffoldFields = array_intersect_key($configuredFields, $scaffoldFields);
-		}
-
-		// Check for blacklisted fields
-		$blacklist = $action->config('scaffold.fields_blacklist');
-		if (!empty($blacklist)) {
-			$scaffoldFields = array_diff_key($scaffoldFields, array_combine($blacklist, $blacklist));
-		}
-
-		// Make sure all array values are an array
-		foreach ($scaffoldFields as $field => $options) {
-			if (!is_array($options)) {
-				$scaffoldFields[$field] = (array)$options;
-			}
-
-			$scaffoldFields[$field] += ['formatter' => null];
-		}
-
-		return $scaffoldFields;
 	}
 
 /**
