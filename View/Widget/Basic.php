@@ -3,9 +3,9 @@ namespace CrudView\View\Widget;
 
 class Basic extends \Cake\View\Widget\Basic {
 
-	public function render(array $data) {
+	public function render(array $data, \Cake\View\Form\ContextInterface $context) {
 		if ($data['type'] === 'hidden') {
-			return parent::render($data);
+			return parent::render($data, $context);
 		}
 
 		if (empty($data['class'])) {
@@ -16,7 +16,7 @@ class Basic extends \Cake\View\Widget\Basic {
 			$data['class'] .= ' form-control';
 		}
 
-		return parent::render($data);
+		return parent::render($data, $context);
 	}
 
 }
