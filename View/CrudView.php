@@ -1,7 +1,7 @@
 <?php
 namespace CrudView\View;
 
-use \Cake\View\Error\MissingViewException;
+use \Cake\View\Exception\MissingViewException;
 
 class CrudView extends \Cake\View\View {
 
