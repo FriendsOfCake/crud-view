@@ -33,7 +33,7 @@ class ViewListener extends BaseListener {
  *
  * @param CakeEvent $event
  */
-	public function setFlash(\Cake\Event\Event $event) {
+	public function setFlash(Event $event) {
 		$event->subject->params['class'] = 'alert alert-dismissable ';
 		$event->subject->params['class'] .= (false !== strpos($event->subject->type, '.success')) ? 'alert-success' : 'alert-danger';
 	}
@@ -69,7 +69,7 @@ class ViewListener extends BaseListener {
 
 		$blacklist = $this->_action()->config('scaffold.relations_blacklist');
 		if (!empty($blacklist)) {
-			$blacklist = \Hash::normalize($blacklist);
+			$blacklist = Hash::normalize($blacklist);
 			$models = array_diff_key($models, $blacklist);
 		}
 
@@ -88,7 +88,7 @@ class ViewListener extends BaseListener {
  * @param  CakeEvent $event [description]
  * @return void
  */
-	public function beforeRender(\Cake\Event\Event $event) {
+	public function beforeRender(Event $event) {
 		if ($this->_controller()->name === 'CakeError') {
 			return;
 		}
