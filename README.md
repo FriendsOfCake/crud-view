@@ -44,11 +44,11 @@ class AppController extends \Cake\Controller\Controller {
 		'Form' => [
 			'templates' => 'CrudView.forms',
 			'widgets' => [
-				'_default' => ['CrudView\View\Widget\Basic'],
-				'textarea' => ['CrudView\View\Widget\Textarea'],
-				'select' => ['CrudView\View\Widget\SelectBox'],
-				'label' => ['CrudView\View\Widget\Label'],
-				'datetime' => ['CrudView\View\Widget\DateTime', 'select']
+				'_default' => ['CrudView\View\Widget\BasicWidget'],
+				'textarea' => ['CrudView\View\Widget\TextareaWidget'],
+				'select' => ['CrudView\View\Widget\SelectBoxWidget'],
+				'label' => ['CrudView\View\Widget\LabelWidget'],
+				'datetime' => ['CrudView\View\Widget\DateTimeWidget', 'select']
 			]
 		]
 	];

@@ -1,7 +1,7 @@
 <?php
 namespace CrudView\View\Widget;
 
-class DateTime extends \Cake\View\Widget\DateTime {
+class DateTimeWidget extends \Cake\View\Widget\DateTimeWidget {
 
 	public function render(array $data, \Cake\View\Form\ContextInterface $context) {
 		return '
