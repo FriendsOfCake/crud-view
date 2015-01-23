@@ -1,9 +1,12 @@
 <?php
 namespace CrudView\View\Widget;
 
-class SelectBoxWidget extends \Cake\View\Widget\SelectBoxWidget {
+use \Cake\View\Form\ContextInterface;
+use \Cake\View\Widget\SelectBoxWidget;
 
-	public function render(array $data, \Cake\View\Form\ContextInterface $context) {
+class SelectBoxWidget extends SelectBoxWidget {
+
+	public function render(array $data, ContextInterface $context) {
 		$data['class'] = 'form-control';
 		return parent::render($data, $context);
 	}

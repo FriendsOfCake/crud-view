@@ -1,9 +1,12 @@
 <?php
 namespace CrudView\View\Widget;
 
-class TextareaWidget extends \Cake\View\Widget\TextareaWidget {
+use \Cake\View\Form\ContextInterface;
+use \Cake\View\Widget\TextareaWidget;
 
-	public function render(array $data, \Cake\View\Form\ContextInterface $context) {
+class TextareaWidget extends TextareaWidget {
+
+	public function render(array $data, ContextInterface $context) {
 		$data['class'] = 'form-control';
 		$data['rows'] = 6;
 

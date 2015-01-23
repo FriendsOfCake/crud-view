@@ -1,9 +1,12 @@
 <?php
 namespace CrudView\View\Widget;
 
-class BasicWidget extends \Cake\View\Widget\BasicWidget {
+use \Cake\View\Form\ContextInterface;
+use \Cake\View\Widget\BasicWidget;
 
-	public function render(array $data, \Cake\View\Form\ContextInterface $context) {
+class BasicWidget extends BasicWidget {
+
+	public function render(array $data, ContextInterface $context) {
 		if ($data['type'] === 'hidden') {
 			return parent::render($data, $context);
 		}
