@@ -4,10 +4,12 @@ namespace CrudView\View\Widget;
 use \Cake\View\Form\ContextInterface;
 use \Cake\View\Widget\DateTimeWidget;
 
-class DateTimeWidget extends DateTimeWidget {
+class DateTimeWidget extends DateTimeWidget
+{
 
-	public function render(array $data, ContextInterface $context) {
-		return '
+    public function render(array $data, ContextInterface $context)
+    {
+        return '
 			<div class="col-sm-10">
 				<div class="input-group date" id="datetimepicker-' . $data['id'] . '" data-date-format="YYYY-MM-DD HH:mm:ss">
 					<input type="text" class="form-control" value="' . $data['val']->format('Y-m-d H:i:s') . '" name="' . $data['name'] . '" />
@@ -23,6 +25,5 @@ class DateTimeWidget extends DateTimeWidget {
 				});
 			});
 			</script>';
-	}
-
+    }
 }
