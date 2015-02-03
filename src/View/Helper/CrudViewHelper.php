@@ -1,11 +1,11 @@
 <?php
 namespace CrudView\View\Helper;
 
-use Cake\View\Helper;
 use Cake\ORM\Entity;
 use Cake\Utility\Hash;
+use Cake\Utility\Inflector;
 use Cake\Utility\String;
-use \Cake\Utility\Inflector;
+use Cake\View\Helper;
 
 class CrudViewHelper extends Helper
 {

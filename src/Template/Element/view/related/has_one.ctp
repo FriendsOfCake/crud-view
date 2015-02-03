@@ -1,9 +1,9 @@
 <?php
+use Cake\Utility\Inflector;
+
 if (empty($associations['oneToOne'])) {
 	return;
 }
-
-use \Cake\Utility\Inflector;
 
 foreach ($associations['oneToOne'] as $alias => $details):
 	$alias = Inflector::singularize($alias);

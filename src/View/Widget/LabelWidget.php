@@ -1,10 +1,10 @@
 <?php
 namespace CrudView\View\Widget;
 
-use \Cake\View\Form\ContextInterface;
-use \Cake\View\Widget\LabelWidget;
+use Cake\View\Form\ContextInterface;
+use Cake\View\Widget\LabelWidget as CoreLabelWidget;
 
-class LabelWidget extends LabelWidget
+class LabelWidget extends CoreLabelWidget
 {
 
     public function render(array $data, ContextInterface $context)

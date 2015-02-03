@@ -1,10 +1,10 @@
 <?php
 namespace CrudView\View\Widget;
 
-use \Cake\View\Form\ContextInterface;
-use \Cake\View\Widget\SelectBoxWidget;
+use Cake\View\Form\ContextInterface;
+use Cake\View\Widget\SelectBoxWidget as CoreSelectBoxWidget;
 
-class SelectBoxWidget extends SelectBoxWidget
+class SelectBoxWidget extends CoreSelectBoxWidget
 {
 
     public function render(array $data, ContextInterface $context)

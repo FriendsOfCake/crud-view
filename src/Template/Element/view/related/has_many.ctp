@@ -1,5 +1,5 @@
 <?php
-use \Cake\Utility\Inflector;
+use Cake\Utility\Inflector;
 
 if (empty($associations['hasAndBelongsToMany'])) {
 	$associations['hasAndBelongsToMany'] = [];

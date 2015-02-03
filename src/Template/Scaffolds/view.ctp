@@ -1,5 +1,9 @@
+<?php
+use Cake\Utility\Inflector;
+
+?>
 <div class="view scaffold-view">
-	<h2><?= $this->get('title');?></h2>
+  <h2><?= $this->get('title');?></h2>
 
   <dl>
     <?php
@@ -12,12 +16,12 @@
       $output = $this->CrudView->relation($field, ${$viewVar}, $associations);
 
       if ($output) {
-        echo "<dt>" . \Cake\Utility\Inflector::humanize($output['alias']) . "</dt>";
+        echo "<dt>" . Inflector::humanize($output['alias']) . "</dt>";
         echo "<dd>";
         echo $output['output'];
         echo "&nbsp;</dd>";
       } else {
-        echo "<dt>" . \Cake\Utility\Inflector::humanize($field) . "</dt>";
+        echo "<dt>" . Inflector::humanize($field) . "</dt>";
         echo "<dd>";
         echo $this->CrudView->process($field, ${$viewVar}, $options);
         echo "&nbsp;</dd>";

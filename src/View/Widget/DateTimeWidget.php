@@ -1,10 +1,10 @@
 <?php
 namespace CrudView\View\Widget;
 
-use \Cake\View\Form\ContextInterface;
-use \Cake\View\Widget\DateTimeWidget;
+use Cake\View\Form\ContextInterface;
+use Cake\View\Widget\DateTimeWidget as CoreDateTimeWidget;
 
-class DateTimeWidget extends DateTimeWidget
+class DateTimeWidget extends CoreDateTimeWidget
 {
 
     public function render(array $data, ContextInterface $context)
@@ -27,3 +27,4 @@ class DateTimeWidget extends DateTimeWidget
 			</script>';
     }
 }
+

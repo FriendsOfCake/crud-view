@@ -1,10 +1,10 @@
 <?php
 namespace CrudView\View\Widget;
 
-use \Cake\View\Form\ContextInterface;
-use \Cake\View\Widget\BasicWidget;
+use Cake\View\Form\ContextInterface;
+use Cake\View\Widget\BasicWidget as CoreBasicWidget;
 
-class BasicWidget extends BasicWidget
+class BasicWidget extends CoreBasicWidget
 {
 
     public function render(array $data, ContextInterface $context)
