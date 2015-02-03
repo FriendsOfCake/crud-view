@@ -12,7 +12,7 @@ if (empty($associations['oneToMany'])) {
 $relations = array_merge($associations['oneToMany'], $associations['hasAndBelongsToMany']);
 
 $i = 0;
-foreach ($relations as $alias => $details) :
+foreach ($relations as $alias => $details):
 	$otherSingularVar = Inflector::variable($alias);
 	?>
 	<div class="related">

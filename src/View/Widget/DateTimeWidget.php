@@ -7,6 +7,14 @@ use Cake\View\Widget\DateTimeWidget as CoreDateTimeWidget;
 class DateTimeWidget extends CoreDateTimeWidget
 {
 
+    /**
+     * Renders a date time widget.
+     *
+     * @param array $data Data to render with.
+     * @param \Cake\View\Form\ContextInterface $context The current form context.
+     * @return string A generated select box.
+     * @throws \RuntimeException When option data is invalid.
+     */
     public function render(array $data, ContextInterface $context)
     {
         return '
@@ -27,4 +35,3 @@ class DateTimeWidget extends CoreDateTimeWidget
 			</script>';
     }
 }
-

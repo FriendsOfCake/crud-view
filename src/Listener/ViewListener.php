@@ -12,11 +12,11 @@ use Crud\Listener\BaseListener;
 class ViewListener extends BaseListener
 {
 
-/**
- * Initialize the listener
- *
- * @return void
- */
+    /**
+     * Initialize the listener
+     *
+     * @return void
+     */
     public function initialize()
     {
         if ($this->_controller()->name === 'CakeError') {
@@ -26,33 +26,41 @@ class ViewListener extends BaseListener
         $this->_injectViewSearchPaths();
     }
 
+    /**
+     * [beforeFind description]
+     *
+     * @param \Cake\Event\Event $event Event.
+     * @return void
+     */
     public function beforeFind(Event $event)
     {
         $event->subject->query->contain($this->_getRelatedModels());
     }
 
-/**
- * Make sure flash messages uses the views from BoostCake
- *
- * @param CakeEvent $event
- */
+    /**
+     * Make sure flash messages uses the views from BoostCake
+     *
+     * @param \Cake\Event\Event $event Event.
+     * @return void
+     */
     public function setFlash(Event $event)
     {
         $event->subject->params['class'] = 'alert alert-dismissable ';
         $event->subject->params['class'] .= (false !== strpos($event->subject->type, '.success')) ? 'alert-success' : 'alert-danger';
     }
 
-/**
- * Get a list of relevant models to contain using Containable
- *
- * If the user haven't configured any relations for an action
- * we assume all relations will be used.
- *
- * The user can chose to suppress specific relations using the blacklist
- * functionality.
- *
- * @return array
- */
+    /**
+     * Get a list of relevant models to contain using Containable
+     *
+     * If the user haven't configured any relations for an action
+     * we assume all relations will be used.
+     *
+     * The user can chose to suppress specific relations using the blacklist
+     * functionality.
+     *
+     * @param array $relations List of relations.
+     * @return array
+     */
     protected function _getRelatedModels($relations = [])
     {
         $models = $this->_action()->config('scaffold.relations');
@@ -87,12 +95,12 @@ class ViewListener extends BaseListener
         return $models;
     }
 
-/**
- * beforeRender event
- *
- * @param  CakeEvent $event [description]
- * @return void
- */
+    /**
+     * beforeRender event
+     *
+     * @param \Cake\Event\Event $event Event.
+     * @return void
+     */
     public function beforeRender(Event $event)
     {
         if ($this->_controller()->name === 'CakeError') {
@@ -114,29 +122,34 @@ class ViewListener extends BaseListener
         $controller->set($this->_getPageVariables());
     }
 
+    /**
+     * Get list of blacklisted fields from config.
+     *
+     * @return array
+     */
     protected function _blacklist()
     {
         return (array)$this->_action()->config('scaffold.fields_blacklist');
     }
 
-/**
- * Inject helpers required for the frontend
- *
- * @return void
- */
+    /**
+     * Inject helpers required for the frontend
+     *
+     * @return void
+     */
     protected function _injectHelpers()
     {
         $Controller = $this->_controller();
         $Controller->helpers[] = 'CrudView.CrudView';
     }
 
-/**
- * Inject the CrudView View path into the views search path
- * so in case the user do not provide their own view, we
- * render our baked in templates first
- *
- * @return void
- */
+    /**
+     * Inject the CrudView View path into the views search path
+     * so in case the user do not provide their own view, we
+     * render our baked in templates first
+     *
+     * @return void
+     */
     protected function _injectViewSearchPaths()
     {
         $existing = Configure::read('App.paths.templates');
@@ -145,11 +158,11 @@ class ViewListener extends BaseListener
         Configure::write('App.paths.templates', $existing);
     }
 
-/**
- * Publish fairly static variables needed in the view
- *
- * @return array
- */
+    /**
+     * Publish fairly static variables needed in the view
+     *
+     * @return array
+     */
     protected function _getPageVariables()
     {
         $table = $this->_table();
@@ -176,11 +189,11 @@ class ViewListener extends BaseListener
         return $data;
     }
 
-/**
- * Returns the page title to show on scaffolded view
- *
- * @return string
- */
+    /**
+     * Returns the page title to show on scaffolded view
+     *
+     * @return string
+     */
     protected function _getPageTitle()
     {
         $action = $this->_action();
@@ -218,15 +231,15 @@ class ViewListener extends BaseListener
         return sprintf('%s %s #%s: %s', $actionName, $controllerName, $primaryKeyValue, $displayFieldValue);
     }
 
-/**
- * Returns fields to be displayed on scaffolded template
- *
- * @return array
- */
+    /**
+     * Returns fields to be displayed on scaffolded template
+     *
+     * @return array
+     */
     protected function _scaffoldFields()
     {
         $cols = $this->_table()->schema()->columns();
-        $scaffoldFields = array_combine(array_values($cols), array_fill(0, sizeof($cols), []));
+        $scaffoldFields = array_combine(array_values($cols), array_fill(0, count($cols), []));
 
         $action = $this->_action();
         $configuredFields = $action->config('scaffold.fields');
@@ -253,11 +266,11 @@ class ViewListener extends BaseListener
         return $scaffoldFields;
     }
 
-/**
- * Get the controller name based on the Crud Action scope
- *
- * @return string
- */
+    /**
+     * Get the controller name based on the Crud Action scope
+     *
+     * @return string
+     */
     protected function _controllerName()
     {
         $baseName = Inflector::humanize(Inflector::underscore($this->_controller()->name));
@@ -273,11 +286,11 @@ class ViewListener extends BaseListener
         return $baseName;
     }
 
-/**
- * Returns groupings of action types on the scaffolded view
- *
- * @return string
- */
+    /**
+     * Returns groupings of action types on the scaffolded view
+     *
+     * @return string
+     */
     protected function _getControllerActions()
     {
         $table = $entity = [];
@@ -297,11 +310,11 @@ class ViewListener extends BaseListener
         return compact('table', 'entity');
     }
 
-/**
- * Returns associations for controllers models.
- *
- * @return array Associations for model
- */
+    /**
+     * Returns associations for controllers models.
+     *
+     * @return array Associations for model
+     */
     protected function _associations()
     {
         $table = $this->_table();
@@ -330,37 +343,37 @@ class ViewListener extends BaseListener
         return $associationConfiguration;
     }
 
-/**
- * Derive the Model::primaryKey value from the current context
- *
- * If no value can be found, NULL is returned
- *
- * @return mixed
- */
+    /**
+     * Derive the Model::primaryKey value from the current context
+     *
+     * If no value can be found, NULL is returned
+     *
+     * @return mixed
+     */
     protected function _primaryKeyValue()
     {
         return $this->_deriveFieldFromContext($this->_table()->primaryKey());
     }
 
-/**
- * Derive the Model::displayField value from the current context
- *
- * If no value can be found, NULL is returned
- *
- * @return string
- */
+    /**
+     * Derive the Model::displayField value from the current context
+     *
+     * If no value can be found, NULL is returned
+     *
+     * @return string
+     */
     protected function _displayFieldValue()
     {
         return $this->_deriveFieldFromContext($this->_table()->displayField());
     }
 
-/**
- * Extract a field value from a either the CakeRequest::$data
- * or Controller::$viewVars for the current model + the supplied field
- *
- * @param  string $field
- * @return mixed
- */
+    /**
+     * Extract a field value from a either the CakeRequest::$data
+     * or Controller::$viewVars for the current model + the supplied field
+     *
+     * @param string $field Name of field.
+     * @return mixed
+     */
     protected function _deriveFieldFromContext($field)
     {
         $controller = $this->_controller();

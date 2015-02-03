@@ -10,33 +10,49 @@ use Cake\View\Helper;
 class CrudViewHelper extends Helper
 {
 
-/**
- * List of helpers used by this helper
- *
- * @var array
- */
+    /**
+     * List of helpers used by this helper
+     *
+     * @var array
+     */
     public $helpers = ['Form', 'Html', 'Time', 'Paginator'];
 
+    /**
+     * Context
+     *
+     * @var array
+     */
     protected $_context = array();
 
+    /**
+     * Set context
+     *
+     * @param \Cake\ORM\Entity $record Entity.
+     * @return void
+     */
     public function setContext(Entity $record)
     {
         $this->_context = $record;
     }
 
+    /**
+     * Get context
+     *
+     * @return \Cake\ORM\Entity
+     */
     public function getContext()
     {
         return $this->_context;
     }
 
-/**
- * Process a single field into an output
- *
- * @param  string $field    The field to process
- * @param  array $data      The raw entity data
- * @param  array $options Processing options
- * @return string
- */
+    /**
+     * Process a single field into an output
+     *
+     * @param string $field The field to process.
+     * @param array $data The raw entity data.
+     * @param array $options Processing options.
+     * @return string
+     */
     public function process($field, Entity $data, array $options = [])
     {
         $this->setContext($data);
@@ -58,14 +74,13 @@ class CrudViewHelper extends Helper
         }
     }
 
-/**
- * Get the current field value
- *
- * @param  array    $data  The raw entity data array
- * @param  string $field The field to extract,
- *                       if null, the field from the entity context is used
- * @return mixed
- */
+    /**
+     * Get the current field value
+     *
+     * @param array $data The raw entity data array.
+     * @param string $field The field to extract, if null, the field from the entity context is used.
+     * @return mixed
+     */
     public function fieldValue(Entity $data = null, $field = null)
     {
         if (empty($field)) {
@@ -79,16 +94,14 @@ class CrudViewHelper extends Helper
         return $data->get($field);
     }
 
-/**
- * Returns a formatted output for a given field
- *
- * @param string $field name of the field
- * @param mixed $value the value that the field should have within related data
- * @param array $data an array of data related to this field
- * @param array $schema a Model schema
- * @param array $associations an array of associations to be used
- * @var string formatted value
- */
+    /**
+     * Returns a formatted output for a given field
+     *
+     * @param string $field Name of field.
+     * @param array $value The value that the field should have within related data.
+     * @param array $options Options array.
+     * @return string formatted value
+     */
     public function introspect($field, $value, array $options = array())
     {
         $output = $this->relation($field, $value, $options);
@@ -114,66 +127,66 @@ class CrudViewHelper extends Helper
         return $this->formatString($field, $value, $options);
     }
 
-/**
- * Format a boolean value for display
- *
- * @param  [type] $field   [description]
- * @param  [type] $value   [description]
- * @param  array  $options [description]
- * @return [type]          [description]
- */
+    /**
+     * Format a boolean value for display
+     *
+     * @param string $field Name of field.
+     * @param array $value Value of field.
+     * @param array $options Options array.
+     * @return string
+     */
     public function formatBoolean($field, $value, array $options)
     {
-        return !!$value ? '<span class="label label-success">Yes</span>' : '<span class="label label-danger">No</span>';
+        return (bool)$value ? '<span class="label label-success">Yes</span>' : '<span class="label label-danger">No</span>';
     }
 
-/**
- * Format a date for display
- *
- * @param  [type] $field   [description]
- * @param  [type] $value   [description]
- * @param  array  $options [description]
- * @return [type]          [description]
- */
+    /**
+     * Format a date for display
+     *
+     * @param string $field Name of field.
+     * @param array $value Value of field.
+     * @param array $options Options array.
+     * @return string
+     */
     public function formatDate($field, $value, array $options)
     {
         return $this->Time->timeAgoInWords($value, $options);
     }
 
-/**
- * Format a time for display
- *
- * @param  [type] $field   [description]
- * @param  [type] $value   [description]
- * @param  array  $options [description]
- * @return [type]          [description]
- */
+    /**
+     * Format a time for display
+     *
+     * @param string $field Name of field.
+     * @param array $value Value of field.
+     * @param array $options Options array.
+     * @return string
+     */
     public function formatTime($field, $value, array $options)
     {
         return $this->Time->nice($value, $options);
     }
 
-/**
- * Format a string for display
- *
- * @param  [type] $field   [description]
- * @param  [type] $value   [description]
- * @param  array  $options [description]
- * @return [type]          [description]
- */
+    /**
+     * Format a string for display
+     *
+     * @param string $field Name of field.
+     * @param array $value Value of field.
+     * @param array $options Options array.
+     * @return string
+     */
     public function formatString($field, $value, array $options)
     {
         return h(String::truncate($value, 200));
     }
 
-/**
- * Returns a formatted relation output for a given field
- *
- * @param string    $field
- * @param array     $value
- * @param array     $options
- * @var mixed array of data to output, false if no match found
- */
+    /**
+     * Returns a formatted relation output for a given field
+     *
+     * @param string $field Name of field.
+     * @param array $value Value of field.
+     * @param array $options Options array.
+     * @return mixed Array of data to output, false if no match found
+     */
     public function relation($field, $value, array $options = [])
     {
         $associations = $this->associations();
@@ -200,12 +213,12 @@ class CrudViewHelper extends Helper
         return false;
     }
 
-/**
- * Returns a hidden input for the redirect_url if it exists
- * in the request querystring, view variables, form data
- *
- * @var array
- */
+    /**
+     * Returns a hidden input for the redirect_url if it exists
+     * in the request querystring, view variables, form data
+     *
+     * @return string
+     */
     public function redirectUrl()
     {
         $redirectUrl = $this->request->query('redirect_url');
@@ -229,6 +242,13 @@ class CrudViewHelper extends Helper
         ));
     }
 
+    /**
+     * Create relation link.
+     *
+     * @param string $alias Model alias.
+     * @param array $relation Relation information.
+     * @return string
+     */
     public function createRelationLink($alias, $relation)
     {
         return $this->Html->link(
@@ -245,26 +265,52 @@ class CrudViewHelper extends Helper
         );
     }
 
+    /**
+     * Get current model class.
+     *
+     * @return string
+     */
     public function currentModel()
     {
         return $this->getViewVar('modelClass');
     }
 
+    /**
+     * Get model schema.
+     *
+     * @return array
+     */
     public function schema()
     {
         return $this->getViewVar('modelSchema');
     }
 
+    /**
+     * Get viewVar used for results.
+     *
+     * @return string
+     */
     public function viewVar()
     {
         return $this->getViewVar('viewVar');
     }
 
+    /**
+     * Get associations.
+     *
+     * @return array List of associations.
+     */
     public function associations()
     {
         return $this->getViewVar('associations');
     }
 
+    /**
+     * Get a view variable.
+     *
+     * @param string $key View variable to get.
+     * @return mixed
+     */
     public function getViewVar($key = null)
     {
         return Hash::get($this->_View->viewVars, $key);

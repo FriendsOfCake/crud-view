@@ -9,20 +9,20 @@ use Crud\Listener\BaseListener;
 class SearchListener extends BaseListener
 {
 
-/**
- * Default configuration
- *
- * @var array
- */
+    /**
+     * Default configuration
+     *
+     * @var array
+     */
     protected $_defaultConfig = [
         'enabled' => null
     ];
 
-/**
- * implementedEvents
- *
- * @return void
- */
+    /**
+     * implementedEvents
+     *
+     * @return array
+     */
     public function implementedEvents()
     {
         return [
@@ -30,14 +30,15 @@ class SearchListener extends BaseListener
         ];
     }
 
-/**
- * afterPaginate
- *
- * Only after a crud paginate call does this listener do anything. So listen
- * for that
- *
- * @param CakeEvent $e
- */
+    /**
+     * afterPaginate
+     *
+     * Only after a crud paginate call does this listener do anything. So listen
+     * for that
+     *
+     * @param \Cake\Event\Event $event Event.
+     * @return void
+     */
     public function afterPaginate(Event $event)
     {
         $enabled = $this->config('enabled') ?: !$this->_request()->is('api');
@@ -49,11 +50,21 @@ class SearchListener extends BaseListener
         $this->_controller()->set('searchInputs', $fields);
     }
 
+    /**
+     * [fields description]
+     *
+     * @return array
+     */
     public function fields()
     {
         return $this->config('fields') ?: $this->_deriveFields();
     }
 
+    /**
+     * [_deriveFields description]
+     *
+     * @return array
+     */
     protected function _deriveFields()
     {
         $table = $this->_table();
