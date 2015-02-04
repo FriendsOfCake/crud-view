@@ -74,7 +74,7 @@ class ViewListener extends BaseListener
 
             $models = [];
             foreach ($relations as $relation) {
-                $models += (array)Hash::extract($associations, "$relation.{s}.model");
+                $models = Hash::merge($models, (array)Hash::extract($associations, "$relation.{s}.model"));
             }
         }
 
