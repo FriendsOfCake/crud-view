@@ -16,7 +16,7 @@ foreach ($relations as $alias => $details):
     $otherSingularVar = Inflector::variable($alias);
     ?>
     <div class="related">
-        <h3><?= __d('crud', "Related %s", Inflector::humanize($details['controller'])); ?></h3>
+        <h3><?= __d('crud', 'Related {0}', [Inflector::humanize($details['controller'])]); ?></h3>
         <?php
         if (${$viewVar}->{$alias}):
             ?>

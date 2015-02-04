@@ -252,7 +252,7 @@ class CrudViewHelper extends Helper
     public function createRelationLink($alias, $relation)
     {
         return $this->Html->link(
-            __d('crud', "Add %s", Inflector::humanize(Inflector::underscore($alias))),
+            __d('crud', 'Add {0}', [Inflector::singularize(Inflector::humanize(Inflector::underscore($alias)))]),
             [
                 'plugin' => $relation['plugin'],
                 'controller' => $relation['controller'],
