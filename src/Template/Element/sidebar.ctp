@@ -1,5 +1,5 @@
 <?php
-use Cake\Core\App;
+use Cake\ORM\TableRegistry;
 use Cake\Utility\Inflector;
 
 ?>
@@ -7,7 +7,10 @@ use Cake\Utility\Inflector;
     <nav>
         <ul class="nav nav-pills nav-stacked">
             <?php
-            foreach (App::objects('Model/Entity') as $model) {
+            $models = TableRegistry::config();
+            ksort($models);
+
+            foreach ($models as $model => $config) {
                 if (false !== strpos($model, 'AppModel')) {
                     continue;
                 }
