@@ -1,4 +1,4 @@
-<div class="index scaffold-view">
+<div class="<?= $pluralVar; ?>-<?= $this->request->action; ?> <?= $pluralVar; ?> <?= $this->request->action; ?> scaffold-view">
     <h2><?= $this->get('title');?></h2>
 
     <?php
