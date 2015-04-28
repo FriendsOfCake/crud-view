@@ -27,9 +27,12 @@ Example controller
 <?php
 namespace App\Controller;
 
-class AppController extends \Cake\Controller\Controller {
+use Cake\Controller\Controller;
+use Crud\Controller;
 
-	use \Crud\Controller\ControllerTrait;
+class AppController extends Controller {
+
+	use ControllerTrait;
 
 	public $viewClass = 'CrudView\View\CrudView';
 
@@ -37,19 +40,6 @@ class AppController extends \Cake\Controller\Controller {
 		'Crud.Crud' => [
 			'actions' => ['Crud.Index', 'Crud.Add', 'Crud.Edit', 'Crud.View', 'Crud.Delete'],
 			'listeners' => ['CrudView.View', 'Crud.RelatedModels', 'Crud.Redirect']
-		]
-	];
-
-	public $helpers = [
-		'Form' => [
-			'templates' => 'CrudView.forms',
-			'widgets' => [
-				'_default' => ['CrudView\View\Widget\BasicWidget'],
-				'textarea' => ['CrudView\View\Widget\TextareaWidget'],
-				'select' => ['CrudView\View\Widget\SelectBoxWidget'],
-				'label' => ['CrudView\View\Widget\LabelWidget'],
-				'datetime' => ['CrudView\View\Widget\DateTimeWidget', 'select']
-			]
 		]
 	];
 
