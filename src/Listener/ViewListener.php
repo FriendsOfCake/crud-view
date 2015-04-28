@@ -122,6 +122,7 @@ class ViewListener extends BaseListener
         $controller->set('associations', $this->_associations());
         $controller->set('tables', $this->_getTables());
         $controller->set($this->_getPageVariables());
+        $controller->set('viewblocks', $this->_getViewBlocks());
     }
 
     /**
@@ -412,5 +413,16 @@ class ViewListener extends BaseListener
         }
 
         return $tables;
+    }
+
+    protected function _getViewBlocks()
+    {
+        $action = $this->_action();
+        $viewblocks = $action->config('scaffold.viewblocks');
+        if (empty($viewblocks)) {
+            $viewblocks = [];
+        }
+
+        return $viewblocks;
     }
 }
