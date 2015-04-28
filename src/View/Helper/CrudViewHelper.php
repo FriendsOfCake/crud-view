@@ -4,8 +4,9 @@ namespace CrudView\View\Helper;
 use Cake\ORM\Entity;
 use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
-use Cake\Utility\String;
+use Cake\Utility\Text;
 use Cake\View\Helper;
+use Cake\View\Helper\FormHelper;
 
 class CrudViewHelper extends Helper
 {
@@ -176,7 +177,7 @@ class CrudViewHelper extends Helper
      */
     public function formatString($field, $value, array $options)
     {
-        return h(String::truncate($value, 200));
+        return h(Text::truncate($value, 200));
     }
 
     /**
