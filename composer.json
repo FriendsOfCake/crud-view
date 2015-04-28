@@ -49,7 +49,4 @@
         "wiki":"http://cakephp.nu/cakephp-crud/",
         "irc":"irc://irc.freenode.org/friendsofcake"
     },
-    "extra": {
-        "installer-name": "CrudView"
-    }
 }
