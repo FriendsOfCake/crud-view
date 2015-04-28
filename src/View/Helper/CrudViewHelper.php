@@ -228,7 +228,10 @@ class CrudViewHelper extends Helper
         if (!empty($redirectUrlViewVar)) {
             $redirectUrl = $redirectUrlViewVar;
         } else {
-            $redirectUrl = $this->Form->value('redirect_url');
+            $context = $this->Form->context();
+            if ($context->val('redirect_url')) {
+                $redirectUrl = $context->val('redirect_url');
+            }
         }
 
         if (empty($redirectUrl)) {
