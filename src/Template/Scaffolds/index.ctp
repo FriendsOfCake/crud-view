@@ -2,9 +2,11 @@
     <h2><?= $this->get('title');?></h2>
 
     <?php
-    $this->startIfEmpty('search');
-        echo $this->element('search');
-    $this->end();
+    if (!$this->exists('search')) {
+        $this->start('search');
+            echo $this->element('search');
+        $this->end();
+    }
 
     echo $this->fetch('search');
     ?>
