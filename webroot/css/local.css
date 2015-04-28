@@ -18,8 +18,11 @@ div.input {
 	margin-bottom: 10px
 }
 
-.btn { 
-	margin-right: 5px 
+.btn {
+	margin-left: 5px
+}
+h2 .actions {
+    margin-left: 15px;
 }
 
 /******************************************************************************
@@ -27,7 +30,7 @@ div.input {
  *****************************************************************************/
 
 .radio input[type=radio], .radio-inline input[type=radio], .checkbox input[type=checkbox], .checkbox-inline input[type=checkbox] {
-	float: none; 
+	float: none;
 	margin-left: 0px;
 }
 
