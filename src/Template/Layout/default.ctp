@@ -47,7 +47,7 @@
         </div>
     </nav>
 
-    <div class="bs-docs-header" id="content">
+    <div class="bs-docs-header">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-xs-0 col-sm-2 col-lg-2">
