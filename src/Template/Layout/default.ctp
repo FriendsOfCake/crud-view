@@ -6,13 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Base CSS -->
-    <?= $this->Html->css('CrudView.bootstrap.min');?>
-    <?= $this->Html->css('CrudView.bootflat.min');?>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <?= $this->Html->css('CrudView.local');?>
 
     <!-- Base JS -->
     <?= $this->Html->script('CrudView.jquery.min');?>
-    <?= $this->Html->script('CrudView.bootstrap.min');?>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 
     <!-- Moment.js -->
     <?= $this->Html->script('CrudView./contrib/momentjs/js/moment-with-langs.min');?>

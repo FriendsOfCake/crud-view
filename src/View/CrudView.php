@@ -6,6 +6,17 @@ use Cake\View\View;
 
 class CrudView extends View
 {
+    public $layout = 'CrudView.default';
+
+    public function initialize(array $config = [])
+    {
+        parent::initialize($config);
+        $this->loadHelper('Html', ['className' => 'BootstrapUI.Html']);
+        $this->loadHelper('Form', ['className' => 'BootstrapUI.Form']);
+        $this->loadHelper('Flash', ['className' => 'BootstrapUI.Flash']);
+        $this->loadHelper('Paginator', ['className' => 'BootstrapUI.Paginator']);
+    }
+
     /**
      * Finds an element filename, returns false on failure.
      *
