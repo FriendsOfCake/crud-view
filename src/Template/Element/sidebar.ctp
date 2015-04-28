@@ -7,15 +7,9 @@ use Cake\Utility\Inflector;
     <nav>
         <ul class="nav nav-pills nav-stacked">
             <?php
-            $models = TableRegistry::config();
-            ksort($models);
-
-            foreach ($models as $model => $config) {
-                if (false !== strpos($model, 'AppModel')) {
-                    continue;
-                }
+            foreach ($tables as $table) {
                 ?>
-                <li><?= $this->Html->link(Inflector::pluralize($model), array('controller' => Inflector::underscore(Inflector::pluralize($model)), 'action' => 'index')); ?></li>
+                <li><?= $this->Html->link(Inflector::humanize($table), array('controller' => $table, 'action' => 'index')); ?></li>
                 <?php
             }
             ?>
