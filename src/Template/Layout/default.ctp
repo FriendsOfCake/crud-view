@@ -55,7 +55,7 @@
                     <?= $this->element('sidebar'); ?>
                 </div>
                 <div class="col-xs-12 col-sm-10 col-lg-10">
-                    <?= $this->Session->flash(); ?>
+                    <?= $this->Flash->render(); ?>
                     <?= $this->fetch('content'); ?>
                 </div>
         </div>
