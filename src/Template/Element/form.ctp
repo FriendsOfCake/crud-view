@@ -1,7 +1,6 @@
 <div class="<?= $pluralVar; ?>-<?= $this->request->action; ?> <?= $pluralVar; ?> <?= $this->request->action; ?> scaffold-view">
     <div class="row">
         <div class="col-lg-6">
-            <? $this->Form->templates(['submitContainer' => '{{content}}']); ?>
             <?= $this->Form->create(${$viewVar}, ['role' => 'form']); ?>
             <?= $this->CrudView->redirectUrl(); ?>
             <?= $this->Form->inputs($fields, $blacklist, array('legend' => false)); ?>
