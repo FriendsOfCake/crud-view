@@ -8,10 +8,17 @@
         $this->end();
     }
 
+    if (!$this->exists('actions')) {
+        $this->start('actions');
+            echo $this->element('actions');
+        $this->end();
+    }
+
+    echo $this->fetch('actions');
     echo $this->fetch('search');
     ?>
 
-    <br />
+    <hr />
 
     <div class="table-responsive">
         <table class="table table-hover table-condensed">
