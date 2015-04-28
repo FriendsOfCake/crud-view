@@ -1,7 +1,5 @@
 <div class="<?= $pluralVar; ?>-<?= $this->request->action; ?> <?= $pluralVar; ?> <?= $this->request->action; ?> scaffold-view">
-    <h2><?= $this->get('title');?></h2>
-
-    <?php
+    <?
     if (!$this->exists('search')) {
         $this->start('search');
             echo $this->element('search');
@@ -13,10 +11,10 @@
             echo $this->element('actions');
         $this->end();
     }
-
-    echo $this->fetch('actions');
-    echo $this->fetch('search');
     ?>
+    <h2><?= $this->get('title'); ?><span class="actions"><?= $this->fetch('actions'); ?></span></h2>
+
+    <?= $this->fetch('search'); ?>
 
     <hr />
 
