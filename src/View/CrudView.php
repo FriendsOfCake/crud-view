@@ -6,6 +6,21 @@ use Cake\View\View;
 
 class CrudView extends View
 {
+    /**
+     * Finds an element filename, returns false on failure.
+     *
+     * @param string $name The name of the element to find.
+     * @return mixed Either a string to the element filename or false when one can't be found.
+     */
+    protected function _getElementFileName($name)
+    {
+        $filename = parent::_getElementFileName($name);
+        if ($filename) {
+            return $filename;
+        }
+
+        return parent::_getElementFileName('CrudView.' . $name);
+    }
 
     /**
      * Returns filename of given action's template file (.ctp) as a string.
@@ -19,7 +34,11 @@ class CrudView extends View
         try {
             return parent::_getViewFileName($name);
         } catch (MissingTemplateException $exception) {
-            return parent::_getViewFileName('/Scaffolds/' . $this->view);
+            try {
+                return parent::_getViewFileName('Scaffolds/' . $this->view);
+            } catch (MissingTemplateException $exception) {
+                return parent::_getViewFileName('CrudView.Scaffolds/' . $this->view);
+            }
         }
     }
 }
