@@ -6,7 +6,7 @@
             <?= $this->Form->inputs($fields, $blacklist, array('legend' => false)); ?>
 
             <div class="form-group">
-                <div class="col col-md-9 col-md-offset-3">
+                <div class="col pull-right">
                     <?= $this->Form->submit(__d('crud', 'Save'), ['class' => 'btn btn-primary', 'div' => false, 'name' => '_save']); ?>
                     <?= $this->Form->submit(__d('crud', 'Save & continue editing'), ['class' => 'btn btn-success btn-save-continue', 'div' => false, 'name' => '_edit']); ?>
                     <?= $this->Form->submit(__d('crud', 'Save & create new'), ['class' => 'btn btn-success', 'div' => false, 'name' => '_add']); ?>
