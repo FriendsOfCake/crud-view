@@ -1,55 +1,55 @@
 {
-	"name":"friendsofcake/crud-view",
-	"version": "0.0.1",
-	"description":"View layer for CRUD",
-	"type":"cakephp-plugin",
-	"keywords":[
-		"cakephp",
-		"crud",
-		"create",
-		"retrieve",
-		"update",
-		"delete",
-		"bake",
-		"cake",
-		"scaffold",
-		"scaffolding"
-	],
-	"homepage":"https://github.com/FriendsOfCake/crud-view",
-	"license":"MIT",
-	"authors":[
-		{
-			"name":"Christian Winther",
-			"role":"Author",
-			"homepage":"http://cakephp.nu/"
-		}
-	],
-	"require":{
-		"friendsofcake/crud":"*",
+    "name":"friendsofcake/crud-view",
+    "version": "0.0.1",
+    "description":"View layer for CRUD",
+    "type":"cakephp-plugin",
+    "keywords":[
+        "cakephp",
+        "crud",
+        "create",
+        "retrieve",
+        "update",
+        "delete",
+        "bake",
+        "cake",
+        "scaffold",
+        "scaffolding"
+    ],
+    "homepage":"https://github.com/FriendsOfCake/crud-view",
+    "license":"MIT",
+    "authors":[
+        {
+            "name":"Christian Winther",
+            "role":"Author",
+            "homepage":"http://cakephp.nu/"
+        }
+    ],
+    "require":{
+        "friendsofcake/crud":"*",
         "friendsofcake/bootstrap-ui": "~0.3"
-	},
-	"require-dev": {
-		"cakephp/cakephp": "3.0.*-dev",
-		"cakephp/app": "dev-master",
-		"phpunit/phpunit": "3.7.33",
+    },
+    "require-dev": {
+        "cakephp/cakephp": "3.0.*-dev",
+        "cakephp/app": "dev-master",
+        "phpunit/phpunit": "3.7.33",
 
-		"friendsofcake/cakephp-test-utilities": "dev-master"
-	},
-	"suggest":{
+        "friendsofcake/cakephp-test-utilities": "dev-master"
+    },
+    "suggest":{
 
-	},
-	"autoload": {
-		"psr-4": {
-			"CrudView\\": "src"
-		}
-	},
-	"support":{
-		"source":"https://github.com/FriendsOfCake/crud-view",
-		"issues":"https://github.com/FriendsOfCake/crud-view/issues",
-		"wiki":"http://cakephp.nu/cakephp-crud/",
-		"irc":"irc://irc.freenode.org/friendsofcake"
-	},
-	"extra": {
-		"installer-name": "CrudView"
-	}
+    },
+    "autoload": {
+        "psr-4": {
+            "CrudView\\": "src"
+        }
+    },
+    "support":{
+        "source":"https://github.com/FriendsOfCake/crud-view",
+        "issues":"https://github.com/FriendsOfCake/crud-view/issues",
+        "wiki":"http://cakephp.nu/cakephp-crud/",
+        "irc":"irc://irc.freenode.org/friendsofcake"
+    },
+    "extra": {
+        "installer-name": "CrudView"
+    }
 }
