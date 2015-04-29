@@ -7,8 +7,25 @@ use Cake\View\View;
 
 class CrudView extends View
 {
+    /**
+     * The name of the layout file to render the view inside of. The name specified
+     * is the filename of the layout in /app/Template/Layout without the .ctp
+     * extension.
+     *
+     * @var string
+     */
     public $layout = 'CrudView.default';
 
+    /**
+     * Initialization hook method.
+     *
+     * Properties like $helpers etc. cannot be initialized statically in your custom
+     * view class as they are overwritten by values from controller in constructor.
+     * So this method allows you to manipulate them as required after view instance
+     * is constructed.
+     *
+     * @return void
+     */
     public function initialize()
     {
         parent::initialize();
@@ -17,6 +34,11 @@ class CrudView extends View
         $this->_setupViewblocks();
     }
 
+    /**
+     * Initializes the bootstrap-ui plugin
+     *
+     * @return void
+     */
     protected function _setupBootstrapUI()
     {
         $this->loadHelper('Html', ['className' => 'BootstrapUI.Html']);
@@ -41,6 +63,11 @@ class CrudView extends View
         }
     }
 
+    /**
+     * Initializes viewblocks for use as panels
+     *
+     * @return void
+     */
     protected function _setupViewblocks()
     {
         $viewblocks = $this->get('viewblocks', []);
