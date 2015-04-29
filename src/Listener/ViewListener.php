@@ -12,7 +12,6 @@ use Crud\Listener\BaseListener;
 
 class ViewListener extends BaseListener
 {
-
     /**
      * Initialize the listener
      *
@@ -36,6 +35,21 @@ class ViewListener extends BaseListener
     public function beforeFind(Event $event)
     {
         $event->subject->query->contain($this->_getRelatedModels());
+    }
+
+    /**
+     * [beforePaginate description]
+     *
+     * @param \Cake\Event\Event $event Event.
+     * @return void
+     */
+    public function beforePaginate(Event $event)
+    {
+        if (!$event->subject->object) {
+            $event->subject->object = $this->_table()->query();
+        }
+
+        $event->subject->object->contain($this->_getRelatedModels());
     }
 
     /**
