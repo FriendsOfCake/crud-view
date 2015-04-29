@@ -325,6 +325,7 @@ class ViewListener extends BaseListener
         $associationConfiguration = [];
 
         $associations = $table->associations();
+
         foreach ($associations->keys() as $associationName) {
             $association = $associations->get($associationName);
             $type = $association->type();
@@ -333,7 +334,7 @@ class ViewListener extends BaseListener
                 $associationConfiguration[$type] = [];
             }
 
-            $assocKey = Inflector::variable(Inflector::underscore($association->name()));
+            $assocKey = $association->name();
             $associationConfiguration[$type][$assocKey]['model'] = $assocKey;
             $associationConfiguration[$type][$assocKey]['type'] = $type;
             $associationConfiguration[$type][$assocKey]['primaryKey'] = $association->target()->primaryKey();
@@ -341,6 +342,7 @@ class ViewListener extends BaseListener
             $associationConfiguration[$type][$assocKey]['foreignKey'] = $association->foreignKey();
             $associationConfiguration[$type][$assocKey]['plugin'] = null;
             $associationConfiguration[$type][$assocKey]['controller'] = Inflector::pluralize(Inflector::underscore($assocKey));
+            $associationConfiguration[$type][$assocKey]['entity'] = Inflector::singularize(Inflector::underscore($assocKey));
         }
 
         return $associationConfiguration;

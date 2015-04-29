@@ -68,7 +68,10 @@ class CrudViewHelper extends Helper
                 return $this->_View->element($options['element'], compact('field', 'value', 'options'));
 
             case 'relation':
-                return $this->relation($field, $value, $options);
+                $relation = $this->relation($field, $value, $options);
+                if ($relation) {
+                    return $relation['output'];
+                }
 
             default:
                 return $this->introspect($field, $value, $options);
@@ -191,22 +194,28 @@ class CrudViewHelper extends Helper
     public function relation($field, $value, array $options = [])
     {
         $associations = $this->associations();
-        if (empty($associations['belongsTo'])) {
+        if (empty($associations['manyToOne'])) {
             return false;
         }
 
         $data = $this->getContext();
-        foreach ($associations['belongsTo'] as $alias => $details) {
+        foreach ($associations['manyToOne'] as $alias => $details) {
             if ($field !== $details['foreignKey']) {
                 continue;
             }
 
+            $entityName = $details['entity'];
+            $entity = $data->$entityName;
+            if (!$entity) {
+                return false;
+            }
+
             return [
                 'alias' => $alias,
-                'output' => $this->Html->link($data[$alias][$details['displayField']], [
+                'output' => $this->Html->link($entity->$details['displayField'], [
                     'controller' => $details['controller'],
                     'action' => 'view',
-                    $data[$alias][$details['primaryKey']]
+                    $entity->$details['primaryKey']
                 ])
             ];
         }
