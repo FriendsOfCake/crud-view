@@ -1,7 +1,5 @@
 <?php
-use Cake\ORM\TableRegistry;
 use Cake\Utility\Inflector;
-
 ?>
 <div class="collapse navbar-collapse navbar-ex1-collapse navbar-left bs-sidebar">
     <nav>
@@ -9,7 +7,10 @@ use Cake\Utility\Inflector;
             <?php
             foreach ($tables as $table) {
                 ?>
-                <li><?= $this->Html->link(Inflector::humanize($table), array('controller' => $table, 'action' => 'index')); ?></li>
+                <li><?= $this->Html->link(Inflector::humanize($table), [
+                    'controller' => Inflector::camelize($table),
+                    'action' => 'index'
+                ]); ?></li>
                 <?php
             }
             ?>
