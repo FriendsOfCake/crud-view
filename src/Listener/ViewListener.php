@@ -135,8 +135,9 @@ class ViewListener extends BaseListener
         $controller->set('actions', $this->_getControllerActions());
         $controller->set('associations', $this->_associations());
         $controller->set('tables', $this->_getTables());
-        $controller->set($this->_getPageVariables());
+        $controller->set('bulkActions', $this->_getBulkActions());
         $controller->set('viewblocks', $this->_getViewBlocks());
+        $controller->set($this->_getPageVariables());
     }
 
     /**
@@ -440,5 +441,16 @@ class ViewListener extends BaseListener
         }
 
         return $viewblocks;
+    }
+
+    protected function _getBulkActions()
+    {
+        $action = $this->_action();
+        $bulkActions = $action->config('scaffold.bulkActions');
+        if (empty($bulkActions)) {
+            $bulkActions = [];
+        }
+
+        return $bulkActions;
     }
 }

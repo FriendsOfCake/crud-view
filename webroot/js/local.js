@@ -1,5 +1,16 @@
 jQuery(document).on('ready', function() {
 
+  var bulkActionForm = jQuery('.bulk-actions');
+
+  bulkActionForm.submit(function (e) {
+    var action = jQuery('.bulk-actions .bulk-action-submit select').val();
+    if (!action) {
+      return e.preventDefault();
+    }
+
+    bulkActionForm.attr('action', action);
+  });
+
   jQuery('input.autocomplete').each(function () {
     var _this = jQuery(this);
     var cache = {};
