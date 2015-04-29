@@ -1,6 +1,7 @@
 <?php
 namespace CrudView\View;
 
+use Cake\Core\Configure;
 use Cake\View\Exception\MissingTemplateException;
 use Cake\View\View;
 
@@ -12,6 +13,7 @@ class CrudView extends View
     {
         parent::initialize();
         $this->_setupBootstrapUI();
+        $this->_setupPaths();
         $this->_setupViewblocks();
     }
 
@@ -21,6 +23,22 @@ class CrudView extends View
         $this->loadHelper('Form', ['className' => 'BootstrapUI.Form']);
         $this->loadHelper('Flash', ['className' => 'BootstrapUI.Flash']);
         $this->loadHelper('Paginator', ['className' => 'BootstrapUI.Paginator']);
+    }
+
+    /**
+     * Initializes the crud-view template paths
+     *
+     * @return void
+     */
+    protected function _setupPaths()
+    {
+        $crudTemplates = dirname(dirname(__FILE__)) . DS . 'Template' . DS;
+        $paths = (array)Configure::read('App.paths.templates');
+
+        if (!in_array($crudTemplates, $paths)) {
+            $paths[] = $crudTemplates;
+            Configure::write('App.paths.templates', $paths);
+        }
     }
 
     protected function _setupViewblocks()
@@ -44,22 +62,6 @@ class CrudView extends View
     }
 
     /**
-     * Finds an element filename, returns false on failure.
-     *
-     * @param string $name The name of the element to find.
-     * @return mixed Either a string to the element filename or false when one can't be found.
-     */
-    protected function _getElementFileName($name)
-    {
-        $filename = parent::_getElementFileName($name);
-        if ($filename) {
-            return $filename;
-        }
-
-        return parent::_getElementFileName('CrudView.' . $name);
-    }
-
-    /**
      * Returns filename of given action's template file (.ctp) as a string.
      *
      * @param string|null $name Controller action to find template filename for.
@@ -71,11 +73,9 @@ class CrudView extends View
         try {
             return parent::_getViewFileName($name);
         } catch (MissingTemplateException $exception) {
-            try {
-                return parent::_getViewFileName('Scaffolds/' . $this->view);
-            } catch (MissingTemplateException $exception) {
-                return parent::_getViewFileName('CrudView.Scaffolds/' . $this->view);
-            }
+            $this->subDir = null;
+            $this->viewPath = 'Scaffolds';
+            return parent::_getViewFileName($this->view);
         }
     }
 }
