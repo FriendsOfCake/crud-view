@@ -422,11 +422,18 @@ class ViewListener extends BaseListener
     {
         $action = $this->_action();
         $tables = $action->config('scaffold.tables');
-        if (empty($tables)) {
-            $connection = ConnectionManager::get('default');
-            $schema = $connection->schemaCollection();
-            $tables = $schema->listTables();
-            ksort($tables);
+        if (!empty($tables)) {
+            return $tables;
+        }
+
+        $connection = ConnectionManager::get('default');
+        $schema = $connection->schemaCollection();
+        $tables = $schema->listTables();
+        ksort($tables);
+
+        $blacklist = $action->config('scaffold.tables_blacklist');
+        if (!empty($blacklist)) {
+            return array_diff($tables, $blacklist);
         }
 
         return $tables;
