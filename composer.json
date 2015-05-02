@@ -28,9 +28,8 @@
 		"friendsofcake/crud":"*"
 	},
 	"require-dev": {
-		"cakephp/cakephp": "3.0.*-dev",
-		"cakephp/app": "dev-master",
-		"phpunit/phpunit": "3.7.33",
+		"cakephp/cakephp": "~3.0",
+		"cakephp/app": "~3.0",
 
 		"friendsofcake/cakephp-test-utilities": "dev-master"
 	},
