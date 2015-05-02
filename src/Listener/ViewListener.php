@@ -453,7 +453,7 @@ class ViewListener extends BaseListener
     protected function _getBulkActions()
     {
         $action = $this->_action();
-        $bulkActions = $action->config('scaffold.bulkActions');
+        $bulkActions = $action->config('scaffold.bulk_actions');
         if (empty($bulkActions)) {
             $bulkActions = [];
         }
