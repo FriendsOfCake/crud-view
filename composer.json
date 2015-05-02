@@ -25,14 +25,12 @@
         }
     ],
     "require":{
+        "cakephp/cakephp": "~3.0",
         "friendsofcake/crud":"*",
         "friendsofcake/bootstrap-ui": "~0.3"
     },
     "require-dev": {
-        "cakephp/cakephp": "3.0.*-dev",
-        "cakephp/app": "dev-master",
         "phpunit/phpunit": "3.7.33",
-
         "friendsofcake/cakephp-test-utilities": "dev-master"
     },
     "suggest":{
