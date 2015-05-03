@@ -1,14 +1,12 @@
 <?php
-use Cake\Utility\Inflector;
-
-foreach ($actions['table'] as $action) {
+foreach ($actions['table'] as $action => $config) {
     if ($this->request->action == $action) {
         continue;
     }
 
     echo $this->Html->link(
-        Inflector::humanize($action),
-        ['action' => $action],
+        $config['title'],
+        ['controller' => $config['controller'],'action' => $action],
         ['class' => 'btn btn-default']
     );
 }

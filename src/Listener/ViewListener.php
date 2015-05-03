@@ -318,9 +318,15 @@ class ViewListener extends BaseListener
             $action = $this->_action($actionName);
 
             if ($action->scope() === 'table') {
-                $table[] = $actionName;
+                $table[$actionName] = [
+                    'title' => Inflector::humanize($actionName),
+                    'controller' => Inflector::camelize($actionName)
+                ];
             } elseif ($action->scope() === 'entity') {
-                $entity[] = $actionName;
+                $entity[$actionName] = [
+                    'title' => Inflector::humanize($actionName),
+                    'controller' => Inflector::camelize($actionName)
+                ];
             }
 
         }
@@ -422,21 +428,44 @@ class ViewListener extends BaseListener
     {
         $action = $this->_action();
         $tables = $action->config('scaffold.tables');
-        if (!empty($tables)) {
-            return $tables;
+        if (empty($tables)) {
+            $connection = ConnectionManager::get('default');
+            $schema = $connection->schemaCollection();
+            $tables = $schema->listTables();
+            ksort($tables);
+
+            $blacklist = $action->config('scaffold.tables_blacklist');
+            if (!empty($blacklist)) {
+                $tables = array_diff($tables, $blacklist);
+            }
         }
 
-        $connection = ConnectionManager::get('default');
-        $schema = $connection->schemaCollection();
-        $tables = $schema->listTables();
-        ksort($tables);
+        $normal = [];
+        foreach ($tables as $table => $config) {
+            if (is_string($config)) {
+                $config = ['table' => $config];
+            }
 
-        $blacklist = $action->config('scaffold.tables_blacklist');
-        if (!empty($blacklist)) {
-            return array_diff($tables, $blacklist);
+            if (is_int($table)) {
+                $table = $config['table'];
+            }
+
+            if (empty($config['action'])) {
+                $config['action'] = 'index';
+            }
+
+            if (empty($config['title'])) {
+                $config['title'] = Inflector::humanize($table);
+            }
+
+            if (empty($config['controller'])) {
+                $config['controller'] = Inflector::camelize($table);
+            }
+
+            $normal[$table] = $config;
         }
 
-        return $tables;
+        return $normal;
     }
 
     protected function _getViewBlocks()
