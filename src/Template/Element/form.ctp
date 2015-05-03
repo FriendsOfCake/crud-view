@@ -1,7 +1,7 @@
 <div class="<?= $this->CrudView->getViewClasses(); ?>">
+    <?= $this->Form->create(${$viewVar}, ['role' => 'form']); ?>
     <div class="row">
-        <div class="col-lg-6">
-            <?= $this->Form->create(${$viewVar}, ['role' => 'form']); ?>
+        <div class="col-lg-8">
             <?= $this->CrudView->redirectUrl(); ?>
             <?= $this->Form->inputs($fields, ['legend' => false]); ?>
 
@@ -14,9 +14,10 @@
                 </div>
             </div>
 
-            <?= $this->Form->end(); ?>
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-2">
+            <?= $this->fetch('form.sidebar'); ?>
         </div>
     </div>
+    <?= $this->Form->end(); ?>
 </div>
