@@ -3,7 +3,7 @@
         <div class="col-lg-6">
             <?= $this->Form->create(${$viewVar}, ['role' => 'form']); ?>
             <?= $this->CrudView->redirectUrl(); ?>
-            <?= $this->Form->inputs($fields, $blacklist, array('legend' => false)); ?>
+            <?= $this->Form->inputs($fields, ['legend' => false]); ?>
 
             <div class="form-group">
                 <div class="col pull-right">
