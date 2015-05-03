@@ -2,7 +2,7 @@
 use Cake\Utility\Inflector;
 
 ?>
-<div class="<?= $pluralVar; ?>-<?= $this->request->action; ?> <?= $pluralVar; ?> <?= $this->request->action; ?> scaffold-view">
+<div class="<?= $this->CrudView->getViewClasses(); ?>">
     <h2><?= $this->get('title');?></h2>
 
     <dl>

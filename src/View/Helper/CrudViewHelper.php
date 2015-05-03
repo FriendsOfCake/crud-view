@@ -73,6 +73,7 @@ class CrudViewHelper extends Helper
                     return $relation['output'];
                 }
 
+                // if there is no relation, allow default
             default:
                 return $this->introspect($field, $value, $options);
         }
@@ -327,5 +328,29 @@ class CrudViewHelper extends Helper
     public function getViewVar($key = null)
     {
         return Hash::get($this->_View->viewVars, $key);
+    }
+
+    /**
+     * Get css classes
+     *
+     * @return mixed
+     */
+    public function getViewClasses()
+    {
+        $action = $this->request->action;
+        $pluralVar = $this->getViewVar('pluralVar');
+        $viewClasses = (array)$this->getViewVar('viewClasses');
+        $args = func_get_args();
+
+        return implode(array_unique(array_merge(
+            [
+                'scaffold-action',
+                sprintf('scaffold-action-%s', $action),
+                sprintf('scaffold-controller-%s', $pluralVar),
+                sprintf('scaffold-%s-%s', $pluralVar, $action),
+            ],
+            $args,
+            $viewClasses
+        )), ' ');
     }
 }

@@ -1,7 +1,7 @@
 <?php
 $hasBulkActions = !empty($bulkActions);
 ?>
-<div class="<?= $pluralVar; ?>-<?= $this->request->action; ?> <?= $pluralVar; ?> <?= $this->request->action; ?> scaffold-view">
+<div class="<?= $this->CrudView->getViewClasses(); ?>">
     <?php
     if (!$this->exists('search')) {
         $this->start('search');

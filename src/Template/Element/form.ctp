@@ -1,4 +1,4 @@
-<div class="<?= $pluralVar; ?>-<?= $this->request->action; ?> <?= $pluralVar; ?> <?= $this->request->action; ?> scaffold-view">
+<div class="<?= $this->CrudView->getViewClasses(); ?>">
     <div class="row">
         <div class="col-lg-6">
             <?= $this->Form->create(${$viewVar}, ['role' => 'form']); ?>
