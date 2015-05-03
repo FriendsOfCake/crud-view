@@ -5,8 +5,6 @@ crud-view
 
 This project is in very very early stage of development, do not use it production unless you want to get down and dirty on the code :)
 
-Current Twitter Bootstrap 3 template: [sb-admin](http://startbootstrap.com/templates/sb-admin) from [startbootstrap.com](http://startbootstrap.com)
-
 Usage
 =====
 
@@ -32,15 +30,26 @@ use Crud\Controller;
 
 class AppController extends Controller
 {
-	use ControllerTrait;
+    use ControllerTrait;
 
-	public $viewClass = 'CrudView\View\CrudView';
-
-	public $components = [
-		'Crud.Crud' => [
-			'actions' => ['Crud.Index', 'Crud.Add', 'Crud.Edit', 'Crud.View', 'Crud.Delete'],
-			'listeners' => ['CrudView.View', 'Crud.RelatedModels', 'Crud.Redirect']
-		]
-	];
+    public function initialize()
+    {
+        parent::initialize();
+        $this->viewClass = 'CrudView\View\CrudView';
+        $this->loadComponent('Crud.Crud', [
+            'actions' => [
+                'Crud.Index',
+                'Crud.Add',
+                'Crud.Edit',
+                'Crud.View',
+                'Crud.Delete',
+            ],
+            'listeners' => [
+                'CrudView.View',
+                'Crud.RelatedModels',
+                'Crud.Redirect',
+            ],
+        ]);
+    }
 }
 ```
