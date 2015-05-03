@@ -11,7 +11,10 @@ $hasBulkActions = !empty($bulkActions);
 
     if (!$this->exists('actions')) {
         $this->start('actions');
-            echo $this->element('actions');
+            echo $this->element('actions', [
+                'actions' => $actions['table'],
+                'singularVar' => false,
+            ]);
         $this->end();
     }
     ?>
@@ -70,7 +73,10 @@ $hasBulkActions = !empty($bulkActions);
                         </td>
                     <?php endif; ?>
                     <?= $this->element('index/table_columns', compact('singularVar')); ?>
-                    <td class="actions"><?= $this->element('index/table_actions', compact('singularVar')); ?></td>
+                    <td class="actions"><?= $this->element('actions', [
+                        'singularVar' => $singularVar,
+                        'actions' => $actions['entity']
+                    ]); ?></td>
                 </tr>
                 <?php
             endforeach;
