@@ -1,7 +1,6 @@
 <?php
 foreach ($actions['entity'] as $action => $config) {
-
-    if ($action === 'add') {
+    if ($this->request->action == $action) {
         continue;
     }
 
