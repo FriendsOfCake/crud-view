@@ -30,8 +30,8 @@ namespace App\Controller;
 use Cake\Controller\Controller;
 use Crud\Controller;
 
-class AppController extends Controller {
-
+class AppController extends Controller
+{
 	use ControllerTrait;
 
 	public $viewClass = 'CrudView\View\CrudView';
@@ -42,6 +42,5 @@ class AppController extends Controller {
 			'listeners' => ['CrudView.View', 'Crud.RelatedModels', 'Crud.Redirect']
 		]
 	];
-
 }
 ```
