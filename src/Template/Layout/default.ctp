@@ -13,19 +13,6 @@
     <?= $this->Html->script('CrudView.jquery.min');?>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 
-    <!-- Moment.js -->
-    <?= $this->Html->script('CrudView./contrib/momentjs/js/moment-with-langs.min');?>
-
-    <!-- DateTime picker -->
-    <?= $this->Html->css('CrudView./contrib/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min');?>
-    <?= $this->Html->script('CrudView./contrib/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min');?>
-
-    <!-- jQuery UI -->
-    <?= $this->Html->css('CrudView./contrib/jquery-ui/css/ui-lightness/jquery-ui-1.10.4.custom.min');?>
-    <?= $this->Html->script('CrudView./contrib/jquery-ui/js/jquery-ui-1.10.4.custom.min');?>
-
-    <?= $this->Html->script('CrudView./contrib/icheck/js/icheck.min');?>
-
     <?= $this->Html->script('CrudView.local');?>
 
     <?= $this->Html->meta('icon'); ?>
