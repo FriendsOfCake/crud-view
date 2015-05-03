@@ -1,4 +1,6 @@
 <div class="<?= $this->CrudView->getViewClasses(); ?>">
+    <?= $this->element('action-header') ?>
+
     <?= $this->Form->create(${$viewVar}, ['role' => 'form']); ?>
     <div class="row">
         <div class="col-lg-8">
