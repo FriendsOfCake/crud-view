@@ -33,7 +33,7 @@ $hasBulkActions = !empty($bulkActions);
             <tr>
                 <?php if ($hasBulkActions) : ?>
                     <th class="bulk-action">
-                        <?= $this->Form->input(null, [
+                        <?= $this->Form->input($primaryKey . '[_all]', [
                             'checked' => false,
                             'div' => false,
                             'label' => '',
@@ -60,7 +60,7 @@ $hasBulkActions = !empty($bulkActions);
                 <tr>
                     <?php if ($hasBulkActions) : ?>
                         <td class="bulk-action">
-                            <?= $this->Form->input($primaryKey . '[]', [
+                            <?= $this->Form->input($primaryKey . '[' . $singularVar->id . ']', [
                                 'id' => $primaryKey . '-' . $singularVar->id,
                                 'checked' => false,
                                 'label' => '',
