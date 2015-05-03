@@ -314,6 +314,10 @@ class ViewListener extends BaseListener
         $table = $entity = [];
 
         $actions = $this->_crud()->config('actions');
+        $blacklist = (array)$this->_action()->config('scaffold.actions_blacklist');
+        $blacklist = array_combine($blacklist, $blacklist);
+        $actions = array_diff_key($actions, $blacklist);
+
         foreach ($actions as $actionName => $config) {
             $action = $this->_action($actionName);
 
