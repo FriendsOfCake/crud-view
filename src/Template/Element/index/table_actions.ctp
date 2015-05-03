@@ -4,18 +4,18 @@ foreach ($actions['entity'] as $action => $config) {
         continue;
     }
 
-    if ($action === 'delete') {
+    if ($config['method'] !== 'GET') {
         echo $this->Form->postLink(
             $config['title'],
             ['controller' => $config['controller'], 'action' => $action, $singularVar->id],
-            ['class' => 'btn btn-default']
+            ['class' => 'btn btn-default', 'method' => $config['method']]
         );
         continue;
     }
 
     echo $this->Html->link(
         $config['title'],
-        ['controller' => $config['controller'],'action' => $action, $singularVar->id],
+        ['controller' => $config['controller'], 'action' => $action, $singularVar->id],
         ['class' => 'btn btn-default']
     );
 

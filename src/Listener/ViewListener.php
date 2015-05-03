@@ -320,8 +320,13 @@ class ViewListener extends BaseListener
 
         foreach ($actions as $actionName => $config) {
             $action = $this->_action($actionName);
+            $method = 'GET';
             $class = get_class($action);
             $scope = $action->scope();
+
+            if ($class == 'Crud\Action\DeleteAction') {
+                $method = 'DELETE';
+            }
 
             if ($class == 'Crud\Action\AddAction') {
                 $scope = 'table';
@@ -331,11 +336,13 @@ class ViewListener extends BaseListener
                 $table[$actionName] = [
                     'title' => Inflector::humanize($actionName),
                     'controller' => $this->_request()->params['controller'],
+                    'method' => $method,
                 ];
             } elseif ($scope === 'entity') {
                 $entity[$actionName] = [
                     'title' => Inflector::humanize($actionName),
                     'controller' => $this->_request()->params['controller'],
+                    'method' => $method,
                 ];
             }
 
