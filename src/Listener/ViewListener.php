@@ -45,11 +45,11 @@ class ViewListener extends BaseListener
      */
     public function beforePaginate(Event $event)
     {
-        if (!$event->subject->object) {
-            $event->subject->object = $this->_table()->query();
+        if (empty($event->subject->query)) {
+            $event->subject->query = $this->_table()->query();
         }
 
-        $event->subject->object->contain($this->_getRelatedModels());
+        $event->subject->query->contain($this->_getRelatedModels());
     }
 
     /**
