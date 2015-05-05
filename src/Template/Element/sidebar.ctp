@@ -7,6 +7,7 @@
                 <li><?= $this->Html->link($config['title'], [
                     'controller' => $config['controller'],
                     'action' => $config['action'],
+                    '_method' => 'GET',
                 ]); ?></li>
                 <?php
             }
