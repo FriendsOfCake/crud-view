@@ -105,7 +105,7 @@ class CrudView extends View
         }
 
         $internal = $this->Blocks->get($name, $default);
-        return $viewblock . $internal;
+        return $internal . $viewblock;
     }
 
     /**
