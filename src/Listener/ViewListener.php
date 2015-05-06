@@ -307,18 +307,14 @@ class ViewListener extends BaseListener
     /**
      * Returns groupings of action types on the scaffolded view
      *
-     * @return string
+     * @return array
      */
     protected function _getControllerActions()
     {
         $table = $entity = [];
 
-        $actions = $this->_crud()->config('actions');
-        $blacklist = (array)$this->_action()->config('scaffold.actions_blacklist');
-        $blacklist = array_combine($blacklist, $blacklist);
-        $actions = array_diff_key($actions, $blacklist);
-
-        foreach ($actions as $actionName => $config) {
+        $actions = $this->_getAllowedActions();
+        foreach ($actions as $actionName) {
             $action = $this->_action($actionName);
             $method = 'GET';
             $class = get_class($action);
@@ -345,10 +341,27 @@ class ViewListener extends BaseListener
                     'method' => $method,
                 ];
             }
-
         }
 
         return compact('table', 'entity');
+    }
+
+    /**
+     * Returns a list of actions that are allowed to be shown
+     *
+     * @return array
+     */
+    public function _getAllowedActions()
+    {
+        $actions = $this->_action()->config('scaffold.actions');
+        if ($actions !== null) {
+            return $actions;
+        }
+
+        $actions = $this->_crud()->config('actions');
+        $blacklist = (array)$this->_action()->config('scaffold.actions_blacklist');
+        $blacklist = array_combine($blacklist, $blacklist);
+        return array_keys(array_diff_key($actions, $blacklist));
     }
 
     /**
