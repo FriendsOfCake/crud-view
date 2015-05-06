@@ -324,11 +324,11 @@ class ViewListener extends BaseListener
             $class = get_class($action);
             $scope = $action->scope();
 
-            if ($class == 'Crud\Action\DeleteAction') {
+            if ($class === 'Crud\Action\DeleteAction') {
                 $method = 'DELETE';
             }
 
-            if ($class == 'Crud\Action\AddAction') {
+            if ($class === 'Crud\Action\AddAction') {
                 $scope = 'table';
             }
 
