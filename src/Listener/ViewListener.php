@@ -488,22 +488,12 @@ class ViewListener extends BaseListener
     protected function _getViewBlocks()
     {
         $action = $this->_action();
-        $viewblocks = $action->config('scaffold.viewblocks');
-        if (empty($viewblocks)) {
-            $viewblocks = [];
-        }
-
-        return $viewblocks;
+        return $action->config('scaffold.viewblocks') ?: [];
     }
 
     protected function _getBulkActions()
     {
         $action = $this->_action();
-        $bulkActions = $action->config('scaffold.bulk_actions');
-        if (empty($bulkActions)) {
-            $bulkActions = [];
-        }
-
-        return $bulkActions;
+        return $action->config('scaffold.bulk_actions') ?: [];
     }
 }
