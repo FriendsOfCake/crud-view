@@ -50,8 +50,8 @@ class CrudView extends View
             $this->Html->css($config['css'], ['block' => true]);
         }
 
-        if (!$empty($config['js'])) {
-            foreach($config['js'] as $block => $scripts) {
+        if (!empty($config['js'])) {
+            foreach ($config['js'] as $block => $scripts) {
                 $this->Html->script($scripts, ['block' => $block]);
             }
         }
