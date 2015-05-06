@@ -467,17 +467,11 @@ class ViewListener extends BaseListener
                 $table = $config['table'];
             }
 
-            if (empty($config['action'])) {
-                $config['action'] = 'index';
-            }
-
-            if (empty($config['title'])) {
-                $config['title'] = Inflector::humanize($table);
-            }
-
-            if (empty($config['controller'])) {
-                $config['controller'] = Inflector::camelize($table);
-            }
+            $config += [
+                'action' => 'index',
+                'title' => Inflector::humanize($table),
+                'controller' => Inflector::camelize($table)
+            ];
 
             $normal[$table] = $config;
         }
