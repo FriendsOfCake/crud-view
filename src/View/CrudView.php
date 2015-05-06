@@ -31,6 +31,30 @@ class CrudView extends View
         parent::initialize();
         $this->_setupBootstrapUI();
         $this->_setupPaths();
+        $this->_loadAssets();
+    }
+
+    /**
+     * Read from config which css and js files to load, and add them to the output
+     *
+     * @return void
+     */
+    protected function _loadAssets()
+    {
+        $config = Configure::read('CrudView');
+        if (!$config) {
+            return;
+        }
+
+        if (!empty($config['css'])) {
+            $this->Html->css($config['css'], ['block' => true]);
+        }
+
+        if (!$empty($config['js'])) {
+            foreach($config['js'] as $block => $scripts) {
+                $this->Html->script($scripts, ['block' => $block]);
+            }
+        }
     }
 
     /**
@@ -45,13 +69,6 @@ class CrudView extends View
         $this->loadHelper('Flash', ['className' => 'BootstrapUI.Flash']);
         $this->loadHelper('Paginator', ['className' => 'BootstrapUI.Paginator']);
 
-        $crudAssets = $this->get('crudAssets', []);
-        $crudAssets += [
-            'bootstrapCss' => 'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/css/bootstrap.css',
-            'bootstrapJs' => 'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/js/bootstrap.min.js',
-            'jquery' => 'https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js',
-        ];
-        $this->set('crudAssets', $crudAssets);
     }
 
     /**

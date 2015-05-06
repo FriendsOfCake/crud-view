@@ -5,19 +5,10 @@
     <title><?= $this->get('title');?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Base CSS -->
-    <?= $this->Html->css($crudAssets['bootstrapCss']); ?>
-    <?= $this->Html->css('CrudView.local');?>
-
-    <!-- Base JS -->
-    <?= $this->Html->script($crudAssets['jquery']); ?>
-    <?= $this->Html->script($crudAssets['bootstrapJs']); ?>
-
-    <?= $this->Html->script('CrudView.local');?>
-
     <?= $this->Html->meta('icon'); ?>
     <?= $this->fetch('meta'); ?>
     <?= $this->fetch('css'); ?>
+    <?= $this->fetch('headjs'); ?>
 </head>
 <body>
     <nav class="navbar navbar-default navbar-static-top" role="navigation">
