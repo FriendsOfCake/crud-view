@@ -200,17 +200,21 @@ class CrudViewHelper extends Helper
         }
 
         $data = $this->getContext();
+        if (empty($data)) {
+            return false;
+        }
+
         foreach ($associations['manyToOne'] as $alias => $details) {
             if ($field !== $details['foreignKey']) {
                 continue;
             }
 
             $entityName = $details['entity'];
-            $entity = $data->$entityName;
-            if (!$entity) {
+            if (empty($data->$entityName)) {
                 return false;
             }
 
+            $entity = $data->$entityName;
             return [
                 'alias' => $alias,
                 'output' => $this->Html->link($entity->$details['displayField'], [
