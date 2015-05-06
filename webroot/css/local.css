@@ -17,6 +17,9 @@
     display: inline-block;
     width: 50%;
 }
+.bulk-action-submit input {
+    width: auto;
+}
 
 td form {
 	display: inline;
