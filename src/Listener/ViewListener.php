@@ -53,6 +53,36 @@ class ViewListener extends BaseListener
     }
 
     /**
+     * beforeRender event
+     *
+     * @param \Cake\Event\Event $event Event.
+     * @return void
+     */
+    public function beforeRender(Event $event)
+    {
+        if ($this->_controller()->name === 'CakeError') {
+            return;
+        }
+
+        if (!empty($event->subject->entity)) {
+            $this->_entity = $event->subject->entity;
+        }
+
+        $this->_injectHelpers();
+
+        $controller = $this->_controller();
+        $controller->set('title', $this->_getPageTitle());
+        $controller->set('fields', $this->_scaffoldFields());
+        $controller->set('blacklist', $this->_blacklist());
+        $controller->set('actions', $this->_getControllerActions());
+        $controller->set('associations', $this->_associations());
+        $controller->set('tables', $this->_getTables());
+        $controller->set('bulkActions', $this->_getBulkActions());
+        $controller->set('viewblocks', $this->_getViewBlocks());
+        $controller->set($this->_getPageVariables());
+    }
+
+    /**
      * Make sure flash messages uses the views from BoostCake
      *
      * @param \Cake\Event\Event $event Event.
@@ -108,36 +138,6 @@ class ViewListener extends BaseListener
         }
 
         return $models;
-    }
-
-    /**
-     * beforeRender event
-     *
-     * @param \Cake\Event\Event $event Event.
-     * @return void
-     */
-    public function beforeRender(Event $event)
-    {
-        if ($this->_controller()->name === 'CakeError') {
-            return;
-        }
-
-        if (!empty($event->subject->entity)) {
-            $this->_entity = $event->subject->entity;
-        }
-
-        $this->_injectHelpers();
-
-        $controller = $this->_controller();
-        $controller->set('title', $this->_getPageTitle());
-        $controller->set('fields', $this->_scaffoldFields());
-        $controller->set('blacklist', $this->_blacklist());
-        $controller->set('actions', $this->_getControllerActions());
-        $controller->set('associations', $this->_associations());
-        $controller->set('tables', $this->_getTables());
-        $controller->set('bulkActions', $this->_getBulkActions());
-        $controller->set('viewblocks', $this->_getViewBlocks());
-        $controller->set($this->_getPageVariables());
     }
 
     /**
