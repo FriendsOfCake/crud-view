@@ -7,7 +7,6 @@ $submitButton = $this->Form->input(__d('crud', 'Apply'), [
     'label' => false,
     'type' => 'submit',
     'class' => 'btn btn-success btn-bulk-apply form-control',
-    'div' => false,
     'name' => '_bulk',
 ]);
 
