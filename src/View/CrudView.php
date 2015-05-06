@@ -31,7 +31,6 @@ class CrudView extends View
         parent::initialize();
         $this->_setupBootstrapUI();
         $this->_setupPaths();
-        $this->_setupViewblocks();
     }
 
     /**
@@ -64,28 +63,46 @@ class CrudView extends View
     }
 
     /**
-     * Initializes viewblocks for use as panels
+     * Fetch the content for a block. If a block is
+     * empty or undefined '' will be returned.
+     *
+     * @param string $name Name of the block
+     * @param string $default Default text
+     * @return string default The block content or $default if the block does not exist.
+     * @see ViewBlock::get()
+     */
+    public function fetch($name, $default = '')
+    {
+        $viewblock = '';
+        $viewblocks = $this->get('viewblocks', []);
+        if (!empty($viewblocks[$name])) {
+            $viewblock = $this->_createViewblock($viewblocks[$name]);
+        }
+
+        $internal = $this->Blocks->get($name, $default);
+        return $viewblock . $internal;
+    }
+
+    /**
+     * Constructs a ViewBlock from an array of configured data
      *
      * @return void
      */
-    protected function _setupViewblocks()
+    protected function _createViewblock($data)
     {
-        $viewblocks = $this->get('viewblocks', []);
-        foreach ($viewblocks as $viewblock => $set) {
-            $output = '';
-            foreach ($set as $key => $type) {
-                if ($type == 'element') {
-                    $output .= $this->element($key);
-                } elseif ($type == 'Html::css') {
-                    $output .= $this->Html->css($key);
-                } elseif ($type == 'Html::script') {
-                    $output .= $this->Html->script($key);
-                } else {
-                    $output .= $key;
-                }
+        $output = '';
+        foreach ($data as $key => $type) {
+            if ($type == 'element') {
+                $output = $this->element($key);
+            } elseif ($type == 'Html::css') {
+                $output .= $this->Html->css($key);
+            } elseif ($type == 'Html::script') {
+                $output .= $this->Html->script($key);
+            } else {
+                $output .= $key;
             }
-            $this->Blocks->set($viewblock, $output);
         }
+        return $output;
     }
 
     /**
