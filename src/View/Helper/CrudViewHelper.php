@@ -63,20 +63,18 @@ class CrudViewHelper extends Helper
         $options = (array)$options;
         $options += ['formatter' => null];
 
-        switch ($options['formatter']) {
-            case 'element':
-                return $this->_View->element($options['element'], compact('field', 'value', 'options'));
-
-            case 'relation':
-                $relation = $this->relation($field, $value, $options);
-                if ($relation) {
-                    return $relation['output'];
-                }
-
-                // if there is no relation, allow default
-            default:
-                return $this->introspect($field, $value, $options);
+        if ($options['formatter'] == 'element') {
+            return $this->_View->element($options['element'], compact('field', 'value', 'options'));
         }
+
+        if ($options['formatter'] == 'relation') {
+            $relation = $this->relation($field, $value, $options);
+            if ($relation) {
+                return $relation['output'];
+            }
+        }
+
+        return $this->introspect($field, $value, $options);
     }
 
     /**
