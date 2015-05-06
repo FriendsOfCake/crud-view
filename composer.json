@@ -1,9 +1,9 @@
 {
-    "name":"friendsofcake/crud-view",
+    "name": "friendsofcake/crud-view",
     "version": "0.0.1",
-    "description":"View layer for CRUD",
-    "type":"cakephp-plugin",
-    "keywords":[
+    "description": "View layer for CRUD",
+    "type": "cakephp-plugin",
+    "keywords": [
         "cakephp",
         "crud",
         "create",
@@ -15,36 +15,38 @@
         "scaffold",
         "scaffolding"
     ],
-    "homepage":"https://github.com/FriendsOfCake/crud-view",
-    "license":"MIT",
-    "authors":[
+    "homepage": "https://github.com/FriendsOfCake/crud-view",
+    "license": "MIT",
+    "authors": [
         {
-            "name":"Christian Winther",
-            "role":"Author",
-            "homepage":"http://cakephp.nu/"
+            "name": "Christian Winther",
+            "role": "Author",
+            "homepage": "http://cakephp.nu/"
+        },
+        {
+            "name": "Jose Diaz-Gonzalez",
+            "role": "Author",
+            "homepage": "http://josediazgonzalez.com/"
         }
     ],
-    "require":{
+    "require": {
         "cakephp/cakephp": "~3.0",
-        "friendsofcake/crud":"*",
+        "friendsofcake/crud": "*",
         "friendsofcake/bootstrap-ui": "~0.3"
     },
     "require-dev": {
         "phpunit/phpunit": "3.7.33",
         "friendsofcake/cakephp-test-utilities": "dev-master"
     },
-    "suggest":{
-
-    },
     "autoload": {
         "psr-4": {
             "CrudView\\": "src"
         }
     },
-    "support":{
-        "source":"https://github.com/FriendsOfCake/crud-view",
-        "issues":"https://github.com/FriendsOfCake/crud-view/issues",
-        "wiki":"http://cakephp.nu/cakephp-crud/",
-        "irc":"irc://irc.freenode.org/friendsofcake"
-    },
+    "support": {
+        "source": "https://github.com/FriendsOfCake/crud-view",
+        "issues": "https://github.com/FriendsOfCake/crud-view/issues",
+        "wiki": "http://cakephp.nu/cakephp-crud/",
+        "irc": "irc://irc.freenode.org/friendsofcake"
+    }
 }
