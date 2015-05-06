@@ -3,10 +3,7 @@
 
         <?php
         if ($this->Paginator->hasPage(2)) {
-            echo $this->Paginator->numbers([
-                'next' => 'NEXT',
-                'prev' => 'PREV',
-            ]);
+            echo $this->Paginator->numbers();
         }
         ?>
 
