@@ -6,12 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Base CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <?= $this->Html->css($crudAssets['bootstrapCss']); ?>
     <?= $this->Html->css('CrudView.local');?>
 
     <!-- Base JS -->
-    <?= $this->Html->script('CrudView.jquery.min');?>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <?= $this->Html->script($crudAssets['jquery']); ?>
+    <?= $this->Html->script($crudAssets['bootstrapJs']); ?>
 
     <?= $this->Html->script('CrudView.local');?>
 

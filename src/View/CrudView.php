@@ -44,6 +44,14 @@ class CrudView extends View
         $this->loadHelper('Form', ['className' => 'BootstrapUI.Form']);
         $this->loadHelper('Flash', ['className' => 'BootstrapUI.Flash']);
         $this->loadHelper('Paginator', ['className' => 'BootstrapUI.Paginator']);
+
+        $crudAssets = $this->get('crudAssets', []);
+        $crudAssets += [
+            'bootstrapCss' => 'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/css/bootstrap.css',
+            'bootstrapJs' => 'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/js/bootstrap.min.js',
+            'jquery' => 'https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js',
+        ];
+        $this->set('crudAssets', $crudAssets);
     }
 
     /**
