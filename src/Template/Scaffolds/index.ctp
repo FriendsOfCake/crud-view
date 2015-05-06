@@ -1,7 +1,7 @@
 <?php
 $hasBulkActions = !empty($bulkActions);
 ?>
-<div class="<?= $this->CrudView->getViewClasses(); ?>">
+<div class="<?= $this->CrudView->getCssClasses(); ?>">
     <?php
     if (!$this->exists('search')) {
         $this->start('search');

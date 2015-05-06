@@ -2,7 +2,7 @@
 use Cake\Utility\Inflector;
 
 ?>
-<div class="<?= $this->CrudView->getViewClasses(); ?>">
+<div class="<?= $this->CrudView->getCssClasses(); ?>">
     <h2><?= $this->get('title');?></h2>
 
     <dl>

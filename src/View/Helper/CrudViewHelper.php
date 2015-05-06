@@ -335,7 +335,7 @@ class CrudViewHelper extends Helper
      *
      * @return mixed
      */
-    public function getViewClasses()
+    public function getCssClasses()
     {
         $action = $this->request->action;
         $pluralVar = $this->getViewVar('pluralVar');

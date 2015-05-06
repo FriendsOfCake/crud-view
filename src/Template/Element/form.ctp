@@ -1,4 +1,4 @@
-<div class="<?= $this->CrudView->getViewClasses(); ?>">
+<div class="<?= $this->CrudView->getCssClasses(); ?>">
     <?= $this->element('action-header') ?>
 
     <?= $this->Form->create(${$viewVar}, ['role' => 'form']); ?>
