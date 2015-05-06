@@ -1,6 +1,6 @@
 <?php
 foreach ($actions as $action => $config) {
-    if ($this->request->action == $action) {
+    if ($this->request->action === $action) {
         continue;
     }
 

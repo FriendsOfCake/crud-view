@@ -63,11 +63,11 @@ class CrudViewHelper extends Helper
         $options = (array)$options;
         $options += ['formatter' => null];
 
-        if ($options['formatter'] == 'element') {
+        if ($options['formatter'] === 'element') {
             return $this->_View->element($options['element'], compact('field', 'value', 'options'));
         }
 
-        if ($options['formatter'] == 'relation') {
+        if ($options['formatter'] === 'relation') {
             $relation = $this->relation($field, $value, $options);
             if ($relation) {
                 return $relation['output'];
@@ -123,7 +123,7 @@ class CrudViewHelper extends Helper
             return $this->formatDate($field, $value, $options);
         }
 
-        if ($type == 'time') {
+        if ($type === 'time') {
             return $this->formatTime($field, $value, $options);
         }
 

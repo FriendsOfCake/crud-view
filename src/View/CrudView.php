@@ -117,11 +117,11 @@ class CrudView extends View
     {
         $output = '';
         foreach ($data as $key => $type) {
-            if ($type == 'element') {
+            if ($type === 'element') {
                 $output = $this->element($key);
-            } elseif ($type == 'Html::css') {
+            } elseif ($type === 'Html::css') {
                 $output .= $this->Html->css($key);
-            } elseif ($type == 'Html::script') {
+            } elseif ($type === 'Html::script') {
                 $output .= $this->Html->script($key);
             } else {
                 $output .= $key;
