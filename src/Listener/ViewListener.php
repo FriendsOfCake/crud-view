@@ -68,6 +68,8 @@ class ViewListener extends BaseListener
             $this->_entity = $event->subject->entity;
         }
 
+        $this->ensureConfig();
+
         $this->_injectHelpers();
 
         $controller = $this->_controller();
@@ -80,6 +82,23 @@ class ViewListener extends BaseListener
         $controller->set('bulkActions', $this->_getBulkActions());
         $controller->set('viewblocks', $this->_getViewBlocks());
         $controller->set($this->_getPageVariables());
+    }
+
+    /**
+     * Make sure the CrudView config exists
+     *
+     * If it doesn't, load the defaults file
+     *
+     * @return array
+     */
+    public function ensureConfig()
+    {
+        $config = Configure::read('CrudView');
+        if ($config !== null) {
+            return $config;
+        }
+
+        return Configure::load('CrudView.defaults');
     }
 
     /**
