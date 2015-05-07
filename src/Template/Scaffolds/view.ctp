@@ -2,7 +2,7 @@
 use Cake\Utility\Inflector;
 
 ?>
-<div class="view scaffold-view">
+<div class="<?= $this->CrudView->getCssClasses(); ?>">
     <h2><?= $this->get('title');?></h2>
 
     <dl>
@@ -26,7 +26,6 @@ use Cake\Utility\Inflector;
                 echo $this->CrudView->process($field, ${$viewVar}, $options);
                 echo "&nbsp;</dd>";
             }
-
         }
         ?>
     </dl>

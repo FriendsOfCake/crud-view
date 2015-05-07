@@ -1,20 +1,25 @@
-<div class="index scaffold-view">
-    <h2><?= $this->get('title');?></h2>
-
+<div class="<?= $this->CrudView->getCssClasses(); ?>">
     <?php
-    $this->startIfEmpty('search');
-        echo $this->element('search');
-    $this->end();
-
-    echo $this->fetch('search');
+    if (!$this->exists('search')) {
+        $this->start('search');
+            echo $this->element('search');
+        $this->end();
+    }
     ?>
+    <?= $this->element('action-header') ?>
 
-    <br />
+    <?= $this->fetch('search'); ?>
+
+    <hr />
+
+    <?= $this->element('index/bulk_actions/form_start', compact('bulkActions')); ?>
 
     <div class="table-responsive">
         <table class="table table-hover table-condensed">
         <thead>
             <tr>
+                <?= $this->element('index/bulk_actions/table', compact('bulkActions', 'primaryKey', 'singularVar')); ?>
+
                 <?php
                 foreach ($fields as $field => $options) :
                     ?>
@@ -26,12 +31,17 @@
             </tr>
         </thead>
         <tbody>
+
             <?php
             foreach (${$viewVar} as $singularVar) :
                 ?>
                 <tr>
+                    <?= $this->element('index/bulk_actions/record', compact('bulkActions', 'primaryKey', 'singularVar')); ?>
                     <?= $this->element('index/table_columns', compact('singularVar')); ?>
-                    <td class="actions"><?= $this->element('index/table_actions', compact('singularVar')); ?></td>
+                    <td class="actions"><?= $this->element('actions', [
+                        'singularVar' => $singularVar,
+                        'actions' => $actions['entity']
+                    ]); ?></td>
                 </tr>
                 <?php
             endforeach;
@@ -40,5 +50,6 @@
         </table>
     </div>
 
+    <?= $this->element('index/bulk_actions/form_end', compact('bulkActions')); ?>
     <?= $this->element('index/pagination'); ?>
 </div>

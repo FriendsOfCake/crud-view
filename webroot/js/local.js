@@ -1,58 +1,65 @@
 jQuery(document).on('ready', function() {
 
-	jQuery('.checkbox input').iCheck({
-		checkboxClass: 'icheckbox_flat',
-		increaseArea: '20%'
-	});
+  var bulkActionForm = jQuery('.bulk-actions');
+  if (bulkActionForm.length) {
+    bulkActionForm.submit(function (e) {
+      var action = jQuery('.bulk-actions .bulk-action-submit select').val();
+      if (!action) {
+        return e.preventDefault();
+      }
 
-	jQuery('input.autocomplete').each(function() {
-		var _this = jQuery(this);
-		var cache = {};
-		var url = _this.data('url');
-		var update = _this.data('linked-to');
+      bulkActionForm.attr('action', action);
+    });
+  }
 
-		if (update) {
-			update = $('#' + update);
-		}
+  jQuery('input.autocomplete').each(function () {
+    var _this = jQuery(this);
+    var cache = {};
+    var url = _this.data('url');
+    var update = _this.data('linked-to');
 
-		_this.autocomplete({
-			minLength: 0,
+    if (update) {
+      update = $('#' + update);
+    }
 
-			select: function(event, ui) {
-				console.log(ui.item);
-				_this.val(ui.item ? ui.item.value : this.value);
+    _this.autocomplete({
+      minLength: 0,
 
-				if (update) {
-					update.val(ui.item ? ui.item.id : '');
-				}
-			},
+      select: function(event, ui) {
+        console.log(ui.item);
+        _this.val(ui.item ? ui.item.value : this.value);
 
-			source: function(request, response) {
-				var term = request.term;
+        if (update) {
+          update.val(ui.item ? ui.item.id : '');
+        }
+      },
 
-				if (cache.hasOwnProperty(term)) {
-					response(cache[term]);
-					return;
-				}
+      source: function(request, response) {
+        var term = request.term;
 
-				$.getJSON(url, request, function(data, status, xhr) {
-					var result = [];
+        if (cache.hasOwnProperty(term)) {
+          response(cache[term]);
+          return;
+        }
 
-					jQuery.each(data.data, function(key, value) {
-						console.log(key, value);
-						result.push({"id": key, "value": value });
-					});
+        $.getJSON(url, request, function(data, status, xhr) {
+          var result = [];
 
-					console.log(result);
-					cache[term] = result;
-					response(result);
-				});
-			}
-		})
-		.focus(function() {
-			_this.autocomplete('search');
-		});
+          jQuery.each(data.data, function(key, value) {
+            console.log(key, value);
+            result.push({"id": key, "value": value });
+          });
 
-	});
+          console.log(result);
+          cache[term] = result;
+          response(result);
+        });
+      }
+    })
+    .focus(function() {
+      _this.autocomplete('search');
+    });
+
+  });
 
 });

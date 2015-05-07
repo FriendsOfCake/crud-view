@@ -4,8 +4,9 @@ namespace CrudView\View\Helper;
 use Cake\ORM\Entity;
 use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
-use Cake\Utility\String;
+use Cake\Utility\Text;
 use Cake\View\Helper;
+use Cake\View\Helper\FormHelper;
 
 class CrudViewHelper extends Helper
 {
@@ -62,16 +63,18 @@ class CrudViewHelper extends Helper
         $options = (array)$options;
         $options += ['formatter' => null];
 
-        switch ($options['formatter']) {
-            case 'element':
-                return $this->_View->element($options['element'], compact('field', 'value', 'options'));
-
-            case 'relation':
-                return $this->relation($field, $value, $options);
-
-            default:
-                return $this->introspect($field, $value, $options);
+        if ($options['formatter'] === 'element') {
+            return $this->_View->element($options['element'], compact('field', 'value', 'options'));
         }
+
+        if ($options['formatter'] === 'relation') {
+            $relation = $this->relation($field, $value, $options);
+            if ($relation) {
+                return $relation['output'];
+            }
+        }
+
+        return $this->introspect($field, $value, $options);
     }
 
     /**
@@ -120,7 +123,7 @@ class CrudViewHelper extends Helper
             return $this->formatDate($field, $value, $options);
         }
 
-        if ($type == 'time') {
+        if ($type === 'time') {
             return $this->formatTime($field, $value, $options);
         }
 
@@ -176,7 +179,7 @@ class CrudViewHelper extends Helper
      */
     public function formatString($field, $value, array $options)
     {
-        return h(String::truncate($value, 200));
+        return h(Text::truncate($value, 200));
     }
 
     /**
@@ -190,22 +193,32 @@ class CrudViewHelper extends Helper
     public function relation($field, $value, array $options = [])
     {
         $associations = $this->associations();
-        if (empty($associations['belongsTo'])) {
+        if (empty($associations['manyToOne'])) {
             return false;
         }
 
         $data = $this->getContext();
-        foreach ($associations['belongsTo'] as $alias => $details) {
+        if (empty($data)) {
+            return false;
+        }
+
+        foreach ($associations['manyToOne'] as $alias => $details) {
             if ($field !== $details['foreignKey']) {
                 continue;
             }
 
+            $entityName = $details['entity'];
+            if (empty($data->$entityName)) {
+                return false;
+            }
+
+            $entity = $data->$entityName;
             return [
                 'alias' => $alias,
-                'output' => $this->Html->link($data[$alias][$details['displayField']], [
+                'output' => $this->Html->link($entity->$details['displayField'], [
                     'controller' => $details['controller'],
                     'action' => 'view',
-                    $data[$alias][$details['primaryKey']]
+                    $entity->$details['primaryKey']
                 ])
             ];
         }
@@ -227,7 +240,10 @@ class CrudViewHelper extends Helper
         if (!empty($redirectUrlViewVar)) {
             $redirectUrl = $redirectUrlViewVar;
         } else {
-            $redirectUrl = $this->Form->value('redirect_url');
+            $context = $this->Form->context();
+            if ($context->val('redirect_url')) {
+                $redirectUrl = $context->val('redirect_url');
+            }
         }
 
         if (empty($redirectUrl)) {
@@ -314,5 +330,29 @@ class CrudViewHelper extends Helper
     public function getViewVar($key = null)
     {
         return Hash::get($this->_View->viewVars, $key);
+    }
+
+    /**
+     * Get css classes
+     *
+     * @return mixed
+     */
+    public function getCssClasses()
+    {
+        $action = $this->request->action;
+        $pluralVar = $this->getViewVar('pluralVar');
+        $viewClasses = (array)$this->getViewVar('viewClasses');
+        $args = func_get_args();
+
+        return implode(array_unique(array_merge(
+            [
+                'scaffold-action',
+                sprintf('scaffold-action-%s', $action),
+                sprintf('scaffold-controller-%s', $pluralVar),
+                sprintf('scaffold-%s-%s', $pluralVar, $action),
+            ],
+            $args,
+            $viewClasses
+        )), ' ');
     }
 }

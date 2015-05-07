@@ -4,6 +4,7 @@ namespace CrudView\Listener;
 use Cake\Core\App;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
+use Cake\Datasource\ConnectionManager;
 use Cake\Event\Event;
 use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
@@ -11,7 +12,6 @@ use Crud\Listener\BaseListener;
 
 class ViewListener extends BaseListener
 {
-
     /**
      * Initialize the listener
      *
@@ -35,6 +35,70 @@ class ViewListener extends BaseListener
     public function beforeFind(Event $event)
     {
         $event->subject->query->contain($this->_getRelatedModels());
+    }
+
+    /**
+     * [beforePaginate description]
+     *
+     * @param \Cake\Event\Event $event Event.
+     * @return void
+     */
+    public function beforePaginate(Event $event)
+    {
+        if (empty($event->subject->query)) {
+            $event->subject->query = $this->_table()->query();
+        }
+
+        $event->subject->query->contain($this->_getRelatedModels());
+    }
+
+    /**
+     * beforeRender event
+     *
+     * @param \Cake\Event\Event $event Event.
+     * @return void
+     */
+    public function beforeRender(Event $event)
+    {
+        if ($this->_controller()->name === 'CakeError') {
+            return;
+        }
+
+        if (!empty($event->subject->entity)) {
+            $this->_entity = $event->subject->entity;
+        }
+
+        $this->ensureConfig();
+
+        $this->_injectHelpers();
+
+        $controller = $this->_controller();
+        $controller->set('title', $this->_getPageTitle());
+        $controller->set('fields', $this->_scaffoldFields());
+        $controller->set('blacklist', $this->_blacklist());
+        $controller->set('actions', $this->_getControllerActions());
+        $controller->set('associations', $this->_associations());
+        $controller->set('tables', $this->_getTables());
+        $controller->set('bulkActions', $this->_getBulkActions());
+        $controller->set('viewblocks', $this->_getViewBlocks());
+        $controller->set($this->_getPageVariables());
+    }
+
+    /**
+     * Make sure the CrudView config exists
+     *
+     * If it doesn't, load the defaults file
+     *
+     * @return array
+     */
+    public function ensureConfig()
+    {
+        $config = Configure::read('CrudView');
+        if ($config !== null) {
+            return $config;
+        }
+
+        return Configure::load('CrudView.defaults');
     }
 
     /**
@@ -93,33 +157,6 @@ class ViewListener extends BaseListener
         }
 
         return $models;
-    }
-
-    /**
-     * beforeRender event
-     *
-     * @param \Cake\Event\Event $event Event.
-     * @return void
-     */
-    public function beforeRender(Event $event)
-    {
-        if ($this->_controller()->name === 'CakeError') {
-            return;
-        }
-
-        if (!empty($event->subject->entity)) {
-            $this->_entity = $event->subject->entity;
-        }
-
-        $this->_injectHelpers();
-
-        $controller = $this->_controller();
-        $controller->set('title', $this->_getPageTitle());
-        $controller->set('fields', $this->_scaffoldFields());
-        $controller->set('blacklist', $this->_blacklist());
-        $controller->set('actions', $this->_getControllerActions());
-        $controller->set('associations', $this->_associations());
-        $controller->set($this->_getPageVariables());
     }
 
     /**
@@ -289,25 +326,61 @@ class ViewListener extends BaseListener
     /**
      * Returns groupings of action types on the scaffolded view
      *
-     * @return string
+     * @return array
      */
     protected function _getControllerActions()
     {
         $table = $entity = [];
 
-        $actions = $this->_crud()->config('actions');
-        foreach ($actions as $actionName => $config) {
+        $actions = $this->_getAllowedActions();
+        foreach ($actions as $actionName) {
             $action = $this->_action($actionName);
+            $method = 'GET';
+            $class = get_class($action);
+            $scope = $action->scope();
 
-            if ($action->scope() === 'table') {
-                $table[] = $actionName;
-            } elseif ($action->scope() === 'entity') {
-                $entity[] = $actionName;
+            if ($class === 'Crud\Action\DeleteAction') {
+                $method = 'DELETE';
             }
 
+            if ($class === 'Crud\Action\AddAction') {
+                $scope = 'table';
+            }
+
+            if ($scope === 'table') {
+                $table[$actionName] = [
+                    'title' => Inflector::humanize($actionName),
+                    'controller' => $this->_request()->params['controller'],
+                    'method' => $method,
+                ];
+            } elseif ($scope === 'entity') {
+                $entity[$actionName] = [
+                    'title' => Inflector::humanize($actionName),
+                    'controller' => $this->_request()->params['controller'],
+                    'method' => $method,
+                ];
+            }
         }
 
         return compact('table', 'entity');
+    }
+
+    /**
+     * Returns a list of actions that are allowed to be shown
+     *
+     * @return array
+     */
+    public function _getAllowedActions()
+    {
+        $actions = $this->_action()->config('scaffold.actions');
+        if ($actions !== null) {
+            return $actions;
+        }
+
+        $actions = $this->_crud()->config('actions');
+        $blacklist = (array)$this->_action()->config('scaffold.actions_blacklist');
+        $blacklist = array_combine($blacklist, $blacklist);
+        return array_keys(array_diff_key($actions, $blacklist));
     }
 
     /**
@@ -322,6 +395,7 @@ class ViewListener extends BaseListener
         $associationConfiguration = [];
 
         $associations = $table->associations();
+
         foreach ($associations->keys() as $associationName) {
             $association = $associations->get($associationName);
             $type = $association->type();
@@ -330,7 +404,7 @@ class ViewListener extends BaseListener
                 $associationConfiguration[$type] = [];
             }
 
-            $assocKey = Inflector::variable(Inflector::underscore($association->name()));
+            $assocKey = $association->name();
             $associationConfiguration[$type][$assocKey]['model'] = $assocKey;
             $associationConfiguration[$type][$assocKey]['type'] = $type;
             $associationConfiguration[$type][$assocKey]['primaryKey'] = $association->target()->primaryKey();
@@ -338,6 +412,7 @@ class ViewListener extends BaseListener
             $associationConfiguration[$type][$assocKey]['foreignKey'] = $association->foreignKey();
             $associationConfiguration[$type][$assocKey]['plugin'] = null;
             $associationConfiguration[$type][$assocKey]['controller'] = Inflector::pluralize(Inflector::underscore($assocKey));
+            $associationConfiguration[$type][$assocKey]['entity'] = Inflector::singularize(Inflector::underscore($assocKey));
         }
 
         return $associationConfiguration;
@@ -396,5 +471,55 @@ class ViewListener extends BaseListener
         }
 
         return $value;
+    }
+
+    protected function _getTables()
+    {
+        $action = $this->_action();
+        $tables = $action->config('scaffold.tables');
+        if (empty($tables)) {
+            $connection = ConnectionManager::get('default');
+            $schema = $connection->schemaCollection();
+            $tables = $schema->listTables();
+            ksort($tables);
+
+            $blacklist = $action->config('scaffold.tables_blacklist');
+            if (!empty($blacklist)) {
+                $tables = array_diff($tables, $blacklist);
+            }
+        }
+
+        $normal = [];
+        foreach ($tables as $table => $config) {
+            if (is_string($config)) {
+                $config = ['table' => $config];
+            }
+
+            if (is_int($table)) {
+                $table = $config['table'];
+            }
+
+            $config += [
+                'action' => 'index',
+                'title' => Inflector::humanize($table),
+                'controller' => Inflector::camelize($table)
+            ];
+
+            $normal[$table] = $config;
+        }
+
+        return $normal;
+    }
+
+    protected function _getViewBlocks()
+    {
+        $action = $this->_action();
+        return $action->config('scaffold.viewblocks') ?: [];
+    }
+
+    protected function _getBulkActions()
+    {
+        $action = $this->_action();
+        return $action->config('scaffold.bulk_actions') ?: [];
     }
 }

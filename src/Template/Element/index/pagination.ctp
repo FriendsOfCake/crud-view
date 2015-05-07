@@ -3,13 +3,7 @@
 
         <?php
         if ($this->Paginator->hasPage(2)) {
-            ?>
-            <ul class="pagination">
-                <?= $this->Paginator->prev('PREV'); ?>
-                <?= $this->Paginator->numbers(); ?>
-                <?= $this->Paginator->next('NEXT'); ?>
-            </ul>
-            <?php
+            echo $this->Paginator->numbers();
         }
         ?>
 

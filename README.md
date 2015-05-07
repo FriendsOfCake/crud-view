@@ -5,8 +5,6 @@ crud-view
 
 This project is in very very early stage of development, do not use it production unless you want to get down and dirty on the code :)
 
-Current Twitter Bootstrap 3 template: [sb-admin](http://startbootstrap.com/templates/sb-admin) from [startbootstrap.com](http://startbootstrap.com)
-
 Usage
 =====
 
@@ -27,31 +25,31 @@ Example controller
 <?php
 namespace App\Controller;
 
-class AppController extends \Cake\Controller\Controller {
+use Cake\Controller\Controller;
+use Crud\Controller;
 
-	use \Crud\Controller\ControllerTrait;
+class AppController extends Controller
+{
+    use ControllerTrait;
 
-	public $viewClass = 'CrudView\View\CrudView';
-
-	public $components = [
-		'Crud.Crud' => [
-			'actions' => ['Crud.Index', 'Crud.Add', 'Crud.Edit', 'Crud.View', 'Crud.Delete'],
-			'listeners' => ['CrudView.View', 'Crud.RelatedModels', 'Crud.Redirect']
-		]
-	];
-
-	public $helpers = [
-		'Form' => [
-			'templates' => 'CrudView.forms',
-			'widgets' => [
-				'_default' => ['CrudView\View\Widget\BasicWidget'],
-				'textarea' => ['CrudView\View\Widget\TextareaWidget'],
-				'select' => ['CrudView\View\Widget\SelectBoxWidget'],
-				'label' => ['CrudView\View\Widget\LabelWidget'],
-				'datetime' => ['CrudView\View\Widget\DateTimeWidget', 'select']
-			]
-		]
-	];
-
+    public function initialize()
+    {
+        parent::initialize();
+        $this->viewClass = 'CrudView\View\CrudView';
+        $this->loadComponent('Crud.Crud', [
+            'actions' => [
+                'Crud.Index',
+                'Crud.Add',
+                'Crud.Edit',
+                'Crud.View',
+                'Crud.Delete',
+            ],
+            'listeners' => [
+                'CrudView.View',
+                'Crud.RelatedModels',
+                'Crud.Redirect',
+            ],
+        ]);
+    }
 }
 ```

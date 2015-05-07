@@ -1,6 +1,25 @@
 /******************************************************************************
  * Generic form hacks
  *****************************************************************************/
+.bulk-action {
+    width: 32px;
+}
+.bulk-action .checkbox {
+    margin-bottom: 0;
+}
+.bulk-action-submit {
+    width: 50%;
+}
+.bulk-action-submit label {
+    width: auto;
+}
+.bulk-action-submit select {
+    display: inline-block;
+    width: 50%;
+}
+.bulk-action-submit input {
+    width: auto;
+}
 
 td form {
 	display: inline;
@@ -18,27 +37,9 @@ div.input {
 	margin-bottom: 10px
 }
 
-.btn { 
-	margin-right: 5px 
+.btn {
+	margin-left: 5px
 }
-
-/******************************************************************************
- * Checkbox / radio hacks
- *****************************************************************************/
-
-.radio input[type=radio], .radio-inline input[type=radio], .checkbox input[type=checkbox], .checkbox-inline input[type=checkbox] {
-	float: none; 
-	margin-left: 0px;
-}
-
-.form-horizontal .control-label, .form-horizontal .radio, .form-horizontal .checkbox, .form-horizontal .radio-inline, .form-horizontal .checkbox-inline {
-	margin-top: 0;
-	margin-bottom: 0;
-	padding-top: 0px;
-}
-
-.radio label, .checkbox label {
-	display: inline;
-	font-weight: 700;
-	cursor: pointer;
+h2 .actions {
+    margin-left: 15px;
 }

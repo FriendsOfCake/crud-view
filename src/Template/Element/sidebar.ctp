@@ -1,21 +1,13 @@
-<?php
-use Cake\ORM\TableRegistry;
-use Cake\Utility\Inflector;
-
-?>
 <div class="collapse navbar-collapse navbar-ex1-collapse navbar-left bs-sidebar">
     <nav>
         <ul class="nav nav-pills nav-stacked">
             <?php
-            $models = TableRegistry::config();
-            ksort($models);
-
-            foreach ($models as $model => $config) {
-                if (false !== strpos($model, 'AppModel')) {
-                    continue;
-                }
+            foreach ($tables as $table => $config) {
                 ?>
-                <li><?= $this->Html->link(Inflector::pluralize($model), array('controller' => Inflector::underscore(Inflector::pluralize($model)), 'action' => 'index')); ?></li>
+                <li><?= $this->Html->link($config['title'], [
+                    'controller' => $config['controller'],
+                    'action' => $config['action'],
+                ]); ?></li>
                 <?php
             }
             ?>
