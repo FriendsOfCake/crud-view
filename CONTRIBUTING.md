@@ -47,13 +47,13 @@ chance of keeping on top of things.
 ## Testcases and codesniffer
 
 CakePHP-CrudView tests requires [PHPUnit](http://www.phpunit.de/manual/current/en/installation.html)
-3.5 or higher. To run the testcases locally use the following command:
+3.7.33 or higher. To run the testcases locally use the following command:
 
-    ./lib/Cake/Console/cake test Crud AllCrud
+    phpunit
 
 To run the sniffs for CakePHP coding standards
 
-    phpcs -p --extensions=php --standard=CakePHP ./app/Plugin/Crud
+    phpcs -n -p --extensions=php --standard=vendor/cakephp/cakephp-codesniffer/CakePHP
 
 Check the [cakephp-codesniffer](https://github.com/cakephp/cakephp-codesniffer)
 repository to setup the CakePHP standard. The README contains installation info
