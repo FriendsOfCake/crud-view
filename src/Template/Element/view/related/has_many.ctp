@@ -18,13 +18,13 @@ foreach ($relations as $alias => $details):
     <div class="related">
         <h3><?= __d('crud', 'Related {0}', [Inflector::humanize($details['controller'])]); ?></h3>
         <?php
-        if (${$viewVar}->{$alias}):
+        if (${$viewVar}->{$details['entities']}):
             ?>
             <table class="table table-bordered table-hover">
                 <thead>
                     <tr>
                         <?php
-                        $otherFields = array_keys(${$viewVar}->{$alias}[0]->toArray());
+                        $otherFields = array_keys(${$viewVar}->{$details['entities']}[0]->toArray());
                         if (isset($details['with'])) {
                             $index = array_search($details['with'], $otherFields);
                             unset($otherFields[$index]);
@@ -40,7 +40,7 @@ foreach ($relations as $alias => $details):
                 <tbody>
                     <?php
                     $i = 0;
-                    foreach (${$viewVar}->{$alias} as ${$otherSingularVar}) :
+                    foreach (${$viewVar}->{$details['entities']} as ${$otherSingularVar}) :
                         ?>
                         <tr>
                             <?php
