@@ -20,10 +20,14 @@
         <div class="col-lg-<?= $this->exists('form.sidebar') ? '8' : '12' ?>">
            <div class="form-group">
                 <div class="col pull-right">
-                    <?= $this->Form->submit(__d('crud', 'Save'), ['class' => 'btn btn-primary', 'div' => false, 'name' => '_save']); ?>
-                    <?= $this->Form->submit(__d('crud', 'Save & continue editing'), ['class' => 'btn btn-success btn-save-continue', 'div' => false, 'name' => '_edit']); ?>
-                    <?= $this->Form->submit(__d('crud', 'Save & create new'), ['class' => 'btn btn-success', 'div' => false, 'name' => '_add']); ?>
-                    <?= $this->Html->link(__d('crud', 'Back'), ['action' => 'index'], ['class' => 'btn btn-default', 'div' => false]); ?>
+                    <?php
+                        echo $this->Form->submit(__d('crud', 'Save'), ['class' => 'btn btn-primary', 'div' => false, 'name' => '_save']);
+                        if (empty($disableExtraButtons)) {
+                            echo $this->Form->submit(__d('crud', 'Save & continue editing'), ['class' => 'btn btn-success btn-save-continue', 'div' => false, 'name' => '_edit']);
+                            echo $this->Form->submit(__d('crud', 'Save & create new'), ['class' => 'btn btn-success', 'div' => false, 'name' => '_add']);
+                            echo $this->Html->link(__d('crud', 'Back'), ['action' => 'index'], ['class' => 'btn btn-default', 'div' => false]);
+                        }
+                    ?>
                 </div>
             </div>
         </div>
