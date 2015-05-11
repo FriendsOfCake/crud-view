@@ -1,7 +1,7 @@
 <div class="<?= $this->CrudView->getCssClasses(); ?>">
     <?= $this->element('action-header') ?>
 
-    <?= $this->Form->create(${$viewVar}, ['role' => 'form']); ?>
+    <?= $this->Form->create(${$viewVar}, ['role' => 'form', 'url' => $formUrl]); ?>
     <?= $this->CrudView->redirectUrl(); ?>
     <div class="row">
         <div class="col-lg-8">
