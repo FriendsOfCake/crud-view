@@ -1,3 +1,5 @@
+<?= $this->fetch('before_form'); ?>
+
 <div class="<?= $this->CrudView->getCssClasses(); ?>">
     <?= $this->element('action-header') ?>
 
@@ -25,3 +27,5 @@
     </div>
     <?= $this->Form->end(); ?>
 </div>
+
+<?= $this->fetch('after_form'); ?>

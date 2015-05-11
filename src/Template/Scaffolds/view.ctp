@@ -1,3 +1,4 @@
+<?= $this->fetch('before_view'); ?>
 
 <div class="<?= $this->CrudView->getCssClasses(); ?>">
     <h2><?= $this->get('title');?></h2>
@@ -28,3 +29,5 @@
     </dl>
     <?= $this->element('view/related'); ?>
 </div>
+
+<?= $this->fetch('after_view'); ?>
