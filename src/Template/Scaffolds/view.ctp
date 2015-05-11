@@ -1,7 +1,4 @@
-<?php
-use Cake\Utility\Inflector;
 
-?>
 <div class="<?= $this->CrudView->getCssClasses(); ?>">
     <h2><?= $this->get('title');?></h2>
 
@@ -16,12 +13,12 @@ use Cake\Utility\Inflector;
             $output = $this->CrudView->relation($field, ${$viewVar}, $associations);
 
             if ($output) {
-                echo "<dt>" . Inflector::humanize($output['alias']) . "</dt>";
+                echo "<dt>" . \Cake\Utility\Inflector::humanize($output['alias']) . "</dt>";
                 echo "<dd>";
                 echo $output['output'];
                 echo "&nbsp;</dd>";
             } else {
-                echo "<dt>" . Inflector::humanize($field) . "</dt>";
+                echo "<dt>" . \Cake\Utility\Inflector::humanize($field) . "</dt>";
                 echo "<dd>";
                 echo $this->CrudView->process($field, ${$viewVar}, $options);
                 echo "&nbsp;</dd>";
