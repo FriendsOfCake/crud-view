@@ -10,13 +10,15 @@ Usage
 
 1) make sure to follow the normal CRUD install settings
 
-2) change ``AppController::$viewClass`` to ``CrudView\View\CrudView``
+2) add ``Plugin::load('CrudView');`` and  ``Plugin::load('BootstrapUI');`` in your ``app/config/bootstrap.php``
 
-3) load the ``CrudView.View``, ``Crud.RelatedModels`` and ``Crud.Redirect`` listeners
+3) change ``AppController::$viewClass`` to ``CrudView\View\CrudView``
 
-4) configure the ``FormHelper`` to look like below
+4) load the ``CrudView.View``, ``Crud.RelatedModels`` and ``Crud.Redirect`` listeners
 
-5) hopefully going to ``/<your controller with crud enabled/`` should just work
+5) configure the ``FormHelper`` to look like below
+
+6) hopefully going to ``/<your controller with crud enabled/`` should just work
 
 Example controller
 ==================

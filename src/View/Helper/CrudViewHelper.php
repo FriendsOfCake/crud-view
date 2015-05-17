@@ -64,7 +64,8 @@ class CrudViewHelper extends Helper
         $options += ['formatter' => null];
 
         if ($options['formatter'] === 'element') {
-            return $this->_View->element($options['element'], compact('field', 'value', 'options'));
+            $context = $this->getContext();
+            return $this->_View->element($options['element'], compact('context', 'field', 'value', 'options'));
         }
 
         if ($options['formatter'] === 'relation') {

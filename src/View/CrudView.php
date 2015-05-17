@@ -109,6 +109,19 @@ class CrudView extends View
     }
 
     /**
+     * Check if a block exists
+     *
+     * @param string $name Name of the block
+     *
+     * @return bool
+     */
+    public function exists($name)
+    {
+        $viewblocks = $this->get('viewblocks', []);
+        return !empty($viewblocks[$name]) || $this->Blocks->exists($name);
+    }
+
+    /**
      * Constructs a ViewBlock from an array of configured data
      *
      * @return void

@@ -1,4 +1,7 @@
+<?= $this->fetch('before_index'); ?>
+
 <div class="<?= $this->CrudView->getCssClasses(); ?>">
+
     <?php
     if (!$this->exists('search')) {
         $this->start('search');
@@ -53,3 +56,5 @@
     <?= $this->element('index/bulk_actions/form_end', compact('bulkActions')); ?>
     <?= $this->element('index/pagination'); ?>
 </div>
+
+<?= $this->fetch('after_index'); ?>

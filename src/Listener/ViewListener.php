@@ -81,6 +81,8 @@ class ViewListener extends BaseListener
         $controller->set('tables', $this->_getTables());
         $controller->set('bulkActions', $this->_getBulkActions());
         $controller->set('viewblocks', $this->_getViewBlocks());
+        $controller->set('formUrl', $this->_getFormUrl());
+        $controller->set('disableExtraButtons', $this->_getDisableExtraButtons());
         $controller->set($this->_getPageVariables());
     }
 
@@ -411,8 +413,9 @@ class ViewListener extends BaseListener
             $associationConfiguration[$type][$assocKey]['displayField'] = $association->target()->displayField();
             $associationConfiguration[$type][$assocKey]['foreignKey'] = $association->foreignKey();
             $associationConfiguration[$type][$assocKey]['plugin'] = null;
-            $associationConfiguration[$type][$assocKey]['controller'] = Inflector::pluralize(Inflector::underscore($assocKey));
+            $associationConfiguration[$type][$assocKey]['controller'] = Inflector::pluralize($assocKey);
             $associationConfiguration[$type][$assocKey]['entity'] = Inflector::singularize(Inflector::underscore($assocKey));
+            $associationConfiguration[$type][$assocKey]['entities'] = Inflector::underscore($assocKey);
         }
 
         return $associationConfiguration;
@@ -521,5 +524,17 @@ class ViewListener extends BaseListener
     {
         $action = $this->_action();
         return $action->config('scaffold.bulk_actions') ?: [];
+    }
+
+    protected function _getFormUrl()
+    {
+        $action = $this->_action();
+        return $action->config('scaffold.form_action') ?: null;
+    }
+
+    protected function _getDisableExtraButtons()
+    {
+        $action = $this->_action();
+        return $action->config('scaffold.disable_extra_buttons') ?: false;
     }
 }
