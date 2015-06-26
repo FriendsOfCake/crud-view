@@ -84,7 +84,8 @@ class SearchListener extends BaseListener
                 continue;
             }
 
-            $field = $filter->field();
+            $searchParam = $filter->name();
+            $field = $filter->field() ?: $searchParam;
 
             // Ignore multi-field filters for now
             if (is_array($field)) {
@@ -99,12 +100,12 @@ class SearchListener extends BaseListener
             }
 
             $input += [
-                'label' => Inflector::humanize(preg_replace('/_id$/', '', $field)),
+                'label' => Inflector::humanize(preg_replace('/_id$/', '', $searchParam)),
                 'required' => false,
                 'type' => 'text'
             ];
 
-            $value = $request->query($field);
+            $value = $request->query($searchParam);
             if ($value !== null) {
                 $input['value'] = $value;
             }
@@ -118,7 +119,7 @@ class SearchListener extends BaseListener
 
             if (!empty($input['options'])) {
                 $input['empty'] = true;
-                $fields[$field] = $input;
+                $fields[$searchParam] = $input;
                 continue;
             }
 
@@ -135,10 +136,11 @@ class SearchListener extends BaseListener
                 $urlArgs[$key] = $val;
             }
 
-            $url = ['action' => 'lookup', '?' => $urlArgs, 'ext' => 'json'];
+            unset($input['fields']);
+            $url = ['action' => 'lookup', '?' => $urlArgs, '_ext' => 'json'];
             $input['data-url'] = Router::url($url);
 
-            $fields[$field] = $input;
+            $fields[$searchParam] = $input;
         }
 
         // debug($fields);
