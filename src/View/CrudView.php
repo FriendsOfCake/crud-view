@@ -65,7 +65,12 @@ class CrudView extends View
     protected function _setupBootstrapUI()
     {
         $this->loadHelper('Html', ['className' => 'BootstrapUI.Html']);
-        $this->loadHelper('Form', ['className' => 'BootstrapUI.Form']);
+        $this->loadHelper('Form', [
+            'className' => 'BootstrapUI.Form',
+            'widgets' => [
+               'datetime' => ['CrudView\View\Widget\DateTimeWidget', 'select']
+            ]
+        ]);
         $this->loadHelper('Flash', ['className' => 'BootstrapUI.Flash']);
         $this->loadHelper('Paginator', ['className' => 'BootstrapUI.Paginator']);
 
