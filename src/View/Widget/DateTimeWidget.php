@@ -1,8 +1,11 @@
 <?php
 namespace CrudView\View\Widget;
 
+use Cake\I18n\I18n;
+use Cake\I18n\Time;
 use Cake\View\Form\ContextInterface;
 use Cake\View\Widget\DateTimeWidget as CoreDateTimeWidget;
+use DateTime;
 
 class DateTimeWidget extends CoreDateTimeWidget
 {
@@ -17,21 +20,42 @@ class DateTimeWidget extends CoreDateTimeWidget
      */
     public function render(array $data, ContextInterface $context)
     {
-        return '
-            <div class="col-sm-10">
-                <div class="input-group date" id="datetimepicker-' . $data['id'] . '" data-date-format="YYYY-MM-DD HH:mm:ss">
-                    <input type="text" class="form-control" value="' . $data['val']->format('Y-m-d H:i:s') . '" name="' . $data['name'] . '" />
-                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
-                </div>
-            </div>
+        $id = $data['id'];
+        $name = $data['name'];
+        $val = $data['val'];
+        $required = $data['required'] ? 'required' : '';
+        $year = $month = $day = $hour = $minute = false;
+        $lang = locale_get_primary_language(I18n::locale());
 
+        if (!$val instanceof DateTime && !empty($val)) {
+            $val = Time::parseDateTime($val);
+        }
+
+        if ($val) {
+            $year = $val->format('Y');
+            $month = $val->format('m') - 1;
+            $day = $val->format('d');
+            $hour = $val->format('H');
+            $minute = $val->format('i');
+            $val = $val->format('Y-m-d H:i:s');
+        }
+
+        $widget =<<<html
+            <div class="input-group datetime">
+                <input type='text' class="form-control" name="$name" value="$val" id='$id' $required/>
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
             <script type="text/javascript">
-            jQuery(function() {
-                $("#datetimepicker-' . $data['id'] . '").datetimepicker({
-                    sideBySide: true,
-                    useSeconds: false
+                $(function () {
+                    var widget = $('#$id').parent().datetimepicker({locale: '$lang'});
+                    if ($year) {
+                        widget.data('DateTimePicker').date(new Date($year, $month, $day, $hour, $minute));
+                    }
                 });
-            });
-            </script>';
+            </script>
+html;
+        return $widget;
     }
 }
