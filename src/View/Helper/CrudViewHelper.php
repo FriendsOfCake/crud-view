@@ -75,7 +75,13 @@ class CrudViewHelper extends Helper
             }
         }
 
-        return $this->introspect($field, $value, $options);
+        $value = $this->introspect($field, $value, $options);
+
+        if ($field === $this->getViewVar('displayField')) {
+            $value = $this->Html->link($value, ['action' => 'view', $data->get($this->getViewVar('primaryKey'))]);
+        }
+
+        return $value;
     }
 
     /**
