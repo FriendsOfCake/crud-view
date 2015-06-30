@@ -283,8 +283,7 @@ class ViewListener extends BaseListener
         $action = $this->_action();
         $configuredFields = $action->config('scaffold.fields');
         if (!empty($configuredFields)) {
-            $configuredFields = Hash::normalize($configuredFields);
-            $scaffoldFields = array_intersect_key($configuredFields, $scaffoldFields);
+            $scaffoldFields = Hash::normalize($configuredFields);
         }
 
         // Check for blacklisted fields
