@@ -75,7 +75,13 @@ class CrudViewHelper extends Helper
             }
         }
 
-        return $this->introspect($field, $value, $options);
+        $value = $this->introspect($field, $value, $options);
+
+        if ($field === $this->displayField()) {
+            $value = $this->Html->link($value, ['action' => 'view', $data->get($this->getViewVar('primaryKey'))]);
+        }
+
+        return $value;
     }
 
     /**
@@ -320,6 +326,16 @@ class CrudViewHelper extends Helper
     public function associations()
     {
         return $this->getViewVar('associations');
+    }
+
+    /**
+     * Returns the main table dispaly field column
+     *
+     * @return void
+     */
+    public function displayField()
+    {
+        return $this->getViewVar('displayField');
     }
 
     /**
