@@ -24,7 +24,7 @@ class DateTimeWidget extends CoreDateTimeWidget
         $name = $data['name'];
         $val = $data['val'];
         $required = $data['required'] ? 'required' : '';
-        $year = $month = $day = $hour = $minute = false;
+        $year = $month = $day = $hour = $minute = 0;
         $lang = locale_get_primary_language(I18n::locale());
 
         if (!$val instanceof DateTime && !empty($val)) {
