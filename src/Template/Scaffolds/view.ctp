@@ -1,9 +1,7 @@
 <?= $this->fetch('before_view'); ?>
-
 <div class="<?= $this->CrudView->getCssClasses(); ?>">
     <h2><?= $this->get('title');?></h2>
-
-    <dl>
+    <table class="table">
         <?php
         $this->CrudView->setContext(${$viewVar});
         foreach ($fields as $field => $options) {
@@ -11,23 +9,24 @@
                 continue;
             }
 
+            echo '<tr>';
             $output = $this->CrudView->relation($field, ${$viewVar}, $associations);
 
             if ($output) {
-                echo "<dt>" . \Cake\Utility\Inflector::humanize($output['alias']) . "</dt>";
-                echo "<dd>";
+                echo "<th>" . \Cake\Utility\Inflector::humanize($output['alias']) . "</th>";
+                echo "<td>";
                 echo $output['output'];
-                echo "&nbsp;</dd>";
+                echo "&nbsp;</td>";
             } else {
-                echo "<dt>" . \Cake\Utility\Inflector::humanize($field) . "</dt>";
-                echo "<dd>";
+                echo "<th>" . \Cake\Utility\Inflector::humanize($field) . "</th>";
+                echo "<td>";
                 echo $this->CrudView->process($field, ${$viewVar}, $options);
-                echo "&nbsp;</dd>";
+                echo "&nbsp;</td>";
             }
+            echo '</tr>';
         }
         ?>
-    </dl>
+    </table>
     <?= $this->element('view/related'); ?>
 </div>
-
 <?= $this->fetch('after_view'); ?>
