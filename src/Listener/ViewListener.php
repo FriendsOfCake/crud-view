@@ -34,7 +34,9 @@ class ViewListener extends BaseListener
      */
     public function beforeFind(Event $event)
     {
-        $event->subject->query->contain($this->_getRelatedModels());
+        if (!$event->subject->query->contain()) {
+            $event->subject->query->contain($this->_getRelatedModels());
+        }
     }
 
     /**
@@ -45,11 +47,9 @@ class ViewListener extends BaseListener
      */
     public function beforePaginate(Event $event)
     {
-        if (empty($event->subject->query)) {
-            $event->subject->query = $this->_table()->query();
+        if (!$event->subject->query->contain()) {
+            $event->subject->query->contain($this->_getRelatedModels(['manyToOne', 'oneToOne']));
         }
-
-        $event->subject->query->contain($this->_getRelatedModels());
     }
 
     /**
