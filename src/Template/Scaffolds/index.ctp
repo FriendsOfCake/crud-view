@@ -26,7 +26,7 @@
                 <?php
                 foreach ($fields as $field => $options) :
                     ?>
-                    <th><?= $this->Paginator->sort($field, null, $options); ?></th>
+                    <th><?= $this->Paginator->sort($field, isset($options['title']) ? $options['title'] : null, $options); ?></th>
                     <?php
                     endforeach;
                 ?>
