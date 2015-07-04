@@ -241,15 +241,15 @@ class CrudViewHelper extends Helper
      */
     public function redirectUrl()
     {
-        $redirectUrl = $this->request->query('redirect_url');
-        $redirectUrlViewVar = $this->getViewVar('redirect_url');
+        $redirectUrl = $this->request->query('_redirect_url');
+        $redirectUrlViewVar = $this->getViewVar('_redirect_url');
 
         if (!empty($redirectUrlViewVar)) {
             $redirectUrl = $redirectUrlViewVar;
         } else {
             $context = $this->Form->context();
-            if ($context->val('redirect_url')) {
-                $redirectUrl = $context->val('redirect_url');
+            if ($context->val('_redirect_url')) {
+                $redirectUrl = $context->val('_redirect_url');
             }
         }
 
@@ -257,8 +257,8 @@ class CrudViewHelper extends Helper
             return null;
         }
 
-        return $this->Form->hidden('redirect_url', [
-            'name' => 'redirect_url',
+        return $this->Form->hidden('_redirect_url', [
+            'name' => '_redirect_url',
             'value' => $redirectUrl,
             'id' => null,
             'secure' => FormHelper::SECURE_SKIP
@@ -282,7 +282,7 @@ class CrudViewHelper extends Helper
                 'action' => 'add',
                 '?' => [
                     $relation['foreignKey'] => $this->getViewVar('primaryKeyValue'),
-                    'redirect_url' => $this->request->here
+                    '_redirect_url' => $this->request->here
                 ]
             ]
         );
