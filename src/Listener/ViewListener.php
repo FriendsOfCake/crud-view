@@ -89,15 +89,15 @@ class ViewListener extends BaseListener
     }
 
     /**
-     * Make sure flash messages uses the views from BoostCake
+     * Make sure flash messages are properly handled by BootstrapUI.FlashHelper
      *
      * @param \Cake\Event\Event $event Event.
      * @return void
      */
     public function setFlash(Event $event)
     {
-        $event->subject->params['class'] = 'alert alert-dismissable ';
-        $event->subject->params['class'] .= (false !== strpos($event->subject->type, '.success')) ? 'alert-success' : 'alert-danger';
+        unset($event->subject->params['class']);
+        $event->subject->element = ltrim($event->subject->type);
     }
 
     /**

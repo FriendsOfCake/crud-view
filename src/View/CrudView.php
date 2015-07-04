@@ -77,6 +77,7 @@ class CrudView extends View
         $this->loadHelper('Paginator', ['className' => 'BootstrapUI.Paginator']);
 
         $this->loadHelper('CrudView.CrudView');
+        $this->loadHelper('BootstrapUI.Flash');
     }
 
     /**
