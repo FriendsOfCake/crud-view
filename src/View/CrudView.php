@@ -87,10 +87,15 @@ class CrudView extends View
      */
     protected function _setupPaths()
     {
-        $existing = Configure::read('App.paths.templates');
-        $existing[] = Plugin::classPath('CrudView') . 'Template' . DS;
+        $paths = Configure::read('App.paths.templates');
 
-        Configure::write('App.paths.templates', $existing);
+        $extraPaths = Configure::read('CrudView.templatePaths');
+        if (!empty($extraPaths)) {
+            $paths = array_merge($paths, (array)$extraPaths);
+        }
+        $paths[] = Plugin::classPath('CrudView') . 'Template' . DS;
+
+        Configure::write('App.paths.templates', $paths);
     }
 
     /**
