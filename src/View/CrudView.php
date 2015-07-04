@@ -2,6 +2,7 @@
 namespace CrudView\View;
 
 use Cake\Core\Configure;
+use Cake\Core\Plugin;
 use Cake\View\Exception\MissingTemplateException;
 use Cake\View\View;
 
@@ -29,8 +30,9 @@ class CrudView extends View
     public function initialize()
     {
         parent::initialize();
-        $this->_setupBootstrapUI();
+
         $this->_setupPaths();
+        $this->_setupHelpers();
         $this->_loadAssets();
     }
 
@@ -58,11 +60,11 @@ class CrudView extends View
     }
 
     /**
-     * Initializes the bootstrap-ui plugin
+     * Setup helpers
      *
      * @return void
      */
-    protected function _setupBootstrapUI()
+    protected function _setupHelpers()
     {
         $this->loadHelper('Html', ['className' => 'BootstrapUI.Html']);
         $this->loadHelper('Form', [
@@ -74,6 +76,7 @@ class CrudView extends View
         $this->loadHelper('Flash', ['className' => 'BootstrapUI.Flash']);
         $this->loadHelper('Paginator', ['className' => 'BootstrapUI.Paginator']);
 
+        $this->loadHelper('CrudView.CrudView');
     }
 
     /**
@@ -83,13 +86,10 @@ class CrudView extends View
      */
     protected function _setupPaths()
     {
-        $crudTemplates = dirname(dirname(__FILE__)) . DS . 'Template' . DS;
-        $paths = (array)Configure::read('App.paths.templates');
+        $existing = Configure::read('App.paths.templates');
+        $existing[] = Plugin::classPath('CrudView') . 'Template' . DS;
 
-        if (!in_array($crudTemplates, $paths)) {
-            $paths[] = $crudTemplates;
-            Configure::write('App.paths.templates', $paths);
-        }
+        Configure::write('App.paths.templates', $existing);
     }
 
     /**
