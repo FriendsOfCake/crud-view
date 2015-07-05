@@ -81,10 +81,6 @@ class CrudViewHelper extends Helper
 
         $value = $this->introspect($field, $value, $options);
 
-        if ($field === $this->getViewVar('displayField')) {
-            $value = $this->Html->link($value, ['action' => 'view', $data->get($this->getViewVar('primaryKey'))]);
-        }
-
         return $value;
     }
 
@@ -138,7 +134,13 @@ class CrudViewHelper extends Helper
             return $this->formatTime($field, $value, $options);
         }
 
-        return $this->formatString($field, $value, $options);
+        $value = $this->formatString($field, $value, $options);
+
+        if ($field === $this->getViewVar('displayField')) {
+            $value = $this->createViewLink($value);
+        }
+
+        return $value;
     }
 
     /**
@@ -291,6 +293,20 @@ class CrudViewHelper extends Helper
                     'redirect_url' => $this->request->here
                 ]
             ]
+        );
+    }
+
+    /**
+     * Create view link.
+     *
+     * @param string $title Link title
+     * @return string
+     */
+    public function createViewLink($title)
+    {
+        return $this->Html->link(
+            $title,
+            ['action' => 'view', $this->getContext()->get($this->getViewVar('primaryKey'))]
         );
     }
 
