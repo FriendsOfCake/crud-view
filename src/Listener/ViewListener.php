@@ -1,9 +1,7 @@
 <?php
 namespace CrudView\Listener;
 
-use Cake\Core\App;
 use Cake\Core\Configure;
-use Cake\Core\Plugin;
 use Cake\Datasource\ConnectionManager;
 use Cake\Event\Event;
 use Cake\Utility\Hash;
@@ -330,7 +328,7 @@ class ViewListener extends BaseListener
      *
      * @return array
      */
-    public function _getAllowedActions()
+    protected function _getAllowedActions()
     {
         $actions = $this->_action()->config('scaffold.actions');
         if ($actions !== null) {
@@ -434,6 +432,11 @@ class ViewListener extends BaseListener
         return $value;
     }
 
+    /**
+     * Get table links
+     *
+     * @return array
+     */
     protected function _getTables()
     {
         $action = $this->_action();
@@ -472,24 +475,44 @@ class ViewListener extends BaseListener
         return $normal;
     }
 
+    /**
+     * Get view blocks.
+     *
+     * @return array
+     */
     protected function _getViewBlocks()
     {
         $action = $this->_action();
         return $action->config('scaffold.viewblocks') ?: [];
     }
 
+    /**
+     * Get bulk actions blocks.
+     *
+     * @return array
+     */
     protected function _getBulkActions()
     {
         $action = $this->_action();
         return $action->config('scaffold.bulk_actions') ?: [];
     }
 
+    /**
+     * Get form url.
+     *
+     * @return mixed
+     */
     protected function _getFormUrl()
     {
         $action = $this->_action();
         return $action->config('scaffold.form_action') ?: null;
     }
 
+    /**
+     * Disable extra buttons.
+     *
+     * @return bool
+     */
     protected function _getDisableExtraButtons()
     {
         $action = $this->_action();

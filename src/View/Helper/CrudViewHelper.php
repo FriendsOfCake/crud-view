@@ -21,9 +21,9 @@ class CrudViewHelper extends Helper
     /**
      * Context
      *
-     * @var array
+     * @var \Cake\ORM\Entity
      */
-    protected $_context = array();
+    protected $_context;
 
     /**
      * Set context
@@ -112,7 +112,7 @@ class CrudViewHelper extends Helper
      * @param array $options Options array.
      * @return string formatted value
      */
-    public function introspect($field, $value, array $options = array())
+    public function introspect($field, $value, array $options = [])
     {
         $output = $this->relation($field, $value, $options);
 
@@ -126,7 +126,7 @@ class CrudViewHelper extends Helper
             return $this->formatBoolean($field, $value, $options);
         }
 
-        if (in_array($type, array('datetime', 'date', 'timestamp'))) {
+        if (in_array($type, ['datetime', 'date', 'timestamp'])) {
             return $this->formatDate($field, $value, $options);
         }
 
@@ -257,12 +257,12 @@ class CrudViewHelper extends Helper
             return null;
         }
 
-        return $this->Form->hidden('redirect_url', array(
+        return $this->Form->hidden('redirect_url', [
             'name' => 'redirect_url',
             'value' => $redirectUrl,
             'id' => null,
             'secure' => FormHelper::SECURE_SKIP
-        ));
+        ]);
     }
 
     /**
@@ -351,15 +351,18 @@ class CrudViewHelper extends Helper
         $viewClasses = (array)$this->getViewVar('viewClasses');
         $args = func_get_args();
 
-        return implode(array_unique(array_merge(
-            [
-                'scaffold-action',
-                sprintf('scaffold-action-%s', $action),
-                sprintf('scaffold-controller-%s', $pluralVar),
-                sprintf('scaffold-%s-%s', $pluralVar, $action),
-            ],
-            $args,
-            $viewClasses
-        )), ' ');
+        return implode(
+            array_unique(array_merge(
+                [
+                    'scaffold-action',
+                    sprintf('scaffold-action-%s', $action),
+                    sprintf('scaffold-controller-%s', $pluralVar),
+                    sprintf('scaffold-%s-%s', $pluralVar, $action),
+                ],
+                $args,
+                $viewClasses
+            )),
+            ' '
+        );
     }
 }
