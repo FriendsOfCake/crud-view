@@ -59,8 +59,6 @@ class CrudViewHelper extends Helper
         $this->setContext($data);
 
         $value = $this->fieldValue($data, $field);
-
-        $options = (array)$options;
         $options += ['formatter' => null];
 
         if ($options['formatter'] === 'element') {
