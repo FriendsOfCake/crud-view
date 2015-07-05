@@ -2,13 +2,20 @@
 namespace CrudView\View\Cell;
 
 use Cake\Datasource\ConnectionManager;
-use Cake\View\Cell;
 use Cake\Utility\Inflector;
+use Cake\View\Cell;
 
 class TablesListCell extends Cell
 {
 
-    public function display($tables, $blacklist)
+    /**
+     * Default cell method.
+     *
+     * @param array $tables Tables list.
+     * @param array $blacklist Blacklisted tables list.
+     * @return array
+     */
+    public function display($tables = null, $blacklist = null)
     {
         if (empty($tables)) {
             $connection = ConnectionManager::get('default');
@@ -42,5 +49,4 @@ class TablesListCell extends Cell
 
         return $this->set('tables', $normal);
     }
-
 }
