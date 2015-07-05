@@ -12,6 +12,14 @@ jQuery(document).on('ready', function() {
     });
   }
 
+  jQuery('[role=datetime-picker]').each(function() {
+    $(this).datetimepicker({
+      locale: $(this).data('locale'),
+      format: $(this).data('format'),
+      date: new Date($(this).data('timestamp') * 1000)
+    });
+  });
+
   jQuery('input.autocomplete').each(function () {
     var _this = jQuery(this);
     var cache = {};
