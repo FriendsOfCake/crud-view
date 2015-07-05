@@ -12,19 +12,6 @@ use Crud\Listener\BaseListener;
 
 class ViewListener extends BaseListener
 {
-    /**
-     * Initialize the listener
-     *
-     * @return void
-     */
-    public function initialize()
-    {
-        if ($this->_controller()->name === 'CakeError') {
-            return;
-        }
-
-        $this->_injectViewSearchPaths();
-    }
 
     /**
      * [beforeFind description]
@@ -70,8 +57,6 @@ class ViewListener extends BaseListener
 
         $this->ensureConfig();
 
-        $this->_injectHelpers();
-
         $controller = $this->_controller();
         $controller->set('title', $this->_getPageTitle());
         $controller->set('fields', $this->_scaffoldFields());
@@ -104,15 +89,15 @@ class ViewListener extends BaseListener
     }
 
     /**
-     * Make sure flash messages uses the views from BoostCake
+     * Make sure flash messages are properly handled by BootstrapUI.FlashHelper
      *
      * @param \Cake\Event\Event $event Event.
      * @return void
      */
     public function setFlash(Event $event)
     {
-        $event->subject->params['class'] = 'alert alert-dismissable ';
-        $event->subject->params['class'] .= (false !== strpos($event->subject->type, '.success')) ? 'alert-success' : 'alert-danger';
+        unset($event->subject->params['class']);
+        $event->subject->element = ltrim($event->subject->type);
     }
 
     /**
@@ -169,32 +154,6 @@ class ViewListener extends BaseListener
     protected function _blacklist()
     {
         return (array)$this->_action()->config('scaffold.fields_blacklist');
-    }
-
-    /**
-     * Inject helpers required for the frontend
-     *
-     * @return void
-     */
-    protected function _injectHelpers()
-    {
-        $Controller = $this->_controller();
-        $Controller->helpers[] = 'CrudView.CrudView';
-    }
-
-    /**
-     * Inject the CrudView View path into the views search path
-     * so in case the user do not provide their own view, we
-     * render our baked in templates first
-     *
-     * @return void
-     */
-    protected function _injectViewSearchPaths()
-    {
-        $existing = Configure::read('App.paths.templates');
-        $existing[] = Plugin::path('CrudView') . 'Template' . DS;
-
-        Configure::write('App.paths.templates', $existing);
     }
 
     /**
