@@ -1,9 +1,7 @@
 <?php
 namespace CrudView\Listener;
 
-use Cake\Core\App;
 use Cake\Core\Configure;
-use Cake\Core\Plugin;
 use Cake\Datasource\ConnectionManager;
 use Cake\Event\Event;
 use Cake\Utility\Hash;
