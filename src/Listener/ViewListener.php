@@ -511,7 +511,7 @@ class ViewListener extends BaseListener
     /**
      * Disable extra buttons.
      *
-     * @return boolean
+     * @return bool
      */
     protected function _getDisableExtraButtons()
     {
