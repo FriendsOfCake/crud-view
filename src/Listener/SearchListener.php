@@ -26,7 +26,7 @@ class SearchListener extends BaseListener
     public function implementedEvents()
     {
         return [
-            'Crud.afterPaginate' => array('callable' => 'afterPaginate')
+            'Crud.afterPaginate' => ['callable' => 'afterPaginate']
         ];
     }
 

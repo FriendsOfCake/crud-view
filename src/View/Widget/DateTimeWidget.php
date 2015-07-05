@@ -40,7 +40,7 @@ class DateTimeWidget extends CoreDateTimeWidget
             $val = $val->format('Y-m-d H:i:s');
         }
 
-        $widget =<<<html
+        $widget = <<<html
             <div class="input-group datetime">
                 <input type='text' class="form-control" name="$name" value="$val" id='$id' $required/>
                 <span class="input-group-addon">
