@@ -147,7 +147,9 @@ class CrudViewHelper extends Helper
      */
     public function formatBoolean($field, $value, array $options)
     {
-        return (bool)$value ? '<span class="label label-success">Yes</span>' : '<span class="label label-danger">No</span>';
+        return (bool)$value ?
+            $this->Html->label(__d('crud', 'Yes'), 'success') :
+            $this->Html->label(__d('crud', 'No'), 'danger');
     }
 
     /**
