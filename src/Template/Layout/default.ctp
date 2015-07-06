@@ -20,7 +20,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/">Crud View v0.1.0</a>
+                <a class="navbar-brand" href="/"><?= $brand ?></a>
             </div>
         </div>
     </nav>

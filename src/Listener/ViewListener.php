@@ -56,6 +56,7 @@ class ViewListener extends BaseListener
 
         $controller = $this->_controller();
         $controller->set('actionConfig', $this->_action()->config());
+        $controller->set('brand', $this->_getBrand());
         $controller->set('title', $this->_getPageTitle());
         $controller->set('fields', $this->_scaffoldFields());
         $controller->set('blacklist', $this->_blacklist());
@@ -96,6 +97,25 @@ class ViewListener extends BaseListener
     {
         unset($event->subject->params['class']);
         $event->subject->element = ltrim($event->subject->type);
+    }
+
+    /**
+     * Get the brand name to use in the default template.
+     *
+     * @return string
+     */
+    protected function _getBrand()
+    {
+        $brand = $action->config('scaffold.brand');
+        if (!empty($brand)) {
+            return $brand;
+        }
+
+        if (!$brand = Configure::read('App.brand')) {
+            $brand = 'Crud View';
+        }
+
+        return $brand;
     }
 
     /**
