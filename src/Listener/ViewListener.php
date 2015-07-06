@@ -308,13 +308,17 @@ class ViewListener extends BaseListener
             if ($scope === 'table') {
                 $table[$actionName] = [
                     'title' => Inflector::humanize($actionName),
-                    'controller' => $this->_request()->params['controller'],
+                    'url' => [
+                        'action' => $actionName
+                    ],
                     'method' => $method,
                 ];
             } elseif ($scope === 'entity') {
                 $entity[$actionName] = [
                     'title' => Inflector::humanize($actionName),
-                    'controller' => $this->_request()->params['controller'],
+                    'url' => [
+                        'action' => $actionName
+                    ],
                     'method' => $method,
                 ];
             }
