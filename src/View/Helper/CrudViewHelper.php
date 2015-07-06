@@ -166,6 +166,9 @@ class CrudViewHelper extends Helper
      */
     public function formatDate($field, $value, array $options)
     {
+        if ($value === null) {
+            return $this->Html->label(__d('crud', 'N/A'), 'info');
+        }
         return $this->Time->timeAgoInWords($value, $options);
     }
 
@@ -179,6 +182,9 @@ class CrudViewHelper extends Helper
      */
     public function formatTime($field, $value, array $options)
     {
+        if ($value === null) {
+            return $this->Html->label(__d('crud', 'N/A'), 'info');
+        }
         return $this->Time->nice($value, $options);
     }
 
