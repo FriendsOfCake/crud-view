@@ -59,8 +59,6 @@ class CrudViewHelper extends Helper
         $this->setContext($data);
 
         $value = $this->fieldValue($data, $field);
-
-        $options = (array)$options;
         $options += ['formatter' => null];
 
         if ($options['formatter'] === 'element') {
@@ -75,11 +73,11 @@ class CrudViewHelper extends Helper
             }
         }
 
-        $value = $this->introspect($field, $value, $options);
-
-        if ($field === $this->getViewVar('displayField')) {
-            $value = $this->Html->link($value, ['action' => 'view', $data->get($this->getViewVar('primaryKey'))]);
+        if (is_callable($options['formatter'])) {
+            return $options['formatter']($field, $value, $this->getContext(), $options);
         }
+
+        $value = $this->introspect($field, $value, $options);
 
         return $value;
     }
@@ -134,7 +132,13 @@ class CrudViewHelper extends Helper
             return $this->formatTime($field, $value, $options);
         }
 
-        return $this->formatString($field, $value, $options);
+        $value = $this->formatString($field, $value, $options);
+
+        if ($field === $this->getViewVar('displayField')) {
+            $value = $this->createViewLink($value);
+        }
+
+        return $value;
     }
 
     /**
@@ -147,7 +151,9 @@ class CrudViewHelper extends Helper
      */
     public function formatBoolean($field, $value, array $options)
     {
-        return (bool)$value ? '<span class="label label-success">Yes</span>' : '<span class="label label-danger">No</span>';
+        return (bool)$value ?
+            $this->Html->label(__d('crud', 'Yes'), 'success') :
+            $this->Html->label(__d('crud', 'No'), 'danger');
     }
 
     /**
@@ -285,6 +291,20 @@ class CrudViewHelper extends Helper
                     '_redirect_url' => $this->request->here
                 ]
             ]
+        );
+    }
+
+    /**
+     * Create view link.
+     *
+     * @param string $title Link title
+     * @return string
+     */
+    public function createViewLink($title)
+    {
+        return $this->Html->link(
+            $title,
+            ['action' => 'view', $this->getContext()->get($this->getViewVar('primaryKey'))]
         );
     }
 
