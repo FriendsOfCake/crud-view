@@ -37,12 +37,21 @@ class CrudView extends View
     }
 
     /**
-     * Read from config which css and js files to load, and add them to the output
+     * Read from config which css and js files to load, and add them to the output.
+     * If `AssetCompress` plugin is loaded, use the `asset_compress.ini` configuration
+     * that is part of this plugin.
      *
      * @return void
      */
     protected function _loadAssets()
     {
+        if (Plugin::loaded('AssetCompress')) {
+            $this->AssetCompress->css('CrudView.crudview', ['block' => true]);
+            $this->AssetCompress->script('CrudView.crudview_head', ['block' => 'headjs']);
+            $this->AssetCompress->script('CrudView.crudview', ['block' => true]);
+            return;
+        }
+
         $config = Configure::read('CrudView');
         if (!$config) {
             return;
@@ -78,6 +87,10 @@ class CrudView extends View
 
         $this->loadHelper('CrudView.CrudView');
         $this->loadHelper('BootstrapUI.Flash');
+
+        if (Plugin::loaded('AssetCompress')) {
+            $this->loadHelper('AssetCompress.AssetCompress');
+        }
     }
 
     /**
