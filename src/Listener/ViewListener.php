@@ -2,7 +2,6 @@
 namespace CrudView\Listener;
 
 use Cake\Core\Configure;
-use Cake\Datasource\ConnectionManager;
 use Cake\Event\Event;
 use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
@@ -56,12 +55,12 @@ class ViewListener extends BaseListener
         $this->ensureConfig();
 
         $controller = $this->_controller();
+        $controller->set('actionConfig', $this->_action()->config());
         $controller->set('title', $this->_getPageTitle());
         $controller->set('fields', $this->_scaffoldFields());
         $controller->set('blacklist', $this->_blacklist());
         $controller->set('actions', $this->_getControllerActions());
         $controller->set('associations', $this->_associations());
-        $controller->set('tables', $this->_getTables());
         $controller->set('bulkActions', $this->_getBulkActions());
         $controller->set('viewblocks', $this->_getViewBlocks());
         $controller->set('formUrl', $this->_getFormUrl());
@@ -430,49 +429,6 @@ class ViewListener extends BaseListener
         }
 
         return $value;
-    }
-
-    /**
-     * Get table links
-     *
-     * @return array
-     */
-    protected function _getTables()
-    {
-        $action = $this->_action();
-        $tables = $action->config('scaffold.tables');
-        if (empty($tables)) {
-            $connection = ConnectionManager::get('default');
-            $schema = $connection->schemaCollection();
-            $tables = $schema->listTables();
-            ksort($tables);
-
-            $blacklist = $action->config('scaffold.tables_blacklist');
-            if (!empty($blacklist)) {
-                $tables = array_diff($tables, $blacklist);
-            }
-        }
-
-        $normal = [];
-        foreach ($tables as $table => $config) {
-            if (is_string($config)) {
-                $config = ['table' => $config];
-            }
-
-            if (is_int($table)) {
-                $table = $config['table'];
-            }
-
-            $config += [
-                'action' => 'index',
-                'title' => Inflector::humanize($table),
-                'controller' => Inflector::camelize($table)
-            ];
-
-            $normal[$table] = $config;
-        }
-
-        return $normal;
     }
 
     /**
