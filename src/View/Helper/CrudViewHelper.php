@@ -135,7 +135,7 @@ class CrudViewHelper extends Helper
         $value = $this->formatString($field, $value, $options);
 
         if ($field === $this->getViewVar('displayField')) {
-            $value = $this->createViewLink($value);
+            $value = $this->createViewLink($value, ['escape' => false]);
         }
 
         return $value;
@@ -304,13 +304,15 @@ class CrudViewHelper extends Helper
      * Create view link.
      *
      * @param string $title Link title
+     * @param array $options Options array to be passed to the link function
      * @return string
      */
-    public function createViewLink($title)
+    public function createViewLink($title, $options = [])
     {
         return $this->Html->link(
             $title,
-            ['action' => 'view', $this->getContext()->get($this->getViewVar('primaryKey'))]
+            ['action' => 'view', $this->getContext()->get($this->getViewVar('primaryKey'))],
+            $options
         );
     }
 
