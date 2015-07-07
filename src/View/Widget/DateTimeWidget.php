@@ -24,30 +24,26 @@ class DateTimeWidget extends \Cake\View\Widget\DateTimeWidget
         $val = $data['val'];
         $type = $data['type'];
         $required = $data['required'] ? 'required' : '';
-        $timestamp = $year = $month = $day = $hour = $minute = false;
+        $format = null;
+        $timestamp = null;
         $locale = locale_get_primary_language(I18n::locale());
-        $format = $type === 'date' ? 'Y-m-d' : 'Y-m-d H:i:s';
+
         if (isset($data['data-format'])) {
-            $format = $data['data-format'];
+            $format = $this->_convertPHPToMomentFormat($data['data-format']);
         }
 
         if (!$val instanceof DateTime && !empty($val)) {
-            $val = Time::parseDateTime($val);
+            $val = $type === 'date' ? Time::parseDate($val) : Time::parseDateTime($val);
         }
 
         if ($val) {
-            $year = $val->format('Y');
-            $month = $val->format('m') - 1;
-            $day = $val->format('d');
-            if ($type !== 'date') {
-                $hour = $val->format('H');
-                $minute = $val->format('i');
-            }
-            $val = $val->format($format);
-            $timestamp = strtotime($val);
+            $timestamp = $val->format('U');
+            $val = $val->format($type === 'date' ? 'Y-m-d' : 'Y-m-d H:i:s');
         }
 
-        $format = $this->_convertPHPToMomentFormat($format);
+        if (!$format) {
+            $format = $type === 'date' ? 'L' : 'L LT';
+        }
 
         $widget = <<<html
             <div class="input-group $type">
