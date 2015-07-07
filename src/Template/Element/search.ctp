@@ -4,7 +4,7 @@ if (empty($searchInputs)) {
 }
 ?>
 
-<div class="row-fluid">
+<div class="row-fluid search-filters">
     <?php
     $searchOptions = isset($searchOptions) ? $searchOptions : [];
     $searchOptions += ['class' => 'form-inline', 'id' => 'searchFilter'];

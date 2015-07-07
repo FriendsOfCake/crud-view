@@ -39,3 +39,23 @@ div.input {
 h2 .actions {
     margin-left: 15px;
 }
+
+.search-filters .form-inline .form-group {
+    padding-left:10px;
+}
+
+.search-filters .form-inline .form-group label {
+    padding-right:10px;
+}
+
+.search-filters .form-inline .form-control {
+    min-width:90px !important;
+}
+
+.search-filters .form-inline .form-control input, .search-filters .form-inline .form-control select {
+    min-width:90px !important;
+}
+
+.selectize-input.items.full {
+    padding-right:33px;
+}
