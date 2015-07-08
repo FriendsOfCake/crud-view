@@ -225,4 +225,57 @@ options after saving the record and the latter will send the required
 information to the view so that the ``select`` widgets for associations get the
 correct options.
 
+Specifying the Fields to be Displayed
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+When adding a new record, you probably want to avoid some of the fields from
+being displayed as an input in the form. Use the ``scaffold.fields`` and
+``scaffold.fields_blacklist``.
+
+For example, let's avoid having inputs for the ``created`` and ``modified``
+fields in the form:
+
+
+.. code-block:: php
+  <?php
+
+    ...
+    public function add()
+    {
+      $action = $this->Crud->action();
+      $action->config('scaffold.fields_blacklist', ['created', 'modified']);
+      return $this->Crud->execute();
+    }
+
+It is also possible to directly specify which fields should have an input in the
+form by using the ``scaffold.fields`` configuration key:
+
+.. code-block:: php
+  <?php
+
+    ...
+    public function add()
+    {
+      $action = $this->Crud->action();
+      $action->config('scaffold.fields', ['title', 'body', 'category_id']);
+      return $this->Crud->execute();
+    }
+
+You can pass attributes or change the form input type to specific fields when
+using the ``scaffold.fields`` configuration key. For example, you may want to
+add the ``placeholder`` property to the ``title`` input:
+
+.. code-block:: php
+  <?php
+
+    ...
+    public function add()
+    {
+      $action = $this->Crud->action();
+      $action->config('scaffold.fields', [
+        'title' => ['placeholder' => 'Insert a title here'],
+        'body',
+        'category_id'
+      ]);
+      return $this->Crud->execute();
+    }
