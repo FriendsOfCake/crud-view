@@ -185,7 +185,8 @@ class CrudViewHelper extends Helper
         if ($value === null) {
             return $this->Html->label(__d('crud', 'N/A'), 'info');
         }
-        return $this->Time->nice($value, $options);
+        $format = isset($options['format']) ? $options['format'] : null;
+        return $this->Time->nice($value, $format);
     }
 
     /**
