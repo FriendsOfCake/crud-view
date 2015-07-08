@@ -6,12 +6,11 @@ plugin first. Since much of the features this plugin provides are implemented on
 top of the features exposed by the CRUD plugin, much of the documentation will
 just repeat what it is possible in it.
 
-Implementing an Index View
+Implementing an Index List
 --------------------------
 
 Rendering a list of the rows in a table is a matter of just adding the ``Crud.Index``
 action to the ``Crud`` component and the ``CrudView.View`` as a listener.
-
 
 .. code-block:: php
 
@@ -119,3 +118,111 @@ alter the ``contain()`` list for the pagination query:
       });
       return $this->Crud->execute();
     }
+
+Specifying the Fields to be Displayed
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you wish to control which fields should be displayed in the index table, use
+the ``scaffold.fields`` and ``scaffold.fields_blacklist`` configuration keys. By
+default, all fields from the table will be displayed
+
+For example, let's avoid the ``created`` and ``modified`` fields from being
+displayed in the index table:
+
+.. code-block:: php
+  <?php
+
+    ...
+    public function index()
+    {
+      $action = $this->Crud->action();
+      $action->config('scaffold.fields_blacklist', ['created', 'modified']);
+      return $this->Crud->execute();
+    }
+
+You can also be specific about the fields, and the order, in which they should
+appear in the index table:
+
+.. code-block:: php
+  <?php
+
+    ...
+    public function index()
+    {
+      $action = $this->Crud->action();
+      $action->config('scaffold.fields', ['title', 'body', 'category', 'published_time']);
+      return $this->Crud->execute();
+    }
+
+Linking to Actions
+~~~~~~~~~~~~~~~~~~
+
+At the end of each row in the index table, there will be a list of actions
+links, such as ``View``, ``Edit`` and ``Delete``. If you wish to control which
+actions should be displayed or not, use the ``scaffold.actions`` and
+``scaffold.actions_blacklist`` configurations keys.
+
+For example, imagine we wanted to remove the ``Delete`` link from the index
+table:
+
+.. code-block:: php
+  <?php
+
+    ...
+    public function index()
+    {
+      $action = $this->Crud->action();
+      $action->config('scaffold.actions_blacklist', ['delete']);
+      return $this->Crud->execute();
+    }
+
+Likewise, you can instruct the ``CrudView`` plugin on which actions should be
+specifically displayed in the index view:
+
+.. code-block:: php
+  <?php
+
+    ...
+    public function index()
+    {
+      $action = $this->Crud->action();
+      $action->config('scaffold.actions', ['view', 'add', 'edit']);
+      return $this->Crud->execute();
+    }
+
+Implementing an Add Action
+--------------------------
+
+If you have read this far, you know almost everything there is to know about
+configuring any type of action using ``CrudView``, but being explicit about what
+is available in all of them will not hurt.
+
+Implementing the ``Add`` action is done by adding the ``Crud.View`` action to
+the ``Crud`` component configuration:
+
+.. code-block:: php
+
+  <?php
+  public function initialize()
+  {
+      $this->loadComponent('Crud.Crud', [
+            'actions' => [
+              'Crud.Add',
+              ...
+            ],
+            'listeners' => [
+                'CrudView.View',
+                'Crud.Redirect'
+                'Crud.RelatedModels'
+                ...
+            ]
+        ]);
+    }
+
+For the ``Add`` action it is recommended that you add the ``Crud.Redirect`` and
+``Crud.RelatedModels`` listeners. The former will help adding more redirection
+options after saving the record and the latter will send the required
+information to the view so that the ``select`` widgets for associations get the
+correct options.
+
+
