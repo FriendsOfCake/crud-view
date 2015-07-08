@@ -34,8 +34,8 @@ can implement it to customize both the behavior and looks of the index listing
 page.
 
 .. code-block:: php
-  <?php
 
+    <?php
     ...
     class ArticlesController extends AppController
     {
@@ -52,8 +52,8 @@ the action object. The ``config()`` method can be used for both reading and
 writing.
 
 .. code-block:: php
-  <?php
 
+    <?php
     ...
     public function index()
     {
@@ -76,8 +76,8 @@ Fore example you may want to not fetch the ``Authors`` association of the
 ``Articles`` as you don't plan to show it in the index table:
 
 .. code-block:: php
-  <?php
 
+    <?php
     ...
     public function index()
     {
@@ -90,8 +90,8 @@ If you want to be specific about which association need to be fetched, just use
 the ``scaffold.relations`` configuration key:
 
 .. code-block:: php
-  <?php
 
+    <?php
     ...
     public function index()
     {
@@ -104,8 +104,8 @@ Alternatively, you can use the ``Crud`` plugin's ``beforePaginate`` method to
 alter the ``contain()`` list for the pagination query:
 
 .. code-block:: php
-  <?php
 
+    <?php
     ...
     public function index()
     {
@@ -130,8 +130,8 @@ For example, let's avoid the ``created`` and ``modified`` fields from being
 displayed in the index table:
 
 .. code-block:: php
-  <?php
 
+    <?php
     ...
     public function index()
     {
@@ -144,8 +144,8 @@ You can also be specific about the fields, and the order, in which they should
 appear in the index table:
 
 .. code-block:: php
-  <?php
 
+    <?php
     ...
     public function index()
     {
@@ -166,8 +166,8 @@ For example, imagine we wanted to remove the ``Delete`` link from the index
 table:
 
 .. code-block:: php
-  <?php
 
+    <?php
     ...
     public function index()
     {
@@ -180,8 +180,8 @@ Likewise, you can instruct the ``CrudView`` plugin on which actions should be
 specifically displayed in the index view:
 
 .. code-block:: php
-  <?php
 
+    <?php
     ...
     public function index()
     {
@@ -237,8 +237,8 @@ fields in the form:
 
 
 .. code-block:: php
-  <?php
 
+    <?php
     ...
     public function add()
     {
@@ -251,8 +251,8 @@ It is also possible to directly specify which fields should have an input in the
 form by using the ``scaffold.fields`` configuration key:
 
 .. code-block:: php
-  <?php
 
+    <?php
     ...
     public function add()
     {
@@ -266,8 +266,8 @@ using the ``scaffold.fields`` configuration key. For example, you may want to
 add the ``placeholder`` property to the ``title`` input:
 
 .. code-block:: php
-  <?php
 
+    <?php
     ...
     public function add()
     {
