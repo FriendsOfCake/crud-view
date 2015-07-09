@@ -176,6 +176,9 @@ class CrudView extends View
      */
     protected function _getViewFileName($name = null)
     {
+        if ($this->viewPath === 'Error') {
+            return parent::_getViewFileName($name);
+        }
         try {
             return parent::_getViewFileName($name);
         } catch (MissingTemplateException $exception) {
