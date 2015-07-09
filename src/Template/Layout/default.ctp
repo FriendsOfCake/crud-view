@@ -34,6 +34,7 @@
                 <?= $this->Flash->render(); ?>
                 <?= $this->fetch('content'); ?>
             </div>
+        </div>
     </div>
 
     <?= $this->fetch('script'); ?>
