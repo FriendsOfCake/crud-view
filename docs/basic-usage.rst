@@ -279,3 +279,8 @@ add the ``placeholder`` property to the ``title`` input:
       ]);
       return $this->Crud->execute();
     }
+
+Limiting the Associations Information
+-------------------------------------
+
+
