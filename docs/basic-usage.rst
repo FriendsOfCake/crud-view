@@ -283,4 +283,48 @@ add the ``placeholder`` property to the ``title`` input:
 Limiting the Associations Information
 -------------------------------------
 
+By default the ``RelatedModels`` listener will populate the select boxes in the
+form by looking up all the records from the associated tables. For example, when
+creating an Article, if you have a ``Categories`` association it will populate
+the select box for the ``category_id`` field.
+
+
+For a full explanation on ``RelatedModels`` please visit the `CRUD Documentation
+for the RelatedModelsListener <http://crud.readthedocs.org/en/latest/listeners/related-models.html>`_.
+
+If you want to alter the query that is used for an association in particular,
+you can use the ``relatedModels`` event:
+
+.. code-block:: php
+
+    <?php
+    ...
+    public function add()
+    {
+      $this->Crud->on('relatedModel', function(\Cake\Event\Event $event) {
+          if ($event->subject->association->name() === 'Categories') {
+            $event->subject->query->limit(3);
+            $event->subject->query->where(['is_active' => true]);
+          }
+      });
+      return $this->Crud->execute();
+    }
+
+Disabling the Extra Submit Buttons
+----------------------------------
+
+You may have noticed already that in the ``add`` form there are multiple submit
+buttons. If you wish to only keep the "Save" button, you set the ``scaffold.disable_extra_buttons``
+configuration key to ``true``:
+
+.. code-block:: php
+
+    <?php
+    ...
+    public function add()
+    {
+      $action = $this->Crud->action();
+      $action->config('scaffold.disable_extra_buttons', true);
+      return $this->Crud->execute();
+    }
 
