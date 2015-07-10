@@ -28,19 +28,13 @@ foreach ($actions as $config) {
     if (!empty($config['callback'])) {
         $callback = $config['callback'];
         unset($config['callback']);
-        $config['linkOptions'] = $linkOptions;
+        $config['options'] = $linkOptions;
         echo $callback($config, !empty($singularVar) ? $singularVar : null);
     }
 
     $url = $config['url'];
     if (!empty($singularVar)) {
-        if (!empty($config['map'])) {
-            foreach ($config['map'] as $key => $prop) {
-                $url[$key] = $singularVar[$prop];
-            }
-        } else {
-            $url[] = $singularVar->{$primaryKey};
-        }
+        $url[] = $singularVar->{$primaryKey};
     }
 
     if ($config['method'] !== 'GET') {
