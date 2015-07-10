@@ -225,10 +225,39 @@ options after saving the record and the latter will send the required
 information to the view so that the ``select`` widgets for associations get the
 correct options.
 
-Specifying the Fields to be Displayed
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Implementing an Edit Action
+---------------------------
 
-When adding a new record, you probably want to avoid some of the fields from
+Likewise, edit actions can be implemented by adding the right configuration to
+the ``Crud`` component. This is the recommended configuration:
+
+.. code-block:: php
+
+  <?php
+  public function initialize()
+  {
+      $this->loadComponent('Crud.Crud', [
+            'actions' => [
+              'Crud.Edit',
+              ...
+            ],
+            'listeners' => [
+                'CrudView.View',
+                'Crud.Redirect'
+                'Crud.RelatedModels'
+                ...
+            ]
+        ]);
+    }
+
+As with the ``Add`` action, the ``Crud.Redirect`` and
+``Crud.RelatedModels`` listeners will help handling redirection after save and
+help populate the ``select`` widgets for associations.
+
+Specifying the Fields to be Displayed
+-------------------------------------
+
+When adding or editing a record, you probably want to avoid some of the fields from
 being displayed as an input in the form. Use the ``scaffold.fields`` and
 ``scaffold.fields_blacklist``.
 
@@ -254,7 +283,7 @@ form by using the ``scaffold.fields`` configuration key:
 
     <?php
     ...
-    public function add()
+    public function edit()
     {
       $action = $this->Crud->action();
       $action->config('scaffold.fields', ['title', 'body', 'category_id']);
@@ -279,6 +308,8 @@ add the ``placeholder`` property to the ``title`` input:
       ]);
       return $this->Crud->execute();
     }
+
+The configuration can be used in both ``add`` and ``edit`` actions.
 
 Limiting the Associations Information
 -------------------------------------
@@ -310,6 +341,48 @@ you can use the ``relatedModels`` event:
       return $this->Crud->execute();
     }
 
+The callback can be used in both ``add`` and ``edit`` actions.
+
+Pre-Selecting Association Options
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In order to pre-select the right association options in an ``edit`` action, for
+example pre-selecting the ``category_id`` in the categories select box,
+``CrudView`` will automatically fetch all associations for the entity to be
+modified.
+
+This can be wasteful at times, especially if you only allow a few associations
+to be saved. For this case, you may use the ``scaffold.relations`` and
+``scaffold.relations_blacklist`` to control what associations are added to
+``contain()``:
+
+.. code-block:: php
+
+    <?php
+    ...
+    public function edit()
+    {
+      $action $this->Crud->action();
+      // Only fetch association info for Categories and Tags
+      $action->config('scaffold.relations', ['Categories', 'Tags']);
+      return $this->Crud->execute();
+    }
+
+If you choose to use ``scaffold.relations_blacklist``, then you need only
+specify those association that should not be added to ``contain()``:
+
+.. code-block:: php
+
+    <?php
+    ...
+    public function edit()
+    {
+      $action $this->Crud->action();
+      // Only fetch association info for Categories and Tags
+      $action->config('scaffold.relations_blacklist', ['Authors']);
+      return $this->Crud->execute();
+    }
+
 Disabling the Extra Submit Buttons
 ----------------------------------
 
@@ -328,3 +401,4 @@ configuration key to ``true``:
       return $this->Crud->execute();
     }
 
+The setting can be used in both ``add`` and ``edit`` actions.
