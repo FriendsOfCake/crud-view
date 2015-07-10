@@ -401,7 +401,25 @@ configuration key to ``true``:
       return $this->Crud->execute();
     }
 
-The setting can be used in both ``add`` and ``edit`` actions.
+It is also possible to only disable a few of the extra submit buttons by using
+the ``scaffold.extra_buttons_blacklist`` configuration key:
+
+.. code-block:: php
+
+    <?php
+    ...
+    public function add()
+    {
+      $action = $this->Crud->action();
+      $action->config('scaffold.extra_buttons_blacklist', [
+        'save_and_continue', // Hide the Save and Continue button
+        'save_and_create', // Hide the Save and create new button
+        'back', // Hide the back button
+      ]);
+      return $this->Crud->execute();
+    }
+
+Both settings can be used in ``add`` and ``edit`` actions.
 
 Implementing a View Action
 --------------------------
