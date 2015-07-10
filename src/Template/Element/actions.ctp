@@ -2,9 +2,8 @@
 foreach ($actions as $config) {
     $config += ['method' => 'GET'];
 
-    if ((empty($config['url']['controller']) ||
-            $this->request->controller === $config['url']['controller']) &&
-        $this->request->action === $config['url']['action']
+    if ((empty($config['url']['controller']) || $this->request->controller === $config['url']['controller']) &&
+        (!empty($config['url']['action']) && $this->request->action === $config['url']['action'])
     ) {
         continue;
     }
@@ -24,6 +23,13 @@ foreach ($actions as $config) {
         $linkOptions += [
             'method' => $config['method']
         ];
+    }
+
+    if (!empty($config['callback'])) {
+        $callback = $config['callback'];
+        unset($config['callback']);
+        $config['linkOptions'] = $linkOptions;
+        echo $callback($config, !empty($singularVar) ? $singularVar : null);
     }
 
     $url = $config['url'];
