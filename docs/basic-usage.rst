@@ -402,3 +402,125 @@ configuration key to ``true``:
     }
 
 The setting can be used in both ``add`` and ``edit`` actions.
+
+Implementing a View Action
+--------------------------
+
+Implementing a ``View`` action, for displaying the full information for
+a record, including its associations is also achieved via configuring the
+``Crud`` component:
+
+.. code-block:: php
+
+  <?php
+  public function initialize()
+  {
+      $this->loadComponent('Crud.Crud', [
+            'actions' => [
+              'Crud.View',
+              ...
+            ],
+            'listeners' => [
+                'CrudView.View',
+                ...
+            ]
+        ]);
+    }
+
+For this type of action there are no extra recommended listeners that you can
+apply, but there are some configuration options you can use to customize the
+information that is displayed.
+
+Specifying the Fields to be Displayed
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you wish to control which fields should be displayed in the view table, use
+the ``scaffold.fields`` and ``scaffold.fields_blacklist`` configuration keys. By
+default, all fields from the table will be displayed
+
+For example, let's avoid the ``created`` and ``modified`` fields from being
+displayed in the view table:
+
+.. code-block:: php
+
+    <?php
+    ...
+    public function view()
+    {
+      $action = $this->Crud->action();
+      $action->config('scaffold.fields_blacklist', ['created', 'modified']);
+      return $this->Crud->execute();
+    }
+
+You can also be specific about the fields, and the order, in which they should
+appear in the index table:
+
+.. code-block:: php
+
+    <?php
+    ...
+    public function view()
+    {
+      $action = $this->Crud->action();
+      $action->config('scaffold.fields', ['title', 'body', 'category', 'published_time']);
+      return $this->Crud->execute();
+    }
+
+Providing Associations to be Displayed
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+By default all associations are fetched so they can be displayed in the view action.
+Similarly to the ``Index`` action, you can use the ``scaffold.relations`` and
+the ``scaffold.relations_blacklist``
+
+Fore example you may want to not fetch the ``Authors`` association of the
+``Articles`` as it may be implicit by the currently logged-in user:
+
+.. code-block:: php
+
+    <?php
+    ...
+    public function view()
+    {
+      $action = $this->Crud->action();
+      $action->config('scaffold.relations_blacklist', ['Authors', ...]);
+      return $this->Crud->execute();
+    }
+
+If you want to be specific about which association need to be fetched, just use
+the ``scaffold.relations`` configuration key:
+
+.. code-block:: php
+
+    <?php
+    ...
+    public function view()
+    {
+      $action = $this->Crud->action();
+      $action->config('scaffold.relations', ['Categories', 'Tags']);
+      return $this->Crud->execute();
+    }
+
+Alternatively, you can use the ``Crud`` plugin's ``beforePaginate`` method to
+alter the ``contain()`` list for the pagination query:
+
+.. code-block:: php
+
+    <?php
+    ...
+    public function view()
+    {
+      $this->Crud->on('beforeFind', function ($event) {
+        $event->subject()->query->contain([
+          'Categories',
+          'Authors' => ['fields' => ['id', 'name']]
+        ]);
+      });
+      return $this->Crud->execute();
+    }
+
+Going Forward
+-------------
+
+The following chapters will show you how to customize the output of each field,
+how to override parts of the templates and implementing search auto-completion.
