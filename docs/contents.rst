@@ -5,3 +5,4 @@ Contents
    index
    installation
    basic-usage
+   customizing-templates
