@@ -3,10 +3,27 @@ foreach ($actions as $config) {
     $config += ['method' => 'GET'];
 
     if ((empty($config['url']['controller']) ||
-        $this->request->controller === $config['url']['controller']) &&
+            $this->request->controller === $config['url']['controller']) &&
         $this->request->action === $config['url']['action']
     ) {
         continue;
+    }
+
+    $linkOptions = ['class' => 'btn btn-default'];
+    if (isset($config['options'])) {
+        $linkOptions = $config['options'] + $linkOptions;
+    }
+
+    if ($config['method'] === 'DELETE') {
+        $linkOptions += [
+            'confirm' => __d('crud', 'Are you sure you want to delete record #{0}?', [$singularVar->{$primaryKey}])
+        ];
+    }
+
+    if ($config['method'] !== 'GET') {
+        $linkOptions += [
+            'method' => $config['method']
+        ];
     }
 
     $url = $config['url'];
@@ -20,20 +37,11 @@ foreach ($actions as $config) {
         }
     }
 
-    $options = ['class' => 'btn btn-default'];
-    if (isset($config['options'])) {
-        $options = $config['options'] + $options;
-    }
-
     if ($config['method'] !== 'GET') {
-        $options += [
-            'confirm' => __d('crud', 'Are you sure you want to delete record #{0}?', [$singularVar->{$primaryKey}]),
-            'method' => $config['method']
-        ];
         echo $this->Form->postLink(
             $config['title'],
             $url,
-            $options
+            $linkOptions
         );
         continue;
     }
@@ -41,7 +49,6 @@ foreach ($actions as $config) {
     echo $this->Html->link(
         $config['title'],
         $url,
-        $options
+        $linkOptions
     );
-
 }
