@@ -65,6 +65,7 @@ class ViewListener extends BaseListener
         $controller->set('viewblocks', $this->_getViewBlocks());
         $controller->set('formUrl', $this->_getFormUrl());
         $controller->set('disableExtraButtons', $this->_getDisableExtraButtons());
+        $controller->set('extraButtonsBlacklist', $this->_getExtraButtonsBlacklist());
         $controller->set($this->_getPageVariables());
     }
 
@@ -473,5 +474,16 @@ class ViewListener extends BaseListener
     {
         $action = $this->_action();
         return $action->config('scaffold.disable_extra_buttons') ?: false;
+    }
+
+    /**
+     * Get extra buttons blacklist
+     *
+     * @return array
+     */
+    protected function _getExtraButtonsBlacklist()
+    {
+        $action = $this->_action();
+        return $action->config('scaffold.extra_buttons_blacklist') ?: [];
     }
 }

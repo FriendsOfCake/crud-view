@@ -23,9 +23,15 @@
                     <?php
                         echo $this->Form->submit(__d('crud', 'Save'), ['class' => 'btn btn-primary', 'div' => false, 'name' => '_save']);
                         if (empty($disableExtraButtons)) {
-                            echo $this->Form->submit(__d('crud', 'Save & continue editing'), ['class' => 'btn btn-success btn-save-continue', 'div' => false, 'name' => '_edit']);
-                            echo $this->Form->submit(__d('crud', 'Save & create new'), ['class' => 'btn btn-success', 'div' => false, 'name' => '_add']);
-                            echo $this->Html->link(__d('crud', 'Back'), ['action' => 'index'], ['class' => 'btn btn-default', 'div' => false]);
+                            if (!in_array('save_and_continue', $extraButtonsBlacklist)) {
+                                echo $this->Form->submit(__d('crud', 'Save & continue editing'), ['class' => 'btn btn-success btn-save-continue', 'div' => false, 'name' => '_edit']);
+                            }
+                            if (!in_array('save_and_create', $extraButtonsBlacklist)) {
+                                echo $this->Form->submit(__d('crud', 'Save & create new'), ['class' => 'btn btn-success', 'div' => false, 'name' => '_add']);
+                            }
+                            if (!in_array('back', $extraButtonsBlacklist)) {
+                                echo $this->Html->link(__d('crud', 'Back'), ['action' => 'index'], ['class' => 'btn btn-default', 'div' => false]);
+                            }
                         }
                     ?>
                 </div>
