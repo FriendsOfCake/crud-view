@@ -8,4 +8,5 @@ if (!$this->exists('actions')) {
     $this->end();
 }
 ?>
-<h2><?= $this->get('title'); ?><span class="actions"><?= $this->fetch('actions'); ?></span></h2>
+<h2><?= $this->get('title'); ?></h2>
+<p class="actions"><?= $this->fetch('actions'); ?></p>
