@@ -214,14 +214,13 @@ class ViewListener extends BaseListener
         }
 
         $primaryKeyValue = $this->_primaryKeyValue();
-        $displayFieldValue = $this->_displayFieldValue();
-
-        if ($displayFieldValue === null) {
-            return sprintf('%s %s #%s', $actionName, $controllerName, $primaryKeyValue);
+        if ($primaryKeyValue === null) {
+            return sprintf('%s %s', $actionName, $controllerName);
         }
 
-        if ($primaryKeyValue === null) {
-            return sprintf('%s %s %s', $actionName, $controllerName, $displayFieldValue);
+        $displayFieldValue = $this->_displayFieldValue();
+        if ($displayFieldValue === null) {
+            return sprintf('%s %s #%s', $actionName, $controllerName, $primaryKeyValue);
         }
 
         return sprintf('%s %s #%s: %s', $actionName, $controllerName, $primaryKeyValue, $displayFieldValue);
