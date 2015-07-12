@@ -8,12 +8,6 @@
     <div class="row">
         <div class="col-lg-<?= $this->exists('form.sidebar') ? '8' : '12' ?>">
             <?= $this->Form->inputs($fields, ['legend' => false]); ?>
-            <?php
-            $this->Html->scriptBlock(
-                '$("select[multiple]").selectize({plugins: ["remove_button"]})',
-                ['block' => true]
-            );
-            ?>
         </div>
 
         <?php if ($this->exists('form.sidebar')) : ?>

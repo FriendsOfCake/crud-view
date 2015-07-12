@@ -20,7 +20,9 @@ jQuery(document).on('ready', function() {
     });
   });
 
-  $('input.autocomplete, select.autocomplete').each(function (i, e) {
+    $('select[multiple]').selectize({plugins: ['remove_button']});
+
+    $('input.autocomplete, select.autocomplete').each(function (i, e) {
         e = $(e);
         e.selectize({
             maxItems: 1,
