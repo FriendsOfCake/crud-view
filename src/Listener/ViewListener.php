@@ -106,16 +106,12 @@ class ViewListener extends BaseListener
      */
     protected function _getBrand()
     {
-        $brand = $action->config('scaffold.brand');
+        $brand = $this->_action()->config('scaffold.brand');
         if (!empty($brand)) {
             return $brand;
         }
 
-        if (!$brand = Configure::read('App.brand')) {
-            $brand = 'Crud View';
-        }
-
-        return $brand;
+        return Configure::read('CrudView.brand');
     }
 
     /**
