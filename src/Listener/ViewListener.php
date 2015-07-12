@@ -257,7 +257,7 @@ class ViewListener extends BaseListener
             $scaffoldFields = Hash::normalize($configuredFields);
         } else {
             $cols = $this->_table()->schema()->columns();
-            $scaffoldFields = array_combine(array_values($cols), array_fill(0, count($cols), []));
+            $scaffoldFields = Hash::normalize($cols);
 
             $scope = $action->config('scope');
             if ($scope === 'entity' && !empty($associations['manyToMany'])) {
