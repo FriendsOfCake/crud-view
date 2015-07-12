@@ -1,26 +1,26 @@
-jQuery(document).on('ready', function() {
+$(document).on('ready', function() {
 
-  var bulkActionForm = jQuery('.bulk-actions');
-  if (bulkActionForm.length) {
-    bulkActionForm.submit(function (e) {
-      var action = jQuery('.bulk-actions .bulk-action-submit select').val();
-      if (!action) {
-        return e.preventDefault();
-      }
+    var bulkActionForm = $('.bulk-actions');
+    if (bulkActionForm.length) {
+        bulkActionForm.submit(function (e) {
+            var action = $('.bulk-actions .bulk-action-submit select').val();
+            if (!action) {
+                return e.preventDefault();
+            }
 
-      bulkActionForm.attr('action', action);
+            bulkActionForm.attr('action', action);
+        });
+    }
+
+    $('[role=datetime-picker]').each(function() {
+        $(this).datetimepicker({
+            locale: $(this).data('locale'),
+            format: $(this).data('format'),
+            date: new Date($(this).data('timestamp') * 1000)
+        });
     });
-  }
 
-  jQuery('[role=datetime-picker]').each(function() {
-    $(this).datetimepicker({
-      locale: $(this).data('locale'),
-      format: $(this).data('format'),
-      date: new Date($(this).data('timestamp') * 1000)
-    });
-  });
-
-    $('select[multiple]').selectize({plugins: ['remove_button']});
+    $('select').selectize({plugins: ['remove_button']});
 
     $('input.autocomplete, select.autocomplete').each(function (i, e) {
         e = $(e);
