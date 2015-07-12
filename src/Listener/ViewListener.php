@@ -58,10 +58,11 @@ class ViewListener extends BaseListener
         $controller->set('actionConfig', $this->_action()->config());
         $controller->set('brand', $this->_getBrand());
         $controller->set('title', $this->_getPageTitle());
-        $controller->set('fields', $this->_scaffoldFields());
+        $associations = $this->_associations();
+        $controller->set(compact('associations'));
+        $controller->set('fields', $this->_scaffoldFields($associations));
         $controller->set('blacklist', $this->_blacklist());
         $controller->set('actions', $this->_getControllerActions());
-        $controller->set('associations', $this->_associations());
         $controller->set('bulkActions', $this->_getBulkActions());
         $controller->set('viewblocks', $this->_getViewBlocks());
         $controller->set('formUrl', $this->_getFormUrl());
@@ -245,17 +246,27 @@ class ViewListener extends BaseListener
     /**
      * Returns fields to be displayed on scaffolded template
      *
+     * @param array $assocations Associations list.
      * @return array
      */
-    protected function _scaffoldFields()
+    protected function _scaffoldFields(array $associations = [])
     {
-        $cols = $this->_table()->schema()->columns();
-        $scaffoldFields = array_combine(array_values($cols), array_fill(0, count($cols), []));
-
         $action = $this->_action();
         $configuredFields = $action->config('scaffold.fields');
         if (!empty($configuredFields)) {
             $scaffoldFields = Hash::normalize($configuredFields);
+        } else {
+            $cols = $this->_table()->schema()->columns();
+            $scaffoldFields = Hash::normalize($cols);
+
+            $scope = $action->config('scope');
+            if ($scope === 'entity' && !empty($associations['manyToMany'])) {
+                foreach ($associations['manyToMany'] as $alias => $options) {
+                    $scaffoldFields[sprintf('%s._ids', $options['entities'])] = [
+                        'multiple' => true
+                    ];
+                }
+            }
         }
 
         // Check for blacklisted fields
