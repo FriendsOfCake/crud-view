@@ -30,7 +30,7 @@
                                 echo $this->Form->button(__d('crud', 'Save & create new'), ['class' => 'btn btn-success', 'name' => '_add']);
                             }
                             if (!in_array('back', $extraButtonsBlacklist)) {
-                                echo $this->Html->link(__d('crud', 'Back'), ['action' => 'index'], ['class' => 'btn btn-default']);
+                                echo $this->Html->link(__d('crud', 'Back'), ['action' => 'index'], ['class' => 'btn btn-default', 'role' => 'button']);
                             }
                         }
                     ?>
