@@ -29,7 +29,7 @@ foreach ($actions as $config) {
         $callback = $config['callback'];
         unset($config['callback']);
         $config['options'] = $linkOptions;
-        echo $callback($config, !empty($singularVar) ? $singularVar : null);
+        echo $callback($config, !empty($singularVar) ? $singularVar : null, $this);
     }
 
     $url = $config['url'];
