@@ -20,7 +20,7 @@ $(document).on('ready', function() {
         });
     });
 
-    $('select').selectize({plugins: ['remove_button']});
+    $('select:not(.autocomplete, .no-selectize)').selectize({plugins: ['remove_button']});
 
     $('input.autocomplete, select.autocomplete').each(function (i, e) {
         e = $(e);
