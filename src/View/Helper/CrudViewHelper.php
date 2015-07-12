@@ -146,10 +146,9 @@ class CrudViewHelper extends Helper
      *
      * @param string $field Name of field.
      * @param array $value Value of field.
-     * @param array $options Options array.
      * @return string
      */
-    public function formatBoolean($field, $value, array $options)
+    public function formatBoolean($field, $value)
     {
         return (bool)$value ?
             $this->Html->label(__d('crud', 'Yes'), 'success') :
@@ -194,10 +193,9 @@ class CrudViewHelper extends Helper
      *
      * @param string $field Name of field.
      * @param array $value Value of field.
-     * @param array $options Options array.
      * @return string
      */
-    public function formatString($field, $value, array $options)
+    public function formatString($field, $value)
     {
         return h(Text::truncate($value, 200));
     }
@@ -206,11 +204,9 @@ class CrudViewHelper extends Helper
      * Returns a formatted relation output for a given field
      *
      * @param string $field Name of field.
-     * @param array $value Value of field.
-     * @param array $options Options array.
      * @return mixed Array of data to output, false if no match found
      */
-    public function relation($field, $value, array $options = [])
+    public function relation($field)
     {
         $associations = $this->associations();
         if (empty($associations['manyToOne'])) {
