@@ -118,7 +118,13 @@ class CrudViewHelper extends Helper
             return $output['output'];
         }
 
-        $type = $this->schema()->columnType($field);
+
+        $schema = $this->schema();
+        if (method_exists($schema, 'baseColumnType')) {
+            $type = $schema->baseColumnType($field);
+        } else {
+            $type = $schema->columnType($field);
+        }
 
         if ($type === 'boolean') {
             return $this->formatBoolean($field, $value, $options);
