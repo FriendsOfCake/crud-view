@@ -9,7 +9,6 @@
 
         <br />
 
-
-        <?= $this->Paginator->counter('Page {{page}} of {{pages}}, showing {{current}} records out of {{count}} total.</div>'); ?>
+        <?= $this->Paginator->counter('Page {{page}} of {{pages}}, showing {{current}} records out of {{count}} total.'); ?>
     </div>
 </div>
