@@ -151,12 +151,9 @@ class CrudViewHelper extends Helper
      */
     public function formatBoolean($field, $value, array $options)
     {
-        if (!array_key_exists('inverted', $options)) {
-            $options['inverted'] = false;
-        }
         return (bool)$value ?
-            $this->Html->label(__d('crud', 'Yes'), $options['inverted'] ? 'danger' : 'success') :
-            $this->Html->label(__d('crud', 'No'), $options['inverted'] ? 'success' : 'danger');
+            $this->Html->label(__d('crud', 'Yes'), empty($options['inverted']) ? 'success' : 'danger') :
+            $this->Html->label(__d('crud', 'No'), empty($options['inverted']) ? 'danger' : 'success');
     }
 
     /**
