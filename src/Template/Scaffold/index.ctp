@@ -54,6 +54,7 @@
     </div>
 
     <?= $this->element('index/bulk_actions/form_end', compact('bulkActions')); ?>
+    <?= $this->fetch('action_link_forms') ?>
     <?= $this->element('index/pagination'); ?>
 </div>
 
