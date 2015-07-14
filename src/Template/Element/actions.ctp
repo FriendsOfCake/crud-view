@@ -15,6 +15,7 @@ foreach ($actions as $config) {
 
     if ($config['method'] === 'DELETE') {
         $linkOptions += [
+            'block' => 'action_link_forms',
             'confirm' => __d('crud', 'Are you sure you want to delete record #{0}?', [$singularVar->{$primaryKey}])
         ];
     }
