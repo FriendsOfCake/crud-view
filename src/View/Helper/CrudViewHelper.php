@@ -152,8 +152,8 @@ class CrudViewHelper extends Helper
     public function formatBoolean($field, $value, array $options)
     {
         return (bool)$value ?
-            $this->Html->label(__d('crud', 'Yes'), 'success') :
-            $this->Html->label(__d('crud', 'No'), 'danger');
+            $this->Html->label(__d('crud', 'Yes'), empty($options['inverted']) ? 'success' : 'danger') :
+            $this->Html->label(__d('crud', 'No'), empty($options['inverted']) ? 'danger' : 'success');
     }
 
     /**
