@@ -5,6 +5,13 @@ if (!$this->exists('actions')) {
             'actions' => $actions['table'],
             'singularVar' => false,
         ]);
+        // to make sure ${$viewVar} is a single entity, not a collection
+        if (${$viewVar} instanceof \Cake\Datasource\EntityInterface) {
+            echo $this->element('actions', [
+                'actions' => $actions['entity'],
+                'singularVar' => ${$viewVar},
+            ]);
+        }
     $this->end();
 }
 ?>
