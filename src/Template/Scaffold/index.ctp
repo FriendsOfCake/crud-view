@@ -30,7 +30,9 @@
                     <?php
                     endforeach;
                 ?>
-                <th><?= __d('crud', 'Actions'); ?></th>
+                <?php if ($actionsExist = !empty($actions['entity'])): ?>
+                    <th><?= __d('crud', 'Actions'); ?></th>
+                <?php endif; ?>
             </tr>
         </thead>
         <tbody>
@@ -41,10 +43,13 @@
                 <tr>
                     <?= $this->element('index/bulk_actions/record', compact('bulkActions', 'primaryKey', 'singularVar')); ?>
                     <?= $this->element('index/table_columns', compact('singularVar')); ?>
-                    <td class="actions"><?= $this->element('actions', [
-                        'singularVar' => $singularVar,
-                        'actions' => $actions['entity']
-                    ]); ?></td>
+
+                    <?php if ($actionsExist): ?>
+                        <td class="actions"><?= $this->element('actions', [
+                            'singularVar' => $singularVar,
+                            'actions' => $actions['entity']
+                        ]); ?></td>
+                    <?php endif; ?>
                 </tr>
                 <?php
             endforeach;
