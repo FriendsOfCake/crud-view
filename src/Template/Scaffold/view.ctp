@@ -7,7 +7,7 @@ $assocMap = isset($associations['manyToOne']) ?
 ?>
 <?= $this->fetch('before_view'); ?>
 <div class="<?= $this->CrudView->getCssClasses(); ?>">
-    <h2><?= $this->get('title');?></h2>
+    <?= $this->element('action-header') ?>
     <table class="table">
         <?php
         $this->CrudView->setContext(${$viewVar});
