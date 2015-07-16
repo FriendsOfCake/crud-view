@@ -57,4 +57,7 @@ $(document).on('ready', function() {
             }
         });
     });
+
+    $.DirtyForms.dialog = false;
+    $('form[data-dirty-check=1]').dirtyForms();
 });
