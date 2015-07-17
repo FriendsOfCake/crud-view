@@ -341,7 +341,7 @@ class ViewListener extends BaseListener
             $method = isset($config['method']) ? $config['method'] : 'GET';
 
             ${$scope}[$actionName] = [
-                'title' => Inflector::humanize($actionName),
+                'title' => Inflector::humanize(Inflector::underscore($actionName)),
                 'url' => [
                     'action' => $actionName
                 ],
