@@ -317,59 +317,82 @@ class ViewListener extends BaseListener
         $table = $entity = [];
 
         $actions = $this->_getAllowedActions();
-        foreach ($actions as $actionName) {
-            $action = $this->_action($actionName);
-            $method = 'GET';
-            $class = get_class($action);
-            $class = substr($class, strrpos($class, '\\') + 1);
-            $scope = $action->scope();
+        foreach ($actions as $actionName => $config) {
+            if ($this->_crud()->isActionMapped($actionName)) {
+                $action = $this->_action($actionName);
+                $class = get_class($action);
+                $class = substr($class, strrpos($class, '\\') + 1);
+                $config['scope'] = $action->scope();
 
-            if ($class === 'DeleteAction') {
-                $method = 'DELETE';
+                if ($class === 'DeleteAction') {
+                    $config['method'] = 'DELETE';
+                }
+
+                if ($class === 'AddAction') {
+                    $config['scope'] = 'table';
+                }
             }
 
-            if ($class === 'AddAction') {
-                $scope = 'table';
-            }
+            // apply defaults if necessary
+            $scope = isset($config['scope']) ? $config['scope'] : 'entity';
+            $method = isset($config['method']) ? $config['method'] : 'GET';
 
-            if ($scope === 'table') {
-                $table[$actionName] = [
-                    'title' => Inflector::humanize($actionName),
-                    'url' => [
-                        'action' => $actionName
-                    ],
-                    'method' => $method,
-                ];
-            } elseif ($scope === 'entity') {
-                $entity[$actionName] = [
-                    'title' => Inflector::humanize($actionName),
-                    'url' => [
-                        'action' => $actionName
-                    ],
-                    'method' => $method,
-                ];
-            }
+            ${$scope}[$actionName] = [
+                'title' => Inflector::humanize($actionName),
+                'url' => [
+                    'action' => $actionName
+                ],
+                'method' => $method,
+            ];
         }
 
         return compact('table', 'entity');
     }
 
     /**
-     * Returns a list of actions that are allowed to be shown
+     * Returns a list of action configs that are allowed to be shown
      *
      * @return array
      */
     protected function _getAllowedActions()
     {
-        $actions = $this->_action()->config('scaffold.actions');
-        if ($actions !== null) {
-            return $actions;
-        }
+        $actions = $this->_action()->config('scaffold.actions') ?: $this->_crud()->config('actions');
+        $extraActions = $this->_action()->config('scaffold.extra_actions') ?: [];
 
-        $actions = $this->_crud()->config('actions');
+        $allActions = array_merge(
+            $this->_normalizeActions($actions),
+            $this->_normalizeActions($extraActions)
+        );
+
         $blacklist = (array)$this->_action()->config('scaffold.actions_blacklist');
         $blacklist = array_combine($blacklist, $blacklist);
-        return array_keys(array_diff_key($actions, $blacklist));
+
+        return array_diff_key($allActions, $blacklist);
+    }
+
+    /**
+     * Convert mixed action configs to unified structure
+     *
+     * [
+     *   'ACTION_1' => [..config...],
+     *   'ACTION_2' => [..config...],
+     *   'ACTION_N' => [..config...]
+     * ]
+     *
+     * @param array $actions Actions
+     * @return array
+     */
+    protected function _normalizeActions($actions)
+    {
+        $normalized = [];
+        foreach ($actions as $key => $config) {
+            if (is_array($config)) {
+                $normalized[$key] = $config;
+            } else {
+                $normalized[$config] = [];
+            }
+        }
+        return $normalized;
     }
 
     /**
