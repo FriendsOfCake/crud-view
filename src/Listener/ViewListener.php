@@ -68,6 +68,7 @@ class ViewListener extends BaseListener
         $controller->set('formUrl', $this->_getFormUrl());
         $controller->set('disableExtraButtons', $this->_getDisableExtraButtons());
         $controller->set('extraButtonsBlacklist', $this->_getExtraButtonsBlacklist());
+        $controller->set('enableDirtyCheck', $this->_getEnableDirtyCheck());
         $controller->set($this->_getPageVariables());
     }
 
@@ -516,5 +517,16 @@ class ViewListener extends BaseListener
     {
         $action = $this->_action();
         return $action->config('scaffold.extra_buttons_blacklist') ?: [];
+    }
+
+    /**
+     * Get enable dirty check setting
+     *
+     * @return bool
+     */
+    protected function _getEnableDirtyCheck()
+    {
+        $action = $this->_action();
+        return $action->config('scaffold.enable_dirty_check') ?: false;
     }
 }

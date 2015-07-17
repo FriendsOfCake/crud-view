@@ -3,7 +3,7 @@
 <div class="<?= $this->CrudView->getCssClasses(); ?>">
     <?= $this->element('action-header') ?>
 
-    <?= $this->Form->create(${$viewVar}, ['role' => 'form', 'url' => $formUrl]); ?>
+    <?= $this->Form->create(${$viewVar}, ['role' => 'form', 'url' => $formUrl, 'data-dirty-check' => $enableDirtyCheck]); ?>
     <?= $this->CrudView->redirectUrl(); ?>
     <div class="row">
         <div class="col-lg-<?= $this->exists('form.sidebar') ? '8' : '12' ?>">
