@@ -6,6 +6,7 @@ use Cake\Event\Event;
 use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
 use Crud\Listener\BaseListener;
+use Cake\Collection\Collection;
 
 class ViewListener extends BaseListener
 {
@@ -69,6 +70,7 @@ class ViewListener extends BaseListener
         $controller->set('disableExtraButtons', $this->_getDisableExtraButtons());
         $controller->set('extraButtonsBlacklist', $this->_getExtraButtonsBlacklist());
         $controller->set('enableDirtyCheck', $this->_getEnableDirtyCheck());
+        $controller->set('actionGroups', $this->_getActionGroups());
         $controller->set($this->_getPageVariables());
     }
 
@@ -551,5 +553,22 @@ class ViewListener extends BaseListener
     {
         $action = $this->_action();
         return $action->config('scaffold.enable_dirty_check') ?: false;
+    }
+
+    /**
+     * Get action groups
+     *
+     * @return array
+     */
+    protected function _getActionGroups()
+    {
+        $action = $this->_action();
+        $groups = $action->config('scaffold.action_groups') ?: [];
+
+        $groupedActions = (new Collection($groups))->unfold()->toList();
+
+        // add "primary" actions (primary should rendered as separate buttons)
+        $groups['primary'] = array_diff(array_keys($this->_getAllowedActions()), $groupedActions);
+        return $groups;
     }
 }

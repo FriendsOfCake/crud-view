@@ -1,5 +1,6 @@
 <?php
-foreach ($actions as $config) {
+$links = [];
+foreach ($actions as $name => $config) {
     $config += ['method' => 'GET'];
 
     if ((empty($config['url']['controller']) || $this->request->controller === $config['url']['controller']) &&
@@ -8,9 +9,9 @@ foreach ($actions as $config) {
         continue;
     }
 
-    $linkOptions = ['class' => 'btn btn-default'];
+    $linkOptions = [];
     if (isset($config['options'])) {
-        $linkOptions = $config['options'] + $linkOptions;
+        $linkOptions = $config['options'];
     }
 
     if ($config['method'] === 'DELETE') {
@@ -30,7 +31,7 @@ foreach ($actions as $config) {
         $callback = $config['callback'];
         unset($config['callback']);
         $config['options'] = $linkOptions;
-        echo $callback($config, !empty($singularVar) ? $singularVar : null, $this);
+        $links[$name] = $callback($config, !empty($singularVar) ? $singularVar : null, $this);
         continue;
     }
 
@@ -39,8 +40,9 @@ foreach ($actions as $config) {
         $url[] = $singularVar->{$primaryKey};
     }
 
+
     if ($config['method'] !== 'GET') {
-        echo $this->Form->postLink(
+        $links[$name] = $this->Form->postLink(
             $config['title'],
             $url,
             $linkOptions
@@ -48,9 +50,30 @@ foreach ($actions as $config) {
         continue;
     }
 
-    echo $this->Html->link(
-        $config['title'],
-        $url,
-        $linkOptions
-    );
+    $links[$name] = [
+        'title' => $config['title'],
+        'url' => $url,
+        'options' => $linkOptions,
+        'method' => $config['method']
+    ];
 }
+?>
+
+<div class="actions-holder">
+    <?php
+    // render primary actions at first
+    foreach ($actionGroups['primary'] as $action) {
+        if (!isset($links[$action])) {
+            continue;
+        }
+        $config = $links[$action];
+        $config['options']['class'] = ['btn btn-default'];
+
+        echo $this->element('action-button', ['config' => $config]);
+    }
+    unset($actionGroups['primary']);
+
+    // render grouped actions
+    echo $this->element('action-groups', ['groups' => $actionGroups, 'links' => $links]);
+    ?>
+</div>
