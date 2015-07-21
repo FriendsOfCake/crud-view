@@ -6,7 +6,7 @@ if (!$this->exists('actions')) {
             'singularVar' => false,
         ]);
         // to make sure ${$viewVar} is a single entity, not a collection
-        if (${$viewVar} instanceof \Cake\Datasource\EntityInterface) {
+        if (${$viewVar} instanceof \Cake\Datasource\EntityInterface && !${$viewVar}->isNew()) {
             echo $this->element('actions', [
                 'actions' => $actions['entity'],
                 'singularVar' => ${$viewVar},
