@@ -60,4 +60,14 @@ $(document).on('ready', function() {
 
     $.DirtyForms.dialog = false;
     $('form[data-dirty-check=1]').dirtyForms();
+
+    $('.dropdown-toggle').dropdown();
+
+    // recommended hack to get dropdowns correctly work inside responsive table
+    $('.table-responsive').on('show.bs.dropdown', function () {
+        $('.table-responsive').css( "overflow", "inherit" );
+    });
+    $('.table-responsive').on('hide.bs.dropdown', function () {
+        $('.table-responsive').css( "overflow", "auto" );
+    })
 });

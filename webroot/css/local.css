@@ -59,3 +59,11 @@ h2 .actions {
 .selectize-input.items.full {
     padding-right:33px;
 }
+
+div.actions-wrapper {
+    margin: 10px 0;
+}
+
+div.actions-holder {
+    float: left;
+}
