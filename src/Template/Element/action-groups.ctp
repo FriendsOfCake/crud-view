@@ -22,7 +22,9 @@ foreach ($groups as $key => $group) {
         ?>
         <ul class="dropdown-menu pull-right">
             <?php foreach ($group as $subaction) : ?>
-                <li><?= $this->element('action-button', ['config' => $links[$subaction]]); ?></li>
+                <?php if (array_key_exists($subaction, $links)): ?>
+                    <li><?= $this->element('action-button', ['config' => $links[$subaction]]); ?></li>
+                <?php endif; ?>
             <?php endforeach; ?>
        </ul>
    </div>
