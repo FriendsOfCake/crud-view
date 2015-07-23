@@ -1,12 +1,12 @@
 <?php
 namespace CrudView\Listener;
 
+use Cake\Collection\Collection;
 use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
 use Crud\Listener\BaseListener;
-use Cake\Collection\Collection;
 
 class ViewListener extends BaseListener
 {
@@ -249,7 +249,7 @@ class ViewListener extends BaseListener
     /**
      * Returns fields to be displayed on scaffolded template
      *
-     * @param array $assocations Associations list.
+     * @param array $associations Associations list.
      * @return array
      */
     protected function _scaffoldFields(array $associations = [])
