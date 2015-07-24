@@ -33,6 +33,7 @@ class ViewListener extends BaseListener
      */
     public function beforePaginate(Event $event)
     {
+        $this->associations = $this->_associations(array_keys($this->_getRelatedModels()));
         if (!$event->subject->query->contain()) {
             $event->subject->query->contain($this->_getRelatedModels(['manyToOne', 'oneToOne']));
         }
