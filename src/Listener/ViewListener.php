@@ -19,6 +19,7 @@ class ViewListener extends BaseListener
      */
     public function beforeFind(Event $event)
     {
+        $this->associations = $this->_associations(array_keys($this->_getRelatedModels()));
         if (!$event->subject->query->contain()) {
             $event->subject->query->contain($this->_getRelatedModels());
         }
@@ -32,6 +33,7 @@ class ViewListener extends BaseListener
      */
     public function beforePaginate(Event $event)
     {
+        $this->associations = $this->_associations(array_keys($this->_getRelatedModels()));
         if (!$event->subject->query->contain()) {
             $event->subject->query->contain($this->_getRelatedModels(['manyToOne', 'oneToOne']));
         }
@@ -59,7 +61,7 @@ class ViewListener extends BaseListener
         $controller->set('actionConfig', $this->_action()->config());
         $controller->set('brand', $this->_getBrand());
         $controller->set('title', $this->_getPageTitle());
-        $associations = $this->_associations();
+        $associations = $this->associations;
         $controller->set(compact('associations'));
         $controller->set('fields', $this->_scaffoldFields($associations));
         $controller->set('blacklist', $this->_blacklist());
@@ -403,7 +405,7 @@ class ViewListener extends BaseListener
      *
      * @return array Associations for model
      */
-    protected function _associations()
+    protected function _associations($whitelist = [])
     {
         $table = $this->_table();
 
@@ -411,7 +413,11 @@ class ViewListener extends BaseListener
 
         $associations = $table->associations();
 
-        foreach ($associations->keys() as $associationName) {
+        $keys = $associations->keys();
+        if ($whitelist) {
+            $keys = array_intersect($keys, array_map('strtolower', $whitelist));
+        }
+        foreach ($keys as $associationName) {
             $association = $associations->get($associationName);
             $type = $association->type();
 
