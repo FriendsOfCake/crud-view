@@ -12,6 +12,13 @@ class ViewListener extends BaseListener
 {
 
     /**
+     * Default associations config
+     *
+     * @var array
+     */
+    protected $associations = [];
+
+    /**
      * [beforeFind description]
      *
      * @param \Cake\Event\Event $event Event.
