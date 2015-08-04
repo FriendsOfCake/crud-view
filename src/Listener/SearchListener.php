@@ -123,7 +123,9 @@ class SearchListener extends BaseListener
                 continue;
             }
 
-            $input['class'] = 'autocomplete';
+            if (empty($input['class'])) {
+                $input['class'] = 'autocomplete';
+            }
 
             if (empty($input['type'])) {
                 $input['type'] = 'text';
@@ -142,8 +144,6 @@ class SearchListener extends BaseListener
 
             $fields[$searchParam] = $input;
         }
-
-        // debug($fields);
         return $fields;
     }
 }
