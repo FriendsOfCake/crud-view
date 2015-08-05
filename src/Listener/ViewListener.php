@@ -355,6 +355,10 @@ class ViewListener extends BaseListener
                     'action' => $actionName
                 ],
                 'method' => $method,
+                'options' => array_diff_key(
+                    $config,
+                    array_flip(['method', 'scope', 'className'])
+                )
             ];
         }
 
