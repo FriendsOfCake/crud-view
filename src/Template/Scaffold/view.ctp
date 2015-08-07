@@ -18,14 +18,10 @@ $assocMap = isset($associations['manyToOne']) ?
 
             echo '<tr>';
 
-            if (array_key_exists($field, $assocMap)) {
-                echo "<th>" . Inflector::singularize(Inflector::humanize(Inflector::underscore($assocMap[$field]))) . "</th>";
-            } else {
-                echo "<th>" . \Cake\Utility\Inflector::humanize($field) . "</th>";
-            }
-            echo "<td>";
-            echo $this->CrudView->process($field, ${$viewVar}, $options);
-            echo "&nbsp;</td>";
+            printf("<th>%s</th>", array_key_exists($field, $assocMap) ?
+                Inflector::singularize(Inflector::humanize(Inflector::underscore($assocMap[$field]))) :
+                Inflector::humanize($field));
+            printf("<td>%s</td>", $this->CrudView->process($field, ${$viewVar}, $options) ?: "&nbsp;");
 
             echo '</tr>';
         }
