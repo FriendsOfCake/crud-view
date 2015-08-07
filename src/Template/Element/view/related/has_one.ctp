@@ -6,7 +6,7 @@ if (empty($associations['oneToOne'])) {
 }
 
 foreach ($associations['oneToOne'] as $alias => $details):
-    $alias = Inflector::singularize($alias);
+    $alias = $details['propertyName'];
     ?>
 <div class="related">
     <h3><?= __d('crud', 'Related {0}', [Inflector::humanize($details['controller'])]); ?></h3>

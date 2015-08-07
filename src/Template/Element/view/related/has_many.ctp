@@ -12,7 +12,7 @@ $relations = array_merge($associations['oneToMany'], $associations['manyToMany']
 
 $i = 0;
 foreach ($relations as $alias => $details):
-    $otherSingularVar = Inflector::variable($alias);
+    $otherSingularVar = $details['propertyName'];
     ?>
     <div class="related">
         <h3><?= __d('crud', 'Related {0}', [Inflector::humanize($details['controller'])]); ?></h3>
