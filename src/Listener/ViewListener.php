@@ -372,7 +372,8 @@ class ViewListener extends BaseListener
      */
     protected function _getAllowedActions()
     {
-        $actions = $this->_action()->config('scaffold.actions') ?: $this->_crud()->config('actions');
+        $actions = $this->_action()->config('scaffold.actions');
+        $actions = ($actions === null) ? $this->_crud()->config('actions') : [];
         $extraActions = $this->_action()->config('scaffold.extra_actions') ?: [];
 
         $allActions = array_merge(
