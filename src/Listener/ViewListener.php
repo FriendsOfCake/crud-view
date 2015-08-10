@@ -415,9 +415,10 @@ class ViewListener extends BaseListener
     /**
      * Returns associations for controllers models.
      *
+     * @param array $whitelist Whitelist of associations to return.
      * @return array Associations for model
      */
-    protected function _associations($whitelist = [])
+    protected function _associations(array $whitelist = [])
     {
         $table = $this->_table();
 
