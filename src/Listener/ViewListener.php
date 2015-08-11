@@ -372,7 +372,8 @@ class ViewListener extends BaseListener
      */
     protected function _getAllowedActions()
     {
-        $actions = $this->_action()->config('scaffold.actions') ?: $this->_crud()->config('actions');
+        $actions = $this->_action()->config('scaffold.actions');
+        $actions = ($actions === null) ? $this->_crud()->config('actions') : [];
         $extraActions = $this->_action()->config('scaffold.extra_actions') ?: [];
 
         $allActions = array_merge(
@@ -414,9 +415,10 @@ class ViewListener extends BaseListener
     /**
      * Returns associations for controllers models.
      *
+     * @param array $whitelist Whitelist of associations to return.
      * @return array Associations for model
      */
-    protected function _associations($whitelist = [])
+    protected function _associations(array $whitelist = [])
     {
         $table = $this->_table();
 
