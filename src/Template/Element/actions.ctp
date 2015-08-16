@@ -45,7 +45,7 @@ foreach ($actions as $name => $config) {
         $links[$name] = $this->Form->postLink(
             $config['title'],
             $url,
-            $linkOptions
+            $linkOptions + ['class'=>'btn btn-default']
         );
         continue;
     }
@@ -67,6 +67,10 @@ foreach ($actions as $name => $config) {
             continue;
         }
         $config = $links[$action];
+        if( is_string($config)) {
+          echo $config;
+          continue;
+        }
         $config['options']['class'] = ['btn btn-default'];
 
         echo $this->element('action-button', ['config' => $config]);
