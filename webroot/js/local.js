@@ -13,10 +13,14 @@ $(document).on('ready', function() {
     }
 
     $('[role=datetime-picker]').each(function() {
+        var date = new Date($(this).data('timestamp') * 1000);
+        if ($(this).data('timestamp') === '') {
+            date = '' ;
+        };
         $(this).datetimepicker({
             locale: $(this).data('locale'),
             format: $(this).data('format'),
-            date: new Date($(this).data('timestamp') * 1000)
+            date: date
         });
     });
 
