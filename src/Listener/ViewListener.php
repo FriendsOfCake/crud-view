@@ -360,6 +360,9 @@ class ViewListener extends BaseListener
                     array_flip(['method', 'scope', 'className'])
                 )
             ];
+            if (!empty($config['callback'])) {
+                ${$scope}[$actionName]['callback'] = $config['callback'];
+            }
         }
 
         return compact('table', 'entity');

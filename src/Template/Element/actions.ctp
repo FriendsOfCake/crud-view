@@ -56,9 +56,14 @@ foreach ($actions as $name => $config) {
         if (!isset($links[$action])) {
             continue;
         }
-        $config = $links[$action];
-        $config['options']['class'] = ['btn btn-default'];
 
+        $config = $links[$action];
+        if (is_string($config)) {
+            echo $config;
+            continue;
+        }
+
+        $config['options']['class'] = ['btn btn-default'];
         if ($config['method'] !== 'GET') {
             echo $this->Form->postLink(
                 $config['title'],
