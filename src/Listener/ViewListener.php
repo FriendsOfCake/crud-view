@@ -358,7 +358,7 @@ class ViewListener extends BaseListener
                 'options' => array_diff_key(
                     $config,
                     array_flip(['method', 'scope', 'className'])
-                ),
+                )
             ];
             if (!empty($config['callback'])) {
                 ${$scope}[$actionName]['callback'] = $config['callback'];
