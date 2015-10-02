@@ -25,7 +25,7 @@ class DateTimeWidget extends \Cake\View\Widget\DateTimeWidget
         $type = $data['type'];
         $required = $data['required'] ? 'required' : '';
         $format = null;
-        $locale = locale_get_primary_language(I18n::locale());
+        $locale = I18n::locale();
 
         if (isset($data['data-format'])) {
             $format = $this->_convertPHPToMomentFormat($data['data-format']);
