@@ -25,7 +25,6 @@ class DateTimeWidget extends \Cake\View\Widget\DateTimeWidget
         $type = $data['type'];
         $required = $data['required'] ? 'required' : '';
         $format = null;
-        $timestamp = null;
         $locale = locale_get_primary_language(I18n::locale());
 
         if (isset($data['data-format'])) {
@@ -37,7 +36,6 @@ class DateTimeWidget extends \Cake\View\Widget\DateTimeWidget
         }
 
         if ($val) {
-            $timestamp = $val->format('U');
             $val = $val->format($type === 'date' ? 'Y-m-d' : 'Y-m-d H:i:s');
         }
 
@@ -56,7 +54,6 @@ class DateTimeWidget extends \Cake\View\Widget\DateTimeWidget
                     role="datetime-picker"
                     data-locale="$locale"
                     data-format="$format"
-                    data-timestamp="$timestamp"
                     $required
                 />
                 <span class="input-group-addon">
