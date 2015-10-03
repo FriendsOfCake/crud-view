@@ -27,6 +27,12 @@ class DateTimeWidget extends \Cake\View\Widget\DateTimeWidget
         $format = null;
         $locale = I18n::locale();
 
+        // @todo this value needs to be configured
+        $timezoneAware = false;
+
+        $timestamp = null;
+        $timezoneOffset = null;
+
         if (isset($data['data-format'])) {
             $format = $this->_convertPHPToMomentFormat($data['data-format']);
         }
@@ -36,6 +42,9 @@ class DateTimeWidget extends \Cake\View\Widget\DateTimeWidget
         }
 
         if ($val) {
+            $timestamp = $val->format('U');
+            $dateTimeZone = new \DateTimeZone(date_default_timezone_get());
+            $timezoneOffset = ($dateTimeZone->getOffset($val) / 60);
             $val = $val->format($type === 'date' ? 'Y-m-d' : 'Y-m-d H:i:s');
         }
 
@@ -54,6 +63,14 @@ class DateTimeWidget extends \Cake\View\Widget\DateTimeWidget
                     role="datetime-picker"
                     data-locale="$locale"
                     data-format="$format"
+html;
+        if ($timezoneAware && isset($timestamp, $timezoneOffset)) {
+            $widget .= <<<html
+                    data-timestamp="$timestamp"
+                    data-timezone-offset="$timezoneOffset"
+html;
+        }
+        $widget .= <<<html
                     $required
                 />
                 <span class="input-group-addon">
