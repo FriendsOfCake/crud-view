@@ -143,6 +143,10 @@ class ViewListener extends BaseListener
     {
         $models = $this->_action()->config('scaffold.relations');
 
+        if ($models === false) {
+            return [];
+        }
+
         if (empty($models)) {
             $associations = $this->_associations();
 
