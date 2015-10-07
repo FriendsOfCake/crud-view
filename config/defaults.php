@@ -1,5 +1,4 @@
 <?php
-
 return [
     'CrudView' => [
         'brand' => 'Crud View',
@@ -21,6 +20,7 @@ return [
             'script' => [
                 'CrudView.local'
             ]
-        ]
+        ],
+        'timezoneAwareDateTimeWidget' => false,
     ]
 ];

@@ -1,6 +1,7 @@
 <?php
 namespace CrudView\View\Widget;
 
+use Cake\Core\Configure;
 use Cake\I18n\I18n;
 use Cake\I18n\Time;
 use Cake\View\Form\ContextInterface;
@@ -27,8 +28,7 @@ class DateTimeWidget extends \Cake\View\Widget\DateTimeWidget
         $format = null;
         $locale = I18n::locale();
 
-        // @todo this value needs to be configured
-        $timezoneAware = false;
+        $timezoneAware = Configure::read('CrudView.timezoneAwareDateTimeWidget');
 
         $timestamp = null;
         $timezoneOffset = null;
