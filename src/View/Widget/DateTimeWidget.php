@@ -24,6 +24,7 @@ class DateTimeWidget extends \Cake\View\Widget\DateTimeWidget
         $val = $data['val'];
         $type = $data['type'];
         $required = $data['required'] ? 'required' : '';
+        $role = isset($data['role']) ? $data['role'] : 'datetime-picker';
         $format = null;
         $timestamp = null;
         $locale = locale_get_primary_language(I18n::locale());
@@ -53,7 +54,7 @@ class DateTimeWidget extends \Cake\View\Widget\DateTimeWidget
                     name="$name"
                     value="$val"
                     id="$id"
-                    role="datetime-picker"
+                    role="$role"
                     data-locale="$locale"
                     data-format="$format"
                     data-timestamp="$timestamp"
