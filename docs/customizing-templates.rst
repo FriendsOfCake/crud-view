@@ -21,7 +21,7 @@ applying formatters to any of your fields. Whenever you use the
       public function index()
       {
         $action = $this->Crud->action();
-        $action->confg('scaffold.fields', [
+        $action->config('scaffold.fields', [
           'title',
           'published_time' => [
             'formatter' => function ($name, Time $value) {
@@ -130,7 +130,7 @@ In your ``index()`` action use the ``scaffold.fields`` configuration to set the
       public function index()
       {
         $action = $this->Crud->action();
-        $action->confg('scaffold.fields', [
+        $action->config('scaffold.fields', [
           'author_id' => ['title' => 'Author Name'],
           ... // The rest of the fields to display here
         ]);
@@ -153,7 +153,7 @@ title for any of the fields by using the ``scaffold.fields`` configuration
       public function add()
       {
         $action = $this->Crud->action();
-        $action->confg('scaffold.fields', [
+        $action->config('scaffold.fields', [
           'author_id' => ['label' => 'Author Name'],
           ... // The rest of the fields to display here
         ]);
