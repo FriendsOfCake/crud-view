@@ -5,8 +5,38 @@ Despite ``CrudView`` being quite smart at guessing how to display your data and
 having great defaults, it is very often that you need to customize the look and
 feel of your Admin application.
 
+
 Formatting fields
 -----------------
+
+The easiest way to modify your fields is to pass options in the ``scaffold.fields``
+configiration key. ``CrudView`` makes use of the Form helper ``inputs`` method 
+and will pass your array values as options when generating the fields. You can
+pass any properties that ``FormHelper::inputs`` supports.
+
+.. code-block:: php
+      <?php
+    ...
+    class ArticlesController extends AppController
+    {
+      public function index()
+      {
+        $action = $this->Crud->action();
+        $action->config('scaffold.fields', [
+          'title',
+          'thread_id' => [
+            'type' => 'text'
+          ],
+          'featured' => [
+            'checked' => 'checked'
+          ]
+        ]);
+        return $this->Crud->execute();
+      }
+    }
+
+Formmating using a Formatter
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The most immediate changes you can do in the way data is displayed is by
 applying formatters to any of your fields. Whenever you use the
@@ -21,7 +51,7 @@ applying formatters to any of your fields. Whenever you use the
       public function index()
       {
         $action = $this->Crud->action();
-        $action->confg('scaffold.fields', [
+        $action->config('scaffold.fields', [
           'title',
           'published_time' => [
             'formatter' => function ($name, Time $value) {
@@ -130,7 +160,7 @@ In your ``index()`` action use the ``scaffold.fields`` configuration to set the
       public function index()
       {
         $action = $this->Crud->action();
-        $action->confg('scaffold.fields', [
+        $action->config('scaffold.fields', [
           'author_id' => ['title' => 'Author Name'],
           ... // The rest of the fields to display here
         ]);
@@ -153,7 +183,7 @@ title for any of the fields by using the ``scaffold.fields`` configuration
       public function add()
       {
         $action = $this->Crud->action();
-        $action->confg('scaffold.fields', [
+        $action->config('scaffold.fields', [
           'author_id' => ['label' => 'Author Name'],
           ... // The rest of the fields to display here
         ]);
