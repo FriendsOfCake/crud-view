@@ -252,7 +252,7 @@ class ViewListener extends BaseListener
         }
 
         $displayFieldValue = $this->_displayFieldValue();
-        if ($displayFieldValue === null) {
+        if ($displayFieldValue === null || $this->_table()->displayField() == $this->_table()->primaryKey()) {
             return sprintf('%s %s #%s', $actionName, $controllerName, $primaryKeyValue);
         }
 
