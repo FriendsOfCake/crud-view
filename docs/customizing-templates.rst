@@ -10,9 +10,9 @@ Formatting fields
 -----------------
 
 The easiest way to modify your fields is to pass options in the ``scaffold.fields``
-configiration key. ``CrudView`` makes use of the Form helper ``inputs`` method 
+configuration key. ``CrudView`` makes use of the ``FormHelper::inputs()`` method 
 and will pass your array values as options when generating the fields. You can
-pass any properties that ``FormHelper::inputs`` supports.
+pass any properties that ``FormHelper::inputs()`` supports.
 
 .. code-block:: php
       <?php
@@ -35,7 +35,7 @@ pass any properties that ``FormHelper::inputs`` supports.
       }
     }
 
-Formmating using a Formatter
+Formating using a Formatter
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The most immediate changes you can do in the way data is displayed is by
