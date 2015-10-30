@@ -273,7 +273,7 @@ class ViewListener extends BaseListener
             $scaffoldFields = Hash::normalize($scaffoldFields);
         }
 
-        if (empty($scaffoldFields) || $action->config('scaffold.mergeFields')) {
+        if (empty($scaffoldFields) || $action->config('scaffold.autoFields')) {
             $cols = $this->_table()->schema()->columns();
             $cols = Hash::normalize($cols);
 
