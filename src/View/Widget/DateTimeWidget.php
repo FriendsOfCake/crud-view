@@ -74,9 +74,9 @@ html;
         $widget .= <<<html
                     $required
                 />
-                <span class="input-group-addon">
+                <label for="$id" class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar"></span>
-                </span>
+                </label>
             </div>
 html;
         return $widget;
