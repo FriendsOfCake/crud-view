@@ -6,10 +6,12 @@ use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
+use CrudView\Traits\CrudViewConfigTrait;
 use Crud\Listener\BaseListener;
 
 class ViewListener extends BaseListener
 {
+    use CrudViewConfigTrait;
 
     /**
      * Default associations config

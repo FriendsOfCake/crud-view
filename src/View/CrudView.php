@@ -5,9 +5,12 @@ use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\View\Exception\MissingTemplateException;
 use Cake\View\View;
+use CrudView\Traits\CrudViewConfigTrait;
 
 class CrudView extends View
 {
+    use CrudViewConfigTrait;
+
     /**
      * The name of the layout file to render the view inside of. The name specified
      * is the filename of the layout in /app/Template/Layout without the .ctp
@@ -31,6 +34,7 @@ class CrudView extends View
     {
         parent::initialize();
 
+        $this->ensureConfig();
         $this->_setupPaths();
         $this->_setupHelpers();
         $this->_loadAssets();
