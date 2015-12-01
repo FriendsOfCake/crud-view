@@ -1,6 +1,7 @@
 <?php
 namespace CrudView\View\Widget;
 
+use Cake\Core\Configure;
 use Cake\I18n\I18n;
 use Cake\I18n\Time;
 use Cake\View\Form\ContextInterface;
@@ -24,20 +25,27 @@ class DateTimeWidget extends \Cake\View\Widget\DateTimeWidget
         $val = $data['val'];
         $type = $data['type'];
         $required = $data['required'] ? 'required' : '';
+        $role = isset($data['role']) ? $data['role'] : 'datetime-picker';
         $format = null;
+        $locale = I18n::locale();
+
+        $timezoneAware = Configure::read('CrudView.timezoneAwareDateTimeWidget');
+
         $timestamp = null;
-        $locale = locale_get_primary_language(I18n::locale());
+        $timezoneOffset = null;
 
         if (isset($data['data-format'])) {
             $format = $this->_convertPHPToMomentFormat($data['data-format']);
         }
 
-        if (!$val instanceof DateTime && !empty($val)) {
+        if (!($val instanceof DateTime) && !empty($val)) {
             $val = $type === 'date' ? Time::parseDate($val) : Time::parseDateTime($val);
         }
 
         if ($val) {
             $timestamp = $val->format('U');
+            $dateTimeZone = new \DateTimeZone(date_default_timezone_get());
+            $timezoneOffset = ($dateTimeZone->getOffset($val) / 60);
             $val = $val->format($type === 'date' ? 'Y-m-d' : 'Y-m-d H:i:s');
         }
 
@@ -53,15 +61,22 @@ class DateTimeWidget extends \Cake\View\Widget\DateTimeWidget
                     name="$name"
                     value="$val"
                     id="$id"
-                    role="datetime-picker"
+                    role="$role"
                     data-locale="$locale"
                     data-format="$format"
+html;
+        if ($timezoneAware && isset($timestamp, $timezoneOffset)) {
+            $widget .= <<<html
                     data-timestamp="$timestamp"
+                    data-timezone-offset="$timezoneOffset"
+html;
+        }
+        $widget .= <<<html
                     $required
                 />
-                <span class="input-group-addon">
+                <label for="$id" class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar"></span>
-                </span>
+                </label>
             </div>
 html;
         return $widget;

@@ -145,6 +145,10 @@ class ViewListener extends BaseListener
     {
         $models = $this->_action()->config('scaffold.relations');
 
+        if ($models === false) {
+            return [];
+        }
+
         if (empty($models)) {
             $associations = $this->_associations();
 
@@ -250,7 +254,7 @@ class ViewListener extends BaseListener
         }
 
         $displayFieldValue = $this->_displayFieldValue();
-        if ($displayFieldValue === null) {
+        if ($displayFieldValue === null || $this->_table()->displayField() == $this->_table()->primaryKey()) {
             return sprintf('%s %s #%s', $actionName, $controllerName, $primaryKeyValue);
         }
 
@@ -266,21 +270,25 @@ class ViewListener extends BaseListener
     protected function _scaffoldFields(array $associations = [])
     {
         $action = $this->_action();
-        $configuredFields = $action->config('scaffold.fields');
-        if (!empty($configuredFields)) {
-            $scaffoldFields = Hash::normalize($configuredFields);
-        } else {
+        $scaffoldFields = (array)$action->config('scaffold.fields');
+        if (!empty($scaffoldFields)) {
+            $scaffoldFields = Hash::normalize($scaffoldFields);
+        }
+
+        if (empty($scaffoldFields) || $action->config('scaffold.autoFields')) {
             $cols = $this->_table()->schema()->columns();
-            $scaffoldFields = Hash::normalize($cols);
+            $cols = Hash::normalize($cols);
 
             $scope = $action->config('scope');
             if ($scope === 'entity' && !empty($associations['manyToMany'])) {
                 foreach ($associations['manyToMany'] as $alias => $options) {
-                    $scaffoldFields[sprintf('%s._ids', $options['entities'])] = [
+                    $cols[sprintf('%s._ids', $options['entities'])] = [
                         'multiple' => true
                     ];
                 }
             }
+
+            $scaffoldFields = array_merge($cols, $scaffoldFields);
         }
 
         // Check for blacklisted fields
@@ -378,7 +386,10 @@ class ViewListener extends BaseListener
     protected function _getAllowedActions()
     {
         $actions = $this->_action()->config('scaffold.actions');
-        $actions = ($actions === null) ? $this->_crud()->config('actions') : [];
+        if ($actions === null) {
+            $actions = $this->_crud()->config('actions');
+        }
+
         $extraActions = $this->_action()->config('scaffold.extra_actions') ?: [];
 
         $allActions = array_merge(
