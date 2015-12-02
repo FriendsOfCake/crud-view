@@ -3,8 +3,8 @@ namespace CrudView\Traits;
 
 use Cake\Core\Configure;
 
-trait CrudViewConfigTrait {
-
+trait CrudViewConfigTrait 
+{
     /**
      * Make sure the CrudView config exists
      *
@@ -21,5 +21,4 @@ trait CrudViewConfigTrait {
 
         return Configure::load('CrudView.defaults');
     }
-
 }
