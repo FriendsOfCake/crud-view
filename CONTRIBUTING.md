@@ -59,6 +59,17 @@ Check the [cakephp-codesniffer](https://github.com/cakephp/cakephp-codesniffer)
 repository to setup the CakePHP standard. The README contains installation info
 for the sniff and phpcs.
 
+## documentation
+
+You can build the documentation using Docker via the following commands:
+
+    # build the docs
+    docker build .
+
+    # make the html
+    docker run -it --rm -v $(pwd)/docs:/data cakephp/docs make html
+
+    # open the generated html docs in docs/_build/html
 
 # Additional Resources
 
