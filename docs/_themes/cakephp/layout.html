@@ -66,7 +66,15 @@ window.lang = "{{ language }}";
 	<div class="document columns nine push-three">
 		<div class="body">
 			{%- if pagename != 'search' -%}
-				<a class="button pale improve" href="https://github.com/friendsofcake/crud-view/edit/{{ branch }}/docs/{{ pagename }}.rst" target="_blank">Improve this Doc</a>
+        {% if display_github %}
+          <a class="button pale improve" href="https://{{ github_host|default("github.com") }}/{{ github_user }}/{{ github_repo }}/blob/{{ github_version }}{{ conf_py_path }}{{ pagename }}{{ suffix }}">Improve this Doc</a>
+        {% elif display_bitbucket %}
+          <a class="button pale improve" href="https://bitbucket.org/{{ bitbucket_user }}/{{ bitbucket_repo }}/src/{{ bitbucket_version}}{{ conf_py_path }}{{ pagename }}{{ suffix }}">Improve this Doc</a>
+        {% elif show_source and source_url_prefix %}
+          <a class="button pale improve" href="{{ source_url_prefix }}{{ pagename }}{{ suffix }}">View page source</a>
+        {% elif show_source and has_source and sourcename %}
+          <a class="button pale improve" href="{{ pathto('_sources/' + sourcename, true)|e }}" rel="nofollow"> View page source</a>
+        {% endif %}
 			{%- endif -%}
 			{% block body %} {% endblock %}
 		</div>
