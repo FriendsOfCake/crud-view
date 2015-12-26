@@ -14,17 +14,17 @@ action to the ``Crud`` component and the ``CrudView.View`` as a listener.
 
 .. code-block:: php
 
-  <?php
-  public function initialize()
-  {
-      $this->loadComponent('Crud.Crud', [
+    <?php
+    public function initialize()
+    {
+        $this->loadComponent('Crud.Crud', [
             'actions' => [
-              'Crud.Index',
-              ...
+                'Crud.Index',
+                // ...
             ],
             'listeners' => [
                 'CrudView.View',
-                ...
+                // ...
             ]
         ]);
     }
@@ -36,15 +36,13 @@ page.
 .. code-block:: php
 
     <?php
-    ...
     class ArticlesController extends AppController
     {
-      public function index()
-      {
-        // Your customization and configuration changes here
-        ...
-        return $this->Crud->execute();
-      }
+        public function index()
+        {
+            // Your customization and configuration changes here
+            return $this->Crud->execute();
+        }
     }
 
 Most configuration changes need to be done by using the ``config()`` function in
@@ -54,12 +52,11 @@ writing.
 .. code-block:: php
 
     <?php
-    ...
     public function index()
     {
-      $action = $this->Crud->action(); // Gets the IndexAction object
-      debug($action->config()); // Show all configuration related to this action
-      return $this->Crud->execute();
+        $action = $this->Crud->action(); // Gets the IndexAction object
+        debug($action->config()); // Show all configuration related to this action
+        return $this->Crud->execute();
     }
 
 Below is a list of the configuration values that can be used and how they affect
@@ -78,12 +75,11 @@ Fore example you may want to not fetch the ``Authors`` association of the
 .. code-block:: php
 
     <?php
-    ...
     public function index()
     {
-      $action = $this->Crud->action();
-      $action->config('scaffold.relations_blacklist', ['Authors', ...]);
-      return $this->Crud->execute();
+        $action = $this->Crud->action();
+        $action->config('scaffold.relations_blacklist', ['Authors', ...]);
+        return $this->Crud->execute();
     }
 
 If you want to be specific about which association need to be fetched, just use
@@ -92,12 +88,11 @@ the ``scaffold.relations`` configuration key:
 .. code-block:: php
 
     <?php
-    ...
     public function index()
     {
-      $action = $this->Crud->action();
-      $action->config('scaffold.relations', ['Categories', 'Tags']);
-      return $this->Crud->execute();
+        $action = $this->Crud->action();
+        $action->config('scaffold.relations', ['Categories', 'Tags']);
+        return $this->Crud->execute();
     }
 
 Alternatively, you can use the ``Crud`` plugin's ``beforePaginate`` method to
@@ -106,17 +101,16 @@ alter the ``contain()`` list for the pagination query:
 .. code-block:: php
 
     <?php
-    ...
     public function index()
     {
-      $this->Crud->on('beforePaginate', function ($event) {
-        $paginationQuery  = $event->subject()->query;
-        $paginationQuery->contain([
-          'Categories',
-          'Authors' => ['fields' => ['id', 'name']]
-        ]);
-      });
-      return $this->Crud->execute();
+        $this->Crud->on('beforePaginate', function ($event) {
+            $paginationQuery  = $event->subject()->query;
+            $paginationQuery->contain([
+                'Categories',
+                'Authors' => ['fields' => ['id', 'name']]
+            ]);
+        });
+        return $this->Crud->execute();
     }
 
 Specifying the Fields to be Displayed
@@ -132,12 +126,11 @@ displayed in the index table:
 .. code-block:: php
 
     <?php
-    ...
     public function index()
     {
-      $action = $this->Crud->action();
-      $action->config('scaffold.fields_blacklist', ['created', 'modified']);
-      return $this->Crud->execute();
+        $action = $this->Crud->action();
+        $action->config('scaffold.fields_blacklist', ['created', 'modified']);
+        return $this->Crud->execute();
     }
 
 You can also be specific about the fields, and the order, in which they should
@@ -146,12 +139,11 @@ appear in the index table:
 .. code-block:: php
 
     <?php
-    ...
     public function index()
     {
-      $action = $this->Crud->action();
-      $action->config('scaffold.fields', ['title', 'body', 'category', 'published_time']);
-      return $this->Crud->execute();
+        $action = $this->Crud->action();
+        $action->config('scaffold.fields', ['title', 'body', 'category', 'published_time']);
+        return $this->Crud->execute();
     }
 
 Linking to Actions
@@ -168,12 +160,11 @@ table:
 .. code-block:: php
 
     <?php
-    ...
     public function index()
     {
-      $action = $this->Crud->action();
-      $action->config('scaffold.actions_blacklist', ['delete']);
-      return $this->Crud->execute();
+        $action = $this->Crud->action();
+        $action->config('scaffold.actions_blacklist', ['delete']);
+        return $this->Crud->execute();
     }
 
 Likewise, you can instruct the ``CrudView`` plugin on which actions should be
@@ -182,12 +173,11 @@ specifically displayed in the index view:
 .. code-block:: php
 
     <?php
-    ...
     public function index()
     {
-      $action = $this->Crud->action();
-      $action->config('scaffold.actions', ['view', 'add', 'edit']);
-      return $this->Crud->execute();
+        $action = $this->Crud->action();
+        $action->config('scaffold.actions', ['view', 'add', 'edit']);
+        return $this->Crud->execute();
     }
 
 Implementing an Add Action
@@ -202,19 +192,19 @@ the ``Crud`` component configuration:
 
 .. code-block:: php
 
-  <?php
-  public function initialize()
-  {
-      $this->loadComponent('Crud.Crud', [
+    <?php
+    public function initialize()
+    {
+        $this->loadComponent('Crud.Crud', [
             'actions' => [
-              'Crud.Add',
-              ...
+                'Crud.Add',
+                // ...
             ],
             'listeners' => [
                 'CrudView.View',
                 'Crud.Redirect'
                 'Crud.RelatedModels'
-                ...
+                // ...
             ]
         ]);
     }
@@ -233,19 +223,19 @@ the ``Crud`` component. This is the recommended configuration:
 
 .. code-block:: php
 
-  <?php
-  public function initialize()
-  {
-      $this->loadComponent('Crud.Crud', [
+    <?php
+    public function initialize()
+    {
+        $this->loadComponent('Crud.Crud', [
             'actions' => [
-              'Crud.Edit',
-              ...
+                'Crud.Edit',
+                // ...
             ],
             'listeners' => [
                 'CrudView.View',
                 'Crud.Redirect'
                 'Crud.RelatedModels'
-                ...
+                // ...
             ]
         ]);
     }
@@ -268,12 +258,11 @@ fields in the form:
 .. code-block:: php
 
     <?php
-    ...
     public function add()
     {
-      $action = $this->Crud->action();
-      $action->config('scaffold.fields_blacklist', ['created', 'modified']);
-      return $this->Crud->execute();
+        $action = $this->Crud->action();
+        $action->config('scaffold.fields_blacklist', ['created', 'modified']);
+        return $this->Crud->execute();
     }
 
 It is also possible to directly specify which fields should have an input in the
@@ -282,12 +271,11 @@ form by using the ``scaffold.fields`` configuration key:
 .. code-block:: php
 
     <?php
-    ...
     public function edit()
     {
-      $action = $this->Crud->action();
-      $action->config('scaffold.fields', ['title', 'body', 'category_id']);
-      return $this->Crud->execute();
+        $action = $this->Crud->action();
+        $action->config('scaffold.fields', ['title', 'body', 'category_id']);
+        return $this->Crud->execute();
     }
 
 You can pass attributes or change the form input type to specific fields when
@@ -297,16 +285,15 @@ add the ``placeholder`` property to the ``title`` input:
 .. code-block:: php
 
     <?php
-    ...
     public function add()
     {
-      $action = $this->Crud->action();
-      $action->config('scaffold.fields', [
-        'title' => ['placeholder' => 'Insert a title here'],
-        'body',
-        'category_id'
-      ]);
-      return $this->Crud->execute();
+        $action = $this->Crud->action();
+        $action->config('scaffold.fields', [
+            'title' => ['placeholder' => 'Insert a title here'],
+            'body',
+            'category_id'
+        ]);
+        return $this->Crud->execute();
     }
 
 The configuration can be used in both ``add`` and ``edit`` actions.
@@ -329,16 +316,15 @@ you can use the ``relatedModels`` event:
 .. code-block:: php
 
     <?php
-    ...
     public function add()
     {
-      $this->Crud->on('relatedModel', function(\Cake\Event\Event $event) {
-          if ($event->subject->association->name() === 'Categories') {
-            $event->subject->query->limit(3);
-            $event->subject->query->where(['is_active' => true]);
-          }
-      });
-      return $this->Crud->execute();
+        $this->Crud->on('relatedModel', function(\Cake\Event\Event $event) {
+            if ($event->subject->association->name() === 'Categories') {
+                $event->subject->query->limit(3);
+                $event->subject->query->where(['is_active' => true]);
+            }
+        });
+        return $this->Crud->execute();
     }
 
 The callback can be used in both ``add`` and ``edit`` actions.
@@ -359,13 +345,12 @@ to be saved. For this case, you may use the ``scaffold.relations`` and
 .. code-block:: php
 
     <?php
-    ...
     public function edit()
     {
-      $action $this->Crud->action();
-      // Only fetch association info for Categories and Tags
-      $action->config('scaffold.relations', ['Categories', 'Tags']);
-      return $this->Crud->execute();
+        $action $this->Crud->action();
+        // Only fetch association info for Categories and Tags
+        $action->config('scaffold.relations', ['Categories', 'Tags']);
+        return $this->Crud->execute();
     }
 
 If you choose to use ``scaffold.relations_blacklist``, then you need only
@@ -374,13 +359,12 @@ specify those association that should not be added to ``contain()``:
 .. code-block:: php
 
     <?php
-    ...
     public function edit()
     {
-      $action $this->Crud->action();
-      // Only fetch association info for Categories and Tags
-      $action->config('scaffold.relations_blacklist', ['Authors']);
-      return $this->Crud->execute();
+        $action $this->Crud->action();
+        // Only fetch association info for Categories and Tags
+        $action->config('scaffold.relations_blacklist', ['Authors']);
+        return $this->Crud->execute();
     }
 
 Disabling the Extra Submit Buttons
@@ -393,12 +377,11 @@ configuration key to ``true``:
 .. code-block:: php
 
     <?php
-    ...
     public function add()
     {
-      $action = $this->Crud->action();
-      $action->config('scaffold.disable_extra_buttons', true);
-      return $this->Crud->execute();
+        $action = $this->Crud->action();
+        $action->config('scaffold.disable_extra_buttons', true);
+        return $this->Crud->execute();
     }
 
 It is also possible to only disable a few of the extra submit buttons by using
@@ -407,16 +390,15 @@ the ``scaffold.extra_buttons_blacklist`` configuration key:
 .. code-block:: php
 
     <?php
-    ...
     public function add()
     {
-      $action = $this->Crud->action();
-      $action->config('scaffold.extra_buttons_blacklist', [
-        'save_and_continue', // Hide the Save and Continue button
-        'save_and_create', // Hide the Save and create new button
-        'back', // Hide the back button
-      ]);
-      return $this->Crud->execute();
+        $action = $this->Crud->action();
+        $action->config('scaffold.extra_buttons_blacklist', [
+            'save_and_continue', // Hide the Save and Continue button
+            'save_and_create', // Hide the Save and create new button
+            'back', // Hide the back button
+        ]);
+        return $this->Crud->execute();
     }
 
 Both settings can be used in ``add`` and ``edit`` actions.
@@ -430,17 +412,17 @@ a record, including its associations is also achieved via configuring the
 
 .. code-block:: php
 
-  <?php
-  public function initialize()
-  {
-      $this->loadComponent('Crud.Crud', [
+    <?php
+    public function initialize()
+    {
+        $this->loadComponent('Crud.Crud', [
             'actions' => [
-              'Crud.View',
-              ...
+                'Crud.View',
+                // ...
             ],
             'listeners' => [
                 'CrudView.View',
-                ...
+                // ...
             ]
         ]);
     }
@@ -462,12 +444,11 @@ displayed in the view table:
 .. code-block:: php
 
     <?php
-    ...
     public function view()
     {
-      $action = $this->Crud->action();
-      $action->config('scaffold.fields_blacklist', ['created', 'modified']);
-      return $this->Crud->execute();
+        $action = $this->Crud->action();
+        $action->config('scaffold.fields_blacklist', ['created', 'modified']);
+        return $this->Crud->execute();
     }
 
 You can also be specific about the fields, and the order, in which they should
@@ -476,12 +457,11 @@ appear in the index table:
 .. code-block:: php
 
     <?php
-    ...
     public function view()
     {
-      $action = $this->Crud->action();
-      $action->config('scaffold.fields', ['title', 'body', 'category', 'published_time']);
-      return $this->Crud->execute();
+        $action = $this->Crud->action();
+        $action->config('scaffold.fields', ['title', 'body', 'category', 'published_time']);
+        return $this->Crud->execute();
     }
 
 Providing Associations to be Displayed
@@ -497,12 +477,11 @@ Fore example you may want to not fetch the ``Authors`` association of the
 .. code-block:: php
 
     <?php
-    ...
     public function view()
     {
-      $action = $this->Crud->action();
-      $action->config('scaffold.relations_blacklist', ['Authors', ...]);
-      return $this->Crud->execute();
+        $action = $this->Crud->action();
+        $action->config('scaffold.relations_blacklist', ['Authors', ...]);
+        return $this->Crud->execute();
     }
 
 If you want to be specific about which association need to be fetched, just use
@@ -511,12 +490,11 @@ the ``scaffold.relations`` configuration key:
 .. code-block:: php
 
     <?php
-    ...
     public function view()
     {
-      $action = $this->Crud->action();
-      $action->config('scaffold.relations', ['Categories', 'Tags']);
-      return $this->Crud->execute();
+        $action = $this->Crud->action();
+        $action->config('scaffold.relations', ['Categories', 'Tags']);
+        return $this->Crud->execute();
     }
 
 Alternatively, you can use the ``Crud`` plugin's ``beforePaginate`` method to
@@ -525,16 +503,15 @@ alter the ``contain()`` list for the pagination query:
 .. code-block:: php
 
     <?php
-    ...
     public function view()
     {
-      $this->Crud->on('beforeFind', function ($event) {
-        $event->subject()->query->contain([
-          'Categories',
-          'Authors' => ['fields' => ['id', 'name']]
-        ]);
-      });
-      return $this->Crud->execute();
+        $this->Crud->on('beforeFind', function ($event) {
+            $event->subject()->query->contain([
+                'Categories',
+                'Authors' => ['fields' => ['id', 'name']]
+            ]);
+        });
+        return $this->Crud->execute();
     }
 
 Going Forward

@@ -17,23 +17,22 @@ pass any properties that ``FormHelper::inputs()`` supports.
 .. code-block:: php
 
     <?php
-    ...
     class ArticlesController extends AppController
     {
-      public function index()
-      {
-        $action = $this->Crud->action();
-        $action->config('scaffold.fields', [
-          'title',
-          'thread_id' => [
-            'type' => 'text'
-          ],
-          'featured' => [
-            'checked' => 'checked'
-          ]
-        ]);
-        return $this->Crud->execute();
-      }
+        public function index()
+        {
+            $action = $this->Crud->action();
+            $action->config('scaffold.fields', [
+                'title',
+                'thread_id' => [
+                    'type' => 'text'
+                ],
+                'featured' => [
+                    'checked' => 'checked'
+                ]
+            ]);
+            return $this->Crud->execute();
+        }
     }
 
 Formating using a Formatter
@@ -46,22 +45,21 @@ applying formatters to any of your fields. Whenever you use the
 .. code-block:: php
 
     <?php
-    ...
     class ArticlesController extends AppController
     {
-      public function index()
-      {
-        $action = $this->Crud->action();
-        $action->config('scaffold.fields', [
-          'title',
-          'published_time' => [
-            'formatter' => function ($name, Time $value) {
-              return $value->nice();
-            }
-          ],
-        ]);
-        return $this->Crud->execute();
-      }
+        public function index()
+        {
+            $action = $this->Crud->action();
+            $action->config('scaffold.fields', [
+                'title',
+                'published_time' => [
+                    'formatter' => function ($name, Time $value) {
+                        return $value->nice();
+                    }
+                ],
+            ]);
+            return $this->Crud->execute();
+        }
     }
 
 Formatting with a Callable
@@ -80,14 +78,12 @@ wanted to also display who approved the article:
 .. code-block:: php
 
     <?php
-    ...
     $action->config('scaffold.fields', [
-      ...
-      'published_time' => [
-        'formatter' => function ($name, $value, $entity) {
-          return $value->nice() . sprintf(' (Approved by %s)', $entity->approver->name);
-        }
-      ]
+        'published_time' => [
+            'formatter' => function ($name, $value, $entity) {
+                return $value->nice() . sprintf(' (Approved by %s)', $entity->approver->name);
+            }
+        ]
     ]);
 
 Formatting with an Element
@@ -104,14 +100,13 @@ to the same index action by passing some search arguments:
 .. code-block:: php
 
     <?php
-    ...
     $action->config('scaffold.fields', [
-      ...
-      'published_time' => [
-        'formatter' => 'element',
-        'element' => 'search/published_time',
-        'action' => 'index'
-      ]
+        // ...
+        'published_time' => [
+            'formatter' => 'element',
+            'element' => 'search/published_time',
+            'action' => 'index'
+        ]
     ]);
 
 We have instructed the formatter to use ``search/published_time`` element. Then,
@@ -123,8 +118,8 @@ it is just a matter of creating the element file with the right content:
     // src/Template/Element/search/published_time.ctp
 
     echo $this->Html->link($value->timeAgoInWords(), [
-      'action' => $options['action'],
-      'published_time' => $value->format('Y-m-d')
+        'action' => $options['action'],
+        'published_time' => $value->format('Y-m-d')
     ]);
 
 After this, when displaying the ``published_time`` field, there will the will be
@@ -155,18 +150,17 @@ In your ``index()`` action use the ``scaffold.fields`` configuration to set the
 .. code-block:: php
 
     <?php
-    ...
     class ArticlesController extends AppController
     {
-      public function index()
-      {
-        $action = $this->Crud->action();
-        $action->config('scaffold.fields', [
-          'author_id' => ['title' => 'Author Name'],
-          ... // The rest of the fields to display here
-        ]);
-        return $this->Crud->execute();
-      }
+        public function index()
+        {
+            $action = $this->Crud->action();
+            $action->config('scaffold.fields', [
+                'author_id' => ['title' => 'Author Name'],
+                // The rest of the fields to display here
+            ]);
+            return $this->Crud->execute();
+        }
     }
 
 Changing Form Input Labels
@@ -178,18 +172,17 @@ title for any of the fields by using the ``scaffold.fields`` configuration
 .. code-block:: php
 
     <?php
-    ...
     class ArticlesController extends AppController
     {
-      public function add()
-      {
-        $action = $this->Crud->action();
-        $action->config('scaffold.fields', [
-          'author_id' => ['label' => 'Author Name'],
-          ... // The rest of the fields to display here
-        ]);
-        return $this->Crud->execute();
-      }
+        public function add()
+        {
+            $action = $this->Crud->action();
+            $action->config('scaffold.fields', [
+                'author_id' => ['label' => 'Author Name'],
+                // The rest of the fields to display here
+            ]);
+            return $this->Crud->execute();
+        }
     }
 
 Overriding Template Parts
