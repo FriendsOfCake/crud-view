@@ -14,7 +14,6 @@ action to the ``Crud`` component and the ``CrudView.View`` as a listener.
 
 .. code-block:: php
 
-    <?php
     public function initialize()
     {
         $this->loadComponent('Crud.Crud', [
@@ -36,6 +35,8 @@ page.
 .. code-block:: php
 
     <?php
+    namespace App\Controller;
+
     class ArticlesController extends AppController
     {
         public function index()
@@ -51,7 +52,6 @@ writing.
 
 .. code-block:: php
 
-    <?php
     public function index()
     {
         $action = $this->Crud->action(); // Gets the IndexAction object
@@ -74,7 +74,6 @@ Fore example you may want to not fetch the ``Authors`` association of the
 
 .. code-block:: php
 
-    <?php
     public function index()
     {
         $action = $this->Crud->action();
@@ -87,7 +86,6 @@ the ``scaffold.relations`` configuration key:
 
 .. code-block:: php
 
-    <?php
     public function index()
     {
         $action = $this->Crud->action();
@@ -100,7 +98,6 @@ alter the ``contain()`` list for the pagination query:
 
 .. code-block:: php
 
-    <?php
     public function index()
     {
         $this->Crud->on('beforePaginate', function ($event) {
@@ -125,7 +122,6 @@ displayed in the index table:
 
 .. code-block:: php
 
-    <?php
     public function index()
     {
         $action = $this->Crud->action();
@@ -138,7 +134,6 @@ appear in the index table:
 
 .. code-block:: php
 
-    <?php
     public function index()
     {
         $action = $this->Crud->action();
@@ -159,7 +154,6 @@ table:
 
 .. code-block:: php
 
-    <?php
     public function index()
     {
         $action = $this->Crud->action();
@@ -172,7 +166,6 @@ specifically displayed in the index view:
 
 .. code-block:: php
 
-    <?php
     public function index()
     {
         $action = $this->Crud->action();
@@ -192,7 +185,6 @@ the ``Crud`` component configuration:
 
 .. code-block:: php
 
-    <?php
     public function initialize()
     {
         $this->loadComponent('Crud.Crud', [
@@ -223,7 +215,6 @@ the ``Crud`` component. This is the recommended configuration:
 
 .. code-block:: php
 
-    <?php
     public function initialize()
     {
         $this->loadComponent('Crud.Crud', [
@@ -257,7 +248,6 @@ fields in the form:
 
 .. code-block:: php
 
-    <?php
     public function add()
     {
         $action = $this->Crud->action();
@@ -270,7 +260,6 @@ form by using the ``scaffold.fields`` configuration key:
 
 .. code-block:: php
 
-    <?php
     public function edit()
     {
         $action = $this->Crud->action();
@@ -284,7 +273,6 @@ add the ``placeholder`` property to the ``title`` input:
 
 .. code-block:: php
 
-    <?php
     public function add()
     {
         $action = $this->Crud->action();
@@ -315,7 +303,6 @@ you can use the ``relatedModels`` event:
 
 .. code-block:: php
 
-    <?php
     public function add()
     {
         $this->Crud->on('relatedModel', function(\Cake\Event\Event $event) {
@@ -344,7 +331,6 @@ to be saved. For this case, you may use the ``scaffold.relations`` and
 
 .. code-block:: php
 
-    <?php
     public function edit()
     {
         $action $this->Crud->action();
@@ -358,7 +344,6 @@ specify those association that should not be added to ``contain()``:
 
 .. code-block:: php
 
-    <?php
     public function edit()
     {
         $action $this->Crud->action();
@@ -376,7 +361,6 @@ configuration key to ``true``:
 
 .. code-block:: php
 
-    <?php
     public function add()
     {
         $action = $this->Crud->action();
@@ -389,7 +373,6 @@ the ``scaffold.extra_buttons_blacklist`` configuration key:
 
 .. code-block:: php
 
-    <?php
     public function add()
     {
         $action = $this->Crud->action();
@@ -412,7 +395,6 @@ a record, including its associations is also achieved via configuring the
 
 .. code-block:: php
 
-    <?php
     public function initialize()
     {
         $this->loadComponent('Crud.Crud', [
@@ -443,7 +425,6 @@ displayed in the view table:
 
 .. code-block:: php
 
-    <?php
     public function view()
     {
         $action = $this->Crud->action();
@@ -456,7 +437,6 @@ appear in the index table:
 
 .. code-block:: php
 
-    <?php
     public function view()
     {
         $action = $this->Crud->action();
@@ -476,7 +456,6 @@ Fore example you may want to not fetch the ``Authors`` association of the
 
 .. code-block:: php
 
-    <?php
     public function view()
     {
         $action = $this->Crud->action();
@@ -489,7 +468,6 @@ the ``scaffold.relations`` configuration key:
 
 .. code-block:: php
 
-    <?php
     public function view()
     {
         $action = $this->Crud->action();
@@ -502,7 +480,6 @@ alter the ``contain()`` list for the pagination query:
 
 .. code-block:: php
 
-    <?php
     public function view()
     {
         $this->Crud->on('beforeFind', function ($event) {

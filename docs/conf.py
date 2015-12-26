@@ -34,7 +34,8 @@ from _config import *
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    #   '_config.cakephpbranch',
+    'sphinxcontrib.phpdomain',
+    '_config.cakephpbranch',
     #  'sphinx.ext.todo'
 ]
 
@@ -104,7 +105,7 @@ pygments_style = 'sphinx'
 # If true, keep warnings as "system message" paragraphs in the built documents.
 # keep_warnings = False
 
-# highlight_language = 'phpinline'
+highlight_language = 'php'
 
 # -- Options for HTML output ----------------------------------------------
 
@@ -271,9 +272,9 @@ texinfo_documents = [
 # If true, do not generate a @detailmenu in the "Top" node's menu.
 # texinfo_no_detailmenu = False
 
-# from sphinx.highlighting import lexers
-# from pygments.lexers.web import PhpLexer
+from sphinx.highlighting import lexers
+from pygments.lexers.php import PhpLexer
 
-# lexers['phpinline'] = PhpLexer(startinline=True)
+lexers['php'] = PhpLexer(startinline=True)
 
 branch = 'master'

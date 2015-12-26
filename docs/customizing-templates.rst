@@ -17,6 +17,8 @@ pass any properties that ``FormHelper::inputs()`` supports.
 .. code-block:: php
 
     <?php
+    namespace App\Controller;
+
     class ArticlesController extends AppController
     {
         public function index()
@@ -45,6 +47,8 @@ applying formatters to any of your fields. Whenever you use the
 .. code-block:: php
 
     <?php
+    namespace App\Controller;
+
     class ArticlesController extends AppController
     {
         public function index()
@@ -77,7 +81,6 @@ wanted to also display who approved the article:
 
 .. code-block:: php
 
-    <?php
     $action->config('scaffold.fields', [
         'published_time' => [
             'formatter' => function ($name, $value, $entity) {
@@ -99,7 +102,6 @@ to the same index action by passing some search arguments:
 
 .. code-block:: php
 
-    <?php
     $action->config('scaffold.fields', [
         // ...
         'published_time' => [
@@ -114,7 +116,6 @@ it is just a matter of creating the element file with the right content:
 
 .. code-block:: php
 
-    <?php
     // src/Template/Element/search/published_time.ctp
 
     echo $this->Html->link($value->timeAgoInWords(), [
@@ -150,6 +151,8 @@ In your ``index()`` action use the ``scaffold.fields`` configuration to set the
 .. code-block:: php
 
     <?php
+    namespace App\Controller;
+
     class ArticlesController extends AppController
     {
         public function index()
@@ -172,6 +175,8 @@ title for any of the fields by using the ``scaffold.fields`` configuration
 .. code-block:: php
 
     <?php
+    namespace App\Controller;
+
     class ArticlesController extends AppController
     {
         public function add()
