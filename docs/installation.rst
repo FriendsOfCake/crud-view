@@ -90,7 +90,8 @@ Therefore, you can just leave your controller code empty!
   <?php
   namespace App\Controller;
 
-  class CategoriesController extends AppController {
+  class CategoriesController extends AppController 
+  {
     // No code here, but we have all actions available to use!
   }
 
