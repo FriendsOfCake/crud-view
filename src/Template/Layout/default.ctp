@@ -27,14 +27,22 @@
 
     <div class="container-fluid">
         <div class="row">
-            <div class="col-xs-0 col-sm-2 col-lg-2">
-                <?= $this->element('sidebar'); ?>
-            </div>
-            <div class="col-xs-12 col-sm-10 col-lg-10">
-                <?= $this->Flash->render(); ?>
-                <?= $this->fetch('content'); ?>
-                <?= $this->fetch('action_link_forms'); ?>
-            </div>
+            <?php if ($disableSidebar) : ?>
+                <div class="col-sm-12">
+                    <?= $this->Flash->render(); ?>
+                    <?= $this->fetch('content'); ?>
+                    <?= $this->fetch('action_link_forms'); ?>
+                </div>
+            <?php else : ?>
+                <div class="col-xs-0 col-sm-2 col-lg-2">
+                    <?= $this->element('sidebar'); ?>
+                </div>
+                <div class="col-xs-12 col-sm-10 col-lg-10">
+                    <?= $this->Flash->render(); ?>
+                    <?= $this->fetch('content'); ?>
+                    <?= $this->fetch('action_link_forms'); ?>
+                </div>
+            <?php endif; ?>
         </div>
     </div>
 
