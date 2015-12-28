@@ -91,13 +91,13 @@ class ViewListener extends BaseListener
      *
      * If it doesn't, load the defaults file
      *
-     * @return array
+     * @return bool
      */
     public function ensureConfig()
     {
         $config = Configure::read('CrudView');
         if ($config !== null) {
-            return $config;
+            return true;
         }
 
         return Configure::load('CrudView.defaults');
