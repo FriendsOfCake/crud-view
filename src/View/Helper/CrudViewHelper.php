@@ -8,6 +8,11 @@ use Cake\Utility\Text;
 use Cake\View\Helper;
 use Cake\View\Helper\FormHelper;
 
+/**
+ * @property \Cake\View\Helper\FormHelper $Form
+ * @property \Cake\View\Helper\HtmlHelper $Html
+ * @property \Cake\View\Helper\TimeHelper $Time
+ */
 class CrudViewHelper extends Helper
 {
 
@@ -16,7 +21,7 @@ class CrudViewHelper extends Helper
      *
      * @var array
      */
-    public $helpers = ['Form', 'Html', 'Time', 'Paginator'];
+    public $helpers = ['Form', 'Html', 'Time'];
 
     /**
      * Context
@@ -67,7 +72,7 @@ class CrudViewHelper extends Helper
         }
 
         if ($options['formatter'] === 'relation') {
-            $relation = $this->relation($field, $value, $options);
+            $relation = $this->relation($field);
             if ($relation) {
                 return $relation['output'];
             }
@@ -112,8 +117,7 @@ class CrudViewHelper extends Helper
      */
     public function introspect($field, $value, array $options = [])
     {
-        $output = $this->relation($field, $value, $options);
-
+        $output = $this->relation($field);
         if ($output) {
             return $output['output'];
         }
@@ -138,7 +142,7 @@ class CrudViewHelper extends Helper
             return $this->formatTime($field, $value, $options);
         }
 
-        $value = $this->formatString($field, $value, $options);
+        $value = $this->formatString($field, $value);
 
         if ($field === $this->getViewVar('displayField')) {
             $value = $this->createViewLink($value, ['escape' => false]);
