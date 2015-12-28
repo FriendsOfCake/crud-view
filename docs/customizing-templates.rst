@@ -190,6 +190,30 @@ title for any of the fields by using the ``scaffold.fields`` configuration
         }
     }
 
+Disabling the Sidebar
+---------------------
+
+There are cases where you may wish to disable the sidebar. For instance, you
+may be implementing crud-view for just a single table, or have all navigation
+in your header. You can disable it using the ``scaffold.disable_sidebar``
+configuration key:
+
+
+.. code-block:: php
+
+    <?php
+    namespace App\Controller;
+
+    class ArticlesController extends AppController
+    {
+        public function beforeFilter()
+        {
+            parent::beforeFilter();
+            $action = $this->Crud->action();
+            $action->config('scaffold.disable_sidebar', false);
+        }
+    }
+
 Overriding Template Parts
 -------------------------
 
