@@ -1,6 +1,5 @@
 {
     "name": "friendsofcake/crud-view",
-    "version": "0.0.1",
     "description": "View layer for CRUD",
     "type": "cakephp-plugin",
     "keywords": [
