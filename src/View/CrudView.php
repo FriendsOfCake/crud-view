@@ -7,6 +7,9 @@ use Cake\View\Exception\MissingTemplateException;
 use Cake\View\View;
 use CrudView\Traits\CrudViewConfigTrait;
 
+/**
+  * @property \AssetCompress\View\Helper\AssetCompressHelper $AssetCompress
+  */
 class CrudView extends View
 {
     use CrudViewConfigTrait;
@@ -180,15 +183,15 @@ class CrudView extends View
      */
     protected function _getViewFileName($name = null)
     {
-        if ($this->viewPath === 'Error') {
+        if ($this->templatePath === 'Error') {
             return parent::_getViewFileName($name);
         }
         try {
             return parent::_getViewFileName($name);
         } catch (MissingTemplateException $exception) {
             $this->subDir = null;
-            $this->viewPath = 'Scaffold';
-            return parent::_getViewFileName($this->view);
+            $this->templatePath = 'Scaffold';
+            return parent::_getViewFileName($this->template);
         }
     }
 }
