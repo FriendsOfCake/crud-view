@@ -307,11 +307,12 @@ class ViewListener extends BaseListener
             $scaffoldFields[$field] += ['formatter' => null];
         }
 
-        $fieldFormatters = $action->config('scaffold.field_formatters');
-        if (empty($fieldFormatters)) {
-            $fieldFormatters = [];
+        $fieldSettings = $action->config('scaffold.field_settings');
+        if (empty($fieldSettings)) {
+            $fieldSettings = [];
         }
-        $scaffoldFields = Hash::merge($scaffoldFields, $fieldFormatters);
+        $fieldSettings = array_intersect_key($fieldSettings, $scaffoldFields);
+        $scaffoldFields = Hash::merge($scaffoldFields, $fieldSettings);
 
         return $scaffoldFields;
     }

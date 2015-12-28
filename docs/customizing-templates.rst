@@ -66,6 +66,31 @@ applying formatters to any of your fields. Whenever you use the
         }
     }
 
+You may also specify formatters using the ``scaffold.field_settings``
+configuration key. This is useful if you want to display all fields but wish
+to only configure the settings for one or two.
+
+.. code-block:: php
+
+    <?php
+    namespace App\Controller;
+
+    class ArticlesController extends AppController
+    {
+        public function index()
+        {
+            $action = $this->Crud->action();
+            $action->config('scaffold.field_settings', [
+                'published_time' => [
+                    'formatter' => function ($name, Time $value) {
+                        return $value->nice();
+                    }
+                ],
+            ]);
+            return $this->Crud->execute();
+        }
+    }
+
 Formatting with a Callable
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
