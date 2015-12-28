@@ -75,7 +75,6 @@ class SearchListener extends BaseListener
         }
 
         $filters = $table->searchConfiguration();
-        $currentModel = $table->alias();
         $schema = $table->schema();
 
         $fields = [];
