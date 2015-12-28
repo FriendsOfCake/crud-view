@@ -8,8 +8,8 @@ use Cake\View\View;
 use CrudView\Traits\CrudViewConfigTrait;
 
 /**
-  * @property \AssetCompress\View\Helper\AssetCompressHelper $AssetCompress
-  */
+ * @property \AssetCompress\View\Helper\AssetCompressHelper $AssetCompress
+ */
 class CrudView extends View
 {
     use CrudViewConfigTrait;
