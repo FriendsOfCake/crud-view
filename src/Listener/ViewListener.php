@@ -29,8 +29,8 @@ class ViewListener extends BaseListener
     public function beforeFind(Event $event)
     {
         $this->associations = $this->_associations(array_keys($this->_getRelatedModels()));
-        if (!$event->subject->query->contain()) {
-            $event->subject->query->contain($this->_getRelatedModels());
+        if (!$event->subject()->query->contain()) {
+            $event->subject()->query->contain($this->_getRelatedModels());
         }
     }
 
@@ -43,8 +43,8 @@ class ViewListener extends BaseListener
     public function beforePaginate(Event $event)
     {
         $this->associations = $this->_associations(array_keys($this->_getRelatedModels()));
-        if (!$event->subject->query->contain()) {
-            $event->subject->query->contain($this->_getRelatedModels(['manyToOne', 'oneToOne']));
+        if (!$event->subject()->query->contain()) {
+            $event->subject()->query->contain($this->_getRelatedModels(['manyToOne', 'oneToOne']));
         }
     }
 
@@ -60,8 +60,8 @@ class ViewListener extends BaseListener
             return;
         }
 
-        if (!empty($event->subject->entity)) {
-            $this->_entity = $event->subject->entity;
+        if (!empty($event->subject()->entity)) {
+            $this->_entity = $event->subject()->entity;
         }
 
         $this->ensureConfig();
@@ -111,8 +111,8 @@ class ViewListener extends BaseListener
      */
     public function setFlash(Event $event)
     {
-        unset($event->subject->params['class']);
-        $event->subject->element = ltrim($event->subject->type);
+        unset($event->subject()->params['class']);
+        $event->subject()->element = ltrim($event->subject()->type);
     }
 
     /**
@@ -522,9 +522,9 @@ class ViewListener extends BaseListener
         $controller = $this->_controller();
         $entity = $this->_entity();
         $request = $this->_request();
-        $value = null;
+        $value = $entity->get($field);
 
-        if ($value = $entity->get($field)) {
+        if ($value) {
             return $value;
         }
 
