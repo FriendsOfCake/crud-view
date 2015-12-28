@@ -324,15 +324,22 @@ class ViewListener extends BaseListener
      */
     protected function _controllerName()
     {
-        $controllerName = (string)$this->_controller()->name;
-        $baseName = Inflector::humanize(Inflector::underscore($controllerName));
+        $inflections = [
+            'underscore',
+            'humanize',
+        ];
 
         if ($this->_action()->scope() === 'table') {
-            return Inflector::pluralize($baseName);
+            $inflections[] = 'pluralize';
         }
 
         if ($this->_action()->scope() === 'entity') {
-            return Inflector::singularize($baseName);
+            $inflections[] = 'singularize';
+        }
+
+        $baseName = (string)$this->_controller()->name;
+        foreach ($inflections as $inflection) {
+            $baseName = Inflector::$inflection($baseName);
         }
 
         return $baseName;
