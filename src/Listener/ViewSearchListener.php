@@ -6,7 +6,7 @@ use Cake\Routing\Router;
 use Cake\Utility\Inflector;
 use Crud\Listener\BaseListener;
 
-class SearchListener extends BaseListener
+class ViewSearchListener extends BaseListener
 {
 
     /**
