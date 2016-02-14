@@ -41,8 +41,11 @@ $(document).on('ready', function() {
     $('input.autocomplete, select.autocomplete').each(function (i, e) {
         e = $(e);
         e.selectize({
-            maxItems: 1,
-            create: !$(e).data('exact-match'),
+            maxItems: e.data('max-items') || 1,
+            maxOptions: e.data('max-options') || 10,
+            hideSelected: e.data('hide-selected'),
+            closeAfterSelect: e.data('close-after-select'),
+            create: !e.data('exact-match'),
             persist: false,
             render: {
                 'option_create': function(data, escape) {
