@@ -63,7 +63,11 @@ class ViewListener extends BaseListener
         if (!empty($event->subject()->entity)) {
             $this->_entity = $event->subject()->entity;
         }
-
+        
+        if (empty($this->associations)) {
+            $this->associations = $this->_associations(array_keys($this->_getRelatedModels()));
+        }
+        
         $this->ensureConfig();
 
         $controller = $this->_controller();
