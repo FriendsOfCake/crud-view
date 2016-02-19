@@ -22,6 +22,8 @@
                 </button>
                 <a class="navbar-brand" href="/"><?= $brand ?></a>
             </div>
+
+            <?= $this->element('topbar'); ?>
         </div>
     </nav>
 
