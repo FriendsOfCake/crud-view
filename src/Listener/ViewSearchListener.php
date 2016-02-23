@@ -140,7 +140,7 @@ class ViewSearchListener extends BaseListener
             }
 
             unset($input['fields']);
-            $url = ['action' => 'lookup', '?' => $urlArgs, '_ext' => 'json'];
+            $url = array_merge(['action' => 'lookup', '_ext' => 'json'], $urlArgs);
             $input['data-url'] = Router::url($url);
 
             $fields[$searchParam] = $input;
