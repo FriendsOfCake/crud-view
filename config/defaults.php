@@ -1,4 +1,6 @@
 <?php
+use \Cake\Core\Plugin;
+
 return [
     'CrudView' => [
         'brand' => 'Crud View',
@@ -22,5 +24,6 @@ return [
             ]
         ],
         'timezoneAwareDateTimeWidget' => false,
+        'useAssetCompress' => Plugin::loaded('AssetCompress')
     ]
 ];

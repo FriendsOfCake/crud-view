@@ -52,7 +52,7 @@ class CrudView extends View
      */
     protected function _loadAssets()
     {
-        if (Plugin::loaded('AssetCompress')) {
+        if (Configure::read('CrudView.useAssetCompress')) {
             $this->AssetCompress->css('CrudView.crudview', ['block' => true]);
             $this->AssetCompress->script('CrudView.crudview_head', ['block' => 'headjs']);
             $this->AssetCompress->script('CrudView.crudview', ['block' => true]);
@@ -95,7 +95,7 @@ class CrudView extends View
         $this->loadHelper('CrudView.CrudView');
         $this->loadHelper('BootstrapUI.Flash');
 
-        if (Plugin::loaded('AssetCompress')) {
+        if (Configure::read('CrudView.useAssetCompress')) {
             $this->loadHelper('AssetCompress.AssetCompress');
         }
     }
