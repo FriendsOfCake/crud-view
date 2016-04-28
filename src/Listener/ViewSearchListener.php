@@ -124,10 +124,6 @@ class ViewSearchListener extends BaseListener
                 continue;
             }
 
-            if (empty($input['class'])) {
-                $input['class'] = 'autocomplete';
-            }
-
             if (empty($input['type'])) {
                 $input['type'] = 'text';
             }
