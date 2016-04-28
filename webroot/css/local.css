@@ -76,9 +76,6 @@ h2 .actions {
 }
 
 div.actions-wrapper {
+    display: inline-block;
     margin: 10px 0;
-}
-
-div.actions-holder {
-    float: left;
 }
