@@ -15,8 +15,8 @@ if (!$this->exists('actions')) {
     $this->end();
 }
 ?>
-<h2><?= $this->get('title'); ?></h2>
-<div class="actions-wrapper">
-    <?= $this->fetch('actions'); ?>
-    <div style="clear: both;"></div>
-</div>
+<h2><?= $this->get('title'); ?>
+    <div class="actions-wrapper">
+        <?= $this->fetch('actions'); ?>
+    </div>
+</h2>

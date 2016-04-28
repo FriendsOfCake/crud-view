@@ -49,35 +49,33 @@ foreach ($actions as $name => $config) {
 }
 ?>
 
-<div class="actions-holder">
-    <?php
-    // render primary actions at first
-    foreach ($actionGroups['primary'] as $action) {
-        if (!isset($links[$action])) {
-            continue;
-        }
-
-        $config = $links[$action];
-        if (is_string($config)) {
-            echo $config;
-            continue;
-        }
-
-        $config['options']['class'] = ['btn btn-default'];
-        if ($config['method'] !== 'GET') {
-            echo $this->Form->postLink(
-                $config['title'],
-                $config['url'],
-                $config['options']
-            );
-            continue;
-        }
-
-        echo $this->element('action-button', ['config' => $config]);
+<?php
+// render primary actions at first
+foreach ($actionGroups['primary'] as $action) {
+    if (!isset($links[$action])) {
+        continue;
     }
-    unset($actionGroups['primary']);
 
-    // render grouped actions
-    echo $this->element('action-groups', ['groups' => $actionGroups, 'links' => $links]);
-    ?>
-</div>
+    $config = $links[$action];
+    if (is_string($config)) {
+        echo $config;
+        continue;
+    }
+
+    $config['options']['class'] = ['btn btn-default'];
+    if ($config['method'] !== 'GET') {
+        echo $this->Form->postLink(
+            $config['title'],
+            $config['url'],
+            $config['options']
+        );
+        continue;
+    }
+
+    echo $this->element('action-button', ['config' => $config]);
+}
+unset($actionGroups['primary']);
+
+// render grouped actions
+echo $this->element('action-groups', ['groups' => $actionGroups, 'links' => $links]);
+?>
