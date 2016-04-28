@@ -26,9 +26,17 @@
                 <?php
                 foreach ($fields as $field => $options) :
                     ?>
-                    <th><?= $this->Paginator->sort($field, isset($options['title']) ? $options['title'] : null, $options); ?></th>
+                    <th>
+                        <?php
+                        if (!empty($options['disableSort'])) {
+                            echo isset($options['title']) ? $options['title'] : \Cake\Utility\Inflector::humanize($field);
+                        } else {
+                            echo $this->Paginator->sort($field, isset($options['title']) ? $options['title'] : null, $options);
+                        }
+                        ?>
+                    </th>
                     <?php
-                    endforeach;
+                endforeach;
                 ?>
                 <?php if ($actionsExist = !empty($actions['entity'])): ?>
                     <th><?= __d('crud', 'Actions'); ?></th>
