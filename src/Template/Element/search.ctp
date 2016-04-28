@@ -14,7 +14,6 @@ if (empty($searchInputs)) {
     ?>
 
     <fieldset>
-        <legend>Filter</legend>
         <?= $this->Form->inputs($searchInputs, ['fieldset' => false]); ?>
         <?= $this->Form->button('Filter results', ['type' => 'submit', 'class' => 'btn btn-primary']); ?>
     </fieldset>
