@@ -379,15 +379,17 @@ class ViewListener extends BaseListener
             $scope = isset($config['scope']) ? $config['scope'] : 'entity';
             $method = isset($config['method']) ? $config['method'] : 'GET';
 
+            $title = !empty($config['link_title']) ? $config['link_title'] : Inflector::humanize(Inflector::underscore($actionName));
+
             ${$scope}[$actionName] = [
-                'title' => Inflector::humanize(Inflector::underscore($actionName)),
+                'title' => $title,
                 'url' => [
                     'action' => $actionName
                 ],
                 'method' => $method,
                 'options' => array_diff_key(
                     $config,
-                    array_flip(['method', 'scope', 'className'])
+                    array_flip(['method', 'scope', 'className', 'link_title'])
                 )
             ];
             if (!empty($config['callback'])) {
