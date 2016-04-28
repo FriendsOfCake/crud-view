@@ -59,9 +59,17 @@ If you haven't configured the CRUD plugin already, add the following lines to yo
          */
         public function beforeRender(\Cake\Event\Event $event)
         {
+            // For CakePHP 3.1+
             if ($this->viewBuilder()->className() === null) {
                 $this->viewBuilder()->className('CrudView\View\CrudView');
             }
+            
+            // For CakePHP 3.0
+            /*
+            if ($this->viewClass === null) {
+                $this->viewClass == '\CrudView\View\CrudView';
+            }
+            */
         }
     }
 
