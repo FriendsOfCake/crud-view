@@ -67,7 +67,7 @@ If you haven't configured the CRUD plugin already, add the following lines to yo
             // For CakePHP 3.0
             /*
             if ($this->viewClass === null) {
-                $this->viewClass == '\CrudView\View\CrudView';
+                $this->viewClass = 'CrudView\View\CrudView';
             }
             */
         }
