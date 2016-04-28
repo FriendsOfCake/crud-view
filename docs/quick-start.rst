@@ -32,7 +32,6 @@ If you haven't configured the CRUD plugin already, add the following lines to yo
             $this->loadComponent('RequestHandler');
             $this->loadComponent('Flash');
 
-            $this->viewClass = 'CrudView\View\CrudView';
             $this->loadComponent('Crud.Crud', [
                 'actions' => [
                     'Crud.Index',
@@ -50,6 +49,27 @@ If you haven't configured the CRUD plugin already, add the following lines to yo
                     'CrudView.Search',
                 ]
             ]);
+        }
+        
+        /**
+         * Before render callback.
+         *
+         * @param \Cake\Event\Event $event The beforeRender event.
+         * @return void
+         */
+        public function beforeRender(\Cake\Event\Event $event)
+        {
+            // For CakePHP 3.1+
+            if ($this->viewBuilder()->className() === null) {
+                $this->viewBuilder()->className('CrudView\View\CrudView');
+            }
+            
+            // For CakePHP 3.0
+            /*
+            if ($this->viewClass === null) {
+                $this->viewClass = 'CrudView\View\CrudView';
+            }
+            */
         }
     }
 
