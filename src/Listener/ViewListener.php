@@ -21,6 +21,14 @@ class ViewListener extends BaseListener
     protected $associations = [];
 
     /**
+     * Flags whether associations should
+     * be loaded or not.
+     *
+     * @var bool
+     */
+    protected $_shouldLoadAssociations = true;
+
+    /**
      * [beforeFind description]
      *
      * @param \Cake\Event\Event $event Event.
@@ -63,11 +71,11 @@ class ViewListener extends BaseListener
         if (!empty($event->subject()->entity)) {
             $this->_entity = $event->subject()->entity;
         }
-        
+
         if (empty($this->associations)) {
             $this->associations = $this->_associations(array_keys($this->_getRelatedModels()));
         }
-        
+
         $this->ensureConfig();
 
         $controller = $this->_controller();
@@ -151,6 +159,7 @@ class ViewListener extends BaseListener
         $models = $this->_action()->config('scaffold.relations');
 
         if ($models === false) {
+            $this->_shouldLoadAssociations = false;
             return [];
         }
 
@@ -173,6 +182,7 @@ class ViewListener extends BaseListener
         if (!empty($blacklist)) {
             $blacklist = Hash::normalize($blacklist);
             $models = array_diff_key($models, $blacklist);
+            $this->_shouldLoadAssociations = !empty($models);
         }
 
         foreach ($models as $key => $value) {
@@ -458,6 +468,10 @@ class ViewListener extends BaseListener
      */
     protected function _associations(array $whitelist = [])
     {
+        if (!$this->_shouldLoadAssociations) {
+          return [];
+        }
+
         $table = $this->_table();
 
         $associationConfiguration = [];
