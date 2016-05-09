@@ -469,7 +469,7 @@ class ViewListener extends BaseListener
     protected function _associations(array $whitelist = [])
     {
         if (!$this->_shouldLoadAssociations) {
-          return [];
+            return [];
         }
 
         $table = $this->_table();
