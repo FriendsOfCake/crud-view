@@ -122,13 +122,7 @@ class CrudViewHelper extends Helper
             return $output['output'];
         }
 
-
-        $schema = $this->schema();
-        if (method_exists($schema, 'baseColumnType')) {
-            $type = $schema->baseColumnType($field);
-        } else {
-            $type = $schema->columnType($field);
-        }
+        $type = $this->columnType($field);
 
         if ($type === 'boolean') {
             return $this->formatBoolean($field, $value, $options);
@@ -145,10 +139,26 @@ class CrudViewHelper extends Helper
         $value = $this->formatString($field, $value);
 
         if ($field === $this->getViewVar('displayField')) {
-            $value = $this->createViewLink($value, ['escape' => false]);
+            return $this->formatdisplayField($value, $options);
         }
 
         return $value;
+    }
+
+    /**
+     * Get column type from schema.
+     *
+     * @param string $field Field to get column type for
+     * @return string
+     */
+    public function columnType($field)
+    {
+        $schema = $this->schema();
+        if (method_exists($schema, 'baseColumnType')) {
+            return $schema->baseColumnType($field);
+        }
+
+        return $schema->columnType($field);
     }
 
     /**
@@ -209,6 +219,18 @@ class CrudViewHelper extends Helper
     public function formatString($field, $value)
     {
         return h(Text::truncate($value, 200));
+    }
+
+    /**
+     * Format display field value.
+     *
+     * @param string $value Display field value.
+     * @param array $options Field options.
+     * @return string
+     */
+    public function formatDisplayField($value, array $options)
+    {
+        return $this->createViewLink($value, ['escape' => false]);
     }
 
     /**
