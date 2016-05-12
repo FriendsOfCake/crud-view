@@ -4,10 +4,5 @@ if (empty($bulkActions)) {
 }
 ?>
 <th class="bulk-action">
-    <?= $this->Form->input($primaryKey . '[_all]', [
-        'checked' => false,
-        'div' => false,
-        'label' => '',
-        'type' => 'checkbox',
-    ]); ?>
+    <?= $this->Form->checkbox($primaryKey . '[_all]') ?>
 </th>
