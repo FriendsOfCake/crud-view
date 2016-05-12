@@ -63,11 +63,11 @@ class ViewListener extends BaseListener
         if (!empty($event->subject()->entity)) {
             $this->_entity = $event->subject()->entity;
         }
-        
+
         if (empty($this->associations)) {
             $this->associations = $this->_associations(array_keys($this->_getRelatedModels()));
         }
-        
+
         $this->ensureConfig();
 
         $controller = $this->_controller();
@@ -487,6 +487,8 @@ class ViewListener extends BaseListener
             $associationConfiguration[$type][$assocKey]['controller'] = Inflector::pluralize($assocKey);
             $associationConfiguration[$type][$assocKey]['entity'] = Inflector::singularize(Inflector::underscore($assocKey));
             $associationConfiguration[$type][$assocKey]['entities'] = Inflector::underscore($assocKey);
+
+            $associationConfiguration[$type][$assocKey] = array_merge($associationConfiguration[$type][$assocKey], $this->_action()->config('association.' . $assocKey) ?: []);
         }
 
         return $associationConfiguration;
