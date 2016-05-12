@@ -3,10 +3,8 @@ if (empty($bulkActions)) {
     return;
 }
 
-$submitButton = $this->Form->input(__d('crud', 'Apply'), [
-    'label' => false,
-    'type' => 'submit',
-    'class' => 'btn btn-success btn-bulk-apply form-control',
+$submitButton = $this->Form->button(__d('crud', 'Apply'), [
+    'class' => 'btn btn-primary btn-bulk-apply',
     'name' => '_bulk',
 ]);
 
@@ -22,6 +20,7 @@ echo $this->Form->input('action', [
         'select' => '<div class="col-sm-10"><select name="{{name}}"{{attrs}}>{{content}}</select>' . $submitButton . '</div>',
     ],
     'type' => 'select',
+    'class' => 'no-selectize'
 ]);
 echo $this->Form->end();
 ?>
