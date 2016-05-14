@@ -13,7 +13,7 @@ Automated admin backend based on your [Crud](https://github.com/friendsofcake/cr
 For CakePHP 3.x compatible version:
 
 ```shell
-composer require friendsofcake/crud-view:dev-master
+composer require friendsofcake/crud-view
 ```
 
 ## Documentation
