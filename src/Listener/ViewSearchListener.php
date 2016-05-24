@@ -85,14 +85,7 @@ class ViewSearchListener extends BaseListener
                 continue;
             }
 
-            $searchParam = $filter->name();
-            $field = $filter->field() ?: $searchParam;
-
-            // Ignore multi-field filters for now
-            if (is_array($field)) {
-                continue;
-            }
-
+            $field = $filter->name();
             $input = [];
 
             $filterFormConfig = $filter->config();
@@ -101,35 +94,29 @@ class ViewSearchListener extends BaseListener
             }
 
             $input += [
-                'label' => Inflector::humanize(preg_replace('/_id$/', '', $searchParam)),
+                'label' => Inflector::humanize(preg_replace('/_id$/', '', $field)),
                 'required' => false,
                 'type' => 'text'
             ];
 
-            $value = $request->query($searchParam);
+            $value = $request->query($field);
             if ($value !== null) {
                 $input['value'] = $value;
             }
 
-            if (empty($input['options']) && $table->hasField($field)) {
-                if ($schema->columnType($field) === 'boolean') {
-                    $input['options'] = ['No', 'Yes'];
-                    $input['type'] = 'select';
-                }
+            if (empty($input['options']) && $schema->columnType($field) === 'boolean') {
+                $input['options'] = ['No', 'Yes'];
+                $input['type'] = 'select';
             }
 
             if (!empty($input['options'])) {
                 $input['empty'] = true;
-                $fields[$searchParam] = $input;
+                $fields[$field] = $input;
                 continue;
             }
 
             if (empty($input['class'])) {
                 $input['class'] = 'autocomplete';
-            }
-
-            if (empty($input['type'])) {
-                $input['type'] = 'text';
             }
 
             $urlArgs = [];
@@ -143,7 +130,7 @@ class ViewSearchListener extends BaseListener
             $url = array_merge(['action' => 'lookup', '_ext' => 'json'], $urlArgs);
             $input['data-url'] = Router::url($url);
 
-            $fields[$searchParam] = $input;
+            $fields[$field] = $input;
         }
         return $fields;
     }
