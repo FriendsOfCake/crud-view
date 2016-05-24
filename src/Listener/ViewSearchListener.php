@@ -15,7 +15,9 @@ class ViewSearchListener extends BaseListener
      * @var array
      */
     protected $_defaultConfig = [
-        'enabled' => null
+        'enabled' => null,
+        'autocomplete' => true,
+        'selectize' => true,
     ];
 
     /**
@@ -79,6 +81,7 @@ class ViewSearchListener extends BaseListener
 
         $fields = [];
         $schema = $table->schema();
+        $config = $this->_config;
 
         foreach ($filters->all() as $filter) {
             if ($filter->config('form') === false) {
@@ -99,10 +102,7 @@ class ViewSearchListener extends BaseListener
                 'type' => 'text'
             ];
 
-            $value = $request->query($field);
-            if ($value !== null) {
-                $input['value'] = $value;
-            }
+            $input['value'] = $request->query($field);
 
             if (empty($input['options']) && $schema->columnType($field) === 'boolean') {
                 $input['options'] = ['No', 'Yes'];
@@ -111,11 +111,16 @@ class ViewSearchListener extends BaseListener
 
             if (!empty($input['options'])) {
                 $input['empty'] = true;
+                if (empty($input['class']) && !$config['selectize']) {
+                    $input['class'] = 'no-selectize';
+                }
+
                 $fields[$field] = $input;
+
                 continue;
             }
 
-            if (empty($input['class'])) {
+            if (empty($input['class']) && $config['autocomplete']) {
                 $input['class'] = 'autocomplete';
             }
 
