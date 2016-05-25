@@ -43,6 +43,10 @@ class ViewSearchListener extends BaseListener
      */
     public function afterPaginate(Event $event)
     {
+        if (!$this->_table()->behaviors()->has('Search')) {
+            return;
+        }
+
         $enabled = $this->config('enabled') ?: !$this->_request()->is('api');
         if (!$enabled) {
             return;
