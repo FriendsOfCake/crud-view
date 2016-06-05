@@ -333,10 +333,6 @@ class ViewListener extends BaseListener
             'humanize',
         ];
 
-        if ($this->_action()->scope() === 'table') {
-            $inflections[] = 'pluralize';
-        }
-
         if ($this->_action()->scope() === 'entity') {
             $inflections[] = 'singularize';
         }
@@ -484,7 +480,7 @@ class ViewListener extends BaseListener
             $associationConfiguration[$type][$assocKey]['foreignKey'] = $association->foreignKey();
             $associationConfiguration[$type][$assocKey]['propertyName'] = $association->property();
             $associationConfiguration[$type][$assocKey]['plugin'] = null;
-            $associationConfiguration[$type][$assocKey]['controller'] = Inflector::pluralize($assocKey);
+            $associationConfiguration[$type][$assocKey]['controller'] = $assocKey;
             $associationConfiguration[$type][$assocKey]['entity'] = Inflector::singularize(Inflector::underscore($assocKey));
             $associationConfiguration[$type][$assocKey]['entities'] = Inflector::underscore($assocKey);
 
