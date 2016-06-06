@@ -234,7 +234,7 @@ class ViewListener extends BaseListener
     {
         $action = $this->_action();
 
-        $title = $action->config('scaffold.page_title');
+        $title = $action->config('scaffold.pageTitle') ?: $action->config('scaffold.page_title');
         if (!empty($title)) {
             return $title;
         }
