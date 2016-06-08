@@ -46,7 +46,9 @@ If you haven't configured the CRUD plugin already, add the following lines to yo
                     'CrudView.View',
                     'Crud.Redirect',
                     'Crud.RelatedModels',
-                    'CrudView.Search',
+                    // If you need searching
+                    'Crud.Search',
+                    'CrudView.ViewSearch',
                 ]
             ]);
         }
