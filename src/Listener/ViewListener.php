@@ -479,7 +479,7 @@ class ViewListener extends BaseListener
             $associationConfiguration[$type][$assocKey]['displayField'] = $association->target()->displayField();
             $associationConfiguration[$type][$assocKey]['foreignKey'] = $association->foreignKey();
             $associationConfiguration[$type][$assocKey]['propertyName'] = $association->property();
-            $associationConfiguration[$type][$assocKey]['plugin'] = null;
+            $associationConfiguration[$type][$assocKey]['plugin'] = pluginSplit($association->className())[0];
             $associationConfiguration[$type][$assocKey]['controller'] = $assocKey;
             $associationConfiguration[$type][$assocKey]['entity'] = Inflector::singularize(Inflector::underscore($assocKey));
             $associationConfiguration[$type][$assocKey]['entities'] = Inflector::underscore($assocKey);
