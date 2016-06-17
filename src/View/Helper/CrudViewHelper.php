@@ -55,7 +55,7 @@ class CrudViewHelper extends Helper
      * Process a single field into an output
      *
      * @param string $field The field to process.
-     * @param array $data The raw entity data.
+     * @param Entity $data The entity data.
      * @param array $options Processing options.
      * @return string
      */
@@ -90,7 +90,7 @@ class CrudViewHelper extends Helper
     /**
      * Get the current field value
      *
-     * @param array $data The raw entity data array.
+     * @param Entity $data The entity data.
      * @param string $field The field to extract, if null, the field from the entity context is used.
      * @return mixed
      */
