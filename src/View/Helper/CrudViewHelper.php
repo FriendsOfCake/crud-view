@@ -55,7 +55,7 @@ class CrudViewHelper extends Helper
      * Process a single field into an output
      *
      * @param string $field The field to process.
-     * @param array $data The raw entity data.
+     * @param Entity $data The raw entity data.
      * @param array $options Processing options.
      * @return string
      */
