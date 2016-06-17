@@ -90,7 +90,7 @@ class CrudViewHelper extends Helper
     /**
      * Get the current field value
      *
-     * @param array $data The raw entity data array.
+     * @param Entity $data The raw entity data array.
      * @param string $field The field to extract, if null, the field from the entity context is used.
      * @return mixed
      */
