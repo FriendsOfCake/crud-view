@@ -20,7 +20,7 @@ $assocMap = isset($associations['manyToOne']) ?
 
             printf("<th>%s</th>", array_key_exists($field, $assocMap) ?
                 Inflector::singularize(Inflector::humanize(Inflector::underscore($assocMap[$field]))) :
-                Inflector::humanize($field));
+                (isset($options['title']) ? $options['title'] : Inflector::humanize($field)));
             printf("<td>%s</td>", $this->CrudView->process($field, ${$viewVar}, $options) ?: "&nbsp;");
 
             echo '</tr>';
