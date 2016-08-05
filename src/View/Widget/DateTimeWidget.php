@@ -25,7 +25,7 @@ class DateTimeWidget extends \Cake\View\Widget\DateTimeWidget
         $val = $data['val'];
         $type = $data['type'];
         $required = $data['required'] ? 'required' : '';
-        $disabled = $data['disabled'] ? 'disabled' : '';
+        $disabled = isset($data['disabled']) && $data['disabled'] ? 'disabled' : '';
         $role = isset($data['role']) ? $data['role'] : 'datetime-picker';
         $format = null;
         $locale = I18n::locale();
