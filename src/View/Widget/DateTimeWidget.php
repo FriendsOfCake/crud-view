@@ -25,6 +25,7 @@ class DateTimeWidget extends \Cake\View\Widget\DateTimeWidget
         $val = $data['val'];
         $type = $data['type'];
         $required = $data['required'] ? 'required' : '';
+        $disabled = $data['disabled'] ? 'disabled' : '';
         $role = isset($data['role']) ? $data['role'] : 'datetime-picker';
         $format = null;
         $locale = I18n::locale();
@@ -73,6 +74,7 @@ html;
         }
         $widget .= <<<html
                     $required
+                    $disabled
                 />
                 <label for="$id" class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar"></span>
