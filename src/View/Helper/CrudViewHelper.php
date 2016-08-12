@@ -139,7 +139,7 @@ class CrudViewHelper extends Helper
         $value = $this->formatString($field, $value);
 
         if ($field === $this->getViewVar('displayField')) {
-            return $this->formatdisplayField($value, $options);
+            return $this->formatDisplayField($value, $options);
         }
 
         return $value;
