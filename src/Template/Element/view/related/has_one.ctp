@@ -11,6 +11,14 @@ foreach ($associations['oneToOne'] as $alias => $details):
 <div class="related">
     <h3><?= __d('crud', 'Related {0}', [Inflector::humanize($details['controller'])]); ?></h3>
 
+    <div class="actions-wrapper">
+        <?= $this->Html->link(
+            __d('crud', 'View {0}', [Inflector::humanize(Inflector::underscore($alias))]),
+            array('plugin' => $details['plugin'], 'controller' => $details['controller'], 'action' => 'view', ${$viewVar}[$alias][$details['primaryKey']]),
+            array('class' => 'btn btn-default')
+        ); ?>
+    </div>
+
     <?php
     if (!empty(${$viewVar}->{$alias})) :
         ?>
@@ -29,17 +37,6 @@ foreach ($associations['oneToOne'] as $alias => $details):
         <?php
     endif;
     ?>
-
-    <div class="actions">
-        <ul>
-            <li><?= $this->Html->link(
-                __d('crud', 'View {0}', [Inflector::humanize(Inflector::underscore($alias))]),
-                array('plugin' => $details['plugin'], 'controller' => $details['controller'], 'action' => 'view', ${$viewVar}[$alias][$details['primaryKey']])
-            );
-            ?>
-            </li>
-        </ul>
-    </div>
 </div>
 <?php
 endforeach;
