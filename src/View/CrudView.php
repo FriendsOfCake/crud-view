@@ -56,6 +56,8 @@ class CrudView extends View
             $this->AssetCompress->css('CrudView.crudview', ['block' => true]);
             $this->AssetCompress->script('CrudView.crudview_head', ['block' => 'headjs']);
             $this->AssetCompress->script('CrudView.crudview', ['block' => true]);
+            
+
             return;
         }
 
@@ -136,6 +138,8 @@ class CrudView extends View
         }
 
         $internal = $this->Blocks->get($name, $default);
+        
+
         return $internal . $viewblock;
     }
 
@@ -149,13 +153,17 @@ class CrudView extends View
     public function exists($name)
     {
         $viewblocks = $this->get('viewblocks', []);
+        
+
         return !empty($viewblocks[$name]) || $this->Blocks->exists($name);
     }
 
     /**
      * Constructs a ViewBlock from an array of configured data
      *
-     * @return void
+     * @param array $data ViewBlock data
+     *
+     * @return string
      */
     protected function _createViewblock($data)
     {
@@ -171,6 +179,8 @@ class CrudView extends View
                 $output .= $key;
             }
         }
+        
+
         return $output;
     }
 
@@ -191,6 +201,8 @@ class CrudView extends View
         } catch (MissingTemplateException $exception) {
             $this->subDir = null;
             $this->templatePath = 'Scaffold';
+            
+
             return parent::_getViewFileName($this->template);
         }
     }

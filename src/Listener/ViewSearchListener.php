@@ -141,6 +141,8 @@ class ViewSearchListener extends BaseListener
 
             $fields[$field] = $input;
         }
+        
+
         return $fields;
     }
 }
