@@ -443,7 +443,6 @@ class ViewListener extends BaseListener
                 $normalized[$config] = [];
             }
         }
-        
 
         return $normalized;
     }
@@ -555,7 +554,6 @@ class ViewListener extends BaseListener
     protected function _getViewBlocks()
     {
         $action = $this->_action();
-        
 
         return $action->config('scaffold.viewblocks') ?: [];
     }
@@ -568,7 +566,6 @@ class ViewListener extends BaseListener
     protected function _getBulkActions()
     {
         $action = $this->_action();
-        
 
         return $action->config('scaffold.bulk_actions') ?: [];
     }
@@ -581,7 +578,6 @@ class ViewListener extends BaseListener
     protected function _getFormUrl()
     {
         $action = $this->_action();
-        
 
         return $action->config('scaffold.form_action') ?: null;
     }
@@ -594,7 +590,6 @@ class ViewListener extends BaseListener
     protected function _getDisableExtraButtons()
     {
         $action = $this->_action();
-        
 
         return $action->config('scaffold.disable_extra_buttons') ?: false;
     }
@@ -607,7 +602,6 @@ class ViewListener extends BaseListener
     protected function _getDisableSidebar()
     {
         $action = $this->_action();
-        
 
         return $action->config('scaffold.disable_sidebar') ?: false;
     }
@@ -620,7 +614,6 @@ class ViewListener extends BaseListener
     protected function _getExtraButtonsBlacklist()
     {
         $action = $this->_action();
-        
 
         return $action->config('scaffold.extra_buttons_blacklist') ?: [];
     }
@@ -633,7 +626,6 @@ class ViewListener extends BaseListener
     protected function _getEnableDirtyCheck()
     {
         $action = $this->_action();
-        
 
         return $action->config('scaffold.enable_dirty_check') ?: false;
     }
@@ -652,7 +644,6 @@ class ViewListener extends BaseListener
 
         // add "primary" actions (primary should rendered as separate buttons)
         $groups['primary'] = array_diff(array_keys($this->_getAllowedActions()), $groupedActions);
-        
 
         return $groups;
     }
