@@ -195,6 +195,7 @@ class CrudView extends View
         } catch (MissingTemplateException $exception) {
             $this->subDir = null;
             $this->templatePath = 'Scaffold';
+
             return parent::_getViewFileName($this->template);
         }
     }
