@@ -81,6 +81,7 @@ html;
                 </label>
             </div>
 html;
+
         return $widget;
     }
 
@@ -132,6 +133,7 @@ html;
             'U' => 'X',
         ];
         $momentFormat = strtr($format, $replacements);
+
         return $momentFormat;
     }
 }
