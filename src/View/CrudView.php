@@ -158,7 +158,9 @@ class CrudView extends View
     /**
      * Constructs a ViewBlock from an array of configured data
      *
-     * @return void
+     * @param array $data ViewBlock data
+     *
+     * @return string
      */
     protected function _createViewblock($data)
     {

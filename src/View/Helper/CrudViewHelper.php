@@ -140,7 +140,7 @@ class CrudViewHelper extends Helper
         $value = $this->formatString($field, $value);
 
         if ($field === $this->getViewVar('displayField')) {
-            return $this->formatdisplayField($value, $options);
+            return $this->formatDisplayField($value, $options);
         }
 
         return $value;
@@ -317,9 +317,10 @@ class CrudViewHelper extends Helper
      *
      * @param string $alias Model alias.
      * @param array $relation Relation information.
+     * @param array $options Options array to be passed to the link function
      * @return string
      */
-    public function createRelationLink($alias, $relation)
+    public function createRelationLink($alias, $relation, $options = [])
     {
         return $this->Html->link(
             __d('crud', 'Add {0}', [Inflector::singularize(Inflector::humanize(Inflector::underscore($alias)))]),
@@ -331,7 +332,8 @@ class CrudViewHelper extends Helper
                     $relation['foreignKey'] => $this->getViewVar('primaryKeyValue'),
                     '_redirect_url' => $this->request->here
                 ]
-            ]
+            ],
+            $options
         );
     }
 
