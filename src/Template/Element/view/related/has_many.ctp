@@ -70,4 +70,5 @@ foreach ($relations as $alias => $details):
             </ul>
         </div>
     </div>
-<?php endforeach; ?>
+<?php
+endforeach;

@@ -28,5 +28,5 @@ foreach ($groups as $key => $group) {
             <?php endforeach; ?>
        </ul>
    </div>
-<?php endforeach; ?>
-
+<?php
+endforeach;

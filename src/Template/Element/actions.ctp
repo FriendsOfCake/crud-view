@@ -78,4 +78,3 @@ unset($actionGroups['primary']);
 
 // render grouped actions
 echo $this->element('action-groups', ['groups' => $actionGroups, 'links' => $links]);
-?>
