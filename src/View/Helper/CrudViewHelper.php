@@ -68,6 +68,7 @@ class CrudViewHelper extends Helper
 
         if ($options['formatter'] === 'element') {
             $context = $this->getContext();
+
             return $this->_View->element($options['element'], compact('context', 'field', 'value', 'options'));
         }
 
@@ -189,6 +190,7 @@ class CrudViewHelper extends Helper
         if ($value === null) {
             return $this->Html->label(__d('crud', 'N/A'), 'info');
         }
+
         return $this->Time->timeAgoInWords($value, $options);
     }
 
@@ -206,6 +208,7 @@ class CrudViewHelper extends Helper
             return $this->Html->label(__d('crud', 'N/A'), 'info');
         }
         $format = isset($options['format']) ? $options['format'] : null;
+
         return $this->Time->nice($value, $format);
     }
 
