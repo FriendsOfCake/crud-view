@@ -23,4 +23,3 @@ echo $this->Form->input('action', [
     'class' => 'no-selectize'
 ]);
 echo $this->Form->end();
-?>

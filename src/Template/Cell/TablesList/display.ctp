@@ -7,4 +7,3 @@ foreach ($tables as $table => $config) {
     ]); ?></li>
     <?php
 }
-?>

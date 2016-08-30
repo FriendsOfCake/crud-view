@@ -6,4 +6,3 @@ if (empty($bulkActions)) {
 echo $this->Form->create(null, [
     'class' => 'bulk-actions form-horizontal'
 ]);
-?>
