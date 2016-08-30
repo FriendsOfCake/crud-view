@@ -56,6 +56,7 @@ class CrudView extends View
             $this->AssetCompress->css('CrudView.crudview', ['block' => true]);
             $this->AssetCompress->script('CrudView.crudview_head', ['block' => 'headjs']);
             $this->AssetCompress->script('CrudView.crudview', ['block' => true]);
+
             return;
         }
 
@@ -136,6 +137,7 @@ class CrudView extends View
         }
 
         $internal = $this->Blocks->get($name, $default);
+
         return $internal . $viewblock;
     }
 
@@ -149,6 +151,7 @@ class CrudView extends View
     public function exists($name)
     {
         $viewblocks = $this->get('viewblocks', []);
+
         return !empty($viewblocks[$name]) || $this->Blocks->exists($name);
     }
 
@@ -171,6 +174,7 @@ class CrudView extends View
                 $output .= $key;
             }
         }
+
         return $output;
     }
 
