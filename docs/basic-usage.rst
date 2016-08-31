@@ -494,7 +494,7 @@ alter the ``contain()`` list for the pagination query:
 Bulk Actions
 ------------
 
-There are bulk actions which can be easily used with crud view.
+The Crud plugin provides bulk actions which can be easily used with crud view.
 
 To set up crud action in controller do something like this in initialize method.
 
@@ -507,7 +507,7 @@ To set up crud action in controller do something like this in initialize method.
         ]
     ]);
 
-Then you need to config scaffold to display select with actions.
+Then you need to configure scaffold to display select with actions.
 
 .. code-block:: php
     $action->config('scaffold.bulk_actions', [
