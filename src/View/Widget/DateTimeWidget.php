@@ -1,6 +1,7 @@
 <?php
 namespace CrudView\View\Widget;
 
+use Cake\Chronos\ChronosInterface;
 use Cake\Core\Configure;
 use Cake\I18n\I18n;
 use Cake\I18n\Time;
@@ -39,7 +40,7 @@ class DateTimeWidget extends \Cake\View\Widget\DateTimeWidget
             $format = $this->_convertPHPToMomentFormat($data['data-format']);
         }
 
-        if (!($val instanceof DateTime) && !empty($val)) {
+        if (!($val instanceof DateTime || $val instanceof ChronosInterface) && !empty($val)) {
             $val = $type === 'date' ? Time::parseDate($val) : Time::parseDateTime($val);
         }
 
