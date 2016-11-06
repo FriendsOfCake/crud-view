@@ -5,7 +5,7 @@ use Cake\Core\Configure;
 use Cake\I18n\I18n;
 use Cake\I18n\Time;
 use Cake\View\Form\ContextInterface;
-use DateTime;
+use DateTimeInterface;
 
 class DateTimeWidget extends \Cake\View\Widget\DateTimeWidget
 {
@@ -39,7 +39,7 @@ class DateTimeWidget extends \Cake\View\Widget\DateTimeWidget
             $format = $this->_convertPHPToMomentFormat($data['data-format']);
         }
 
-        if (!($val instanceof DateTime) && !empty($val)) {
+        if (!($val instanceof DateTimeInterface) && !empty($val)) {
             $val = $type === 'date' ? Time::parseDate($val) : Time::parseDateTime($val);
         }
 
