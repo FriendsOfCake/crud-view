@@ -44,9 +44,11 @@ class DateTimeWidget extends \Cake\View\Widget\DateTimeWidget
         }
 
         if ($val) {
-            $timestamp = $val->format('U');
-            $dateTimeZone = new \DateTimeZone(date_default_timezone_get());
-            $timezoneOffset = ($dateTimeZone->getOffset($val) / 60);
+            if ($timezoneAware) {
+                $timestamp = $val->format('U');
+                $dateTimeZone = new \DateTimeZone(date_default_timezone_get());
+                $timezoneOffset = ($dateTimeZone->getOffset($val) / 60);
+            }
             $val = $val->format($type === 'date' ? 'Y-m-d' : 'Y-m-d H:i:s');
         }
 
