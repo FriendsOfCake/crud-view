@@ -28,7 +28,7 @@ class DateTimeWidget extends \Cake\View\Widget\DateTimeWidget
         $disabled = isset($data['disabled']) && $data['disabled'] ? 'disabled' : '';
         $role = isset($data['role']) ? $data['role'] : 'datetime-picker';
         $format = null;
-        $locale = I18n::locale();
+        $locale = isset($data['locale']) ? $data['locale'] : I18n::locale();
 
         $timezoneAware = Configure::read('CrudView.timezoneAwareDateTimeWidget');
 
