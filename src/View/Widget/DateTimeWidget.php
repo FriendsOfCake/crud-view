@@ -6,6 +6,7 @@ use Cake\I18n\I18n;
 use Cake\I18n\Time;
 use Cake\View\Form\ContextInterface;
 use DateTimeInterface;
+use DateTimeZone;
 
 class DateTimeWidget extends \Cake\View\Widget\DateTimeWidget
 {
@@ -46,7 +47,7 @@ class DateTimeWidget extends \Cake\View\Widget\DateTimeWidget
         if ($val) {
             if ($timezoneAware) {
                 $timestamp = $val->format('U');
-                $dateTimeZone = new \DateTimeZone(date_default_timezone_get());
+                $dateTimeZone = new DateTimeZone(date_default_timezone_get());
                 $timezoneOffset = ($dateTimeZone->getOffset($val) / 60);
             }
             $val = $val->format($type === 'date' ? 'Y-m-d' : 'Y-m-d H:i:s');
