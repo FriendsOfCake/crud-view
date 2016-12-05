@@ -14,7 +14,8 @@ div.related {
 }
 .logo-cake img {
   height:50%;
-  margin: 0;
+  margin-bottom: 0;
+  margin-top: 4px;
   width: 50%;
 }
 
