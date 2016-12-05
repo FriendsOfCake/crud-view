@@ -685,6 +685,15 @@ h6 {
 p {
     margin: 0 0 20px;
 }
+.document {
+  letter-spacing: 0.02em;
+  line-height: 26px;
+  font-size: 15px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-weight: normal;
+}
 .search-input:focus {
   outline: none
 }
