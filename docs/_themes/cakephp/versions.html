@@ -1,38 +1,54 @@
 {% if READTHEDOCS %}
 <div class="injected">
-{# Add rst-badge after rst-versions for small badge style. #}
-  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
-    <span class="rst-current-version" data-toggle="rst-current-version">
-      <span class="fa fa-book"> Read the Docs</span>
-      v: {{ current_version }}
-      <span class="fa fa-caret-down"></span>
-    </span>
-    <div class="rst-other-versions">
-      <dl>
-        <dt>{{ _('Versions') }}</dt>
-        {% for slug, url in versions %}
-          <dd><a href="{{ url }}">{{ slug }}</a></dd>
-        {% endfor %}
-      </dl>
-      <dl>
-        <dt>{{ _('Downloads') }}</dt>
-        {% for type, url in downloads %}
-          <dd><a href="{{ url }}">{{ type }}</a></dd>
-        {% endfor %}
-      </dl>
-      <dl>
-        <dt>{{ _('On Read the Docs') }}</dt>
-          <dd>
-            <a href="//{{ PRODUCTION_DOMAIN }}/projects/{{ slug }}/?fromdocs={{ slug }}">{{ _('Project Home') }}</a>
-          </dd>
-          <dd>
-            <a href="//{{ PRODUCTION_DOMAIN }}/builds/{{ slug }}/?fromdocs={{ slug }}">{{ _('Builds') }}</a>
-          </dd>
-      </dl>
-      <hr/>
-      {% trans %}Free document hosting provided by <a href="http://www.readthedocs.org">Read the Docs</a>.{% endtrans %}
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    <span class="fa fa-book">&nbsp;</span>
+    v: {{ current_version }}
+    <span class="fa fa-caret-down"></span>
+  </span>
+  <div class="rst-other-versions">
+    <dl>
+      <dt>Versions</dt>
+      <strong>
+        <dd><a href="http://{{ slug }}.readthedocs.io/en/latest/">latest</a></dd>
+      </strong>
+      {% for slug, url in versions %}
+        <dd><a href="{{ url }}">{{ slug }}</a></dd>
+      {% endfor %}
+    </dl>
+    <dl>
+      <dt>Downloads</dt>
+      {% for type, url in downloads %}
+        <dd><a href="{{ url }}">{{ type }}</a></dd>
+      {% endfor %}
+    </dl>
+    <dl>
+      <!-- These are kept as relative links for internal installs that are http -->
+      <dt>On Read the Docs</dt>
+      <dd><a href="//readthedocs.org/projects/{{ slug }}/">Project Home</a></dd>
+      <dd><a href="//readthedocs.org/projects/{{ slug }}/builds/">Builds</a></dd>
+      <dd><a href="//readthedocs.org/projects/{{ slug }}/downloads/">Downloads</a></dd>
+    </dl>
 
-    </div>
+    <dl>
+      <dt>On GitHub</dt>
+      <dd><a href="https://github.com/FriendsOfCake/{{ project }}/blob/master/docs/index.rst">View</a></dd>
+      <dd><a href="https://github.com/FriendsOfCake/{{ project }}/edit/master/docs/index.rst">Edit</a></dd>
+    </dl>
+
+    <dl>
+      <dt>Search</dt>
+      <dd>
+        <div style="padding: 6px;">
+          <form id="flyout-search-form" class="wy-form" target="_blank" action="https://readthedocs.org/projects/{{ slug }}/search/" method="get">
+            <input type="text" name="q" placeholder="Search docs">
+            </form>
+        </div>
+      </dd>
+    </dl>
+
+    <hr>
+
+    Free document hosting provided by <a href="https://readthedocs.org">Read the Docs</a>.
   </div>
 </div>
 {% endif %}
