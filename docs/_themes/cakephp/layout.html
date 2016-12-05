@@ -43,6 +43,50 @@
 <link rel="search" type="application/opensearchdescription+xml" title="{{ project }} Search" href="{{ pathto('_static/opensearchdescription-book-2-x.xml', 1) }}">
 <script type="text/javascript">
 window.lang = "{{ language }}";
+document.addEventListener('DOMContentLoaded', function (e) {
+    var currentVersionEl = document.querySelectorAll('.rst-current-version')[0],
+        currentVersion = currentVersionEl.getAttribute('data-ref'),
+        versionContainer = document.querySelectorAll('.rst-versions.rst-badge')[0],
+        addClass = function (el, className) {
+            if (el.classList) {
+              el.classList.add(className);
+            } else {
+              el.className += ' ' + className;
+            }
+          },
+          addListener = function (elem, type, fn) {
+            if (elem.addEventListener) {
+              elem.addEventListener(type, fn, false);
+            } else if (elem.attachEvent) {
+              elem.attachEvent('on' + type, function() {
+                return fn.call(elem, window.event);
+              });
+            } else {
+              elem['on' + type] = fn;
+            }
+          },
+          hasClass = function (el, className) {
+            if (el.classList) {
+              return el.classList.contains(className);
+            } else {
+              return new RegExp('(^| )' + className + '( |$)', 'gi').test(el.className);
+            }
+          },
+          removeClass = function (el, className) {
+            if (el.classList) {
+              el.classList.remove(className);
+            } else {
+              el.className = el.className.replace(new RegExp('(^|\\b)' + className.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');;
+            }
+          };
+    addListener(currentVersionEl, 'click', function() {
+      if (hasClass(versionContainer, 'shift-up')) {
+        removeClass(versionContainer, 'shift-up');
+      } else {
+        addClass(versionContainer, 'shift-up');
+      }
+    });
+});
 </script>
 {% endblock %}
 
