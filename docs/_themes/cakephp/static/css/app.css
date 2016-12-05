@@ -217,7 +217,12 @@ ul.fas li .fa-large:before {
 }
 .rst-versions a {
     color: #2980B9;
+    font-size: 13px;
+    font-weight: normal;
     text-decoration: none
+}
+.rst-versions dt {
+  font-weight: normal;
 }
 .rst-versions .rst-badge-small {
     display: none

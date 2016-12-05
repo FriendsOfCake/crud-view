@@ -9,9 +9,6 @@
     <div class="rst-other-versions">
       <dl>
         <dt>Versions</dt>
-        <strong>
-          <dd><a href="http://{{ slug }}.readthedocs.io/en/latest/">latest</a></dd>
-        </strong>
         {% for slug, url in versions %}
           <dd><a href="{{ url }}">{{ slug }}</a></dd>
         {% endfor %}
@@ -32,19 +29,8 @@
 
       <dl>
         <dt>On GitHub</dt>
-        <li><a href="https://github.com/{{ github_user }}/{{ github_repo }}/blob/{{ github_version }}{{ conf_py_path }}{{ pagename }}.rst">View</a></dd>
-        <li><a href="https://github.com/{{ github_user }}/{{ github_repo }}/edit/{{ github_version }}{{ conf_py_path }}{{ pagename }}.rst">Edit</a></dd>
-      </dl>
-
-      <dl>
-        <dt>Search</dt>
-        <dd>
-          <div style="padding: 6px;">
-            <form id="flyout-search-form" class="wy-form" target="_blank" action="https://readthedocs.org/projects/{{ slug }}/search/" method="get">
-              <input type="text" name="q" placeholder="Search docs">
-              </form>
-          </div>
-        </dd>
+        <dd><a href="https://github.com/{{ github_user }}/{{ github_repo }}/blob/{{ github_version }}{{ conf_py_path }}{{ pagename }}.rst">View</a></dd>
+        <dd><a href="https://github.com/{{ github_user }}/{{ github_repo }}/edit/{{ github_version }}{{ conf_py_path }}{{ pagename }}.rst">Edit</a></dd>
       </dl>
 
       <hr>
