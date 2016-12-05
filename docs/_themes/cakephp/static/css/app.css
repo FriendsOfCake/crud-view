@@ -1,0 +1,14 @@
+@import 'fonts.css';
+@import 'bootstrap.min.css';
+@import 'font-awesome.min.css';
+@import 'style.css';
+@import 'default.css';
+@import 'pygments.css';
+@import 'responsive.css';
+
+.highlight {
+  background: none;
+}
+div.related {
+  background-color: #565656;
+}

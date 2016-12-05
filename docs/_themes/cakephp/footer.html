@@ -1,0 +1,96 @@
+{% set maintainer = 'FriendsOfCake' %}
+
+<section id="socials" class="back-3">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-5  social text-center">
+        <div class="col-sm-3 col-xs-3">
+        </div>
+
+        <div class="col-sm-3 col-xs-3">
+          <iframe src="https://ghbtns.com/github-btn.html?user={{ maintainer }}&amp;repo={{ project }}&amp;type=star&amp;count=true&amp;size=small" frameborder="0" scrolling="0" width="120px" height="30px"></iframe>
+        </div>
+
+        <div class="col-sm-3 col-xs-3">
+          <iframe src="https://ghbtns.com/github-btn.html?user={{ maintainer }}&amp;repo={{ project }}&amp;type=fork&amp;count=true&amp;size=small" frameborder="0" scrolling="0" width="120px" height="30px"></iframe>
+        </div>
+
+        <div class="col-sm-3 col-xs-3">
+          <a href="https://twitter.com/{{ maintainer }}" class="twitter-follow-button" data-show-count="false" data-show-screen-name="false">Follow @{{ maintainer }}</a>
+          <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+        </div>
+      </div>
+
+      <div class="col-xs-12 col-sm-12 col-md-7 col-md-pull-1 social-footer text-right">
+        <a href="https://twitter.com/{{ maintainer }}" data-toggle="tooltip" title="Twitter"><i class="fa icon-social fa-twitter"></i>
+        <a href="https://github.com/{{ maintainer }}" data-toggle="tooltip" title="Github"><i class="fa icon-social fa-git"></i></a>
+        <a href="http://cakesf.herokuapp.com/" target="_blank" title="Slack" data-toggle="tooltip"><i class="fa fa-slack icon-social"></i></a>
+        <a href="http://stackoverflow.com/tags/cakephp" data-toggle="tooltip" title="Stack Overflow"><i class="fa icon-social fa-stack-overflow"></i></a>
+        <a href="http://webchat.freenode.net/?channels={{ maintainer }}" data-toggle="tooltip" title="IRC" class="icon-irc">#IRC</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer id="footer" class="footer-wrapper">
+  <div class="container">
+
+    <div class="row col-p30">
+      <div class="col-sm-12 col-md-3">
+        <div class="footer-widget t-footer">
+          <div class="col-md-12">
+            <a href="https://www.openhub.net/p/cakephp">
+              <img src="{{ pathto('_static/open-hub.png', 1) }}">
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-12 col-md-9">
+        <div class="col-md-3 col-sm-6 business-solution">
+        </div>
+
+        <div class="col-md-3 col-sm-6">
+        </div>
+
+        <div class="col-md-3 col-sm-6">
+          <ul class="footer-menu">
+            {% include 'menu/footer-documentation.html' %}
+          </ul>
+        </div>
+
+        <div class="col-md-3 col-sm-6">
+          <ul class="footer-menu">
+            {% include 'menu/help.html' %}
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12 text-center mt30">
+        <p class="copyright">
+          {%- if show_copyright %}
+            {%- if hasdoc('copyright') %}
+              {% trans path=pathto('copyright'), copyright=copyright|e %}&copy; <a href="{{ path }}">Copyright</a> {{ copyright }}.{% endtrans %}
+            {%- else %}
+              {% trans copyright=copyright|e %}&copy; Copyright {{ copyright }}.{% endtrans %}
+            {%- endif %}
+          {%- endif %}
+          {%- if last_updated %}
+            {% trans last_updated=last_updated|e %}Last updated on {{ last_updated }}.{% endtrans %}
+          {%- endif %}
+          {%- if show_sphinx %}
+            {% trans sphinx_version=sphinx_version|e %}Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> {{ sphinx_version }}.{% endtrans %}
+          {%- endif %}
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<div id="inline-search-results"></div>
+
+{# End of div[id=wrapper] #}
+</div>
+
