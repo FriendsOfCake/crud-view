@@ -13,8 +13,8 @@ div.related {
   background-color: #565656;
 }
 .logo-cake img {
-  height:35px;
-  width: 35px;
+  height:50%;
+  width: 50%;
 }
 
 #sidebar-navigation > ul > li:nth-of-type(2):last-child:after,
