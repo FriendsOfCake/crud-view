@@ -34,9 +34,9 @@ from _config import *
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
+    'sphinx.ext.todo',
     'sphinxcontrib.phpdomain',
     '_config.cakephpbranch',
-    #  'sphinx.ext.todo'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -53,7 +53,7 @@ master_doc = 'contents'
 
 # General information about the project.
 project = u'crud-view'
-copyright = u'2015, Fiends of Cake'
+copyright = u'%d, Friends of Cake' % datetime.datetime.now().year
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -61,6 +61,7 @@ copyright = u'2015, Fiends of Cake'
 #
 # The short X.Y version.
 version = '1.0'
+
 # The full version, including alpha/beta/rc tags.
 release = '1.0'
 
@@ -142,14 +143,9 @@ html_title = 'CRUD View'
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = []
 
-# Add any extra paths that contain custom files (such as robots.txt or
-# .htaccess) here, relative to this directory. These files are copied
-# directly to the root of the documentation.
-# html_extra_path = []
-
 # If not '', a 'Last updated on:' timestamp is inserted at every page bottom,
 # using the given strftime format.
-# html_last_updated_fmt = '%b %d, %Y'
+html_last_updated_fmt = '%b %d, %Y'
 
 # If true, SmartyPants will be used to convert quotes and dashes to
 # typographically correct entities.
