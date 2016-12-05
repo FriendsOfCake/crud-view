@@ -140,8 +140,8 @@ div.wy-menu.rst-pro div.rst-pro-about {
     font-family: FontAwesome;
     font-weight: normal;
     font-style: normal;
-    src: url("../font/fontawesome_webfont.eot");
-    src: url("../font/fontawesome_webfont.eot?#iefix") format("embedded-opentype"), url("../font/fontawesome_webfont.woff") format("woff"), url("../font/fontawesome_webfont.ttf") format("truetype"), url("../font/fontawesome_webfont.svg#FontAwesome") format("svg")
+    src: url("../font/fontawesome-webfont.eot");
+    src: url("../font/fontawesome-webfont.eot?#iefix") format("embedded-opentype"), url("../font/fontawesome-webfont.woff") format("woff"), url("../font/fontawesome-webfont.ttf") format("truetype"), url("../font/fontawesome-webfont.svg#FontAwesome") format("svg")
 }
 .fa:before {
     display: inline-block;
