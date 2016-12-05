@@ -85,15 +85,6 @@ window.lang = "{{ language }}";
 
       <div class="document-body">
         {% block body %} {% endblock %}
-        <ul class="related-pages inline">
-          {%- for rellink in rellinks %}
-          <li>
-            <a href="{{ pathto(rellink[0]) }}" title="{{ rellink[1]|striptags|e }}" {{ accesskey(rellink[2]) }}>
-              {{- rellink[3] -}}
-            </a>
-          </li>
-          {%- endfor %}
-        </ul>
       </div>
     </div>
 
