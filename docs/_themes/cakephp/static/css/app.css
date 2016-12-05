@@ -16,3 +16,17 @@ div.related {
   height:35px;
   width: 35px;
 }
+
+#sidebar-navigation > ul > li:nth-of-type(2):last-child:after,
+#sidebar-navigation > ul > li:nth-of-type(14):last-child:after {
+    content: " ";
+    display: block;
+    margin-bottom: 1em;
+}
+#sidebar-navigation > ul > li:nth-of-type(1):before {
+    content: "Preface";
+    padding-top: 0;
+}
+#sidebar-navigation > ul > li:nth-of-type(3):before {
+    content: "Getting Started";
+}
