@@ -46,7 +46,6 @@ body {
 	background: #BD8A5D;
 	color: #fff;
 	margin-bottom: 18px;
-	font-family: MuseoSlab500, Helvetica, Arial;
 }
 .breadcrumb-header .row {
 	position: relative;
@@ -509,7 +508,6 @@ dt tt {
 .field-list .field-name {
 	font-size: 15px;
 	font-size: 1.5rem;
-	font-family: MuseoSlab500, Helvetica, Arial;
 	color: #BD8A5D;
 }
 .field-list ul {
@@ -527,7 +525,6 @@ dt tt {
 /* -- glossary -- */
 .glossary dt {
 	font-size: 16px;
-	font-family: MuseoSlab500, Helvetica, Arial;
 	color: #BD8A5D;
 }
 .glossary dd {
@@ -560,7 +557,6 @@ dt tt {
 .sidebar li {
 	list-style: none;
 	font-size: 14px;
-	font-family: MuseoSlab500, Helvetica, Arial;
 	margin: 3px 0;
 	line-height: 21px;
 }
@@ -609,7 +605,6 @@ dt tt {
 .contribute,
 .related-pages a {
 	font-size: 14px;
-	font-family: MuseoSlab500, Helvetica, Arial;
 }
 .copyright {
 	font-size: 12px;
