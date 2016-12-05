@@ -499,6 +499,7 @@ The Crud plugin provides bulk actions which can be easily used with crud view.
 To set up crud action in controller do something like this in initialize method.
 
 .. code-block:: php
+
     $this->loadComponent('Crud.Crud', [
         'actions' => [
             'deleteAll' => [
@@ -510,6 +511,7 @@ To set up crud action in controller do something like this in initialize method.
 Then you need to configure scaffold to display select with actions.
 
 .. code-block:: php
+
     $action->config('scaffold.bulk_actions', [
         Router::url(['action' => 'deleteAll']) => __('Delete records'),
     ]);
