@@ -306,9 +306,6 @@ ul.fas li .fa-large:before {
 .rst-versions.rst-badge.shift-up .rst-current-version {
     text-align: right
 }
-.rst-versions.rst-badge.shift-up .rst-current-version .fa-book {
-    float: left
-}
 .rst-versions.rst-badge.shift-up .rst-current-version .icon-book {
     float: left
 }
