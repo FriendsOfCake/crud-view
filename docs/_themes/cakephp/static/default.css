@@ -650,3 +650,20 @@ dt tt {
   background: #a92434;
   background-image: -webkit-linear-gradient(top, #b01b2f, #992434);
 }
+.footer {
+  background: #363638;
+  color: white;
+}
+.footer a {
+    color: white;
+    line-height: 21px;
+    transition: all 0.2s linear;
+    text-decoration: none;
+}
+.footer a:hover {
+    color: rgb(211, 60, 69);
+}
+@import url(http://fonts.googleapis.com/css?family=Raleway:400,100,200,300,500,600,700,800,900);
+@import url(https://fonts.googleapis.com/css?family=Raleway:300italic);
+@import url(https://fonts.googleapis.com/css?family=Roboto+Mono:400,700italic,500italic,500,400italic,300italic,300,100italic,100,700);
+
