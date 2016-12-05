@@ -718,3 +718,7 @@ p {
 .copyright {
   color: white;
 }
+.sidebar a {
+    color: rgb(54, 54, 55);
+    display: block;
+}
