@@ -52,7 +52,7 @@ source_suffix = '.rst'
 master_doc = 'contents'
 
 # General information about the project.
-project = u'crud view'
+project = u'crud-view'
 copyright = u'2015, Fiends of Cake'
 
 # The version info for the project you're documenting, acts as replacement for
