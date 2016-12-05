@@ -213,12 +213,13 @@ ul.fas li .fa-large:before {
     background: #1f1d1d;
     border-top: solid 10px #343131;
     font-family: "Lato", "proxima-nova", "Helvetica Neue", Arial, sans-serif;
-    z-index: 400
+    z-index: 400;
+    font-size: 13px;
+    font-weight: normal;
+    letter-spacing: normal;
 }
 .rst-versions a {
     color: #2980B9;
-    font-size: 13px;
-    font-weight: normal;
     text-decoration: none
 }
 .rst-versions dt {
