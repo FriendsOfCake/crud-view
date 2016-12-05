@@ -685,6 +685,9 @@ h6 {
 p {
     margin: 0 0 20px;
 }
+.search-input:focus {
+  outline: none
+}
 .masthead {
   background: none;
   background-color: #D33C43;
