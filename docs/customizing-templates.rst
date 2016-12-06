@@ -37,7 +37,7 @@ pass any properties that ``FormHelper::inputs()`` supports.
         }
     }
 
-Formating using a Formatter
+Formatting using a Formatter
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The most immediate changes you can do in the way data is displayed is by
