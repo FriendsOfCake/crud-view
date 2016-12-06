@@ -26,7 +26,6 @@ trait SiteTitleTrait
         $controller->set('brand', $siteTitle);
     }
 
-
     /**
      * Get the brand name to use in the default template.
      *

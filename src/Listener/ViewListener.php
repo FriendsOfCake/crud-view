@@ -7,6 +7,7 @@ use Cake\Event\Event;
 use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
 use CrudView\Listener\Traits\SiteTitleTrait;
+use CrudView\Listener\Traits\UtilityNavigationTrait;
 use CrudView\Traits\CrudViewConfigTrait;
 use Crud\Listener\BaseListener;
 
@@ -14,6 +15,7 @@ class ViewListener extends BaseListener
 {
     use CrudViewConfigTrait;
     use SiteTitleTrait;
+    use UtilityNavigationTrait;
 
     /**
      * Default associations config
@@ -73,6 +75,7 @@ class ViewListener extends BaseListener
         $this->ensureConfig();
 
         $this->beforeRenderSiteTitle($event);
+        $this->beforeRenderUtilityNavigation($event);
         $controller = $this->_controller();
         $controller->set('actionConfig', $this->_action()->config());
         $controller->set('title', $this->_getPageTitle());
