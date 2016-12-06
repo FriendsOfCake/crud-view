@@ -2,6 +2,7 @@
 namespace CrudView\Listener\Traits;
 
 use Cake\Event\Event;
+use CrudView\Menu\MenuItem;
 
 trait UtilityNavigationTrait
 {
@@ -27,8 +28,11 @@ trait UtilityNavigationTrait
         $action = $this->_action();
 
         $utilityNavigation = $action->config('scaffold.utility_navigation');
-        if (empty($utilityNavigation)) {
-            $utilityNavigation = null;
+        if ($utilityNavigation === null) {
+            $utilityNavigation = [
+                new MenuItem('Account', ['controller' => 'Users', 'action' => 'account']),
+                new MenuItem('Log Out', ['controller' => 'Users', 'action' => 'logout']),
+            ];
         }
 
         return $utilityNavigation;
