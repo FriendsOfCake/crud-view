@@ -39,3 +39,9 @@ The "utility navigation" shown at the top right normally shows the current user 
         ]
       )
     ]);
+
+The utility navigation can also be completely disabled by setting the value to ``false``.
+
+.. code-block:: php
+
+    $action->config('scaffold.utility_navigation', false);
