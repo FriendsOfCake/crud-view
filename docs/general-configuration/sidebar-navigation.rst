@@ -38,6 +38,7 @@ The sidebar navigation can also be completely disabled by setting the value to `
 
 .. code-block:: php
 
+    $action = $this->Crud->action();
     $action->config('scaffold.sidebar_navigation', false);
 
 If you wish to fallback to just showing links to Crud `index` action for all tables, you can customize this by using the ``scaffold.tables`` and ``scaffold.tables_blacklist`` crud config options:
@@ -50,7 +51,7 @@ If you wish to fallback to just showing links to Crud `index` action for all tab
     $action->config('scaffold.tables', ['posts']);
 
     // do not show these tables
-    $this->Crud->action()->config('scaffold.tables_blacklist', [
+    $action->config('scaffold.tables_blacklist', [
         'phinxlog',
         'users',
     ]);

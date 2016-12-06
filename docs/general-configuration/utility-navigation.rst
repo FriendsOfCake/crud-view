@@ -44,4 +44,5 @@ The utility navigation can also be completely disabled by setting the value to `
 
 .. code-block:: php
 
+    $action = $this->Crud->action();
     $action->config('scaffold.utility_navigation', false);
