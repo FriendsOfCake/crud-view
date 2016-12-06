@@ -2,7 +2,7 @@
 <html lang="<?= \Locale::getPrimaryLanguage(\Cake\I18n\I18n::locale()) ?>">
 <head>
     <?= $this->Html->charset(); ?>
-    <title><?= $this->get('title');?></title>
+    <title><?= $this->get('siteTitle');?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <?= $this->Html->meta('icon'); ?>
@@ -20,7 +20,17 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/"><?= $brand ?></a>
+                <?php
+                    $siteTitleContent = $siteTitle;
+                    if (!empty($siteTitleImage)) {
+                        $siteTitleContent = $this->Html->image($siteTitleImage);
+                    }
+                    if (empty($siteTitleLink)) {
+                        echo $this->Html->tag('span', $siteTitleContent, ['class' => 'navbar-brand', 'escape' => false]);
+                    } else {
+                        echo $this->Html->link($siteTitleContent, $siteTitleLink, ['class' => 'navbar-brand', 'escape' => false]);
+                    }
+                ?>
             </div>
         </div>
     </nav>
