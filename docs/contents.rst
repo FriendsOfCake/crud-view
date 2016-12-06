@@ -15,4 +15,4 @@ Contents
     Basic Usage <basic-usage>
     Customizing Templates <customizing-templates>
 
-    Site Title Options <site-title-options>
+    Site Title Options <general-configuration/site-title-options>
