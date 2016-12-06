@@ -5,6 +5,7 @@ The "utility navigation" shown at the top right normally shows the current user 
 
 .. code-block:: php
 
+    use CrudView\Menu\MenuDivider;
     use CrudView\Menu\MenuDropdown;
     use CrudView\Menu\MenuItem;
 

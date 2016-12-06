@@ -6,6 +6,7 @@ use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
+use CrudView\Listener\Traits\SidebarNavigationTrait;
 use CrudView\Listener\Traits\SiteTitleTrait;
 use CrudView\Listener\Traits\UtilityNavigationTrait;
 use CrudView\Traits\CrudViewConfigTrait;
@@ -14,6 +15,7 @@ use Crud\Listener\BaseListener;
 class ViewListener extends BaseListener
 {
     use CrudViewConfigTrait;
+    use SidebarNavigationTrait;
     use SiteTitleTrait;
     use UtilityNavigationTrait;
 
@@ -76,6 +78,7 @@ class ViewListener extends BaseListener
 
         $this->beforeRenderSiteTitle($event);
         $this->beforeRenderUtilityNavigation($event);
+        $this->beforeRenderSidebarNavigation($event);
         $controller = $this->_controller();
         $controller->set('actionConfig', $this->_action()->config());
         $controller->set('title', $this->_getPageTitle());
@@ -122,6 +125,47 @@ class ViewListener extends BaseListener
     {
         unset($event->subject()->params['class']);
         $event->subject()->element = ltrim($event->subject()->type);
+    }
+
+    /**
+     * Returns the sites title to show on scaffolded view
+     *
+     * @return string
+     */
+    protected function _getPageTitle()
+    {
+        $action = $this->_action();
+
+        $title = $action->config('scaffold.page_title');
+        if (!empty($title)) {
+            return $title;
+        }
+
+        $scope = $action->config('scope');
+
+        $request = $this->_request();
+        $actionName = Inflector::humanize(Inflector::underscore($request->action));
+        $controllerName = $this->_controllerName();
+
+        if ($scope === 'table') {
+            if ($actionName === 'Index') {
+                return $controllerName;
+            }
+
+            return sprintf('%s %s', $controllerName, $actionName);
+        }
+
+        $primaryKeyValue = $this->_primaryKeyValue();
+        if ($primaryKeyValue === null) {
+            return sprintf('%s %s', $actionName, $controllerName);
+        }
+
+        $displayFieldValue = $this->_displayFieldValue();
+        if ($displayFieldValue === null || $this->_table()->displayField() == $this->_table()->primaryKey()) {
+            return sprintf('%s %s #%s', $actionName, $controllerName, $primaryKeyValue);
+        }
+
+        return sprintf('%s %s #%s: %s', $actionName, $controllerName, $primaryKeyValue, $displayFieldValue);
     }
 
     /**
@@ -213,47 +257,6 @@ class ViewListener extends BaseListener
         }
 
         return $data;
-    }
-
-    /**
-     * Returns the page title to show on scaffolded view
-     *
-     * @return string
-     */
-    protected function _getPageTitle()
-    {
-        $action = $this->_action();
-
-        $title = $action->config('scaffold.page_title');
-        if (!empty($title)) {
-            return $title;
-        }
-
-        $scope = $action->config('scope');
-
-        $request = $this->_request();
-        $actionName = Inflector::humanize(Inflector::underscore($request->action));
-        $controllerName = $this->_controllerName();
-
-        if ($scope === 'table') {
-            if ($actionName === 'Index') {
-                return $controllerName;
-            }
-
-            return sprintf('%s %s', $controllerName, $actionName);
-        }
-
-        $primaryKeyValue = $this->_primaryKeyValue();
-        if ($primaryKeyValue === null) {
-            return sprintf('%s %s', $actionName, $controllerName);
-        }
-
-        $displayFieldValue = $this->_displayFieldValue();
-        if ($displayFieldValue === null || $this->_table()->displayField() == $this->_table()->primaryKey()) {
-            return sprintf('%s %s #%s', $actionName, $controllerName, $primaryKeyValue);
-        }
-
-        return sprintf('%s %s #%s: %s', $actionName, $controllerName, $primaryKeyValue, $displayFieldValue);
     }
 
     /**
