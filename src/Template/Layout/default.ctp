@@ -32,6 +32,8 @@
                     }
                 ?>
             </div>
+
+            <?= $this->element('topbar'); ?>
         </div>
     </nav>
 
