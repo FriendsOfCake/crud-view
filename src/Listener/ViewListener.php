@@ -6,12 +6,14 @@ use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
+use CrudView\Listener\Traits\SiteTitleTrait;
 use CrudView\Traits\CrudViewConfigTrait;
 use Crud\Listener\BaseListener;
 
 class ViewListener extends BaseListener
 {
     use CrudViewConfigTrait;
+    use SiteTitleTrait;
 
     /**
      * Default associations config
@@ -70,9 +72,9 @@ class ViewListener extends BaseListener
 
         $this->ensureConfig();
 
+        $this->beforeRenderSiteTitle($event);
         $controller = $this->_controller();
         $controller->set('actionConfig', $this->_action()->config());
-        $controller->set('brand', $this->_getBrand());
         $controller->set('title', $this->_getPageTitle());
         $associations = $this->associations;
         $controller->set(compact('associations'));
@@ -117,21 +119,6 @@ class ViewListener extends BaseListener
     {
         unset($event->subject()->params['class']);
         $event->subject()->element = ltrim($event->subject()->type);
-    }
-
-    /**
-     * Get the brand name to use in the default template.
-     *
-     * @return string
-     */
-    protected function _getBrand()
-    {
-        $brand = $this->_action()->config('scaffold.brand');
-        if (!empty($brand)) {
-            return $brand;
-        }
-
-        return Configure::read('CrudView.brand');
     }
 
     /**
