@@ -1,9 +1,7 @@
 <?php
 namespace CrudView\Listener\Traits;
 
-use Cake\Core\Configure;
 use Cake\Event\Event;
-use Cake\Utility\Inflector;
 
 trait UtilityNavigationTrait
 {
@@ -28,11 +26,11 @@ trait UtilityNavigationTrait
     {
         $action = $this->_action();
 
-        $link = $action->config('scaffold.utility_navigation');
-        if (empty($link)) {
-            $link = null;
+        $utilityNavigation = $action->config('scaffold.utility_navigation');
+        if (empty($utilityNavigation)) {
+            $utilityNavigation = null;
         }
 
-        return $link;
+        return $utilityNavigation;
     }
 }
