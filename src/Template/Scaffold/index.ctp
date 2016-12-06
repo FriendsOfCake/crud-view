@@ -17,15 +17,25 @@
 
     <?= $this->element('index/bulk_actions/form_start', compact('bulkActions')); ?>
 
-    <?= $this->element('index/table', [
-        'fields' => $fields,
-        'actions' => $actions,
-        'bulkActions' => $bulkActions,
-        'primaryKey' => $primaryKey,
-        'singularVar' => $singularVar,
-        'viewVar' => $viewVar,
-        $viewVar => ${$viewVar},
-    ])?>
+    <?php
+        $_data = [
+            'fields' => $fields,
+            'actions' => $actions,
+            'bulkActions' => $bulkActions,
+            'primaryKey' => $primaryKey,
+            'singularVar' => $singularVar,
+            'viewVar' => $viewVar,
+            $viewVar => ${$viewVar},
+        ];
+        switch ($indexType) {
+            case 'table':
+                echo $this->element('index/table', $_data);
+                break;
+            default:
+                echo $this->element($indexType, $_data);
+                break;
+        }
+    ?>
 
     <?= $this->element('index/bulk_actions/form_end', compact('bulkActions')); ?>
     <?= $this->element('index/pagination'); ?>

@@ -250,35 +250,3 @@ type of action.
 In general, if you want to override a template, it is a good idea to copy the
 original implementation from
 ``vendor/friendsofcake/crud-view/src/Template/Element``
-
-Index Action Elements
-~~~~~~~~~~~~~~~~~~~~~
-
-search
-  Create ``src/Template/Element/search.ctp`` for having full control over how
-  the search filters are displayed in your pagination table. You can expect the
-  ``$searchInputs`` and ``$searchOptions`` variables to be available
-
-index/pagination
-  Create ``src/Template/Element/index/pagination.ctp`` To implement your own
-  pagination links and counter.
-
-index/bulk_actions/table
-  Create ``src/Template/Element/index/bulk_actions/table.ctp`` for changing how
-  the bulk action inputs for the whole table. You can expect the
-  ``$bulkActions``, ``$primaryKey`` and ``$singularVar`` variables to be
-  available.
-
-index/bulk_actions/record
-  Create ``src/Template/Element/index/bulk_actions/record.ctp`` for changing how
-  the bulk action inputs for each row are displayed. You can expect the
-  ``$bulkActions``, ``$primaryKey`` and ``$singularVar`` variables to be
-  available.
-
-index/bulk_actions/form_start
-  Create ``src/Template/Element/index/bulk_actions/form_start.ctp`` To customize
-  the Form create call for bulk actions
-
-index/bulk_actions/form_end
-  Create ``src/Template/Element/index/bulk_actions/form_end.ctp`` To customize
-  the Form end call for bulk actions
