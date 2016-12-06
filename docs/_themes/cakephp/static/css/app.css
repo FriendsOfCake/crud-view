@@ -21,7 +21,7 @@ div.related {
 
 #sidebar-navigation > ul > li:nth-of-type(2):last-child:after,
 #sidebar-navigation > ul > li:nth-of-type(4):last-child:after,
-#sidebar-navigation > ul > li:nth-of-type(6):last-child:after {
+#sidebar-navigation > ul > li:nth-of-type(7):last-child:after {
     content: " ";
     display: block;
     margin-bottom: 1em;
@@ -33,7 +33,7 @@ div.related {
 #sidebar-navigation > ul > li:nth-of-type(3):before {
     content: "General Configuration";
 }
-#sidebar-navigation > ul > li:nth-of-type(5):before {
+#sidebar-navigation > ul > li:nth-of-type(6):before {
     content: "Usage";
 }
 
