@@ -6,6 +6,7 @@ use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
+use CrudView\Listener\Traits\IndexTypeTrait;
 use CrudView\Listener\Traits\SidebarNavigationTrait;
 use CrudView\Listener\Traits\SiteTitleTrait;
 use CrudView\Listener\Traits\UtilityNavigationTrait;
@@ -15,6 +16,7 @@ use Crud\Listener\BaseListener;
 class ViewListener extends BaseListener
 {
     use CrudViewConfigTrait;
+    use IndexTypeTrait;
     use SidebarNavigationTrait;
     use SiteTitleTrait;
     use UtilityNavigationTrait;
@@ -76,6 +78,7 @@ class ViewListener extends BaseListener
 
         $this->ensureConfig();
 
+        $this->beforeRenderIndexType($event);
         $this->beforeRenderSiteTitle($event);
         $this->beforeRenderUtilityNavigation($event);
         $this->beforeRenderSidebarNavigation($event);

@@ -18,7 +18,7 @@ trait SidebarNavigationTrait
     }
 
     /**
-     * Returns the utility navigation to show on scaffolded view
+     * Returns the sidebar navigation to show on scaffolded view
      *
      * @return string
      */
