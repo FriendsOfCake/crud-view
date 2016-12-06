@@ -21,7 +21,7 @@ pass any properties that ``FormHelper::inputs()`` supports.
 
     class ArticlesController extends AppController
     {
-        public function index()
+        public function add()
         {
             $action = $this->Crud->action();
             $action->config('scaffold.fields', [
