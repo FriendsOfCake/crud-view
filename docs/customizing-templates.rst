@@ -16,26 +16,17 @@ pass any properties that ``FormHelper::inputs()`` supports.
 
 .. code-block:: php
 
-    <?php
-    namespace App\Controller;
 
-    class ArticlesController extends AppController
-    {
-        public function add()
-        {
-            $action = $this->Crud->action();
-            $action->config('scaffold.fields', [
-                'title',
-                'thread_id' => [
-                    'type' => 'text'
-                ],
-                'featured' => [
-                    'checked' => 'checked'
-                ]
-            ]);
-            return $this->Crud->execute();
-        }
-    }
+    $action = $this->Crud->action();
+    $action->config('scaffold.fields', [
+        'title',
+        'thread_id' => [
+            'type' => 'text'
+        ],
+        'featured' => [
+            'checked' => 'checked'
+        ]
+    ]);
 
 Formatting using a Formatter
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -46,25 +37,15 @@ applying formatters to any of your fields. Whenever you use the
 
 .. code-block:: php
 
-    <?php
-    namespace App\Controller;
-
-    class ArticlesController extends AppController
-    {
-        public function index()
-        {
-            $action = $this->Crud->action();
-            $action->config('scaffold.fields', [
-                'title',
-                'published_time' => [
-                    'formatter' => function ($name, Time $value) {
-                        return $value->nice();
-                    }
-                ],
-            ]);
-            return $this->Crud->execute();
-        }
-    }
+    $action = $this->Crud->action();
+    $action->config('scaffold.fields', [
+        'title',
+        'published_time' => [
+            'formatter' => function ($name, Time $value) {
+                return $value->nice();
+            }
+        ],
+    ]);
 
 You may also specify formatters using the ``scaffold.field_settings``
 configuration key. This is useful if you want to display all fields but wish
@@ -72,24 +53,14 @@ to only configure the settings for one or two.
 
 .. code-block:: php
 
-    <?php
-    namespace App\Controller;
-
-    class ArticlesController extends AppController
-    {
-        public function index()
-        {
-            $action = $this->Crud->action();
-            $action->config('scaffold.field_settings', [
-                'published_time' => [
-                    'formatter' => function ($name, Time $value) {
-                        return $value->nice();
-                    }
-                ],
-            ]);
-            return $this->Crud->execute();
-        }
-    }
+    $action = $this->Crud->action();
+    $action->config('scaffold.field_settings', [
+        'published_time' => [
+            'formatter' => function ($name, Time $value) {
+                return $value->nice();
+            }
+        ],
+    ]);
 
 Formatting with a Callable
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -167,30 +138,6 @@ Changing Field Header or Label Names
 be read by a human. Sometimes this is just not enough, or you may wish to show
 an entirely different header in a table or label in a form.
 
-Changing Pagination Table Headers
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-In your ``index()`` action use the ``scaffold.fields`` configuration to set the
-``title`` option to any field you want their table header changed:
-
-.. code-block:: php
-
-    <?php
-    namespace App\Controller;
-
-    class ArticlesController extends AppController
-    {
-        public function index()
-        {
-            $action = $this->Crud->action();
-            $action->config('scaffold.fields', [
-                'author_id' => ['title' => 'Author Name'],
-                // The rest of the fields to display here
-            ]);
-            return $this->Crud->execute();
-        }
-    }
-
 Changing Form Input Labels
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -199,21 +146,11 @@ title for any of the fields by using the ``scaffold.fields`` configuration
 
 .. code-block:: php
 
-    <?php
-    namespace App\Controller;
-
-    class ArticlesController extends AppController
-    {
-        public function add()
-        {
-            $action = $this->Crud->action();
-            $action->config('scaffold.fields', [
-                'author_id' => ['label' => 'Author Name'],
-                // The rest of the fields to display here
-            ]);
-            return $this->Crud->execute();
-        }
-    }
+    $action = $this->Crud->action();
+    $action->config('scaffold.fields', [
+        'author_id' => ['label' => 'Author Name'],
+        // The rest of the fields to display here
+    ]);
 
 Overriding Template Parts
 -------------------------

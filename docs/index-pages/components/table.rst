@@ -24,10 +24,7 @@ To specify the title used in the pagination header, you need to set
 
     $action = $this->Crud->action();
     $action->config('scaffold.fields', [
-      'id',
-      'title' => [
-        'title' => __('Blog Post')
-      ]
+      'author_id' => ['title' => 'Author Name'],
     ]);
 
 Index Action Elements

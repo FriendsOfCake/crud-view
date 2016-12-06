@@ -10,28 +10,28 @@ The "sidebar navigation" shown on the left normally shows the a link to the Crud
 
     $action = $this->Crud->action();
     $action->config('scaffold.sidebar_navigation', [
-      new MenuItem(
-        'CrudView Docs',
-        'https://crud-view.readthedocs.io/en/latest/contents.html',
-        ['target' => 'blank']
-      ),
-      new MenuItem(
-        'Profile',
-        ['controller' => 'Users', 'action' => 'profile']
-      ),
-      new MenuItem(
-        'Inbox',
-        ['controller' => 'Users', 'action' => 'inbox']
-      ),
-      new MenuItem(
-        'Settings',
-        ['controller' => 'Site', 'action' => 'settings']
-      ),
-      new MenuDivider(),
-      new MenuItem(
-        'Log Out',
-        ['controller' => 'Users', 'action' => 'logout']
-      )
+        new MenuItem(
+            'CrudView Docs',
+            'https://crud-view.readthedocs.io/en/latest/contents.html',
+            ['target' => 'blank']
+        ),
+        new MenuItem(
+            'Profile',
+            ['controller' => 'Users', 'action' => 'profile']
+        ),
+        new MenuItem(
+            'Inbox',
+            ['controller' => 'Users', 'action' => 'inbox']
+        ),
+        new MenuItem(
+            'Settings',
+            ['controller' => 'Site', 'action' => 'settings']
+        ),
+        new MenuDivider(),
+        new MenuItem(
+            'Log Out',
+            ['controller' => 'Users', 'action' => 'logout']
+        )
     ]);
 
 The sidebar navigation can also be completely disabled by setting the value to ``false``.
