@@ -94,7 +94,6 @@ class ViewListener extends BaseListener
         $controller->set('viewblocks', $this->_getViewBlocks());
         $controller->set('formUrl', $this->_getFormUrl());
         $controller->set('disableExtraButtons', $this->_getDisableExtraButtons());
-        $controller->set('disableSidebar', $this->_getDisableSidebar());
         $controller->set('extraButtonsBlacklist', $this->_getExtraButtonsBlacklist());
         $controller->set('enableDirtyCheck', $this->_getEnableDirtyCheck());
         $controller->set('actionGroups', $this->_getActionGroups());
@@ -588,18 +587,6 @@ class ViewListener extends BaseListener
         $action = $this->_action();
 
         return $action->config('scaffold.disable_extra_buttons') ?: false;
-    }
-
-    /**
-     * Disable sidebar.
-     *
-     * @return bool
-     */
-    protected function _getDisableSidebar()
-    {
-        $action = $this->_action();
-
-        return $action->config('scaffold.disable_sidebar') ?: false;
     }
 
     /**
