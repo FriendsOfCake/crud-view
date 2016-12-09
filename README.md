@@ -10,7 +10,7 @@ Automated admin backend based on your [Crud](https://github.com/friendsofcake/cr
 
 # Installation
 
-For CakePHP 3.x compatible version:
+For CakePHP 3.x:
 
 ```shell
 composer require friendsofcake/crud-view
@@ -18,7 +18,7 @@ composer require friendsofcake/crud-view
 
 ## Documentation
 
-You can find detailed usage documentation [here](http://crud-view.readthedocs.org/en/latest/).
+You can find detailed usage documentation [here](https://crud-view.readthedocs.io/en/latest/).
 
 # Bugs
 
@@ -29,7 +29,7 @@ You can also create an issue with a description to raise awareness of the bug.
 
 # Features
 
-If you have a good idea for a Crud feature, please join us on IRC and let's discuss it. Pull
+If you have a good idea for a Crud View feature, please join us on IRC and let's discuss it. Pull
 requests are always more than welcome.
 
 # Support / Questions
