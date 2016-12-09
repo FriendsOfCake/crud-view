@@ -132,7 +132,8 @@ master_doc = 'contents'
 # directories to ignore when looking for source files.
 exclude_patterns = [
     '_build',
-    '_themes'
+    '_themes',
+    '_partials',
 ]
 
 # The reST default role (used for this markup: `text`) to use for all
