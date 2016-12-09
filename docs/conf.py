@@ -43,7 +43,15 @@ release = '1.0'
 
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".
-html_title = 'CRUD View'
+html_title = 'Crud View'
+
+html_context = {
+    'maintainer': maintainer,
+    'project_pretty_name': project_pretty_name,
+    'related_projects': {
+        'Crud': 'https://crud.readthedocs.io/'
+    }
+}
 
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title,
