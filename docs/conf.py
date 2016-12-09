@@ -54,6 +54,9 @@ html_context = {
     }
 }
 
+# Output file base name for HTML help builder.
+htmlhelp_basename = 'crud-view'
+
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
@@ -231,9 +234,6 @@ html_sidebars = {
 
 # This is the file name suffix for HTML files (e.g. ".xhtml").
 # html_file_suffix = None
-
-# Output file base name for HTML help builder.
-htmlhelp_basename = 'crud'
 
 
 # -- Options for LaTeX output ---------------------------------------------
