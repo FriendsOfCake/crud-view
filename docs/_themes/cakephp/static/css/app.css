@@ -12,6 +12,17 @@
 div.related {
   background-color: #565656;
 }
+div.admonition {
+  border: none;
+  padding: 12px 10px 12px 60px;
+}
+div.note {
+  background: #fcf8e3;
+}
+.note code,
+.warning code {
+  background-color: transparent;
+}
 .logo-cake img {
   margin-bottom: 0;
   margin-top: 11px;
