@@ -49,7 +49,8 @@ html_context = {
     'maintainer': maintainer,
     'project_pretty_name': project_pretty_name,
     'related_projects': {
-        'Crud': 'https://crud.readthedocs.io/'
+        'Crud': 'https://crud.readthedocs.io/',
+        'Crud Users': 'https://crud-users.readthedocs.io/',
     }
 }
 
