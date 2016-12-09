@@ -2,7 +2,7 @@
 <html lang="<?= \Locale::getPrimaryLanguage(\Cake\I18n\I18n::locale()) ?>">
 <head>
     <?= $this->Html->charset(); ?>
-    <title><?= $this->get('siteTitle');?></title>
+    <title><?= $this->get('title');?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <?= $this->Html->meta('icon'); ?>
