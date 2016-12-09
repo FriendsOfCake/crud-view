@@ -12,11 +12,11 @@
 div.related {
   background-color: #565656;
 }
+.logo-cake {
+}
 .logo-cake img {
-  height:50%;
-  margin-bottom: 0;
-  margin-top: 4px;
-  width: 50%;
+  margin: 0;
+  width: initial;
 }
 
 #sidebar-navigation > ul > li:nth-of-type(2):last-child:after,
