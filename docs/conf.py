@@ -293,3 +293,6 @@ from sphinx.highlighting import lexers
 from pygments.lexers.php import PhpLexer
 
 lexers['php'] = PhpLexer(startinline=True)
+lexers['phpinline'] = PhpLexer(startinline=True)
+lexers['php-annotations'] = PhpLexer(startinline=True)
+primary_domain = "php"
