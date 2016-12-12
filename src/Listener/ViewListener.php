@@ -93,6 +93,7 @@ class ViewListener extends BaseListener
         $controller->set('bulkActions', $this->_getBulkActions());
         $controller->set('viewblocks', $this->_getViewBlocks());
         $controller->set('formUrl', $this->_getFormUrl());
+        $controller->set('submitButtonText', $this->_getSubmitButtonText());
         $controller->set('disableExtraButtons', $this->_getDisableExtraButtons());
         $controller->set('extraButtonsBlacklist', $this->_getExtraButtonsBlacklist());
         $controller->set('enableDirtyCheck', $this->_getEnableDirtyCheck());
@@ -575,6 +576,18 @@ class ViewListener extends BaseListener
         $action = $this->_action();
 
         return $action->config('scaffold.form_action') ?: null;
+    }
+
+    /**
+     * Get submit button text.
+     *
+     * @return bool
+     */
+    protected function _getSubmitButtonText()
+    {
+        $action = $this->_action();
+
+        return $action->config('scaffold.submit_button_text') ?: __d('crud', 'Save');
     }
 
     /**
