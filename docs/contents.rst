@@ -6,18 +6,39 @@ Contents
 
    index
 
+.. _preface-docs:
+
 .. toctree::
    :maxdepth: 3
+   :caption: Preface
 
     Installation <installation>
     Quick Start <quick-start>
 
+.. _usage-docs:
+
+.. toctree::
+   :maxdepth: 3
+   :caption: Usage
+
     Basic Usage <basic-usage>
     Customizing Templates <customizing-templates>
+
+.. _general-configuration-docs:
+
+.. toctree::
+   :maxdepth: 3
+   :caption: General Configuration
 
     Site Title Options <general-configuration/site-title-options>
     Sidebar Navigation <general-configuration/sidebar-navigation>
     Utility Navigation <general-configuration/utility-navigation>
+
+.. _index-pages-docs:
+
+.. toctree::
+   :maxdepth: 3
+   :caption: Index Pages
 
     Customizing the Index Page <index-pages/customizing-the-index-page>
     Custom Index <index-pages/components/custom>
