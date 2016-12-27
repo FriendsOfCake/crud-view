@@ -1,6 +1,6 @@
 # How to contribute
 
-CakePHP-CrudView loves to welcome your contributions. There are several ways to help out:
+CrudView loves to welcome your contributions. There are several ways to help out:
 * Create a ticket in GitHub, if you have found a bug
 * Write testcases for open bug tickets
 * Write patches for open bug/feature tickets, preferably with testcases included
@@ -46,28 +46,31 @@ chance of keeping on top of things.
 
 ## Testcases and codesniffer
 
-CakePHP-CrudView tests requires [PHPUnit](http://www.phpunit.de/manual/current/en/installation.html)
+CrudView tests requires [PHPUnit](http://www.phpunit.de/manual/current/en/installation.html)
 3.7.33 or higher. To run the testcases locally use the following command:
 
     phpunit
 
 To run the sniffs for CakePHP coding standards
 
-    phpcs -n -p --extensions=php --standard=vendor/cakephp/cakephp-codesniffer/CakePHP
+    phpcs -n -p --extensions=php --standard=vendor/cakephp/cakephp-codesniffer/CakePHP --ignore=vendor --ignore=docs src/ config/
 
 Check the [cakephp-codesniffer](https://github.com/cakephp/cakephp-codesniffer)
 repository to setup the CakePHP standard. The README contains installation info
 for the sniff and phpcs.
 
-## documentation
+## Documentation
 
 You can build the documentation using Docker via the following commands:
+
+    # go to the docs dir
+    cd docs
 
     # build the docs
     docker build .
 
     # make the html
-    docker run -it --rm -v $(pwd)/docs:/data cakephp/docs make html
+    docker run -it --rm -v $(pwd)/docs:/data friendsofcake/crud-view make html
 
     # open the generated html docs in docs/_build/html
 
