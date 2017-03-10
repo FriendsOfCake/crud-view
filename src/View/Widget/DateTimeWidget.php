@@ -41,7 +41,13 @@ class DateTimeWidget extends \Cake\View\Widget\DateTimeWidget
         }
 
         if (!($val instanceof DateTimeInterface) && !empty($val)) {
-            $val = $type === 'date' ? Time::parseDate($val) : Time::parseDateTime($val);
+            if ($type === 'date') {
+                $val = Time::parseDate($val);
+            } elseif ($type === 'time') {
+                $val = Time::parseTime($val);
+            } else {
+                $val = Time::parseDateTime($val);
+            }
         }
 
         if ($val) {
@@ -54,8 +60,18 @@ class DateTimeWidget extends \Cake\View\Widget\DateTimeWidget
         }
 
         if (!$format) {
-            $format = $type === 'date' ? 'L' : 'L LT';
+            if ($type === 'date') {
+                $format = 'L';
+            } elseif ($type === 'time') {
+                $format = 'LT';
+            } else {
+                $format = 'L LT';
+            }
         }
+
+        $icon = $type === 'time'
+            ? 'time'
+            : 'calendar';
 
         $widget = <<<html
             <div class="input-group $type">
@@ -80,7 +96,7 @@ html;
                     $disabled
                 />
                 <label for="$id" class="input-group-addon">
-                    <span class="glyphicon glyphicon-calendar"></span>
+                    <span class="glyphicon glyphicon-$icon"></span>
                 </label>
             </div>
 html;
