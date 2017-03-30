@@ -10,7 +10,6 @@ class MenuDropdown
      **/
     protected $title;
 
-
     /**
      * Array of MenuDivider|MenuItem entries
      *
