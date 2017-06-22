@@ -2,9 +2,8 @@
 namespace CrudView\View\Widget;
 
 use Cake\Core\Configure;
-use Cake\I18n\Date;
+use Cake\Database\Type;
 use Cake\I18n\I18n;
-use Cake\I18n\Time;
 use Cake\View\Form\ContextInterface;
 use DateTimeInterface;
 use DateTimeZone;
@@ -42,12 +41,14 @@ class DateTimeWidget extends \Cake\View\Widget\DateTimeWidget
         }
 
         if (!($val instanceof DateTimeInterface) && !empty($val)) {
-            if ($type === 'date') {
-                $val = Date::parseDate($val);
-            } elseif ($type === 'time') {
-                $val = Time::parseTime($val);
-            } else {
-                $val = Time::parseDateTime($val);
+            switch ($type) {
+                case 'date':
+                case 'time':
+                    $val = Type::build($type)->marshal($val);
+                    break;
+
+                default:
+                    $val = Type::build('datetime')->marshal($val);
             }
         }
 
