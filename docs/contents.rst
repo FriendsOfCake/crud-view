@@ -45,3 +45,11 @@ Contents
     Custom Index <index-pages/components/custom>
     Index as a Blog <index-pages/components/blog>
     Index as a Table <index-pages/components/table>
+
+.. _form-pages-docs:
+
+.. toctree::
+   :maxdepth: 3
+   :caption: Form Pages
+
+   Customizing the Form <form-pages/customizing-the-form-page>
