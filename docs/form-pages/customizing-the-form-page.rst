@@ -138,8 +138,8 @@ The following custom view blocks are available for use within forms:
 
 - ``form.sidebar``: Rendered on the side of a form. Will also change the form
   width
-- ``form.before``: Rendered before a form.
-- ``form.after``: Rendered after a form.
+- ``form.before_create``: Rendered before ``FormHelper::create()`` is called
+- ``form.after_end``: Rendered after ``FormHelper::end()`` is called
 
 Form Action Elements
 ---------------------
