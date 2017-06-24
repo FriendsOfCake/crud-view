@@ -1,5 +1,9 @@
-<?= $this->fetch('before_form'); ?>
-<? $formSidebarExists = $this->exists('form.sidebar'); ?>
+<?php
+$formSidebarExists = $this->exists('form.sidebar');
+if ($this->exists('form.before')) {
+    echo $this->fetch('form.before');
+}
+?>
 
 <div class="<?= $this->CrudView->getCssClasses(); ?>">
     <?= $this->element('action-header') ?>
@@ -27,4 +31,8 @@
     <?= $this->Form->end(); ?>
 </div>
 
-<?= $this->fetch('after_form'); ?>
+<?php
+if ($this->exists('form.after')) {
+    echo $this->fetch('form.after');
+}
+?>
