@@ -3,6 +3,13 @@ $formSidebarExists = $this->exists('form.sidebar');
 if ($this->exists('form.before')) {
     echo $this->fetch('form.before');
 }
+if ($this->exists('before_form')) {
+    $template = 'The view block %s has been deprecated. Use %s instead.';
+    $message = sprintf($template, 'before_form', 'form.before');
+    trigger_error($message, E_USER_DEPRECATED);
+
+    echo $this->fetch('before_form');
+}
 ?>
 
 <div class="<?= $this->CrudView->getCssClasses(); ?>">
@@ -34,5 +41,12 @@ if ($this->exists('form.before')) {
 <?php
 if ($this->exists('form.after')) {
     echo $this->fetch('form.after');
+}
+if ($this->exists('after_form')) {
+    $template = 'The view block %s has been deprecated. Use %s instead.';
+    $message = sprintf($template, 'after_form', 'form.before');
+    trigger_error($message, E_USER_DEPRECATED);
+
+    echo $this->fetch('after_form');
 }
 ?>
