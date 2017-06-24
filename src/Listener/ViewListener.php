@@ -95,8 +95,7 @@ class ViewListener extends BaseListener
         $controller->set('viewblocks', $this->_getViewBlocks());
         $controller->set('formUrl', $this->_getFormUrl());
         $controller->set('submitButtonText', $this->_getSubmitButtonText());
-        $controller->set('disableExtraButtons', $this->_getDisableExtraButtons());
-        $controller->set('extraButtonsBlacklist', $this->_getExtraButtonsBlacklist());
+        $controller->set('formSubmitExtraButtons', $this->_getFormSubmitExtraButtons());
         $controller->set('enableDirtyCheck', $this->_getEnableDirtyCheck());
         $controller->set('actionGroups', $this->_getActionGroups());
         $controller->set($this->_getPageVariables());
@@ -650,23 +649,35 @@ class ViewListener extends BaseListener
      *
      * @return bool
      */
-    protected function _getDisableExtraButtons()
+    protected function _getFormSubmitExtraButtons()
     {
         $action = $this->_action();
 
-        return $action->config('scaffold.disable_extra_buttons') ?: false;
-    }
+        $defaults = [
+            [
+                'title' => __d('crud', 'Save & continue editing'),
+                'options' => ['class' => 'btn btn-success btn-save-continue', 'name' => '_edit', 'value' => true],
+                'type' => 'button',
+            ],
+            [
+                'title' => __d('crud', 'Save & create new'),
+                'options' => ['class' => 'btn btn-success', 'name' => '_add', 'value' => true],
+                'type' => 'button',
+            ],
+            [
+                'title' => __d('crud', 'Back'),
+                'url' => ['action' => 'index'],
+                'options' => ['class' => 'btn btn-default', 'role' => 'button', 'value' => true],
+                'type' => 'link',
+            ],
+        ];
 
-    /**
-     * Get extra buttons blacklist
-     *
-     * @return array
-     */
-    protected function _getExtraButtonsBlacklist()
-    {
-        $action = $this->_action();
+        $buttons = $action->config('scaffold.form_submit_extra_buttons');
+        if ($buttons === null || $buttons === true) {
+            $buttons = $defaults;
+        }
 
-        return $action->config('scaffold.extra_buttons_blacklist') ?: [];
+        return $buttons;
     }
 
     /**
