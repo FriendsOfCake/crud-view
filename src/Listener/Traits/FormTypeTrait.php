@@ -85,7 +85,7 @@ trait FormTypeTrait
         $action = $this->_action();
 
         $disableExtraButtons = $this->_getFormDisableExtraButtons();
-        if ($disableExtraButtons === false) {
+        if ($disableExtraButtons === true) {
             $this->deprecatedScaffoldKeyNotice(
                 'scaffold.disable_extra_buttons',
                 'scaffold.form_submit_extra_buttons'
