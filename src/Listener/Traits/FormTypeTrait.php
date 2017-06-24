@@ -41,7 +41,7 @@ trait FormTypeTrait
         $formEnableDirtyCheck = $action->config('scaffold.form_enable_dirty_check');
         if ($formEnableDirtyCheck === null) {
             $formEnableDirtyCheck = $action->config('scaffold.enable_dirty_check');
-            if ($formSubmitButtonText !== null) {
+            if ($formEnableDirtyCheck !== null) {
                 $this->deprecatedScaffoldKeyNotice(
                     'scaffold.enable_dirty_check',
                     'scaffold.form_enable_dirty_check'
