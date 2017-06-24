@@ -8,7 +8,7 @@ if ($this->exists('form.before')) {
 <div class="<?= $this->CrudView->getCssClasses(); ?>">
     <?= $this->element('action-header') ?>
 
-    <?= $this->Form->create(${$viewVar}, ['role' => 'form', 'url' => $formUrl, 'type' => 'file', 'data-dirty-check' => $enableDirtyCheck]); ?>
+    <?= $this->Form->create(${$viewVar}, ['role' => 'form', 'url' => $formUrl, 'type' => 'file', 'data-dirty-check' => $formEnableDirtyCheck]); ?>
     <?= $this->CrudView->redirectUrl(); ?>
     <div class="row">
         <div class="col-lg-<?= $formSidebarExists ? '8' : '12' ?>">

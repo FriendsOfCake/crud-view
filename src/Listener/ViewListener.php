@@ -96,7 +96,7 @@ class ViewListener extends BaseListener
         $controller->set('formUrl', $this->_getFormUrl());
         $controller->set('formSubmitButtonText', $this->_getFormSubmitButtonText());
         $controller->set('formSubmitExtraButtons', $this->_getFormSubmitExtraButtons());
-        $controller->set('enableDirtyCheck', $this->_getEnableDirtyCheck());
+        $controller->set('formEnableDirtyCheck', $this->_getFormEnableDirtyCheck());
         $controller->set('actionGroups', $this->_getActionGroups());
         $controller->set($this->_getPageVariables());
     }
@@ -681,15 +681,15 @@ class ViewListener extends BaseListener
     }
 
     /**
-     * Get enable dirty check setting
+     * Get form enable dirty check setting
      *
      * @return bool
      */
-    protected function _getEnableDirtyCheck()
+    protected function _getFormEnableDirtyCheck()
     {
         $action = $this->_action();
 
-        return $action->config('scaffold.enable_dirty_check') ?: false;
+        return $action->config('scaffold.form_enable_dirty_check') ?: false;
     }
 
     /**
