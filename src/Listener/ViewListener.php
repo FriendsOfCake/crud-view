@@ -6,6 +6,7 @@ use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
+use CrudView\Listener\Traits\DeprecatedConfigurationKeyTrait;
 use CrudView\Listener\Traits\FormTypeTrait;
 use CrudView\Listener\Traits\IndexTypeTrait;
 use CrudView\Listener\Traits\SidebarNavigationTrait;
@@ -17,6 +18,7 @@ use Crud\Listener\BaseListener;
 class ViewListener extends BaseListener
 {
     use CrudViewConfigTrait;
+    use DeprecatedConfigurationKeyTrait;
     use FormTypeTrait;
     use IndexTypeTrait;
     use SidebarNavigationTrait;
