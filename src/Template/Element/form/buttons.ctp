@@ -1,6 +1,6 @@
 <div class="col pull-right">
     <?php
-        echo $this->Form->button($submitButtonText, ['class' => 'btn btn-primary', 'name' => '_save']);
+        echo $this->Form->button($formSubmitButtonText, ['class' => 'btn btn-primary', 'name' => '_save']);
 
         if (!empty($formSubmitExtraButtons)) {
             foreach ($formSubmitExtraButtons as $button) {
