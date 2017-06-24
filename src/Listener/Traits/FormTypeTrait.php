@@ -44,7 +44,6 @@ trait FormTypeTrait
         return $action->config('scaffold.form_submit_button_text') ?: __d('crud', 'Save');
     }
 
-
     /**
      * Get extra form submit buttons.
      *
