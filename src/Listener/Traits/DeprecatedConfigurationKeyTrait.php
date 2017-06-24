@@ -7,8 +7,8 @@ trait DeprecatedConfigurationKeyTrait
     /**
      * Emit a deprecation notice for deprecated configuration key use
      *
-     * @param $deprecatedKey string Name of key that is deprecated
-     * @param $newKey string Name of key that should be used instead of the deprecated key
+     * @param string $deprecatedKey Name of key that is deprecated
+     * @param string $newKey Name of key that should be used instead of the deprecated key
      * @return void
      **/
     protected function deprecatedScaffoldKeyNotice($deprecatedKey, $newKey)

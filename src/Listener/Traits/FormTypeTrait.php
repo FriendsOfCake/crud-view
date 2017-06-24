@@ -90,6 +90,7 @@ trait FormTypeTrait
                 'scaffold.disable_extra_buttons',
                 'scaffold.form_submit_extra_buttons'
             );
+
             return [];
         }
 
@@ -130,7 +131,6 @@ trait FormTypeTrait
             }
             $defaults = $newDefaults;
         }
-
 
         $buttons = $action->config('scaffold.form_submit_extra_buttons');
         if ($buttons === null || $buttons === true) {
