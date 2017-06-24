@@ -16,25 +16,31 @@ if ($this->exists('before_form')) {
     <?= $this->element('action-header') ?>
 
     <?= $this->Form->create(${$viewVar}, ['role' => 'form', 'url' => $formUrl, 'type' => 'file', 'data-dirty-check' => $formEnableDirtyCheck]); ?>
-    <?= $this->CrudView->redirectUrl(); ?>
-    <div class="row">
-        <div class="col-lg-<?= $formSidebarExists ? '8' : '12' ?>">
-            <?= $this->Form->inputs($fields, ['legend' => false]); ?>
-        </div>
-
-        <?php if ($formSidebarExists) : ?>
-            <div class="col-lg-2">
-                <?= $this->fetch('form.sidebar'); ?>
-            </div>
+        <?php if ($this->exists('form.after_create')) : ?>
+            <?= $this->fetch('form.after_create'); ?>
         <?php endif; ?>
-    </div>
-    <div class="row">
-        <div class="col-lg-<?= $formSidebarExists ? '8' : '12' ?>">
-           <div class="form-group">
-                <?= $this->element('form/buttons') ?>
+        <?= $this->CrudView->redirectUrl(); ?>
+        <div class="row">
+            <div class="col-lg-<?= $formSidebarExists ? '8' : '12' ?>">
+                <?= $this->Form->inputs($fields, ['legend' => false]); ?>
+            </div>
+
+            <?php if ($formSidebarExists) : ?>
+                <div class="col-lg-2">
+                    <?= $this->fetch('form.sidebar'); ?>
+                </div>
+            <?php endif; ?>
+        </div>
+        <div class="row">
+            <div class="col-lg-<?= $formSidebarExists ? '8' : '12' ?>">
+               <div class="form-group">
+                    <?= $this->element('form/buttons') ?>
+                </div>
             </div>
         </div>
-    </div>
+        <?php if ($this->exists('form.before_end')) : ?>
+            <?= $this->fetch('form.before_end'); ?>
+        <?php endif; ?>
     <?= $this->Form->end(); ?>
 </div>
 
