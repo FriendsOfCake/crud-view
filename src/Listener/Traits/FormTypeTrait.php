@@ -137,6 +137,10 @@ trait FormTypeTrait
             $buttons = $defaults;
         }
 
+        if ($buttons === false) {
+            $buttons = [];
+        }
+
         return $buttons;
     }
 
