@@ -123,6 +123,40 @@ Element files will have available at least the following variables:
 Index Buttons
 -------------
 
+Customizing primaryKey position in the url
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+For entity-scoped actions, we will append the ``primaryKey`` of the record to
+the link by default:
+
+.. code-block:: php
+
+    $action = $this->Crud->action();
+
+    // For the PostsController, will generate
+    // /posts/translate/english/1
+    $action->config('scaffold.actions', [
+        'translate' => [
+            'url' => ['action' => 'translate', 'english']
+        ]
+    ]);
+
+We can specify the token ``:primaryKey:``. Rather than appending the
+``primaryKey``, we will replace this token in the url as many times as
+specified.
+
+.. code-block:: php
+
+    $action = $this->Crud->action();
+
+    // For the PostsController, will generate
+    // /posts/translate/1/english
+    $action->config('scaffold.actions', [
+        'translate' => [
+            'url' => ['action' => 'translate', ':primaryKey:', 'english']
+        ]
+    ]);
+
 Action Groups
 ~~~~~~~~~~~~~
 
