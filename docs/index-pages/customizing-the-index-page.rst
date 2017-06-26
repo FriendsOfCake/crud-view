@@ -119,6 +119,44 @@ Element files will have available at least the following variables:
 Index Buttons
 -------------
 
+Action Groups
+~~~~~~~~~~~~~
+
+You can group actions together using Action Groups. This will generate a
+dropdown for the group, and can be controlled by the ``scaffold.action_groups``
+configuration key.
+
+.. code-block:: php
+
+    $action = $this->Crud->action();
+    $action->config('scaffold.action_groups', [
+        'Actions' => [
+            'view',
+            'edit',
+            'delete',
+        ],
+    ]);
+
+All actions specified in an action group *must* be included in the
+``scaffold.actions`` key.
+
+You can specify multiple action groups:
+
+.. code-block:: php
+
+    $action = $this->Crud->action();
+    $action->config('scaffold.action_groups', [
+        'Actions' => [
+            'view',
+            'edit',
+            'delete',
+        ],
+        'Destructive Actions' => [
+            'disable',
+            'delete',
+        ]
+    ]);
+
 Index Filters
 -------------
 
