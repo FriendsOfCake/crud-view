@@ -1,7 +1,7 @@
 Sidebar Navigation
 ==================
 
-The "sidebar navigation" shown on the left normally shows the a link to the Crud `index` action for all tables. However, the sidebar navigation is just like any other menu in the system; you can provide your own menu to be rendered in its place.
+The "sidebar navigation" shown on the left normally shows the a link to the Crud ``index`` action for all tables. However, the sidebar navigation is just like any other menu in the system; you can provide your own menu to be rendered in its place:
 
 .. code-block:: php
 
