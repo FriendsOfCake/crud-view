@@ -356,6 +356,7 @@ class ViewListener extends BaseListener
 
     /**
      * Returns groupings of action types on the scaffolded view
+     * Includes derived actions from scaffold.action_groups
      *
      * @return array
      */
@@ -365,44 +366,85 @@ class ViewListener extends BaseListener
 
         $actions = $this->_getAllowedActions();
         foreach ($actions as $actionName => $config) {
-            if ($this->_crud()->isActionMapped($actionName)) {
-                $action = $this->_action($actionName);
-                $class = get_class($action);
-                $class = substr($class, strrpos($class, '\\') + 1);
-                $config['scope'] = $action->scope();
+            list($scope, $actionConfig) = $this->_getControllerActionConfiguration($actionName, $config);
+            ${$scope}[$actionName] = $actionConfig;
+        }
 
-                if ($class === 'DeleteAction') {
-                    $config['method'] = 'DELETE';
+        $actionBlacklist = [];
+        $groups = $this->_action()->config('scaffold.action_groups') ?: [];
+        foreach ($groups as $group) {
+            $group = Hash::normalize($group);
+            foreach ($group as $actionName => $config) {
+                if (isset($table[$actionName]) || isset($entity[$actionName])) {
+                    continue;
+                }
+                list($scope, $actionConfig) = $this->_getControllerActionConfiguration($actionName, $config);
+                $realAction = Hash::get($actionConfig, 'url.action', $actionName);
+                if (!isset(${$scope}[$realAction])) {
+                    continue;
                 }
 
-                if ($class === 'AddAction') {
-                    $config['scope'] = 'table';
-                }
-            }
-
-            // apply defaults if necessary
-            $scope = isset($config['scope']) ? $config['scope'] : 'entity';
-            $method = isset($config['method']) ? $config['method'] : 'GET';
-
-            $title = !empty($config['link_title']) ? $config['link_title'] : Inflector::humanize(Inflector::underscore($actionName));
-
-            ${$scope}[$actionName] = [
-                'title' => $title,
-                'url' => [
-                    'action' => $actionName
-                ],
-                'method' => $method,
-                'options' => array_diff_key(
-                    $config,
-                    array_flip(['method', 'scope', 'className', 'link_title', 'messages'])
-                )
-            ];
-            if (!empty($config['callback'])) {
-                ${$scope}[$actionName]['callback'] = $config['callback'];
+                $actionBlacklist[] = $realAction;
+                ${$scope}[$actionName] = $actionConfig;
             }
         }
 
+        foreach ($actionBlacklist as $actionName) {
+            unset(${$scope}[$actionName]);
+        }
+
         return compact('table', 'entity');
+    }
+
+    /**
+     * Returns url action configuration for a given action
+     *
+     * This is used to figure out how a given action should be linked to
+     *
+     * @return array
+     */
+    protected function _getControllerActionConfiguration($actionName, $config)
+    {
+        $realAction = Hash::get($config, 'url.action', $actionName);
+        if ($this->_crud()->isActionMapped($realAction)) {
+            $action = $this->_action($realAction);
+            $class = get_class($action);
+            $class = substr($class, strrpos($class, '\\') + 1);
+            $config['scope'] = $action->scope();
+
+            if ($class === 'DeleteAction') {
+                $config['method'] = 'DELETE';
+            }
+
+            if ($class === 'AddAction') {
+                $config['scope'] = 'table';
+            }
+        }
+
+        // apply defaults if necessary
+        $scope = isset($config['scope']) ? $config['scope'] : 'entity';
+        $method = isset($config['method']) ? $config['method'] : 'GET';
+
+        $title = !empty($config['link_title']) ? $config['link_title'] : Inflector::humanize(Inflector::underscore($actionName));
+        $url = ['action' => $realAction];
+        if (isset($config['url'])) {
+            $url = $config['url'] + $url;
+        }
+
+        $actionConfig = [
+            'title' => $title,
+            'url' => $url,
+            'method' => $method,
+            'options' => array_diff_key(
+                $config,
+                array_flip(['method', 'scope', 'className', 'link_title', 'messages', 'url'])
+            )
+        ];
+        if (!empty($config['callback'])) {
+            $actionConfig['callback'] = $config['callback'];
+        }
+
+        return [$scope, $actionConfig];
     }
 
     /**
@@ -649,9 +691,13 @@ class ViewListener extends BaseListener
         $action = $this->_action();
         $groups = $action->config('scaffold.action_groups') ?: [];
 
-        $groupedActions = (new Collection($groups))->unfold()->toList();
+        $groupedActions = [];
+        foreach ($groups as $group) {
+            $groupedActions[] = array_keys(Hash::normalize($group));
+        }
 
         // add "primary" actions (primary should rendered as separate buttons)
+        $groupedActions = (new Collection($groupedActions))->unfold()->toList();
         $groups['primary'] = array_diff(array_keys($this->_getAllowedActions()), $groupedActions);
 
         return $groups;

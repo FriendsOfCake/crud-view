@@ -37,7 +37,26 @@ foreach ($actions as $name => $config) {
 
     $url = $config['url'];
     if (!empty($singularVar)) {
-        $url[] = $singularVar->{$primaryKey};
+        $setPrimaryKey = false;
+        $modifiedUrl = [];
+        foreach ($url as $key => $value) {
+            if (is_array($value)) {
+                continue;
+            }
+
+            list($k, $v) = str_replace(':primaryKey:', $singularVar->{$primaryKey}, [$key, $value]);
+            if ($key != $k) {
+                $setPrimaryKey = true;
+            }
+            if ($value != $v) {
+                $setPrimaryKey = true;
+            }
+            $modifiedUrl[$k] = $v;
+        }
+        $url = $modifiedUrl;
+        if (!$setPrimaryKey) {
+            $url[] = $singularVar->{$primaryKey};
+        }
     }
 
     $links[$name] = [
