@@ -21,7 +21,7 @@ class MenuDropdown
      * Contains an HTML link.
      *
      * @param string $title The name of the dropdown
-     * @param array $options Array of MenuDivider|MenuItem entries
+     * @param array $entries Array of MenuDivider|MenuItem entries
      */
     public function __construct($title, array $entries = [])
     {
