@@ -4,7 +4,10 @@ Customizing the Index Page
 Multiple Index Pages
 --------------------
 
-Sometime you may want more than one index page for a resource to represent different views to the user. If multiple index pages exist, CrudView will automatically build links at the top of the `index` page. Including multiple views is simple and requires setting the `index` view in your action.
+Sometime you may want more than one index page for a resource to represent
+different views to the user. If multiple index pages exist, CrudView will
+automatically build links at the top of the `index` page. Including multiple
+views is simple and requires setting the `index` view in your action.
 
 .. code-block:: php
 
@@ -16,7 +19,8 @@ Formatting fields
 
 The most immediate changes you can do in the way data is displayed is by
 applying formatters to any of your fields. Whenever you use the
-``scaffold.fields`` configuration key, you can specify a ``formatter`` to be used.
+``scaffold.fields`` configuration key, you can specify a ``formatter`` to be
+used.
 
 .. code-block:: php
 
@@ -31,8 +35,8 @@ applying formatters to any of your fields. Whenever you use the
     ]);
 
 You may also specify formatters using the ``scaffold.field_settings``
-configuration key. This is useful if you want to display all fields but wish
-to only configure the settings for one or two.
+configuration key. This is useful if you want to display all fields but wish to
+only configure the settings for one or two.
 
 .. code-block:: php
 
