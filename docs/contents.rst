@@ -44,6 +44,7 @@ Contents
     Customizing the Index Page <index-pages/customizing-the-index-page>
     Custom Index <index-pages/components/custom>
     Index as a Blog <index-pages/components/blog>
+    Index as a Gallery <index-pages/components/gallery>
     Index as a Table <index-pages/components/table>
 
 .. _form-pages-docs:
