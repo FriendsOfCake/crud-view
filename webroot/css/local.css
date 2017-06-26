@@ -84,3 +84,6 @@ div.actions-wrapper {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.gallery-content {
+    text-align: center;
+}

@@ -30,7 +30,7 @@ foreach ($fields as $field => $options) {
                     }
                     echo $this->Html->image($imageContent, $imageOptions + ['alt' => $imageAltContent]);
                 ?>
-                <div class="caption">
+                <div class="caption gallery-content">
                     <h3 class="text-truncate"><?= $titleContent ?></h3>
 
                     <?php if (!empty($bodyContent)) :?>
