@@ -13,10 +13,18 @@ trait IndexTypeTrait
      */
     public function beforeRenderIndexType(Event $event)
     {
+        $indexTitleField = $this->_getIndexTitleField();
+        $indexBodyField = $this->_getIndexBodyField();
+
         $controller = $this->_controller();
         $controller->set('indexType', $this->_getIndexType());
-        $controller->set('indexBlogTitleField', $this->_getIndexBlogTitleField());
-        $controller->set('indexBlogBodyField', $this->_getIndexBlogBodyField());
+        $controller->set('indexTitleField', $indexTitleField);
+        $controller->set('indexBodyField', $indexBodyField);
+        $controller->set('indexImageField', $this->_getIndexImageField());
+        $controller->seT('indexGalleryCssClasses', $this->_getIndexGalleryCssClasses());
+
+        $controller->set('indexBlogTitleField', $indexTitleField);
+        $controller->set('indexBlogBodyField', $indexBodyField);
     }
 
     /**
@@ -37,34 +45,88 @@ trait IndexTypeTrait
     }
 
     /**
-     * Returns the blog title field to show on scaffolded view
+     * Returns the title field to show on scaffolded view
      *
      * @return string
      */
-    protected function _getIndexBlogTitleField()
+    protected function _getIndexTitleField()
     {
         $action = $this->_action();
 
-        $field = $action->config('scaffold.index_blog_title_field');
+        $field = $action->config('scaffold.index_title_field');
+        if ($field === null) {
+            $field = $action->config('scaffold.index_blog_title_field');
+            if ($field !== null) {
+                $this->deprecatedScaffoldKeyNotice(
+                    'scaffold.index_blog_title_field',
+                    'scaffold.index_title_field'
+                );
+            }
+        }
+
         if (empty($field)) {
-            $field = 'title';
+            $field = $this->_table()->displayField();
         }
 
         return $field;
     }
 
     /**
-     * Returns the blog body field to show on scaffolded view
+     * Returns the body field to show on scaffolded view
      *
      * @return string
      */
-    protected function _getIndexBlogBodyField()
+    protected function _getIndexBodyField()
     {
         $action = $this->_action();
 
-        $field = $action->config('scaffold.index_blog_body_field');
+        $field = $action->config('scaffold.index_body_field');
+        if ($field === null) {
+            $field = $action->config('scaffold.index_blog_body_field');
+            if ($field !== null) {
+                $this->deprecatedScaffoldKeyNotice(
+                    'scaffold.index_blog_body_field',
+                    'scaffold.index_body_field'
+                );
+            }
+        }
+
         if (empty($field)) {
             $field = 'body';
+        }
+
+        return $field;
+    }
+
+    /**
+     * Returns the image field to show on scaffolded view
+     *
+     * @return string
+     */
+    protected function _getIndexImageField()
+    {
+        $action = $this->_action();
+
+        $field = $action->config('scaffold.index_image_field');
+        if (empty($field)) {
+            $field = 'image';
+        }
+
+        return $field;
+    }
+
+    /**
+     * Returns the css classes to use for each gallery entry
+     *
+     * @return string
+     */
+    protected function _getIndexGalleryCssClasses()
+    {
+        $action = $this->_action();
+
+        $field = $action->config('scaffold.index_gallery_css_classes');
+        if (empty($field)) {
+            $field = 'col-sm-6 col-md-3';
         }
 
         return $field;

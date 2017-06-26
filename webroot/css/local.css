@@ -78,3 +78,12 @@ h2 .actions {
 div.actions-wrapper {
     margin: 10px 0;
 }
+
+.text-truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.gallery-content {
+    text-align: center;
+}
