@@ -6,6 +6,8 @@ use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
+use CrudView\Listener\Traits\DeprecatedConfigurationKeyTrait;
+use CrudView\Listener\Traits\FormTypeTrait;
 use CrudView\Listener\Traits\IndexTypeTrait;
 use CrudView\Listener\Traits\SidebarNavigationTrait;
 use CrudView\Listener\Traits\SiteTitleTrait;
@@ -16,6 +18,8 @@ use Crud\Listener\BaseListener;
 class ViewListener extends BaseListener
 {
     use CrudViewConfigTrait;
+    use DeprecatedConfigurationKeyTrait;
+    use FormTypeTrait;
     use IndexTypeTrait;
     use SidebarNavigationTrait;
     use SiteTitleTrait;
@@ -78,6 +82,7 @@ class ViewListener extends BaseListener
 
         $this->ensureConfig();
 
+        $this->beforeRenderFormType($event);
         $this->beforeRenderIndexType($event);
         $this->beforeRenderSiteTitle($event);
         $this->beforeRenderUtilityNavigation($event);
@@ -93,11 +98,6 @@ class ViewListener extends BaseListener
         $controller->set('actions', $this->_getControllerActions());
         $controller->set('bulkActions', $this->_getBulkActions());
         $controller->set('viewblocks', $this->_getViewBlocks());
-        $controller->set('formUrl', $this->_getFormUrl());
-        $controller->set('submitButtonText', $this->_getSubmitButtonText());
-        $controller->set('disableExtraButtons', $this->_getDisableExtraButtons());
-        $controller->set('extraButtonsBlacklist', $this->_getExtraButtonsBlacklist());
-        $controller->set('enableDirtyCheck', $this->_getEnableDirtyCheck());
         $controller->set('actionGroups', $this->_getActionGroups());
         $controller->set($this->_getPageVariables());
     }
@@ -619,66 +619,6 @@ class ViewListener extends BaseListener
         $action = $this->_action();
 
         return $action->config('scaffold.bulk_actions') ?: [];
-    }
-
-    /**
-     * Get form url.
-     *
-     * @return mixed
-     */
-    protected function _getFormUrl()
-    {
-        $action = $this->_action();
-
-        return $action->config('scaffold.form_action') ?: null;
-    }
-
-    /**
-     * Get submit button text.
-     *
-     * @return bool
-     */
-    protected function _getSubmitButtonText()
-    {
-        $action = $this->_action();
-
-        return $action->config('scaffold.submit_button_text') ?: __d('crud', 'Save');
-    }
-
-    /**
-     * Disable extra buttons.
-     *
-     * @return bool
-     */
-    protected function _getDisableExtraButtons()
-    {
-        $action = $this->_action();
-
-        return $action->config('scaffold.disable_extra_buttons') ?: false;
-    }
-
-    /**
-     * Get extra buttons blacklist
-     *
-     * @return array
-     */
-    protected function _getExtraButtonsBlacklist()
-    {
-        $action = $this->_action();
-
-        return $action->config('scaffold.extra_buttons_blacklist') ?: [];
-    }
-
-    /**
-     * Get enable dirty check setting
-     *
-     * @return bool
-     */
-    protected function _getEnableDirtyCheck()
-    {
-        $action = $this->_action();
-
-        return $action->config('scaffold.enable_dirty_check') ?: false;
     }
 
     /**
