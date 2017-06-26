@@ -1,5 +1,4 @@
 [![Build Status](https://img.shields.io/travis/FriendsOfCake/crud-view/master.svg?style=flat-square)](https://travis-ci.org/FriendsOfCake/crud-view)
-[![Coverage Status](https://img.shields.io/coveralls/FriendsOfCake/crud-view.svg?style=flat-square)](https://coveralls.io/r/FriendsOfCake/crud-view?branch=master)
 [![Total Downloads](https://img.shields.io/packagist/dt/FriendsOfCake/crud-view.svg?style=flat-square)](https://packagist.org/packages/FriendsOfCake/crud-view)
 [![Latest Stable Version](https://img.shields.io/packagist/v/FriendsOfCake/crud-view.svg?style=flat-square)](https://packagist.org/packages/FriendsOfCake/crud-view)
 [![Documentation Status](https://readthedocs.org/projects/crud-view/badge/?version=latest&style=flat-square)](https://readthedocs.org/projects/crud-view/?badge=latest)
