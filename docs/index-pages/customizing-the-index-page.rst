@@ -253,6 +253,27 @@ You can specify multiple action groups:
         ]
     ]);
 
+Finally, you can also set configuration for each entry in an action group:
+
+.. code-block:: php
+
+    $action = $this->Crud->action();
+    $action->config('scaffold.action_groups', [
+        'Actions' => [
+            'view',
+            'edit',
+            'delete',
+        ],
+        'Translate' => [
+            'english' => [
+                'url' => ['action' => 'translate', 'english']
+            ],
+            'spanish' => [
+                'url' => ['action' => 'translate', 'spanish']
+            ],
+        ]
+    ]);
+
 Index Filters
 -------------
 
