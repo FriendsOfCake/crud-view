@@ -1,7 +1,24 @@
 Utility Navigation
 ==================
 
-The "utility navigation" shown at the top right normally shows the current user and a link to log out. However, the utility navigation is just like any other menu in the system; you can provide your own menu to be rendered in its place.
+The "utility navigation" shown at the top right normally shows the current user
+and a link to log out. It can be controlled via the
+``scaffold.utility_navigation`` configuration key
+
+Disabling the Sidebar Navigation
+--------------------------------
+
+The utility navigation can also be completely disabled by setting the value to ``false``.
+
+.. code-block:: php
+
+    $this->Crud->action()->config('scaffold.utility_navigation', false);
+
+Custom Menus
+------------
+
+The utility navigation is just like any other menu in the system. You can
+provide your own menu to be rendered in its place:
 
 .. code-block:: php
 
@@ -39,10 +56,3 @@ The "utility navigation" shown at the top right normally shows the current user 
             ]
         )
     ]);
-
-The utility navigation can also be completely disabled by setting the value to ``false``.
-
-.. code-block:: php
-
-    $action = $this->Crud->action();
-    $action->config('scaffold.utility_navigation', false);
