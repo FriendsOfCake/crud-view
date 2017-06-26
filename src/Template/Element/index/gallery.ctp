@@ -21,7 +21,7 @@ foreach ($fields as $field => $options) {
                 $imageAltContent = $this->CrudView->fieldValue($singularVar, $indexTitleField);
                 $titleContent = $this->CrudView->process($indexTitleField, $singularVar, $titleOptions);
                 $bodyContent = $this->CrudView->process($indexBodyField, $singularVar, $bodyOptions);
-                $imageContent = $this->CrudView->process($indexImageField, $singularVar, $bodyOptions);
+                $imageContent = $this->CrudView->process($indexImageField, $singularVar, $imageOptions);
             ?>
             <div class="thumbnail">
                 <?php
