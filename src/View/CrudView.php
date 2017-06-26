@@ -92,6 +92,9 @@ class CrudView extends View
         ]);
         $this->loadHelper('Flash', ['className' => 'BootstrapUI.Flash']);
         $this->loadHelper('Paginator', ['className' => 'BootstrapUI.Paginator']);
+        if (class_exists('\Cake\View\Helper\BreadcrumbsHelper')) {
+            $this->loadHelper('Breadcrumbs', ['className' => 'BootstrapUI.Breadcrumbs']);
+        }
 
         $this->loadHelper('CrudView.CrudView');
         $this->loadHelper('BootstrapUI.Flash');

@@ -30,6 +30,7 @@ Contents
    :maxdepth: 3
    :caption: General Configuration
 
+    Breadcrumbs <general-configuration/breadcrumbs>
     Site Title Options <general-configuration/site-title-options>
     Sidebar Navigation <general-configuration/sidebar-navigation>
     Utility Navigation <general-configuration/utility-navigation>

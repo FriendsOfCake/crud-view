@@ -42,6 +42,7 @@
             <?php if ($disableSidebar) : ?>
                 <div class="col-sm-12">
                     <?= $this->Flash->render(); ?>
+                    <?= $this->element('breadcrumbs') ?>
                     <?= $this->fetch('content'); ?>
                     <?= $this->fetch('action_link_forms'); ?>
                 </div>
@@ -51,6 +52,7 @@
                 </div>
                 <div class="col-xs-12 col-sm-10 col-lg-10">
                     <?= $this->Flash->render(); ?>
+                    <?= $this->element('breadcrumbs') ?>
                     <?= $this->fetch('content'); ?>
                     <?= $this->fetch('action_link_forms'); ?>
                 </div>
