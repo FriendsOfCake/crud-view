@@ -85,6 +85,7 @@ class ViewListener extends BaseListener
         $controller = $this->_controller();
         $controller->set('actionConfig', $this->_action()->config());
         $controller->set('title', $this->_getPageTitle());
+        $controller->set('breadcrumbs', $this->_getBreadcrumbs());
         $associations = $this->associations;
         $controller->set(compact('associations'));
         $controller->set('fields', $this->_scaffoldFields($associations));
@@ -169,6 +170,18 @@ class ViewListener extends BaseListener
         }
 
         return sprintf('%s %s #%s: %s', $actionName, $controllerName, $primaryKeyValue, $displayFieldValue);
+    }
+
+    /**
+     * Get breadcrumns.
+     *
+     * @return array
+     */
+    protected function _getBreadcrumbs()
+    {
+        $action = $this->_action();
+
+        return $action->config('scaffold.breadcrumbs') ?: [];
     }
 
     /**
