@@ -43,7 +43,6 @@ class Breadcrumb
      * - *innerAttrs*: An array that allows you to define attributes for the inner element of the crumb (by default, to
      * the link)
      * - *templateVars*: Specific template vars in case you override the templates provided.
-     * @return void
      */
     public function __construct($title, $url = null, array $options = [])
     {

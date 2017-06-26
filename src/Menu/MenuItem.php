@@ -32,7 +32,6 @@ class MenuItem
      * @param string|array|null $url Cake-relative URL or array of URL parameters, or
      *   external URL (starts with http://)
      * @param array $options Array of options and HTML attributes.
-     * @return void
      */
     public function __construct($title, $url = null, array $options = [])
     {
