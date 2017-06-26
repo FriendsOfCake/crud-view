@@ -60,7 +60,7 @@ trait IndexTypeTrait
         }
 
         if (empty($field)) {
-            $field = 'title';
+            $field = $this->_table()->displayField();
         }
 
         return $field;

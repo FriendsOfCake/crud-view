@@ -13,7 +13,7 @@ Customizing the Blog fields
 
 The blog index type has two main options:
 
-- ``scaffold.index_title_field``: (default: ``title``) Controls the field used for the blog title.
+- ``scaffold.index_title_field``: (default: ``displayField`` for current table) Controls the field used for the blog title.
 - ``scaffold.index_body_field``: (default: ``body``) Controls the field used for the blog body.
 
 .. code-block:: php
