@@ -1,15 +1,58 @@
-Sidebar Navigation
-==================
+Page Sidebar Navigation
+=======================
 
-The "sidebar navigation" shown on the left normally shows the a link to the Crud ``index`` action for all tables. However, the sidebar navigation is just like any other menu in the system; you can provide your own menu to be rendered in its place:
+The "sidebar navigation" shown on the left normally shows the a link to the Crud
+``index`` action for all tables. You can customize it using the
+``scaffold.sidebar_navigation`` configuration key.
+
+Specifying which tables to show
+-------------------------------
+
+You can specify the exact tables to show in the sidebar via the
+``scaffold.tables`` configuration key:
+
+.. code-block:: php
+
+    // only show the posts table
+    $this->Crud->action()->config('scaffold.tables', ['posts']);
+
+
+Blacklisting tables
+-------------------
+
+As an alternative to whitelisting tables via ``scaffold.tables``, you can use
+the ``scaffold.tables_blacklist`` configuration key to specify tables to
+*exclude* from the output:
+
+.. code-block:: php
+
+    // do not show the ``phinxlog`` and ``users`` tables
+    $this->Crud->action()->config('scaffold.tables_blacklist', [
+        'phinxlog',
+        'users',
+    ]);
+
+Disabling the Sidebar Navigation
+--------------------------------
+
+The sidebar navigation can also be completely disabled by setting the value to ``false``.
+
+.. code-block:: php
+
+    $this->Crud->action()->config('scaffold.sidebar_navigation', false);
+
+Custom Menus
+------------
+
+The sidebar navigation is just like any other menu in the system. You can
+provide your own menu to be rendered in its place:
 
 .. code-block:: php
 
     use CrudView\Menu\MenuDivider;
     use CrudView\Menu\MenuItem;
 
-    $action = $this->Crud->action();
-    $action->config('scaffold.sidebar_navigation', [
+    $this->Crud->action()->config('scaffold.sidebar_navigation', [
         new MenuItem(
             'CrudView Docs',
             'https://crud-view.readthedocs.io/en/latest/contents.html',
@@ -32,26 +75,4 @@ The "sidebar navigation" shown on the left normally shows the a link to the Crud
             'Log Out',
             ['controller' => 'Users', 'action' => 'logout']
         )
-    ]);
-
-The sidebar navigation can also be completely disabled by setting the value to ``false``.
-
-.. code-block:: php
-
-    $action = $this->Crud->action();
-    $action->config('scaffold.sidebar_navigation', false);
-
-If you wish to fallback to just showing links to Crud `index` action for all tables, you can customize this by using the ``scaffold.tables`` and ``scaffold.tables_blacklist`` crud config options:
-
-.. code-block:: php
-
-    $action = $this->Crud->action();
-
-    // only show these tables
-    $action->config('scaffold.tables', ['posts']);
-
-    // do not show these tables
-    $action->config('scaffold.tables_blacklist', [
-        'phinxlog',
-        'users',
     ]);
