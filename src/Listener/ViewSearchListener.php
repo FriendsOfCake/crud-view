@@ -76,7 +76,6 @@ class ViewSearchListener extends BaseListener
         $table = $this->_table();
         $request = $this->_request();
 
-        $filters = null;
         if (method_exists($table, 'searchConfiguration')) {
             $filters = $table->searchConfiguration();
         } else {
