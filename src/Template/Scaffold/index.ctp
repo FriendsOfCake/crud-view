@@ -31,6 +31,9 @@
             case 'table':
                 echo $this->element('index/table', $_data);
                 break;
+            case 'gallery':
+                echo $this->element('index/gallery', $_data);
+                break;
             case 'blog':
                 echo $this->element('index/blog', $_data);
                 break;

@@ -18,6 +18,11 @@ trait IndexTypeTrait
 
         $controller = $this->_controller();
         $controller->set('indexType', $this->_getIndexType());
+        $controller->set('indexTitleField', $indexTitleField);
+        $controller->set('indexBodyField', $indexBodyField);
+        $controller->set('indexImageField', $this->_getIndexImageField());
+        $controller->seT('indexGalleryCssClasses', $this->_getIndexGalleryCssClasses());
+
         $controller->set('indexBlogTitleField', $indexTitleField);
         $controller->set('indexBlogBodyField', $indexBodyField);
     }
@@ -88,6 +93,40 @@ trait IndexTypeTrait
 
         if (empty($field)) {
             $field = 'body';
+        }
+
+        return $field;
+    }
+
+    /**
+     * Returns the image field to show on scaffolded view
+     *
+     * @return string
+     */
+    protected function _getIndexImageField()
+    {
+        $action = $this->_action();
+
+        $field = $action->config('scaffold.index_image_field');
+        if (empty($field)) {
+            $field = 'image';
+        }
+
+        return $field;
+    }
+
+    /**
+     * Returns the css classes to use for each gallery entry
+     *
+     * @return string
+     */
+    protected function _getIndexGalleryCssClasses()
+    {
+        $action = $this->_action();
+
+        $field = $action->config('scaffold.index_gallery_css_classes');
+        if (empty($field)) {
+            $field = 'col-sm-6 col-md-3';
         }
 
         return $field;
