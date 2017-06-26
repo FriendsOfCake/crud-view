@@ -119,9 +119,55 @@ Element files will have available at least the following variables:
 * ``$context``: The entity from which the value came from
 * ``$options``: The array of options associated to the field as passed in ``scaffold.fields``
 
-
 Index Buttons
 -------------
+
+By default, the included index buttons are generated based on the mapped Crud
+actions. You can customize available buttons by using the ``scaffold.actions``
+key:
+
+.. code-block:: php
+
+    $action = $this->Crud->action();
+
+    // restrict to just the add button, which will show up globally
+    $action->config('scaffold.actions', [
+        'add'
+    ]);
+
+    // restrict to just the delete/edit/view actions, which are scoped to entities
+    $action->config('scaffold.actions', [
+        'delete',
+        'edit',
+        'view',
+    ]);
+
+You can also specify configuration for actions, which will be used when
+generating action buttons.
+
+.. code-block:: php
+
+    $action = $this->Crud->action();
+    $action->config('scaffold.actions', [
+        'duplicate' => [
+            // An alternative title for the action
+            'link_title' => 'Duplicate this record',
+
+            // A url that this action should point to
+            'url' => ['action' => 'jk-actually-this-action'],
+
+            // The HTTP method to use. Defaults to GET. All others result in
+            // a ``FormHelper::postLink``
+            'method' => 'POST',
+
+            // Whether to scope the action to a single entity or the entire table
+            // Options: ``entity``, ``table``
+            'scope' => 'entity',
+
+            // All other options are passed in as normal to the options array
+            'other' => 'options',
+        ]
+    ]);
 
 Customizing primaryKey position in the url
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -156,6 +202,18 @@ specified.
             'url' => ['action' => 'translate', ':primaryKey:', 'english']
         ]
     ]);
+
+Blacklisting Index Buttons
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you wish to blacklist certain action buttons from showing up, you can use the
+``scaffold.actions_blacklist`` configuration key. This can be useful when many
+Crud action classes are mapped but should not all be shown on the main UI.
+
+.. code-block:: php
+
+    $action = $this->Crud->action();
+    $action->config('scaffold.actions_blacklist', ['add', 'delete']);
 
 Action Groups
 ~~~~~~~~~~~~~
