@@ -22,7 +22,6 @@ class MenuDropdown
      *
      * @param string $title The name of the dropdown
      * @param array $options Array of MenuDivider|MenuItem entries
-     * @return void
      */
     public function __construct($title, array $entries = [])
     {
