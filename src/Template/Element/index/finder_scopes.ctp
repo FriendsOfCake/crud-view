@@ -4,8 +4,9 @@ if (empty($indexFinderScopes)) {
 }
 
 $finder = $this->request->query('finder');
-foreach ($indexFinderScopes as $scopeTitle => $scopeFinder) {
+foreach ($indexFinderScopes as $indexFinderScope) {
     $scopeOptions = ['class' => 'btn btn-default btn-sm', 'role' => 'button'];
+    $scopeFinder = $indexFinderScope['finder'];
 
     if (empty($finder) && $scopeFinder === 'all') {
         $scopeOptions['class'] .= ' active';
@@ -17,5 +18,5 @@ foreach ($indexFinderScopes as $scopeTitle => $scopeFinder) {
     if ($scopeFinder === 'all') {
         $scopeUrl = [];
     }
-    echo $this->Html->link($scopeTitle, $scopeUrl, $scopeOptions);
+    echo $this->Html->link($indexFinderScope['title'], $scopeUrl, $scopeOptions);
 }

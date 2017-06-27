@@ -286,15 +286,24 @@ to display "Finder Scope" links via the ``scaffold.index_finder_scopes``
 configuration key. These are output below the action header, above the data that
 is being paginated.
 
-The ``scaffold.index_finder_scopes`` option takes an array of data, where the
-"key" is the title to use for the link, and the value is the finder to link to.
+The ``scaffold.index_finder_scopes`` option takes an array of finder scope data.
+Each sub-array should contain ``title`` and ``finder`` parameters.
 
 .. code-block:: php
 
     $this->Crud->action()->config('scaffold.index_finder_scopes', [
-        __('All')      => 'all',
-        __('Active')   => 'active',
-        __('Inactive') => 'inactive',
+            [
+                'title' => __('All'),
+                'finder' => 'all',
+            ],
+            [
+                'title' => __('Active'),
+                'finder' => 'active',
+            ],
+            [
+                'title' => __('Inactive'),
+                'finder' => 'inactive',
+            ],
     ]);
 
 The ``all`` finder scope is special. This scope will be displayed by default,
@@ -323,9 +332,18 @@ result-set. This can be done in the mapped action as follows:
     public function index()
     {
         $this->Crud->action()->config('scaffold.index_finder_scopes', [
-            __('All')      => 'all',
-            __('Active')   => 'active',
-            __('Inactive')   => 'inactive',
+            [
+                'title' => __('All'),
+                'finder' => 'all',
+            ],
+            [
+                'title' => __('Active'),
+                'finder' => 'active',
+            ],
+            [
+                'title' => __('Inactive'),
+                'finder' => 'inactive',
+            ],
         ]);
 
         // We don't need to check for `all` as it is the default findMethod
