@@ -181,4 +181,19 @@ trait FormTypeTrait
 
         return $action->config('scaffold.form_action') ?: null;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    abstract protected function _controller();
+
+    /**
+     * {@inheritDoc}
+     */
+    abstract protected function _action($name = null);
+
+    /**
+     * {@inheritDoc}
+     */
+    abstract protected function deprecatedScaffoldKeyNotice($deprecatedKey, $newKey);
 }
