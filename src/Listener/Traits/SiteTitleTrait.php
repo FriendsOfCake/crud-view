@@ -3,7 +3,6 @@ namespace CrudView\Listener\Traits;
 
 use Cake\Core\Configure;
 use Cake\Event\Event;
-use Cake\Utility\Inflector;
 
 trait SiteTitleTrait
 {
