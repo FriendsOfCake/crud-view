@@ -145,7 +145,7 @@ trait IndexTypeTrait
     /**
      * {@inheritDoc}
      */
-    abstract protected function _table()
+    abstract protected function _table();
 
     /**
      * {@inheritDoc}
