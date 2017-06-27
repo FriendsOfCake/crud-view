@@ -17,6 +17,7 @@ trait IndexTypeTrait
         $indexBodyField = $this->_getIndexBodyField();
 
         $controller = $this->_controller();
+        $controller->set('indexFinderScopes', $this->_getIndexFinderScopes());
         $controller->set('indexType', $this->_getIndexType());
         $controller->set('indexTitleField', $indexTitleField);
         $controller->set('indexBodyField', $indexBodyField);
@@ -25,6 +26,19 @@ trait IndexTypeTrait
 
         $controller->set('indexBlogTitleField', $indexTitleField);
         $controller->set('indexBlogBodyField', $indexBodyField);
+    }
+
+    /**
+     * Returns a list of finder scopes, where the key is the title
+     * and the value is the finder to link to
+     *
+     * @return string
+     */
+    protected function _getIndexFinderScopes()
+    {
+        $action = $this->_action();
+
+        return $action->config('scaffold.index_finder_scopes') ?: [];
     }
 
     /**
