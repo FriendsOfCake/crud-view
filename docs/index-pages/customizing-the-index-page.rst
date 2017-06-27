@@ -19,6 +19,7 @@ in scope. To limit the fields used, simply specify an array of fields:
 .. include:: /_partials/fields/formatter-element.rst
 
 .. include:: /_partials/pages/index/buttons.rst
+.. include:: /_partials/pages/index/bulk-actions.rst
 .. include:: /_partials/pages/index/finder-scopes.rst
 .. include:: /_partials/pages/index/filters.rst
 .. include:: /_partials/pages/index/multiple-pages.rst
