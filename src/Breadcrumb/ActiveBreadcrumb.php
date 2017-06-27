@@ -6,7 +6,7 @@ use CrudView\Breadcrumb\Breadcrumb;
 class ActiveBreadcrumb extends Breadcrumb
 {
     /**
-     * @inheritdoc
+     * {@inheritDoc}
      */
     public function __construct($title, $url = null, array $options = [])
     {
