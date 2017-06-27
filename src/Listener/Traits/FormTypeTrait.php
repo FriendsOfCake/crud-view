@@ -194,6 +194,8 @@ trait FormTypeTrait
 
     /**
      * {@inheritDoc}
+     * @param string $deprecatedKey
+     * @param string $newKey
      */
     abstract protected function deprecatedScaffoldKeyNotice($deprecatedKey, $newKey);
 }

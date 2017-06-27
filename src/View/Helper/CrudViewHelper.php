@@ -403,7 +403,7 @@ class CrudViewHelper extends Helper
     /**
      * Get css classes
      *
-     * @return mixed
+     * @return string
      */
     public function getCssClasses()
     {
