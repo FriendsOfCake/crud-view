@@ -320,6 +320,8 @@ paginated result-set. This must be done manually.
 Example: Applying Finder Scopes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+.. note::
+
     This example assumes a simple blog application is being modified, with a
     ``posts`` database table containing the fields ``id``, ``active``,
     ``title``, ``body``, and ``created``.
