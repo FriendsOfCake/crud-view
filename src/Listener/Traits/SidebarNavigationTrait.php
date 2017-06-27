@@ -35,4 +35,14 @@ trait SidebarNavigationTrait
 
         return $action->config('scaffold.sidebar_navigation');
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    abstract protected function _controller();
+
+    /**
+     * {@inheritDoc}
+     */
+    abstract protected function _action($name = null);
 }

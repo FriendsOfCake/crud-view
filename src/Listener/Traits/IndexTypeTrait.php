@@ -131,4 +131,26 @@ trait IndexTypeTrait
 
         return $field;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    abstract protected function _controller();
+
+    /**
+     * {@inheritDoc}
+     */
+    abstract protected function _action($name = null);
+
+    /**
+     * {@inheritDoc}
+     */
+    abstract protected function _table();
+
+    /**
+     * {@inheritDoc}
+     * @param string $deprecatedKey
+     * @param string $newKey
+     */
+    abstract protected function deprecatedScaffoldKeyNotice($deprecatedKey, $newKey);
 }

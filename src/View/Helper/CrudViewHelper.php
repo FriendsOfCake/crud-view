@@ -57,7 +57,7 @@ class CrudViewHelper extends Helper
      * @param string $field The field to process.
      * @param Entity $data The entity data.
      * @param array $options Processing options.
-     * @return string
+     * @return string|null|array|bool|int
      */
     public function process($field, Entity $data, array $options = [])
     {
@@ -95,12 +95,8 @@ class CrudViewHelper extends Helper
      * @param string $field The field to extract, if null, the field from the entity context is used.
      * @return mixed
      */
-    public function fieldValue(Entity $data = null, $field = null)
+    public function fieldValue(Entity $data, $field)
     {
-        if (empty($field)) {
-            $field = $this->field();
-        }
-
         if (empty($data)) {
             $data = $this->getContext();
         }
@@ -112,7 +108,7 @@ class CrudViewHelper extends Helper
      * Returns a formatted output for a given field
      *
      * @param string $field Name of field.
-     * @param array $value The value that the field should have within related data.
+     * @param mixed $value The value that the field should have within related data.
      * @param array $options Options array.
      * @return string formatted value
      */
@@ -366,7 +362,7 @@ class CrudViewHelper extends Helper
     /**
      * Get model schema.
      *
-     * @return array
+     * @return \Cake\Database\Schema\Table
      */
     public function schema()
     {
@@ -407,7 +403,7 @@ class CrudViewHelper extends Helper
     /**
      * Get css classes
      *
-     * @return mixed
+     * @return string
      */
     public function getCssClasses()
     {

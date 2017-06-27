@@ -8,7 +8,7 @@ class Breadcrumb
      * If the specified $url is a link, then this will
      * also be wrapped by `<a>` tags.
      *
-     * @var string
+     * @var string|array
      **/
     protected $title;
 

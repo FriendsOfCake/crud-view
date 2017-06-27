@@ -193,7 +193,7 @@ class ViewListener extends BaseListener
      * The user can chose to suppress specific relations using the blacklist
      * functionality.
      *
-     * @param array $relations List of relations.
+     * @param string[] $relations List of relations.
      * @return array
      */
     protected function _getRelatedModels($relations = [])

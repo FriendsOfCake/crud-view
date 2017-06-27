@@ -3,7 +3,6 @@ namespace CrudView\Listener\Traits;
 
 use Cake\Core\Configure;
 use Cake\Event\Event;
-use Cake\Utility\Inflector;
 
 trait SiteTitleTrait
 {
@@ -87,4 +86,14 @@ trait SiteTitleTrait
 
         return $image;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    abstract protected function _controller();
+
+    /**
+     * {@inheritDoc}
+     */
+    abstract protected function _action($name = null);
 }
