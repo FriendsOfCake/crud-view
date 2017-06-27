@@ -17,6 +17,8 @@
 
     <?= $this->element('index/bulk_actions/form_start', compact('bulkActions')); ?>
 
+    <?= $this->element('index/finder_scopes', compact('indexFinderScopes')); ?>
+
     <?php
         $_data = [
             'fields' => $fields,
