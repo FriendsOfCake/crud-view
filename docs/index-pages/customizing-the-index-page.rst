@@ -347,14 +347,14 @@ must be created in the ``PostsTable`` class.
     {
         public function findActive(Query $query, array $options)
         {
-            $query->where(["{$this->alias()}.active" => true]);
+            $query->where([$this->aliasField('active') => true]);
 
             return $query;
         }
 
         public function findInactive(Query $query, array $options)
         {
-            $query->where(["{$this->alias()}.active" => false]);
+            $query->where([$this->aliasField('active') => false]);
 
             return $query;
         }
