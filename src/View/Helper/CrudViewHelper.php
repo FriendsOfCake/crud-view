@@ -57,7 +57,7 @@ class CrudViewHelper extends Helper
      * @param string $field The field to process.
      * @param Entity $data The entity data.
      * @param array $options Processing options.
-     * @return string
+     * @return string|null|array|boolean|integer
      */
     public function process($field, Entity $data, array $options = [])
     {
