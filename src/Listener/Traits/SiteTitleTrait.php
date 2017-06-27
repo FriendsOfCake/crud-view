@@ -86,4 +86,14 @@ trait SiteTitleTrait
 
         return $image;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    abstract protected function _controller();
+
+    /**
+     * {@inheritDoc}
+     */
+    abstract protected function _action($name = null);
 }
