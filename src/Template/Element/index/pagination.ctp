@@ -1,15 +1,6 @@
 <div class="row">
     <div class="col-md-12 pagination-wrapper">
-        <?php if (!empty($indexFormats)) : ?>
-            <div class="download-links">
-            Download:
-            <?php foreach ($indexFormats as $formatTitle => $formatRoute) : ?>
-                <?= $this->Html->link($formatTitle, $formatRoute, [
-                    'target' => '_blank'
-                ]); ?>
-            <?php endforeach; ?>
-            </div>
-        <?php endif; ?>
+        <?= $this->element('index/download_formats', compact('indexFormats')); ?>
 
         <div class="pagination-container">
             <?php
