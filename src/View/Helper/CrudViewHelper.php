@@ -95,12 +95,8 @@ class CrudViewHelper extends Helper
      * @param string $field The field to extract, if null, the field from the entity context is used.
      * @return mixed
      */
-    public function fieldValue(Entity $data = null, $field = null)
+    public function fieldValue(Entity $data, $field)
     {
-        if (empty($field)) {
-            $field = $this->field();
-        }
-
         if (empty($data)) {
             $data = $this->getContext();
         }
