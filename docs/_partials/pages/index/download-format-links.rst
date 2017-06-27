@@ -7,7 +7,7 @@ page, and can be used to expose the paginated data in JSON, XML, or other
 formats. The output of each format can be customized to your specifications.
 
 The ``scaffold.index_formats`` option takes an array of data, where the "key" is
-the title to use for the link, and the value is the url.
+the url  and the value is the title to use for the link.
 
 .. code-block:: php
 
