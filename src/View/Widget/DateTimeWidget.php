@@ -61,7 +61,7 @@ class DateTimeWidget extends \Cake\View\Widget\DateTimeWidget
             $val = $val->format($type === 'date' ? 'Y-m-d' : 'Y-m-d H:i:s');
         }
 
-        if (!$format) {
+        if ($format !== null) {
             if ($type === 'date') {
                 $format = 'L';
             } elseif ($type === 'time') {
