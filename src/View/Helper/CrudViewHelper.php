@@ -108,7 +108,7 @@ class CrudViewHelper extends Helper
      * Returns a formatted output for a given field
      *
      * @param string $field Name of field.
-     * @param array $value The value that the field should have within related data.
+     * @param mixed $value The value that the field should have within related data.
      * @param array $options Options array.
      * @return string formatted value
      */
