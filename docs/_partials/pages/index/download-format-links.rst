@@ -14,10 +14,12 @@ the title to use for the link, and the value is the url.
     use Cake\Routing\Router;
 
     // link to the current page, except with extensions `json` or `xml`
+    // include the querystring argument as specified or you will lose any
+    // currently applied filters
     $action = $this->Crud->action();
     $action->config('scaffold.index_formats', [
-        'JSON' => Router::url(['_ext' => 'json']),
-        'XML' => Router::url(['_ext' => 'xml']),
+        'JSON' => Router::url(['_ext' => 'json', '?' => $this->request->query]),
+        'XML' => Router::url(['_ext' => 'xml', '?' => $this->request->query]),
     ]);
 
 Download links are displayed near the bottom-left of the index page and will
@@ -76,7 +78,7 @@ can be modified to add a CSV Download Link.
         }
 
         $this->Crud->action()->config('scaffold.index_formats', [
-            'CSV' => Router::url(['_ext' => 'csv']),
+            'CSV' => Router::url(['_ext' => 'csv', '?' => $this->request->query]),
         ]);
         return $this->Crud->execute();
     }
