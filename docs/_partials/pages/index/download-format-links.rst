@@ -1,5 +1,6 @@
 Download Format Links
 ---------------------
+
 The ``scaffold.index_formats`` configuration key can be used to customize
 "Download Links". These are alternative methods of displaying the current index
 page, and can be used to expose the paginated data in JSON, XML, or other
@@ -28,8 +29,8 @@ Example: CSV Download Link
 .. note::
 
     This example assumes a simple blog application is being modified, with a
-    ``posts`` database table containing the fields ``id``, ``title``, ``body``,
-    and ``created``.
+    ``posts`` database table containing the fields ``id``, ``active``,
+    ``title``, ``body``, and ``created``.
 
 To implement a simple csv download link, the ``friendsofcake/cakephp-csvview``
 plugin should be installed. This plugin will handle the actual rendering of
@@ -71,7 +72,7 @@ can be modified to add a CSV Download Link.
         // only show the id, title, and created fields for csv output
         if ($this->request->getParam('_ext') === 'csv') {
             $this->set('_serialize', ['posts']);
-            $this->set('_extract', ['id', 'title', 'created']);
+            $this->set('_extract', ['id', 'active', 'title', 'created']);
         }
 
         $this->Crud->action()->config('scaffold.index_formats', [
