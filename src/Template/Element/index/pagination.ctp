@@ -1,17 +1,18 @@
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 pagination-wrapper">
+        <?= $this->element('index/download_formats', compact('indexFormats')); ?>
 
-        <?php
-        if ($this->Paginator->hasPage(2)) {
-            echo $this->Paginator->numbers([
-                'prev' => true,
-                'next' => true,
-            ]);
-        }
-        ?>
+        <div class="pagination-container">
+            <?php
+            if ($this->Paginator->hasPage(2)) {
+                echo $this->Paginator->numbers([
+                    'prev' => true,
+                    'next' => true,
+                ]);
+            }
+            ?>
 
-        <br />
-
-        <?= $this->Paginator->counter('Page {{page}} of {{pages}}, showing {{current}} records out of {{count}} total.'); ?>
+            <p><?= $this->Paginator->counter('Page {{page}} of {{pages}}, showing {{current}} records out of {{count}} total.'); ?></p>
+        </div>
     </div>
 </div>

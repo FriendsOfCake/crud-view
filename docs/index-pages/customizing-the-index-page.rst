@@ -22,9 +22,6 @@ in scope. To limit the fields used, simply specify an array of fields:
 .. include:: /_partials/pages/index/finder-scopes.rst
 .. include:: /_partials/pages/index/filters.rst
 .. include:: /_partials/pages/index/multiple-pages.rst
-
-Custom Download Links
----------------------
-
+.. include:: /_partials/pages/index/download-format-links.rst
 .. include:: /_partials/pages/form/viewblocks.rst
 .. include:: /_partials/pages/form/elements.rst
