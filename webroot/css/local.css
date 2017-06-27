@@ -87,3 +87,17 @@ div.actions-wrapper {
 .gallery-content {
     text-align: center;
 }
+.pagination-wrapper {
+    clear: both;
+    margin: 20px 0;
+    text-align: center;
+}
+.download-links {
+    float: left;
+}
+.pagination-container {
+    float: right
+}
+.pagination-container .pagination {
+    margin: 0;
+}
