@@ -362,7 +362,7 @@ class CrudViewHelper extends Helper
     /**
      * Get model schema.
      *
-     * @return array
+     * @return \Cake\Database\Schema\Table
      */
     public function schema()
     {
