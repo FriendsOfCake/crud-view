@@ -30,7 +30,7 @@ To specify the title used in the pagination header, you need to set
 Index Action Elements
 ---------------------
 
-All the ``CrudView`` templates are built from several elements that can be
+All the *CrudView* templates are built from several elements that can be
 overridden by creating them in your own ``src/Template/Element`` folder. The
 following sections will list all the elements that can be overridden for each
 type of action.

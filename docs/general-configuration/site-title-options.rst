@@ -1,12 +1,14 @@
 Site Title Options
 ==================
 
-Every page has what's called the site title on the left side of the menu bar. If you want, you can customize it.
+Every page has what's called the site title on the left side of the menu bar. If
+you want, you can customize it.
 
 Site Title
 ----------
 
-You can use the ``scaffold.site_title`` config variable to modify the title. If not set, it will fallback to the following deprecated alternatives:
+You can use the ``scaffold.site_title`` config variable to modify the title. If
+not set, it will fallback to the following alternatives:
 
 - ``Configure::read('CrudView.siteTitle')``
 - ``$action->config('scaffold.brand')``: Deprecated
@@ -20,7 +22,9 @@ You can use the ``scaffold.site_title`` config variable to modify the title. If 
 Site Title Link
 ---------------
 
-You can use the ``scaffold.site_title_link`` config variable to modify the title link. If not set, the title will not be made into a link. Both urls and cakephp route arrays are supported.
+You can use the ``scaffold.site_title_link`` config variable to modify the title
+link. If not set, the title will not be made into a link. Both urls and cakephp
+route arrays are supported.
 
 .. code-block:: php
 
@@ -29,7 +33,8 @@ You can use the ``scaffold.site_title_link`` config variable to modify the title
 
 Site Title Image
 ----------------
-You can use the ``scaffold.site_title_image`` config variable to modify the title link. If set, it replaces ``scaffold.site_title``.
+You can use the ``scaffold.site_title_image`` config variable to modify the
+title link. If set, it replaces ``scaffold.site_title``.
 
 .. code-block:: php
 

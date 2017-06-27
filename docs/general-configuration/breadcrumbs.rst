@@ -6,7 +6,7 @@ Breadcrumbs
     This functionality is only available for CakePHP 3.3.6 and up.
 
 You can indicate the current page's location within a navigational hierarchy
-called a breadcrumb. CrudView does not output breadcrumbs by default, but they
+called a breadcrumb. *CrudView* does not output breadcrumbs by default, but they
 may be enabled via the ``scaffold.breadcrumbs`` configuration key.
 
 .. warning::

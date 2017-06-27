@@ -161,7 +161,7 @@ table:
         return $this->Crud->execute();
     }
 
-Likewise, you can instruct the ``CrudView`` plugin on which actions should be
+Likewise, you can instruct the *CrudView* plugin on which actions should be
 specifically displayed in the index view:
 
 .. code-block:: php
@@ -177,7 +177,7 @@ Implementing an Add Action
 --------------------------
 
 If you have read this far, you know almost everything there is to know about
-configuring any type of action using ``CrudView``, but being explicit about what
+configuring any type of action using *CrudView*, but being explicit about what
 is available in all of them will not hurt.
 
 Implementing the ``Add`` action is done by adding the ``Crud.View`` action to
@@ -321,7 +321,7 @@ Pre-Selecting Association Options
 
 In order to pre-select the right association options in an ``edit`` action, for
 example pre-selecting the ``category_id`` in the categories select box,
-``CrudView`` will automatically fetch all associations for the entity to be
+*CrudView* will automatically fetch all associations for the entity to be
 modified.
 
 This can be wasteful at times, especially if you only allow a few associations

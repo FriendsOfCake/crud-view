@@ -50,7 +50,7 @@ configuration key for formatting each field:
 Default Image
 -------------
 
-If no image is retrieved, CrudView will default to the following transparent
+If no image is retrieved, *CrudView* will default to the following transparent
 gif:
 
 .. code-block:: html
