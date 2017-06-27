@@ -6,8 +6,8 @@ The ``scaffold.index_formats`` configuration key can be used to customize
 page, and can be used to expose the paginated data in JSON, XML, or other
 formats. The output of each format can be customized to your specifications.
 
-The ``scaffold.index_formats`` option takes an array of data, where the "key" is
-the url  and the value is the title to use for the link.
+The ``scaffold.index_formats`` option takes an array of download format data.
+Each sub-array should contain ``title`` and ``url`` parameters.
 
 .. code-block:: php
 
@@ -18,8 +18,14 @@ the url  and the value is the title to use for the link.
     // currently applied filters
     $action = $this->Crud->action();
     $action->config('scaffold.index_formats', [
-        Router::url(['_ext' => 'json', '?' => $this->request->query]) => 'JSON',
-        Router::url(['_ext' => 'xml', '?' => $this->request->query])  => 'XML',
+        [
+            'title' => 'JSON',
+            'url' => ['_ext' => 'json', '?' => $this->request->query]
+        ],
+        [
+            'title' => 'XML',
+            'url' => Router::url(['_ext' => 'xml', '?' => $this->request->query])
+        ],
     ]);
 
 Download links are displayed near the bottom-left of the index page and will
@@ -78,7 +84,10 @@ can be modified to add a CSV Download Link.
         }
 
         $this->Crud->action()->config('scaffold.index_formats', [
-            Router::url(['_ext' => 'csv', '?' => $this->request->query]) => 'CSV',
+            [
+                'title' => 'CSV',
+                'url' => ['_ext' => 'csv', '?' => $this->request->query]
+            ],
         ]);
         return $this->Crud->execute();
     }
