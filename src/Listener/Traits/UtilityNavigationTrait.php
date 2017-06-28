@@ -9,10 +9,9 @@ trait UtilityNavigationTrait
     /**
      * beforeRender event
      *
-     * @param \Cake\Event\Event $event Event.
      * @return void
      */
-    public function beforeRenderUtilityNavigation(Event $event)
+    public function beforeRenderUtilityNavigation()
     {
         $controller = $this->_controller();
         $controller->set('utilityNavigation', $this->_getUtilityNavigation());

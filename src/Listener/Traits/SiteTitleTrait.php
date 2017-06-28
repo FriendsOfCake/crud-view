@@ -9,10 +9,9 @@ trait SiteTitleTrait
     /**
      * beforeRender event
      *
-     * @param \Cake\Event\Event $event Event.
      * @return void
      */
-    public function beforeRenderSiteTitle(Event $event)
+    public function beforeRenderSiteTitle()
     {
         $controller = $this->_controller();
 

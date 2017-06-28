@@ -8,10 +8,9 @@ trait SidebarNavigationTrait
     /**
      * beforeRender event
      *
-     * @param \Cake\Event\Event $event Event.
      * @return void
      */
-    public function beforeRenderSidebarNavigation(Event $event)
+    public function beforeRenderSidebarNavigation()
     {
         $controller = $this->_controller();
         $sidebarNavigation = $this->_getSidebarNavigation();

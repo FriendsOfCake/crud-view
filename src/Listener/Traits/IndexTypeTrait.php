@@ -8,10 +8,9 @@ trait IndexTypeTrait
     /**
      * beforeRender event
      *
-     * @param \Cake\Event\Event $event Event.
      * @return void
      */
-    public function beforeRenderIndexType(Event $event)
+    public function beforeRenderIndexType()
     {
         $indexTitleField = $this->_getIndexTitleField();
         $indexBodyField = $this->_getIndexBodyField();

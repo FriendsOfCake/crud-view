@@ -82,11 +82,11 @@ class ViewListener extends BaseListener
 
         $this->ensureConfig();
 
-        $this->beforeRenderFormType($event);
-        $this->beforeRenderIndexType($event);
-        $this->beforeRenderSiteTitle($event);
-        $this->beforeRenderUtilityNavigation($event);
-        $this->beforeRenderSidebarNavigation($event);
+        $this->beforeRenderFormType();
+        $this->beforeRenderIndexType();
+        $this->beforeRenderSiteTitle();
+        $this->beforeRenderUtilityNavigation();
+        $this->beforeRenderSidebarNavigation();
         $controller = $this->_controller();
         $controller->set('actionConfig', $this->_action()->getConfig());
         $controller->set('title', $this->_getPageTitle());

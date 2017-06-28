@@ -8,10 +8,9 @@ trait FormTypeTrait
     /**
      * beforeRender event
      *
-     * @param \Cake\Event\Event $event Event.
      * @return void
      */
-    protected function beforeRenderFormType(Event $event)
+    protected function beforeRenderFormType()
     {
         $controller = $this->_controller();
 
