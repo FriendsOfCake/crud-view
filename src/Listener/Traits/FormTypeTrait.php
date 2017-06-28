@@ -47,18 +47,7 @@ trait FormTypeTrait
     {
         $action = $this->_action();
 
-        $formSubmitButtonText = $action->getConfig('scaffold.form_submit_button_text');
-        if ($formSubmitButtonText === null) {
-            $formSubmitButtonText = $action->getConfig('scaffold.submit_button_text');
-            if ($formSubmitButtonText !== null) {
-                $this->deprecatedScaffoldKeyNotice(
-                    'scaffold.submit_button_text',
-                    'scaffold.form_submit_button_text'
-                );
-            }
-        }
-
-        return $formSubmitButtonText ?: __d('crud', 'Save');
+        return $action->getConfig('scaffold.form_submit_button_text') ?: __d('crud', 'Save');
     }
 
     /**
