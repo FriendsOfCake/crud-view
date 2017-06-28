@@ -35,18 +35,7 @@ trait FormTypeTrait
     {
         $action = $this->_action();
 
-        $formEnableDirtyCheck = $action->getConfig('scaffold.form_enable_dirty_check');
-        if ($formEnableDirtyCheck === null) {
-            $formEnableDirtyCheck = $action->getConfig('scaffold.enable_dirty_check');
-            if ($formEnableDirtyCheck !== null) {
-                $this->deprecatedScaffoldKeyNotice(
-                    'scaffold.enable_dirty_check',
-                    'scaffold.form_enable_dirty_check'
-                );
-            }
-        }
-
-        return $formEnableDirtyCheck ?: false;
+        return $action->getConfig('scaffold.form_enable_dirty_check') ?: false;
     }
 
     /**
