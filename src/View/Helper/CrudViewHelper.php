@@ -284,7 +284,7 @@ class CrudViewHelper extends Helper
      */
     public function redirectUrl()
     {
-        $redirectUrl = $this->request->query('_redirect_url');
+        $redirectUrl = $this->request->getQuery('_redirect_url');
         $redirectUrlViewVar = $this->getViewVar('_redirect_url');
 
         if (!empty($redirectUrlViewVar)) {
