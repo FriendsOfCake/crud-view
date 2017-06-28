@@ -41,8 +41,8 @@ class ViewListener extends BaseListener
     public function beforeFind(Event $event)
     {
         $this->associations = $this->_associations(array_keys($this->_getRelatedModels()));
-        if (!$event->subject()->query->contain()) {
-            $event->subject()->query->contain($this->_getRelatedModels());
+        if (!$event->getSubject()->query->contain()) {
+            $event->getSubject()->query->contain($this->_getRelatedModels());
         }
     }
 
@@ -55,8 +55,8 @@ class ViewListener extends BaseListener
     public function beforePaginate(Event $event)
     {
         $this->associations = $this->_associations(array_keys($this->_getRelatedModels()));
-        if (!$event->subject()->query->contain()) {
-            $event->subject()->query->contain($this->_getRelatedModels(['manyToOne', 'oneToOne']));
+        if (!$event->getSubject()->query->contain()) {
+            $event->getSubject()->query->contain($this->_getRelatedModels(['manyToOne', 'oneToOne']));
         }
     }
 
@@ -72,8 +72,8 @@ class ViewListener extends BaseListener
             return;
         }
 
-        if (!empty($event->subject()->entity)) {
-            $this->_entity = $event->subject()->entity;
+        if (!empty($event->getSubject()->entity)) {
+            $this->_entity = $event->getSubject()->entity;
         }
 
         if (empty($this->associations)) {
@@ -127,8 +127,8 @@ class ViewListener extends BaseListener
      */
     public function setFlash(Event $event)
     {
-        unset($event->subject()->params['class']);
-        $event->subject()->element = ltrim($event->subject()->type);
+        unset($event->getSubject()->params['class']);
+        $event->getSubject()->element = ltrim($event->getSubject()->type);
     }
 
     /**
