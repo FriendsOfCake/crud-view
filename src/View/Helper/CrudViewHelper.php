@@ -221,7 +221,7 @@ class CrudViewHelper extends Helper
      */
     public function formatString($field, $value)
     {
-        return h(Text::truncate($value, 200));
+        return h(Text::truncate((string)$value, 200));
     }
 
     /**
