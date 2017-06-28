@@ -14,13 +14,9 @@ trait SiteTitleTrait
     {
         $controller = $this->_controller();
 
-        $siteTitle = $this->_getSiteTitle();
-        $controller->set('siteTitle', $siteTitle);
+        $controller->set('siteTitle', $this->_getSiteTitle());
         $controller->set('siteTitleLink', $this->_getSiteTitleLink());
         $controller->set('siteTitleImage', $this->_getSiteTitleImage());
-
-        // deprecated
-        $controller->set('brand', $siteTitle);
     }
 
     /**
@@ -37,18 +33,7 @@ trait SiteTitleTrait
             return $title;
         }
 
-        $title = Configure::read('CrudView.siteTitle');
-        if (!empty($title)) {
-            return $title;
-        }
-
-        // deprecated
-        $title = $action->getConfig('scaffold.brand');
-        if (!empty($title)) {
-            return $title;
-        }
-
-        return Configure::read('CrudView.brand');
+        return Configure::read('CrudView.siteTitle');
     }
 
     /**

@@ -8,11 +8,9 @@ Site Title
 ----------
 
 You can use the ``scaffold.site_title`` config variable to modify the title. If
-not set, it will fallback to the following alternatives:
+not set, it will fallback to the following alternative:
 
 - ``Configure::read('CrudView.siteTitle')``
-- ``$action->config('scaffold.brand')``: Deprecated
-- ``Configure::read('CrudView.brand')``: Deprecated
 
 .. code-block:: php
 

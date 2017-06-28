@@ -356,35 +356,17 @@ Disabling the Extra Submit Buttons
 ----------------------------------
 
 You may have noticed already that in the ``add`` form there are multiple submit
-buttons. If you wish to only keep the "Save" button, you set the ``scaffold.disable_extra_buttons``
-configuration key to ``true``:
+buttons. If you wish to only keep the "Save" button, you set the
+``scaffold.form_submit_extra_buttons`` configuration key to ``false``:
 
 .. code-block:: php
 
     public function add()
     {
         $action = $this->Crud->action();
-        $action->config('scaffold.disable_extra_buttons', true);
+        $action->config('scaffold.form_submit_extra_buttons', false);
         return $this->Crud->execute();
     }
-
-It is also possible to only disable a few of the extra submit buttons by using
-the ``scaffold.extra_buttons_blacklist`` configuration key:
-
-.. code-block:: php
-
-    public function add()
-    {
-        $action = $this->Crud->action();
-        $action->config('scaffold.extra_buttons_blacklist', [
-            'save_and_continue', // Hide the Save and Continue button
-            'save_and_create', // Hide the Save and create new button
-            'back', // Hide the back button
-        ]);
-        return $this->Crud->execute();
-    }
-
-Both settings can be used in ``add`` and ``edit`` actions.
 
 Implementing a View Action
 --------------------------

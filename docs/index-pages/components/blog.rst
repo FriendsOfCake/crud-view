@@ -22,10 +22,6 @@ The blog index type has two main options:
     $action->config('scaffold.index_title_field', 'name');
     $action->config('scaffold.index_body_field', 'content');
 
-    // the following are deprecated ways of setting the title and body
-    $action->config('scaffold.index_blog_title_field', 'name');
-    $action->config('scaffold.index_blog_body_field', 'content');
-
 Available Variables
 -------------------
 

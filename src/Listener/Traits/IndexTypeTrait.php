@@ -10,20 +10,14 @@ trait IndexTypeTrait
      */
     public function beforeRenderIndexType()
     {
-        $indexTitleField = $this->_getIndexTitleField();
-        $indexBodyField = $this->_getIndexBodyField();
-
         $controller = $this->_controller();
         $controller->set('indexFinderScopes', $this->_getIndexFinderScopes());
         $controller->set('indexFormats', $this->_getIndexFormats());
         $controller->set('indexType', $this->_getIndexType());
-        $controller->set('indexTitleField', $indexTitleField);
-        $controller->set('indexBodyField', $indexBodyField);
+        $controller->set('indexTitleField', $this->_getIndexTitleField());
+        $controller->set('indexBodyField', $this->_getIndexBodyField());
         $controller->set('indexImageField', $this->_getIndexImageField());
         $controller->seT('indexGalleryCssClasses', $this->_getIndexGalleryCssClasses());
-
-        $controller->set('indexBlogTitleField', $indexTitleField);
-        $controller->set('indexBlogBodyField', $indexBodyField);
     }
 
     /**
@@ -80,16 +74,6 @@ trait IndexTypeTrait
 
         $field = $action->getConfig('scaffold.index_title_field');
         if ($field === null) {
-            $field = $action->getConfig('scaffold.index_blog_title_field');
-            if ($field !== null) {
-                $this->deprecatedScaffoldKeyNotice(
-                    'scaffold.index_blog_title_field',
-                    'scaffold.index_title_field'
-                );
-            }
-        }
-
-        if (empty($field)) {
             $field = $this->_table()->getDisplayField();
         }
 
@@ -107,16 +91,6 @@ trait IndexTypeTrait
 
         $field = $action->getConfig('scaffold.index_body_field');
         if ($field === null) {
-            $field = $action->getConfig('scaffold.index_blog_body_field');
-            if ($field !== null) {
-                $this->deprecatedScaffoldKeyNotice(
-                    'scaffold.index_blog_body_field',
-                    'scaffold.index_body_field'
-                );
-            }
-        }
-
-        if (empty($field)) {
             $field = 'body';
         }
 
@@ -171,11 +145,4 @@ trait IndexTypeTrait
      * {@inheritDoc}
      */
     abstract protected function _table();
-
-    /**
-     * {@inheritDoc}
-     * @param string $deprecatedKey
-     * @param string $newKey
-     */
-    abstract protected function deprecatedScaffoldKeyNotice($deprecatedKey, $newKey);
 }
