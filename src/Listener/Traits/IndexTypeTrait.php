@@ -1,8 +1,6 @@
 <?php
 namespace CrudView\Listener\Traits;
 
-use Cake\Event\Event;
-
 trait IndexTypeTrait
 {
     /**

@@ -1,7 +1,6 @@
 <?php
 namespace CrudView\Listener\Traits;
 
-use Cake\Event\Event;
 use CrudView\Menu\MenuItem;
 
 trait UtilityNavigationTrait

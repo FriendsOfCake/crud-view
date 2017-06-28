@@ -2,7 +2,6 @@
 namespace CrudView\Listener\Traits;
 
 use Cake\Core\Configure;
-use Cake\Event\Event;
 
 trait SiteTitleTrait
 {
