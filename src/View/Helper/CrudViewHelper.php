@@ -326,7 +326,7 @@ class CrudViewHelper extends Helper
                 'action' => 'add',
                 '?' => [
                     $relation['foreignKey'] => $this->getViewVar('primaryKeyValue'),
-                    '_redirect_url' => $this->request->here
+                    '_redirect_url' => $this->request->getUri()->getPath()
                 ]
             ],
             $options
