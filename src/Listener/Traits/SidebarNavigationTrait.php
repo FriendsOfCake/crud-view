@@ -25,11 +25,6 @@ trait SidebarNavigationTrait
     {
         $action = $this->_action();
 
-        // deprecated check
-        if ($action->getConfig('scaffold.disable_sidebar')) {
-            return false;
-        }
-
         return $action->getConfig('scaffold.sidebar_navigation');
     }
 
