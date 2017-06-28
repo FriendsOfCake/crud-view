@@ -43,6 +43,7 @@ class ViewSearchListener extends BaseListener
      */
     public function afterPaginate(Event $event)
     {
+        $event;
         if (!$this->_table()->behaviors()->has('Search')) {
             return;
         }
