@@ -567,7 +567,7 @@ class ViewListener extends BaseListener
     }
 
     /**
-     * Extract a field value from a either the CakeRequest::$data
+     * Extract a field value from a either the CakeRequest::getData()
      * or Controller::$viewVars for the current model + the supplied field
      *
      * @param string $field Name of field.
@@ -585,8 +585,8 @@ class ViewListener extends BaseListener
         }
 
         $path = "{$controller->modelClass}.{$field}";
-        if (!empty($request->data)) {
-            $value = Hash::get((array)$request->data, $path);
+        if (!empty($request->getData())) {
+            $value = Hash::get((array)$request->getData(), $path);
         }
 
         $singularVar = Inflector::variable($controller->modelClass);
