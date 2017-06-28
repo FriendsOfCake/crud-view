@@ -12,14 +12,10 @@ trait FormTypeTrait
     {
         $controller = $this->_controller();
 
-        $formSubmitButtonText = $this->_getFormSubmitButtonText();
-
         $controller->set('formEnableDirtyCheck', $this->_getFormEnableDirtyCheck());
-        $controller->set('formSubmitButtonText', $formSubmitButtonText);
+        $controller->set('formSubmitButtonText', $this->_getFormSubmitButtonText());
         $controller->set('formSubmitExtraButtons', $this->_getFormSubmitExtraButtons());
         $controller->set('formUrl', $this->_getFormUrl());
-
-        $controller->set('submitButtonText', $formSubmitButtonText);
         $controller->set('disableExtraButtons', $this->_getFormDisableExtraButtons());
         $controller->set('extraButtonsBlacklist', $this->_getFormExtraButtonsBlacklist());
     }
