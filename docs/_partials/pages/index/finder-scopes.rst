@@ -70,8 +70,8 @@ result-set. This can be done in the mapped action as follows:
         ]);
 
         // We don't need to check for `all` as it is the default findMethod
-        if (in_array($this->request->query('finder'), ['active', 'inactive'])) {
-            $this->Crud->action()->config('findMethod', $this->request->query('finder'));
+        if (in_array($this->request->getQuery('finder'), ['active', 'inactive'])) {
+            $this->Crud->action()->config('findMethod', $this->request->getQuery('finder'));
         }
         return $this->Crud->execute();
     }
