@@ -513,7 +513,7 @@ class ViewListener extends BaseListener
         $associations = $table->associations();
 
         $keys = $associations->keys();
-        if ($whitelist) {
+        if (!empty($whitelist)) {
             $keys = array_intersect($keys, array_map('strtolower', $whitelist));
         }
         foreach ($keys as $associationName) {
