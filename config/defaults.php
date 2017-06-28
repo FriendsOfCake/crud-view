@@ -3,7 +3,6 @@ use \Cake\Core\Plugin;
 
 return [
     'CrudView' => [
-        'brand' => 'Crud View',
         'siteTitle' => 'Crud View',
         'css' => [
             'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/css/bootstrap.css',
