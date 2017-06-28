@@ -177,7 +177,7 @@ class CrudViewHelper extends Helper
      * Format a date for display
      *
      * @param string $field Name of field.
-     * @param array $value Value of field.
+     * @param mixed $value Value of field.
      * @param array $options Options array.
      * @return string
      */
@@ -187,7 +187,11 @@ class CrudViewHelper extends Helper
             return $this->Html->label(__d('crud', 'N/A'), 'info');
         }
 
-        return $this->Time->timeAgoInWords($value, $options);
+        if (is_int($value) || is_string($value) || $value instanceof DateTime) {
+            return $this->Time->timeAgoInWords($value, $options);
+        }
+
+        return $this->Html->label(__d('crud', 'N/A'), 'info');
     }
 
     /**
