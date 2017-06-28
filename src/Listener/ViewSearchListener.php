@@ -130,8 +130,10 @@ class ViewSearchListener extends BaseListener
             $urlArgs = [];
 
             $fieldKeys = isset($input['fields']) ? $input['fields'] : ['id' => $field, 'value' => $field];
-            foreach ($fieldKeys as $key => $val) {
-                $urlArgs[$key] = $val;
+            if (is_array($fieldKeys)) {
+                foreach ($fieldKeys as $key => $val) {
+                    $urlArgs[$key] = $val;
+                }
             }
 
             unset($input['fields']);
