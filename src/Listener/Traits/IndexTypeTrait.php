@@ -93,7 +93,7 @@ trait IndexTypeTrait
         }
 
         if (empty($field)) {
-            $field = $this->_table()->displayField();
+            $field = $this->_table()->getDisplayField();
         }
 
         return $field;

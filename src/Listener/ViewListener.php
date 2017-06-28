@@ -165,7 +165,7 @@ class ViewListener extends BaseListener
         }
 
         $displayFieldValue = $this->_displayFieldValue();
-        if ($displayFieldValue === null || $this->_table()->displayField() == $this->_table()->primaryKey()) {
+        if ($displayFieldValue === null || $this->_table()->getDisplayField() == $this->_table()->primaryKey()) {
             return sprintf('%s %s #%s', $actionName, $controllerName, $primaryKeyValue);
         }
 
@@ -258,7 +258,7 @@ class ViewListener extends BaseListener
         $data = [
             'modelClass' => $controller->modelClass,
             'modelSchema' => $table->schema(),
-            'displayField' => $table->displayField(),
+            'displayField' => $table->getDisplayField(),
             'singularHumanName' => Inflector::humanize(Inflector::underscore(Inflector::singularize($controller->modelClass))),
             'pluralHumanName' => Inflector::humanize(Inflector::underscore($controller->name)),
             'singularVar' => Inflector::singularize($controller->name),
@@ -528,7 +528,7 @@ class ViewListener extends BaseListener
             $associationConfiguration[$type][$assocKey]['model'] = $assocKey;
             $associationConfiguration[$type][$assocKey]['type'] = $type;
             $associationConfiguration[$type][$assocKey]['primaryKey'] = $association->target()->primaryKey();
-            $associationConfiguration[$type][$assocKey]['displayField'] = $association->target()->displayField();
+            $associationConfiguration[$type][$assocKey]['displayField'] = $association->target()->getDisplayField();
             $associationConfiguration[$type][$assocKey]['foreignKey'] = $association->foreignKey();
             $associationConfiguration[$type][$assocKey]['propertyName'] = $association->property();
             $associationConfiguration[$type][$assocKey]['plugin'] = pluginSplit($association->className())[0];
@@ -563,7 +563,7 @@ class ViewListener extends BaseListener
      */
     protected function _displayFieldValue()
     {
-        return $this->_deriveFieldFromContext($this->_table()->displayField());
+        return $this->_deriveFieldFromContext($this->_table()->getDisplayField());
     }
 
     /**
