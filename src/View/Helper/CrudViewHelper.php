@@ -209,7 +209,10 @@ class CrudViewHelper extends Helper
         }
         $format = isset($options['format']) ? $options['format'] : null;
 
-        return $this->Time->nice($value, $format);
+        if (is_int($value) || is_string($value) || $value instanceof DateTime) {
+            return $this->Time->nice($value, $format);
+        }
+        return $this->Html->label(__d('crud', 'N/A'), 'info');
     }
 
     /**
