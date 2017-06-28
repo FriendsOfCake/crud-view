@@ -257,7 +257,7 @@ class ViewListener extends BaseListener
 
         $data = [
             'modelClass' => $controller->modelClass,
-            'modelSchema' => $table->schema(),
+            'modelSchema' => $table->getSchema(),
             'displayField' => $table->getDisplayField(),
             'singularHumanName' => Inflector::humanize(Inflector::underscore(Inflector::singularize($controller->modelClass))),
             'pluralHumanName' => Inflector::humanize(Inflector::underscore($controller->name)),
@@ -290,7 +290,7 @@ class ViewListener extends BaseListener
         }
 
         if (empty($scaffoldFields) || $action->getConfig('scaffold.autoFields')) {
-            $cols = $this->_table()->schema()->columns();
+            $cols = $this->_table()->getSchema()->columns();
             $cols = Hash::normalize($cols);
 
             $scope = $action->getConfig('scope');

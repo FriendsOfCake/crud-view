@@ -83,7 +83,7 @@ class ViewSearchListener extends BaseListener
         }
 
         $fields = [];
-        $schema = $table->schema();
+        $schema = $table->getSchema();
         $config = $this->_config;
 
         foreach ($filters->all() as $filter) {
