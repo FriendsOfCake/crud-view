@@ -162,7 +162,7 @@ class CrudViewHelper extends Helper
      * Format a boolean value for display
      *
      * @param string $field Name of field.
-     * @param array $value Value of field.
+     * @param mixed $value Value of field.
      * @param array $options Options array
      * @return string
      */
@@ -198,7 +198,7 @@ class CrudViewHelper extends Helper
      * Format a time for display
      *
      * @param string $field Name of field.
-     * @param array $value Value of field.
+     * @param mixed $value Value of field.
      * @param array $options Options array.
      * @return string
      */
@@ -216,7 +216,7 @@ class CrudViewHelper extends Helper
      * Format a string for display
      *
      * @param string $field Name of field.
-     * @param array $value Value of field.
+     * @param mixed $value Value of field.
      * @return string
      */
     public function formatString($field, $value)
@@ -228,7 +228,7 @@ class CrudViewHelper extends Helper
      * Format display field value.
      *
      * @param string $value Display field value.
-     * @param array $options Field options.
+     * @param mixed $options Field options.
      * @return string
      */
     public function formatDisplayField($value, array $options)
