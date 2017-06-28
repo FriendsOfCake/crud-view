@@ -213,6 +213,7 @@ class CrudViewHelper extends Helper
         if (is_int($value) || is_string($value) || $value instanceof DateTime) {
             return $this->Time->nice($value, $format);
         }
+
         return $this->Html->label(__d('crud', 'N/A'), 'info');
     }
 
