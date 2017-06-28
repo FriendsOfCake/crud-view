@@ -165,7 +165,7 @@ class ViewListener extends BaseListener
         }
 
         $displayFieldValue = $this->_displayFieldValue();
-        if ($displayFieldValue === null || $this->_table()->getDisplayField() == $this->_table()->primaryKey()) {
+        if ($displayFieldValue === null || $this->_table()->getDisplayField() == $this->_table()->getPrimaryKey()) {
             return sprintf('%s %s #%s', $actionName, $controllerName, $primaryKeyValue);
         }
 
@@ -263,7 +263,7 @@ class ViewListener extends BaseListener
             'pluralHumanName' => Inflector::humanize(Inflector::underscore($controller->name)),
             'singularVar' => Inflector::singularize($controller->name),
             'pluralVar' => Inflector::variable($controller->name),
-            'primaryKey' => $table->primaryKey(),
+            'primaryKey' => $table->getPrimaryKey(),
         ];
 
         if ($scope === 'entity') {
@@ -527,7 +527,7 @@ class ViewListener extends BaseListener
             $assocKey = $association->name();
             $associationConfiguration[$type][$assocKey]['model'] = $assocKey;
             $associationConfiguration[$type][$assocKey]['type'] = $type;
-            $associationConfiguration[$type][$assocKey]['primaryKey'] = $association->target()->primaryKey();
+            $associationConfiguration[$type][$assocKey]['primaryKey'] = $association->target()->getPrimaryKey();
             $associationConfiguration[$type][$assocKey]['displayField'] = $association->target()->getDisplayField();
             $associationConfiguration[$type][$assocKey]['foreignKey'] = $association->foreignKey();
             $associationConfiguration[$type][$assocKey]['propertyName'] = $association->property();
@@ -551,7 +551,7 @@ class ViewListener extends BaseListener
      */
     protected function _primaryKeyValue()
     {
-        return $this->_deriveFieldFromContext($this->_table()->primaryKey());
+        return $this->_deriveFieldFromContext($this->_table()->getPrimaryKey());
     }
 
     /**
