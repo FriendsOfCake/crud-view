@@ -39,7 +39,7 @@ trait IndexTypeTrait
     {
         $action = $this->_action();
 
-        return $action->config('scaffold.index_finder_scopes') ?: [];
+        return $action->getConfig('scaffold.index_finder_scopes') ?: [];
     }
 
     /**
@@ -52,7 +52,7 @@ trait IndexTypeTrait
     {
         $action = $this->_action();
 
-        return $action->config('scaffold.index_formats') ?: [];
+        return $action->getConfig('scaffold.index_formats') ?: [];
     }
 
     /**
@@ -64,7 +64,7 @@ trait IndexTypeTrait
     {
         $action = $this->_action();
 
-        $indexType = $action->config('scaffold.index_type');
+        $indexType = $action->getConfig('scaffold.index_type');
         if (empty($indexType)) {
             $indexType = 'table';
         }
@@ -81,9 +81,9 @@ trait IndexTypeTrait
     {
         $action = $this->_action();
 
-        $field = $action->config('scaffold.index_title_field');
+        $field = $action->getConfig('scaffold.index_title_field');
         if ($field === null) {
-            $field = $action->config('scaffold.index_blog_title_field');
+            $field = $action->getConfig('scaffold.index_blog_title_field');
             if ($field !== null) {
                 $this->deprecatedScaffoldKeyNotice(
                     'scaffold.index_blog_title_field',
@@ -108,9 +108,9 @@ trait IndexTypeTrait
     {
         $action = $this->_action();
 
-        $field = $action->config('scaffold.index_body_field');
+        $field = $action->getConfig('scaffold.index_body_field');
         if ($field === null) {
-            $field = $action->config('scaffold.index_blog_body_field');
+            $field = $action->getConfig('scaffold.index_blog_body_field');
             if ($field !== null) {
                 $this->deprecatedScaffoldKeyNotice(
                     'scaffold.index_blog_body_field',
@@ -135,7 +135,7 @@ trait IndexTypeTrait
     {
         $action = $this->_action();
 
-        $field = $action->config('scaffold.index_image_field');
+        $field = $action->getConfig('scaffold.index_image_field');
         if (empty($field)) {
             $field = 'image';
         }
@@ -152,7 +152,7 @@ trait IndexTypeTrait
     {
         $action = $this->_action();
 
-        $field = $action->config('scaffold.index_gallery_css_classes');
+        $field = $action->getConfig('scaffold.index_gallery_css_classes');
         if (empty($field)) {
             $field = 'col-sm-6 col-md-3';
         }

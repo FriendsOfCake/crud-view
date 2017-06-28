@@ -47,7 +47,7 @@ class ViewSearchListener extends BaseListener
             return;
         }
 
-        $enabled = $this->config('enabled') ?: !$this->_request()->is('api');
+        $enabled = $this->getConfig('enabled') ?: !$this->_request()->is('api');
         if (!$enabled) {
             return;
         }
@@ -63,7 +63,7 @@ class ViewSearchListener extends BaseListener
      */
     public function fields()
     {
-        return $this->config('fields') ?: $this->_deriveFields();
+        return $this->getConfig('fields') ?: $this->_deriveFields();
     }
 
     /**
@@ -87,7 +87,7 @@ class ViewSearchListener extends BaseListener
         $config = $this->_config;
 
         foreach ($filters->all() as $filter) {
-            if ($filter->config('form') === false) {
+            if ($filter->getConfig('form') === false) {
                 continue;
             }
 

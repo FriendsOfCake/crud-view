@@ -29,11 +29,11 @@ trait SidebarNavigationTrait
         $action = $this->_action();
 
         // deprecated check
-        if ($action->config('scaffold.disable_sidebar')) {
+        if ($action->getConfig('scaffold.disable_sidebar')) {
             return false;
         }
 
-        return $action->config('scaffold.sidebar_navigation');
+        return $action->getConfig('scaffold.sidebar_navigation');
     }
 
     /**

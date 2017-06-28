@@ -27,7 +27,7 @@ trait UtilityNavigationTrait
     {
         $action = $this->_action();
 
-        $utilityNavigation = $action->config('scaffold.utility_navigation');
+        $utilityNavigation = $action->getConfig('scaffold.utility_navigation');
         if ($utilityNavigation === null) {
             $utilityNavigation = [
                 new MenuItem('Account', ['controller' => 'Users', 'action' => 'account']),
