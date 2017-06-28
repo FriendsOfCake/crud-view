@@ -43,11 +43,12 @@ class ViewSearchListener extends BaseListener
      */
     public function afterPaginate(Event $event)
     {
+        $event;
         if (!$this->_table()->behaviors()->has('Search')) {
             return;
         }
 
-        $enabled = $this->config('enabled') ?: !$this->_request()->is('api');
+        $enabled = $this->getConfig('enabled') ?: !$this->_request()->is('api');
         if (!$enabled) {
             return;
         }
@@ -63,7 +64,7 @@ class ViewSearchListener extends BaseListener
      */
     public function fields()
     {
-        return $this->config('fields') ?: $this->_deriveFields();
+        return $this->getConfig('fields') ?: $this->_deriveFields();
     }
 
     /**
@@ -83,11 +84,11 @@ class ViewSearchListener extends BaseListener
         }
 
         $fields = [];
-        $schema = $table->schema();
+        $schema = $table->getSchema();
         $config = $this->_config;
 
         foreach ($filters->all() as $filter) {
-            if ($filter->config('form') === false) {
+            if ($filter->getConfig('form') === false) {
                 continue;
             }
 
@@ -105,7 +106,7 @@ class ViewSearchListener extends BaseListener
                 'type' => 'text'
             ];
 
-            $input['value'] = $request->query($field);
+            $input['value'] = $request->getQuery($field);
 
             if (empty($input['options']) && $schema->columnType($field) === 'boolean') {
                 $input['options'] = ['No', 'Yes'];
@@ -130,8 +131,10 @@ class ViewSearchListener extends BaseListener
             $urlArgs = [];
 
             $fieldKeys = isset($input['fields']) ? $input['fields'] : ['id' => $field, 'value' => $field];
-            foreach ($fieldKeys as $key => $val) {
-                $urlArgs[$key] = $val;
+            if (is_array($fieldKeys)) {
+                foreach ($fieldKeys as $key => $val) {
+                    $urlArgs[$key] = $val;
+                }
             }
 
             unset($input['fields']);

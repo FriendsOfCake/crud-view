@@ -29,7 +29,7 @@
         }
     ],
     "require": {
-        "cakephp/cakephp": "~3.0",
+        "cakephp/cakephp": "~3.4",
         "friendsofcake/crud": "*",
         "friendsofcake/bootstrap-ui": "~1.2"
     },

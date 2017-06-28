@@ -1,17 +1,14 @@
 <?php
 namespace CrudView\Listener\Traits;
 
-use Cake\Event\Event;
-
 trait FormTypeTrait
 {
     /**
      * beforeRender event
      *
-     * @param \Cake\Event\Event $event Event.
      * @return void
      */
-    protected function beforeRenderFormType(Event $event)
+    protected function beforeRenderFormType()
     {
         $controller = $this->_controller();
 
@@ -38,9 +35,9 @@ trait FormTypeTrait
     {
         $action = $this->_action();
 
-        $formEnableDirtyCheck = $action->config('scaffold.form_enable_dirty_check');
+        $formEnableDirtyCheck = $action->getConfig('scaffold.form_enable_dirty_check');
         if ($formEnableDirtyCheck === null) {
-            $formEnableDirtyCheck = $action->config('scaffold.enable_dirty_check');
+            $formEnableDirtyCheck = $action->getConfig('scaffold.enable_dirty_check');
             if ($formEnableDirtyCheck !== null) {
                 $this->deprecatedScaffoldKeyNotice(
                     'scaffold.enable_dirty_check',
@@ -61,9 +58,9 @@ trait FormTypeTrait
     {
         $action = $this->_action();
 
-        $formSubmitButtonText = $action->config('scaffold.form_submit_button_text');
+        $formSubmitButtonText = $action->getConfig('scaffold.form_submit_button_text');
         if ($formSubmitButtonText === null) {
-            $formSubmitButtonText = $action->config('scaffold.submit_button_text');
+            $formSubmitButtonText = $action->getConfig('scaffold.submit_button_text');
             if ($formSubmitButtonText !== null) {
                 $this->deprecatedScaffoldKeyNotice(
                     'scaffold.submit_button_text',
@@ -132,7 +129,7 @@ trait FormTypeTrait
             $defaults = $newDefaults;
         }
 
-        $buttons = $action->config('scaffold.form_submit_extra_buttons');
+        $buttons = $action->getConfig('scaffold.form_submit_extra_buttons');
         if ($buttons === null || $buttons === true) {
             $buttons = $defaults;
         }
@@ -154,7 +151,7 @@ trait FormTypeTrait
     {
         $action = $this->_action();
 
-        return $action->config('scaffold.disable_extra_buttons') ?: false;
+        return $action->getConfig('scaffold.disable_extra_buttons') ?: false;
     }
 
     /**
@@ -167,7 +164,7 @@ trait FormTypeTrait
     {
         $action = $this->_action();
 
-        return $action->config('scaffold.extra_buttons_blacklist') ?: [];
+        return $action->getConfig('scaffold.extra_buttons_blacklist') ?: [];
     }
 
     /**
@@ -179,7 +176,7 @@ trait FormTypeTrait
     {
         $action = $this->_action();
 
-        return $action->config('scaffold.form_action') ?: null;
+        return $action->getConfig('scaffold.form_action') ?: null;
     }
 
     /**

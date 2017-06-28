@@ -1,17 +1,14 @@
 <?php
 namespace CrudView\Listener\Traits;
 
-use Cake\Event\Event;
-
 trait SidebarNavigationTrait
 {
     /**
      * beforeRender event
      *
-     * @param \Cake\Event\Event $event Event.
      * @return void
      */
-    public function beforeRenderSidebarNavigation(Event $event)
+    public function beforeRenderSidebarNavigation()
     {
         $controller = $this->_controller();
         $sidebarNavigation = $this->_getSidebarNavigation();
@@ -29,11 +26,11 @@ trait SidebarNavigationTrait
         $action = $this->_action();
 
         // deprecated check
-        if ($action->config('scaffold.disable_sidebar')) {
+        if ($action->getConfig('scaffold.disable_sidebar')) {
             return false;
         }
 
-        return $action->config('scaffold.sidebar_navigation');
+        return $action->getConfig('scaffold.sidebar_navigation');
     }
 
     /**

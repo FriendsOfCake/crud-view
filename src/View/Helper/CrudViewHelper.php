@@ -7,6 +7,7 @@ use Cake\Utility\Inflector;
 use Cake\Utility\Text;
 use Cake\View\Helper;
 use Cake\View\Helper\FormHelper;
+use DateTime;
 
 /**
  * @property \Cake\View\Helper\FormHelper $Form
@@ -162,7 +163,7 @@ class CrudViewHelper extends Helper
      * Format a boolean value for display
      *
      * @param string $field Name of field.
-     * @param array $value Value of field.
+     * @param mixed $value Value of field.
      * @param array $options Options array
      * @return string
      */
@@ -177,7 +178,7 @@ class CrudViewHelper extends Helper
      * Format a date for display
      *
      * @param string $field Name of field.
-     * @param array $value Value of field.
+     * @param mixed $value Value of field.
      * @param array $options Options array.
      * @return string
      */
@@ -187,14 +188,18 @@ class CrudViewHelper extends Helper
             return $this->Html->label(__d('crud', 'N/A'), 'info');
         }
 
-        return $this->Time->timeAgoInWords($value, $options);
+        if (is_int($value) || is_string($value) || $value instanceof DateTime) {
+            return $this->Time->timeAgoInWords($value, $options);
+        }
+
+        return $this->Html->label(__d('crud', 'N/A'), 'info');
     }
 
     /**
      * Format a time for display
      *
      * @param string $field Name of field.
-     * @param array $value Value of field.
+     * @param mixed $value Value of field.
      * @param array $options Options array.
      * @return string
      */
@@ -205,26 +210,30 @@ class CrudViewHelper extends Helper
         }
         $format = isset($options['format']) ? $options['format'] : null;
 
-        return $this->Time->nice($value, $format);
+        if (is_int($value) || is_string($value) || $value instanceof DateTime) {
+            return $this->Time->nice($value, $format);
+        }
+
+        return $this->Html->label(__d('crud', 'N/A'), 'info');
     }
 
     /**
      * Format a string for display
      *
      * @param string $field Name of field.
-     * @param array $value Value of field.
+     * @param mixed $value Value of field.
      * @return string
      */
     public function formatString($field, $value)
     {
-        return h(Text::truncate($value, 200));
+        return h(Text::truncate((string)$value, 200));
     }
 
     /**
      * Format display field value.
      *
      * @param string $value Display field value.
-     * @param array $options Field options.
+     * @param mixed $options Field options.
      * @return string
      */
     public function formatDisplayField($value, array $options)
@@ -284,7 +293,7 @@ class CrudViewHelper extends Helper
      */
     public function redirectUrl()
     {
-        $redirectUrl = $this->request->query('_redirect_url');
+        $redirectUrl = $this->request->getQuery('_redirect_url');
         $redirectUrlViewVar = $this->getViewVar('_redirect_url');
 
         if (!empty($redirectUrlViewVar)) {
@@ -326,7 +335,7 @@ class CrudViewHelper extends Helper
                 'action' => 'add',
                 '?' => [
                     $relation['foreignKey'] => $this->getViewVar('primaryKeyValue'),
-                    '_redirect_url' => $this->request->here
+                    '_redirect_url' => $this->request->getUri()->getPath()
                 ]
             ],
             $options
@@ -407,7 +416,7 @@ class CrudViewHelper extends Helper
      */
     public function getCssClasses()
     {
-        $action = (string)$this->request->param('action');
+        $action = (string)$this->request->getParam('action');
         $pluralVar = $this->getViewVar('pluralVar');
         $viewClasses = (array)$this->getViewVar('viewClasses');
         $args = func_get_args();

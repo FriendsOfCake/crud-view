@@ -101,7 +101,7 @@ alter the ``contain()`` list for the pagination query:
     public function index()
     {
         $this->Crud->on('beforePaginate', function ($event) {
-            $paginationQuery  = $event->subject()->query;
+            $paginationQuery  = $event->getSubject()->query;
             $paginationQuery->contain([
                 'Categories',
                 'Authors' => ['fields' => ['id', 'name']]
@@ -306,9 +306,9 @@ you can use the ``relatedModels`` event:
     public function add()
     {
         $this->Crud->on('relatedModel', function(\Cake\Event\Event $event) {
-            if ($event->subject->association->name() === 'Categories') {
-                $event->subject->query->limit(3);
-                $event->subject->query->where(['is_active' => true]);
+            if ($event->getSubject()->association->name() === 'Categories') {
+                $event->getSubject()->query->limit(3);
+                $event->getSubject()->query->where(['is_active' => true]);
             }
         });
         return $this->Crud->execute();
@@ -483,7 +483,7 @@ alter the ``contain()`` list for the pagination query:
     public function view()
     {
         $this->Crud->on('beforeFind', function ($event) {
-            $event->subject()->query->contain([
+            $event->getSubject()->query->contain([
                 'Categories',
                 'Authors' => ['fields' => ['id', 'name']]
             ]);

@@ -2,17 +2,15 @@
 namespace CrudView\Listener\Traits;
 
 use Cake\Core\Configure;
-use Cake\Event\Event;
 
 trait SiteTitleTrait
 {
     /**
      * beforeRender event
      *
-     * @param \Cake\Event\Event $event Event.
      * @return void
      */
-    public function beforeRenderSiteTitle(Event $event)
+    public function beforeRenderSiteTitle()
     {
         $controller = $this->_controller();
 
@@ -34,7 +32,7 @@ trait SiteTitleTrait
     {
         $action = $this->_action();
 
-        $title = $action->config('scaffold.site_title');
+        $title = $action->getConfig('scaffold.site_title');
         if (!empty($title)) {
             return $title;
         }
@@ -45,7 +43,7 @@ trait SiteTitleTrait
         }
 
         // deprecated
-        $title = $action->config('scaffold.brand');
+        $title = $action->getConfig('scaffold.brand');
         if (!empty($title)) {
             return $title;
         }
@@ -62,7 +60,7 @@ trait SiteTitleTrait
     {
         $action = $this->_action();
 
-        $link = $action->config('scaffold.site_title_link');
+        $link = $action->getConfig('scaffold.site_title_link');
         if (empty($link)) {
             $link = '';
         }
@@ -79,7 +77,7 @@ trait SiteTitleTrait
     {
         $action = $this->_action();
 
-        $image = $action->config('scaffold.site_title_image');
+        $image = $action->getConfig('scaffold.site_title_image');
         if (empty($image)) {
             $image = '';
         }

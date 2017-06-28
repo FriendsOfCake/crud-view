@@ -20,11 +20,11 @@ Each sub-array should contain ``title`` and ``url`` parameters.
     $action->config('scaffold.index_formats', [
         [
             'title' => 'JSON',
-            'url' => ['_ext' => 'json', '?' => $this->request->query]
+            'url' => ['_ext' => 'json', '?' => $this->request->getQueryParams()]
         ],
         [
             'title' => 'XML',
-            'url' => Router::url(['_ext' => 'xml', '?' => $this->request->query])
+            'url' => Router::url(['_ext' => 'xml', '?' => $this->request->getQueryParams()])
         ],
     ]);
 
@@ -86,7 +86,7 @@ can be modified to add a CSV Download Link.
         $this->Crud->action()->config('scaffold.index_formats', [
             [
                 'title' => 'CSV',
-                'url' => ['_ext' => 'csv', '?' => $this->request->query]
+                'url' => ['_ext' => 'csv', '?' => $this->request->getQueryParams()]
             ],
         ]);
         return $this->Crud->execute();
