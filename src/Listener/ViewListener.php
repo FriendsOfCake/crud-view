@@ -95,7 +95,7 @@ class ViewListener extends BaseListener
         $controller->set(compact('associations'));
 
         $fields = $this->_scaffoldFields($associations);
-        $controller->set(compact('fields'));
+        $controller->set('fields', $fields);
         $controller->set('fieldGroups', $this->_getFieldGroups($fields));
 
         $controller->set('blacklist', $this->_blacklist());
