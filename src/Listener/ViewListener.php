@@ -66,7 +66,7 @@ class ViewListener extends BaseListener
      */
     public function beforeRender(Event $event)
     {
-        if ($this->_controller()->name === 'CakeError') {
+        if ($this->_controller()->name === 'Error') {
             return;
         }
 
