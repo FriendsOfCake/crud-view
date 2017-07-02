@@ -20,15 +20,20 @@ if ($this->exists('form.before_create')) {
                 <?php if ($fieldGroups) : ?>
                     <div class="nav-tabs-custom">
                         <ul class="nav nav-tabs" role="tablist">
+                            <?php $firstTab = key($groupFields) ?>
                             <?php foreach ($fieldGroups as $group => $groupFields) : ?>
-                                <li role="presentation">
+                                <li role="presentation" <?= $group === $firstTab ? 'class="active"' : '' ?>>
                                     <a href="#<?= Text::slug($group) ?>" role="tab" data-toggle="tab"><?= $group ?></a>
                                 </li>
                             <?php endforeach ?>
                         </ul>
                         <div class="tab-content">
                             <?php foreach ($fieldGroups as $group => $groupFields) : ?>
-                                <div id="<?= Text::slug($group) ?>" class="tab-pane" role="tabpanel">
+                                <div
+                                    id="<?= Text::slug($group) ?>"
+                                    role="tabpanel"
+                                    class="tab-pane <?= $group === $firstTab ? 'active' : '' ?>"
+                                >
                                     <?= $this->Form->inputs($groupFields, ['legend' => false]); ?>
                                 </div>
                             <?php endforeach ?>
