@@ -666,7 +666,9 @@ class ViewListener extends BaseListener
         $unGroupedFields = array_diff(array_keys($fields), $groupedFields);
 
         if ($unGroupedFields) {
-            $groups = [__('crud', 'Primary') => $unGroupedFields] + $groups;
+            $primayGroup = $action->getConfig('scaffold.primary_group_name') ?: __d('crud', 'Primary');
+
+            $groups = [$primayGroup => $unGroupedFields] + $groups;
         }
 
         return $groups;
