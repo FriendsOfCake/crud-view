@@ -656,7 +656,7 @@ class ViewListener extends BaseListener
     protected function _getFieldGroups(array $fields = [])
     {
         $action = $this->_action();
-        $groups = $action->getConfig('scaffold.field_groups');
+        $groups = $action->getConfig('scaffold.form_field_groups');
 
         if (empty($groups)) {
             return [];
@@ -666,7 +666,7 @@ class ViewListener extends BaseListener
         $unGroupedFields = array_diff(array_keys($fields), $groupedFields);
 
         if ($unGroupedFields) {
-            $primayGroup = $action->getConfig('scaffold.primary_group_name') ?: __d('crud', 'Primary');
+            $primayGroup = $action->getConfig('scaffold.form_primary_group') ?: __d('crud', 'Primary');
 
             $groups = [$primayGroup => $unGroupedFields] + $groups;
         }
