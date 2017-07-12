@@ -18,6 +18,8 @@ class ViewSearchListener extends BaseListener
         'enabled' => null,
         'autocomplete' => true,
         'selectize' => true,
+        'collection' => 'default',
+        'fields' => null
     ];
 
     /**
@@ -80,12 +82,12 @@ class ViewSearchListener extends BaseListener
         if (method_exists($table, 'searchConfiguration')) {
             $filters = $table->searchConfiguration();
         } else {
-            $filters = $table->searchManager();
+            $filters = $table->searchManager()->useCollection($config['collection']);
         }
 
         $fields = [];
         $schema = $table->getSchema();
-        $config = $this->_config;
+        $config = $this->getConfig();
 
         foreach ($filters->all() as $filter) {
             if ($filter->getConfig('form') === false) {
@@ -95,7 +97,7 @@ class ViewSearchListener extends BaseListener
             $field = $filter->name();
             $input = [];
 
-            $filterFormConfig = $filter->config();
+            $filterFormConfig = $filter->getConfig();
             if (!empty($filterFormConfig['form'])) {
                 $input = $filterFormConfig['form'];
             }
@@ -105,6 +107,10 @@ class ViewSearchListener extends BaseListener
                 'required' => false,
                 'type' => 'text'
             ];
+
+            if (substr($field, -3) === '_id' && $field !== '_id') {
+                $input['type'] = 'select';
+            }
 
             $input['value'] = $request->getQuery($field);
 
