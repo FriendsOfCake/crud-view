@@ -12,6 +12,15 @@ class ViewSearchListener extends BaseListener
     /**
      * Default configuration
      *
+     * ### Options
+     *
+     * - `enable`: Indicates whether is listener is enabled.
+     * - `autocomplete`: Whether to use auto complete for select fields. Default `true`.
+     * - `autocomplete`: Whether to use selectize for select fields. Default `true`.
+     * - `collection`: The search behavior collection to use. Default "default".
+     * - `fields`: Fields config for generation filter inputs. If `null` the
+     *   field inputs will be derived based on filter collection. Default `null``.
+     *
      * @var array
      */
     protected $_defaultConfig = [
@@ -23,7 +32,7 @@ class ViewSearchListener extends BaseListener
     ];
 
     /**
-     * implementedEvents
+     * Events this listerner is interested in.
      *
      * @return array
      */
@@ -35,7 +44,7 @@ class ViewSearchListener extends BaseListener
     }
 
     /**
-     * afterPaginate
+     * After paginate event callback.
      *
      * Only after a crud paginate call does this listener do anything. So listen
      * for that
@@ -60,7 +69,7 @@ class ViewSearchListener extends BaseListener
     }
 
     /**
-     * [fields description]
+     * Get field options for search filter inputs.
      *
      * @return array
      */
@@ -70,7 +79,7 @@ class ViewSearchListener extends BaseListener
     }
 
     /**
-     * [_deriveFields description]
+     * Derive field options for search filter inputs based on filter collection.
      *
      * @return array
      */
