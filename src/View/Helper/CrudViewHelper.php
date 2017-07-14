@@ -8,6 +8,7 @@ use Cake\Utility\Text;
 use Cake\View\Helper;
 use Cake\View\Helper\FormHelper;
 use DateTime;
+use DateTimeImmutable;
 
 /**
  * @property \Cake\View\Helper\FormHelper $Form
@@ -188,7 +189,7 @@ class CrudViewHelper extends Helper
             return $this->Html->label(__d('crud', 'N/A'), 'info');
         }
 
-        if (is_int($value) || is_string($value) || $value instanceof DateTime) {
+        if (is_int($value) || is_string($value) || $value instanceof DateTime || $value instanceof DateTimeImmutable) {
             return $this->Time->timeAgoInWords($value, $options);
         }
 
@@ -210,7 +211,7 @@ class CrudViewHelper extends Helper
         }
         $format = isset($options['format']) ? $options['format'] : null;
 
-        if (is_int($value) || is_string($value) || $value instanceof DateTime) {
+        if (is_int($value) || is_string($value) || $value instanceof DateTime || $value instanceof DateTimeImmutable) {
             return $this->Time->nice($value, $format);
         }
 
