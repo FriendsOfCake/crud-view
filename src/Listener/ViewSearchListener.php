@@ -14,7 +14,7 @@ class ViewSearchListener extends BaseListener
      *
      * ### Options
      *
-     * - `enable`: Indicates whether is listener is enabled.
+     * - `enabled`: Indicates whether is listener is enabled.
      * - `autocomplete`: Whether to use auto complete for select fields. Default `true`.
      * - `selectize`: Whether to use selectize for select fields. Default `true`.
      * - `collection`: The search behavior collection to use. Default "default".

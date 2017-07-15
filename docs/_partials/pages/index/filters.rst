@@ -14,9 +14,12 @@ to be installed and filters configured for your model using the search manager.
             $this->Crud->addListener('Crud.Crud');
             $this->Crud->addListener('Crud.ViewSearch', [
                 // Indicates whether is listener is enabled.
-                'enable' => true,
+                'enabled' => true,
 
                 // Whether to use auto complete for select fields. Default `true`.
+                // This requires you have `Crud.Lookup` action enabled for that
+                // related model's controller.
+                // http://crud.readthedocs.io/en/latest/actions/lookup.html
                 'autocomplete' => true,
 
                 // Whether to use selectize for select fields. Default `true`.

@@ -46,13 +46,14 @@ If you haven't configured the CRUD plugin already, add the following lines to yo
                     'CrudView.View',
                     'Crud.Redirect',
                     'Crud.RelatedModels',
-                    // If you need searching
+                    // If you need searching. Generally it's better to load these
+                    // only in the controller for which you need searching.
                     'Crud.Search',
                     'CrudView.ViewSearch',
                 ]
             ]);
         }
-        
+
         /**
          * Before render callback.
          *
@@ -65,7 +66,7 @@ If you haven't configured the CRUD plugin already, add the following lines to yo
             if ($this->viewBuilder()->className() === null) {
                 $this->viewBuilder()->className('CrudView\View\CrudView');
             }
-            
+
             // For CakePHP 3.0
             /*
             if ($this->viewClass === null) {
