@@ -17,7 +17,7 @@ if ($sidebarNavigation === false) {
                     'tables' => Hash::get($actionConfig, 'scaffold.tables'),
                     'blacklist' => array_merge(
                         (array)Hash::get($actionConfig, 'scaffold.tables_blacklist'),
-                        (array)Configure::read('CrudView.tables_blacklist')
+                        (array)Configure::read('CrudView.tablesBlacklist')
                     )
                 ]) ?>
             <?php else : ?>
