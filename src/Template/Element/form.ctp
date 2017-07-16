@@ -18,27 +18,7 @@ if ($this->exists('form.before_create')) {
         <div class="row">
             <div class="col-lg-<?= $formSidebarExists ? '8' : '12' ?>">
                 <?php if ($fieldGroups) : ?>
-                    <div class="nav-tabs-custom">
-                        <ul class="nav nav-tabs" role="tablist">
-                            <?php $firstTab = key($groupFields) ?>
-                            <?php foreach ($fieldGroups as $group => $groupFields) : ?>
-                                <li role="presentation" <?= $group === $firstTab ? 'class="active"' : '' ?>>
-                                    <a href="#tab-<?= mb_strtolower(Text::slug($group)) ?>" role="tab" data-toggle="tab"><?= $group ?></a>
-                                </li>
-                            <?php endforeach ?>
-                        </ul>
-                        <div class="tab-content">
-                            <?php foreach ($fieldGroups as $group => $groupFields) : ?>
-                                <div
-                                    id="tab-<?= mb_strtolower(Text::slug($group)) ?>"
-                                    role="tabpanel"
-                                    class="tab-pane <?= $group === $firstTab ? 'active' : '' ?>"
-                                >
-                                    <?= $this->Form->inputs($groupFields, ['legend' => false]) ?>
-                                </div>
-                            <?php endforeach ?>
-                        </div>
-                    </div>
+                    <?= $this->element('form/tabs') ?>
                 <?php else : ?>
                     <?= $this->Form->inputs($fields, ['legend' => false]) ?>
                 <?php endif ?>
@@ -52,7 +32,7 @@ if ($this->exists('form.before_create')) {
         </div>
         <div class="row">
             <div class="col-lg-<?= $formSidebarExists ? '8' : '12' ?>">
-               <div class="form-group">
+                <div class="form-group">
                     <?= $this->element('form/buttons') ?>
                 </div>
             </div>
