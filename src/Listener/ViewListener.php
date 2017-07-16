@@ -101,23 +101,6 @@ class ViewListener extends BaseListener
     }
 
     /**
-     * Make sure the CrudView config exists
-     *
-     * If it doesn't, load the defaults file
-     *
-     * @return bool
-     */
-    public function ensureConfig()
-    {
-        $config = Configure::read('CrudView');
-        if ($config !== null) {
-            return true;
-        }
-
-        return Configure::load('CrudView.defaults');
-    }
-
-    /**
      * Make sure flash messages are properly handled by BootstrapUI.FlashHelper
      *
      * @param \Cake\Event\Event $event Event.
