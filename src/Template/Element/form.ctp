@@ -23,24 +23,24 @@ if ($this->exists('form.before_create')) {
                             <?php $firstTab = key($groupFields) ?>
                             <?php foreach ($fieldGroups as $group => $groupFields) : ?>
                                 <li role="presentation" <?= $group === $firstTab ? 'class="active"' : '' ?>>
-                                    <a href="#<?= Text::slug($group) ?>" role="tab" data-toggle="tab"><?= $group ?></a>
+                                    <a href="#tab-<?= mb_strtolower(Text::slug($group)) ?>" role="tab" data-toggle="tab"><?= $group ?></a>
                                 </li>
                             <?php endforeach ?>
                         </ul>
                         <div class="tab-content">
                             <?php foreach ($fieldGroups as $group => $groupFields) : ?>
                                 <div
-                                    id="<?= Text::slug($group) ?>"
+                                    id="tab-<?= mb_strtolower(Text::slug($group)) ?>"
                                     role="tabpanel"
                                     class="tab-pane <?= $group === $firstTab ? 'active' : '' ?>"
                                 >
-                                    <?= $this->Form->inputs($groupFields, ['legend' => false]); ?>
+                                    <?= $this->Form->inputs($groupFields, ['legend' => false]) ?>
                                 </div>
                             <?php endforeach ?>
                         </div>
                     </div>
                 <?php else : ?>
-                    <?= $this->Form->inputs($fields, ['legend' => false]); ?>
+                    <?= $this->Form->inputs($fields, ['legend' => false]) ?>
                 <?php endif ?>
             </div>
 
