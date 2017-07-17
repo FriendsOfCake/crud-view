@@ -96,7 +96,7 @@ class ViewListener extends BaseListener
 
         $fields = $this->_scaffoldFields($associations);
         $controller->set('fields', $fields);
-        $controller->set('fieldGroups', $this->_getFieldGroups($fields));
+        $controller->set('formTabGroups', $this->_getFormTabGroups($fields));
 
         $controller->set('blacklist', $this->_blacklist());
         $controller->set('actions', $this->_getControllerActions());
@@ -648,15 +648,15 @@ class ViewListener extends BaseListener
     }
 
     /**
-     * Get field groups
+     * Get field tab groups
      *
      * @param array $fields Form fields.
      * @return array
      */
-    protected function _getFieldGroups(array $fields = [])
+    protected function _getFormTabGroups(array $fields = [])
     {
         $action = $this->_action();
-        $groups = $action->getConfig('scaffold.form_field_groups');
+        $groups = $action->getConfig('scaffold.form_tab_groups');
 
         if (empty($groups)) {
             return [];
@@ -666,7 +666,7 @@ class ViewListener extends BaseListener
         $unGroupedFields = array_diff(array_keys($fields), $groupedFields);
 
         if ($unGroupedFields) {
-            $primayGroup = $action->getConfig('scaffold.form_primary_group') ?: __d('crud', 'Primary');
+            $primayGroup = $action->getConfig('scaffold.form_primary_tab') ?: __d('crud', 'Primary');
 
             $groups = [$primayGroup => $unGroupedFields] + $groups;
         }

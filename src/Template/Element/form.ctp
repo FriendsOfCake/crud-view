@@ -17,7 +17,7 @@ if ($this->exists('form.before_create')) {
         <?= $this->CrudView->redirectUrl(); ?>
         <div class="row">
             <div class="col-lg-<?= $formSidebarExists ? '8' : '12' ?>">
-                <?php if ($fieldGroups) : ?>
+                <?php if ($formTabGroups) : ?>
                     <?= $this->element('form/tabs') ?>
                 <?php else : ?>
                     <?= $this->Form->inputs($fields, ['legend' => false]) ?>
