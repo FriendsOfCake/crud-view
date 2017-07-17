@@ -28,11 +28,40 @@ to be installed and filters configured for your model using the search manager.
                 // The search behavior collection to use. Default "default".
                 'collection' => 'default',
 
-                // Fields config for generation filter inputs. If `null` the field
-                // inputs will be derived based on filter collection. Default `null``.
-                'fields' => null
+                // Config for generating filter controls. If `null` the
+                // filter controls will be derived based on filter collection.
+                // You can use "form" key in filter config to specify control options.
+                // Default `null`.
+                'fields' => [
+                    // Key should be the filter name.
+                    'filter_1 => [
+                        // Any option which you can use Form::control() options.
+                    ],
+                    // Control options for other filters.
+                ]
             ]);
 
             $this->Crud->execute();
         }
     }
+
+Here's an e.g. of how configure filter controls options through search manager itself::
+
+.. code-block:: php
+
+    <?php
+    // Samples::initialize()
+    $this->searchManager()
+        ->useCollection('backend')
+        ->add('q', 'Search.Like', [
+            'field' => ['title', 'body'],
+            'form' => [
+                'data-foo' => 'bar'
+            ]
+        ])
+        ->add('category_id', 'Search.Value', [
+            'form' => [
+                'type' => 'select',
+                'class' => 'no-selectize'
+            ]
+        ]);

@@ -18,8 +18,9 @@ class ViewSearchListener extends BaseListener
      * - `autocomplete`: Whether to use auto complete for select fields. Default `true`.
      * - `selectize`: Whether to use selectize for select fields. Default `true`.
      * - `collection`: The search behavior collection to use. Default "default".
-     * - `fields`: Fields config for generation filter inputs. If `null` the
-     *   field inputs will be derived based on filter collection. Default `null``.
+     * - `fields`: Config for generating filter controls. If `null` the
+     *   filter controls will be derived based on filter collection. You can use
+     *   "form" key in filter config to specify control options. Default `null`.
      *
      * @var array
      */
