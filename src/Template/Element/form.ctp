@@ -1,4 +1,6 @@
 <?php
+use Cake\Utility\Text;
+
 $formSidebarExists = $this->exists('form.sidebar');
 if ($this->exists('form.before_create')) {
     echo $this->fetch('form.before_create');
@@ -15,7 +17,11 @@ if ($this->exists('form.before_create')) {
         <?= $this->CrudView->redirectUrl(); ?>
         <div class="row">
             <div class="col-lg-<?= $formSidebarExists ? '8' : '12' ?>">
-                <?= $this->Form->inputs($fields, ['legend' => false]); ?>
+                <?php if ($formTabGroups) : ?>
+                    <?= $this->element('form/tabs') ?>
+                <?php else : ?>
+                    <?= $this->Form->inputs($fields, ['legend' => false]) ?>
+                <?php endif ?>
             </div>
 
             <?php if ($formSidebarExists) : ?>
@@ -26,7 +32,7 @@ if ($this->exists('form.before_create')) {
         </div>
         <div class="row">
             <div class="col-lg-<?= $formSidebarExists ? '8' : '12' ?>">
-               <div class="form-group">
+                <div class="form-group">
                     <?= $this->element('form/buttons') ?>
                 </div>
             </div>

@@ -85,13 +85,19 @@ class ViewListener extends BaseListener
         $this->beforeRenderSiteTitle();
         $this->beforeRenderUtilityNavigation();
         $this->beforeRenderSidebarNavigation();
+
         $controller = $this->_controller();
         $controller->set('actionConfig', $this->_action()->getConfig());
         $controller->set('title', $this->_getPageTitle());
         $controller->set('breadcrumbs', $this->_getBreadcrumbs());
+
         $associations = $this->associations;
         $controller->set(compact('associations'));
-        $controller->set('fields', $this->_scaffoldFields($associations));
+
+        $fields = $this->_scaffoldFields($associations);
+        $controller->set('fields', $fields);
+        $controller->set('formTabGroups', $this->_getFormTabGroups($fields));
+
         $controller->set('blacklist', $this->_blacklist());
         $controller->set('actions', $this->_getControllerActions());
         $controller->set('bulkActions', $this->_getBulkActions());
@@ -620,6 +626,33 @@ class ViewListener extends BaseListener
         // add "primary" actions (primary should rendered as separate buttons)
         $groupedActions = (new Collection($groupedActions))->unfold()->toList();
         $groups['primary'] = array_diff(array_keys($this->_getAllowedActions()), $groupedActions);
+
+        return $groups;
+    }
+
+    /**
+     * Get field tab groups
+     *
+     * @param array $fields Form fields.
+     * @return array
+     */
+    protected function _getFormTabGroups(array $fields = [])
+    {
+        $action = $this->_action();
+        $groups = $action->getConfig('scaffold.form_tab_groups');
+
+        if (empty($groups)) {
+            return [];
+        }
+
+        $groupedFields = (new Collection($groups))->unfold()->toList();
+        $unGroupedFields = array_diff(array_keys($fields), $groupedFields);
+
+        if ($unGroupedFields) {
+            $primayGroup = $action->getConfig('scaffold.form_primary_tab') ?: __d('crud', 'Primary');
+
+            $groups = [$primayGroup => $unGroupedFields] + $groups;
+        }
 
         return $groups;
     }
