@@ -86,8 +86,8 @@ class ViewSearchListener extends BaseListener
      */
     protected function _deriveFields()
     {
+        $config = $this->getConfig();
         $table = $this->_table();
-        $request = $this->_request();
 
         if (method_exists($table, 'searchConfiguration')) {
             $filters = $table->searchConfiguration();
@@ -97,7 +97,7 @@ class ViewSearchListener extends BaseListener
 
         $fields = [];
         $schema = $table->getSchema();
-        $config = $this->getConfig();
+        $request = $this->_request();
 
         foreach ($filters->all() as $filter) {
             if ($filter->getConfig('form') === false) {
