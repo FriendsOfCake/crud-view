@@ -12,16 +12,28 @@ class ViewSearchListener extends BaseListener
     /**
      * Default configuration
      *
+     * ### Options
+     *
+     * - `enabled`: Indicates whether is listener is enabled.
+     * - `autocomplete`: Whether to use auto complete for select fields. Default `true`.
+     * - `selectize`: Whether to use selectize for select fields. Default `true`.
+     * - `collection`: The search behavior collection to use. Default "default".
+     * - `fields`: Config for generating filter controls. If `null` the
+     *   filter controls will be derived based on filter collection. You can use
+     *   "form" key in filter config to specify control options. Default `null`.
+     *
      * @var array
      */
     protected $_defaultConfig = [
         'enabled' => null,
         'autocomplete' => true,
         'selectize' => true,
+        'collection' => 'default',
+        'fields' => null
     ];
 
     /**
-     * implementedEvents
+     * Events this listerner is interested in.
      *
      * @return array
      */
@@ -33,7 +45,7 @@ class ViewSearchListener extends BaseListener
     }
 
     /**
-     * afterPaginate
+     * After paginate event callback.
      *
      * Only after a crud paginate call does this listener do anything. So listen
      * for that
@@ -58,7 +70,7 @@ class ViewSearchListener extends BaseListener
     }
 
     /**
-     * [fields description]
+     * Get field options for search filter inputs.
      *
      * @return array
      */
@@ -68,7 +80,7 @@ class ViewSearchListener extends BaseListener
     }
 
     /**
-     * [_deriveFields description]
+     * Derive field options for search filter inputs based on filter collection.
      *
      * @return array
      */
@@ -80,12 +92,12 @@ class ViewSearchListener extends BaseListener
         if (method_exists($table, 'searchConfiguration')) {
             $filters = $table->searchConfiguration();
         } else {
-            $filters = $table->searchManager();
+            $filters = $table->searchManager()->useCollection($config['collection']);
         }
 
         $fields = [];
         $schema = $table->getSchema();
-        $config = $this->_config;
+        $config = $this->getConfig();
 
         foreach ($filters->all() as $filter) {
             if ($filter->getConfig('form') === false) {
@@ -93,18 +105,20 @@ class ViewSearchListener extends BaseListener
             }
 
             $field = $filter->name();
-            $input = [];
-
-            $filterFormConfig = $filter->config();
-            if (!empty($filterFormConfig['form'])) {
-                $input = $filterFormConfig['form'];
-            }
-
-            $input += [
+            $input = [
                 'label' => Inflector::humanize(preg_replace('/_id$/', '', $field)),
                 'required' => false,
                 'type' => 'text'
             ];
+
+            if (substr($field, -3) === '_id' && $field !== '_id') {
+                $input['type'] = 'select';
+            }
+
+            $filterFormConfig = $filter->getConfig('form');
+            if (!empty($filterFormConfig)) {
+                $input = $filterFormConfig + $input;
+            }
 
             $input['value'] = $request->getQuery($field);
 
