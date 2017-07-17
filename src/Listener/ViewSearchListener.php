@@ -104,14 +104,7 @@ class ViewSearchListener extends BaseListener
             }
 
             $field = $filter->name();
-            $input = [];
-
-            $filterFormConfig = $filter->getConfig();
-            if (!empty($filterFormConfig['form'])) {
-                $input = $filterFormConfig['form'];
-            }
-
-            $input += [
+            $input = [
                 'label' => Inflector::humanize(preg_replace('/_id$/', '', $field)),
                 'required' => false,
                 'type' => 'text'
@@ -119,6 +112,11 @@ class ViewSearchListener extends BaseListener
 
             if (substr($field, -3) === '_id' && $field !== '_id') {
                 $input['type'] = 'select';
+            }
+
+            $filterFormConfig = $filter->getConfig('form');
+            if (!empty($filterFormConfig)) {
+                $input = $filterFormConfig + $input;
             }
 
             $input['value'] = $request->getQuery($field);
