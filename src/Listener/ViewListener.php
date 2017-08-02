@@ -385,10 +385,12 @@ class ViewListener extends BaseListener
     }
 
     /**
-     * Returns url action configuration for a given action
+     * Returns url action configuration for a given action.
      *
-     * This is used to figure out how a given action should be linked to
+     * This is used to figure out how a given action should be linked to.
      *
+     * @param string $actionName Action name.
+     * @param array $config Config array.
      * @return array
      */
     protected function _getControllerActionConfiguration($actionName, $config)
