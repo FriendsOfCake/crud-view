@@ -10,7 +10,7 @@ trait CrudViewConfigTrait
      *
      * If it doesn't, load the defaults file
      *
-     * @return array
+     * @return bool
      */
     public function ensureConfig()
     {

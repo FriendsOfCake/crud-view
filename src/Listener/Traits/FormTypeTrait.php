@@ -50,6 +50,11 @@ trait FormTypeTrait
     protected function _getFormSubmitExtraButtons()
     {
         $action = $this->_action();
+        $buttons = $action->getConfig('scaffold.form_submit_extra_buttons');
+
+        if ($buttons === false) {
+            return [];
+        }
 
         $defaults = [
             [
@@ -73,13 +78,8 @@ trait FormTypeTrait
             ],
         ];
 
-        $buttons = $action->getConfig('scaffold.form_submit_extra_buttons');
         if ($buttons === null || $buttons === true) {
             $buttons = $defaults;
-        }
-
-        if ($buttons === false) {
-            $buttons = [];
         }
 
         return $buttons;

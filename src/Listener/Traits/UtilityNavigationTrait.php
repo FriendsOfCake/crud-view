@@ -19,7 +19,7 @@ trait UtilityNavigationTrait
     /**
      * Returns the utility navigation to show on scaffolded view
      *
-     * @return string
+     * @return array
      */
     protected function _getUtilityNavigation()
     {

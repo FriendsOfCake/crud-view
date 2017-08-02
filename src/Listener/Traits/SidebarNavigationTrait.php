@@ -19,7 +19,7 @@ trait SidebarNavigationTrait
     /**
      * Returns the sidebar navigation to show on scaffolded view
      *
-     * @return string
+     * @return string|null|false
      */
     protected function _getSidebarNavigation()
     {
