@@ -90,16 +90,16 @@ class ViewSearchListener extends BaseListener
         $table = $this->_table();
 
         if (method_exists($table, 'searchConfiguration')) {
-            $filters = $table->searchConfiguration();
+            $searchManager = $table->searchConfiguration();
         } else {
-            $filters = $table->searchManager()->useCollection($config['collection']);
+            $searchManager = $table->searchManager();
         }
 
         $fields = [];
         $schema = $table->getSchema();
         $request = $this->_request();
 
-        foreach ($filters->all() as $filter) {
+        foreach ($searchManager->getFilters($config['collection']) as $filter) {
             if ($filter->getConfig('form') === false) {
                 continue;
             }
