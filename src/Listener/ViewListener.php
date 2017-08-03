@@ -200,7 +200,7 @@ class ViewListener extends BaseListener
 
             $models = [];
             foreach ($relations as $relation) {
-                $models = Hash::merge($models, (array)Hash::extract($associations, "$relation.{s}.model"));
+                $models = Hash::merge($models, Hash::extract($associations, "$relation.{s}.model"));
             }
         }
 
@@ -333,7 +333,7 @@ class ViewListener extends BaseListener
             $inflections[] = 'singularize';
         }
 
-        $baseName = (string)$this->_controller()->name;
+        $baseName = $this->_controller()->name;
         foreach ($inflections as $inflection) {
             $baseName = Inflector::$inflection($baseName);
         }
@@ -377,17 +377,20 @@ class ViewListener extends BaseListener
         }
 
         foreach ($actionBlacklist as $actionName) {
-            unset(${$scope}[$actionName]);
+            unset($table[$actionName]);
+            unset($entity[$actionName]);
         }
 
         return compact('table', 'entity');
     }
 
     /**
-     * Returns url action configuration for a given action
+     * Returns url action configuration for a given action.
      *
-     * This is used to figure out how a given action should be linked to
+     * This is used to figure out how a given action should be linked to.
      *
+     * @param string $actionName Action name.
+     * @param array $config Config array.
      * @return array
      */
     protected function _getControllerActionConfiguration($actionName, $config)

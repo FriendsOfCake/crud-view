@@ -11,8 +11,8 @@ use DateTime;
 use DateTimeImmutable;
 
 /**
- * @property \Cake\View\Helper\FormHelper $Form
- * @property \Cake\View\Helper\HtmlHelper $Html
+ * @property \BootstrapUI\View\Helper\FormHelper $Form
+ * @property \BootstrapUI\View\Helper\HtmlHelper $Html
  * @property \Cake\View\Helper\TimeHelper $Time
  */
 class CrudViewHelper extends Helper
@@ -171,8 +171,8 @@ class CrudViewHelper extends Helper
     public function formatBoolean($field, $value, $options)
     {
         return (bool)$value ?
-            $this->Html->label(__d('crud', 'Yes'), empty($options['inverted']) ? 'success' : 'danger') :
-            $this->Html->label(__d('crud', 'No'), empty($options['inverted']) ? 'danger' : 'success');
+            $this->Html->label(__d('crud', 'Yes'), ['type' => empty($options['inverted']) ? 'success' : 'danger']) :
+            $this->Html->label(__d('crud', 'No'), ['type' => empty($options['inverted']) ? 'danger' : 'success']);
     }
 
     /**
@@ -186,14 +186,14 @@ class CrudViewHelper extends Helper
     public function formatDate($field, $value, array $options)
     {
         if ($value === null) {
-            return $this->Html->label(__d('crud', 'N/A'), 'info');
+            return $this->Html->label(__d('crud', 'N/A'), ['type' => 'info']);
         }
 
         if (is_int($value) || is_string($value) || $value instanceof DateTime || $value instanceof DateTimeImmutable) {
             return $this->Time->timeAgoInWords($value, $options);
         }
 
-        return $this->Html->label(__d('crud', 'N/A'), 'info');
+        return $this->Html->label(__d('crud', 'N/A'), ['type' => 'info']);
     }
 
     /**
@@ -207,7 +207,7 @@ class CrudViewHelper extends Helper
     public function formatTime($field, $value, array $options)
     {
         if ($value === null) {
-            return $this->Html->label(__d('crud', 'N/A'), 'info');
+            return $this->Html->label(__d('crud', 'N/A'), ['type' => 'info']);
         }
         $format = isset($options['format']) ? $options['format'] : null;
 
@@ -215,7 +215,7 @@ class CrudViewHelper extends Helper
             return $this->Time->nice($value, $format);
         }
 
-        return $this->Html->label(__d('crud', 'N/A'), 'info');
+        return $this->Html->label(__d('crud', 'N/A'), ['type' => 'info']);
     }
 
     /**
@@ -290,7 +290,7 @@ class CrudViewHelper extends Helper
      * Returns a hidden input for the redirect_url if it exists
      * in the request querystring, view variables, form data
      *
-     * @return string
+     * @return string|null
      */
     public function redirectUrl()
     {

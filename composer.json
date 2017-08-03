@@ -34,7 +34,8 @@
         "friendsofcake/bootstrap-ui": "~1.2"
     },
     "require-dev": {
-        "friendsofcake/cakephp-test-utilities": "dev-master"
+        "friendsofcake/cakephp-test-utilities": "dev-master",
+        "markstory/asset_compress": "^3.2"
     },
     "autoload": {
         "psr-4": {

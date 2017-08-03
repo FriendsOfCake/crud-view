@@ -17,7 +17,7 @@ trait IndexTypeTrait
         $controller->set('indexTitleField', $this->_getIndexTitleField());
         $controller->set('indexBodyField', $this->_getIndexBodyField());
         $controller->set('indexImageField', $this->_getIndexImageField());
-        $controller->seT('indexGalleryCssClasses', $this->_getIndexGalleryCssClasses());
+        $controller->set('indexGalleryCssClasses', $this->_getIndexGalleryCssClasses());
     }
 
     /**

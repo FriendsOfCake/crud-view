@@ -1,0 +1,4 @@
+parameters:
+    ignoreErrors:
+        - '#Call to an undefined method Cake\\Datasource\\ConnectionInterface::schemaCollection\(\)#'
+        - '#Property Cake\\View\\View::\$subDir \(string\) does not accept null#'
