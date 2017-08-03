@@ -1,3 +1,6 @@
+<?php
+use Cake\Utility\Text;
+?>
 <div class="nav-tabs-custom">
     <ul class="nav nav-tabs" role="tablist">
         <?php $firstTab = key($formTabGroups) ?>
