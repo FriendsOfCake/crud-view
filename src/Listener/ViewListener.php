@@ -28,7 +28,7 @@ class ViewListener extends BaseListener
      *
      * @var array
      */
-    protected $associations = [];
+    protected $associations = null;
 
     /**
      * [beforeFind description]
@@ -38,9 +38,15 @@ class ViewListener extends BaseListener
      */
     public function beforeFind(Event $event)
     {
-        $this->associations = $this->_associations(array_keys($this->_getRelatedModels()));
+        $related = $this->_getRelatedModels();
+        if ($related === []) {
+            $this->associations = [];
+        } else {
+            $this->associations = $this->_associations(array_keys($related));
+        }
+
         if (!$event->getSubject()->query->contain()) {
-            $event->getSubject()->query->contain($this->_getRelatedModels());
+            $event->getSubject()->query->contain($related);
         }
     }
 
@@ -52,7 +58,13 @@ class ViewListener extends BaseListener
      */
     public function beforePaginate(Event $event)
     {
-        $this->associations = $this->_associations(array_keys($this->_getRelatedModels()));
+        $related = $this->_getRelatedModels();
+        if ($related === []) {
+            $this->associations = [];
+        } else {
+            $this->associations = $this->_associations(array_keys($related));
+        }
+
         if (!$event->getSubject()->query->contain()) {
             $event->getSubject()->query->contain($this->_getRelatedModels(['manyToOne', 'oneToOne']));
         }
@@ -74,7 +86,7 @@ class ViewListener extends BaseListener
             $this->_entity = $event->getSubject()->entity;
         }
 
-        if (empty($this->associations)) {
+        if ($this->associations === null) {
             $this->associations = $this->_associations(array_keys($this->_getRelatedModels()));
         }
 
@@ -174,16 +186,16 @@ class ViewListener extends BaseListener
     /**
      * Get a list of relevant models to contain using Containable
      *
-     * If the user haven't configured any relations for an action
+     * If the user hasn't configured any relations for an action
      * we assume all relations will be used.
      *
-     * The user can chose to suppress specific relations using the blacklist
+     * The user can choose to suppress specific relations using the blacklist
      * functionality.
      *
-     * @param string[] $relations List of relations.
+     * @param string[] $associationTypes List of association types.
      * @return array
      */
-    protected function _getRelatedModels($relations = [])
+    protected function _getRelatedModels($associationTypes = [])
     {
         $models = $this->_action()->getConfig('scaffold.relations');
 
@@ -192,15 +204,21 @@ class ViewListener extends BaseListener
         }
 
         if (empty($models)) {
-            $associations = $this->_associations();
-
-            if (empty($relations)) {
-                $relations = array_keys($associations);
+            $associations = [];
+            if (empty($associationTypes)) {
+                $associations = $this->_table()->associations();
+            } else {
+                foreach ($associationTypes as $assocType) {
+                    $associations = array_merge(
+                        $associations,
+                        $this->_table()->associations()->type($assocType)
+                    );
+                }
             }
 
             $models = [];
-            foreach ($relations as $relation) {
-                $models = Hash::merge($models, Hash::extract($associations, "$relation.{s}.model"));
+            foreach ($associations as $assoc) {
+                $models[] = $assoc->name();
             }
         }
 
