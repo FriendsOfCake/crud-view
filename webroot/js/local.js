@@ -1,4 +1,4 @@
-$(document).on('ready', function() {
+$(function() {
 
     var bulkActionForm = $('.bulk-actions');
     if (bulkActionForm.length) {
