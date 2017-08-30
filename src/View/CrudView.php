@@ -201,7 +201,7 @@ class CrudView extends View
             $this->subDir = null;
             $this->templatePath = 'Scaffold';
 
-            return parent::_getViewFileName($this->template);
+            return parent::_getViewFileName($name);
         }
     }
 }
