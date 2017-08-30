@@ -206,6 +206,5 @@ class CrudView extends View
         } catch (MissingTemplateException $exception) {
             return parent::_getViewFileName($name);
         }
-
     }
 }
