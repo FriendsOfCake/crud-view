@@ -37,15 +37,15 @@ Adding Controller Actions to utilize Crud Actions
 -------------------------------------------------
 
 It's easy to add an action to a controller that makes use of another
-*CrudView* action. This uses the template provided by the add action.
+*CrudView* action. This can use the template provided by the add action,
+it is possible to have a custom template ``register.ctp`` too.
 
 .. code-block:: php
 
-public function login() {
-    $this->Crud->mapAction('login', [
+public function register() {
+    $this->Crud->mapAction('register', [
         'className' => 'Crud.Add',
     ]);
-    $this->Crud->action()->config('scaffold.fields', ['username', 'password']);
     $this->Crud->execute();
 }
 
