@@ -37,8 +37,8 @@ Adding Controller Actions to utilize Crud Actions
 -------------------------------------------------
 
 It's easy to add an action to a controller that makes use of another
-*CrudView* action. This can use the template provided by the add action,
-it is possible to have a custom template ``register.ctp`` too.
+*CrudView* action. This does use the template provided by the add action
+by default, it can be overwritten by providing a custom ``register.ctp``.
 
 .. code-block:: php
 
