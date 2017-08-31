@@ -37,7 +37,7 @@ Adding Controller Actions to utilize Crud Actions
 -------------------------------------------------
 
 It's easy to add an action to a controller that makes use of another
-*CrudView* action. This uses the template provided by the add action too.
+*CrudView* action. This uses the template provided by the add action.
 
 .. code-block:: php
 
