@@ -49,7 +49,7 @@ public function account() {
         'view' => 'edit',
     ]);
     return $this->Crud->execute(null, $this->Auth->user('id'));
-  }
+}
 
 By default, it can be overwritten by providing a custom ``register.ctp``.
 
