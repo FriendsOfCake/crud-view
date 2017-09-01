@@ -39,7 +39,7 @@ Adding Controller Actions to utilize Crud Actions
 It's easy to add an action to a controller that makes use of another
 *CrudView* action.
 
-This does use the template provided by the edit action:
+This does use the template provided by the edit action::
 
 .. code-block:: php
 
@@ -51,7 +51,7 @@ public function account() {
     return $this->Crud->execute(null, $this->Auth->user('id'));
 }
 
-By default, it can be overwritten by providing a custom ``register.ctp``:
+By default, it can be overwritten by providing a custom ``register.ctp``::
 
 .. code-block:: php
 
