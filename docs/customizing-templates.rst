@@ -37,8 +37,21 @@ Adding Controller Actions to utilize Crud Actions
 -------------------------------------------------
 
 It's easy to add an action to a controller that makes use of another
-*CrudView* action. This does use the template provided by the add action
-by default, it can be overwritten by providing a custom ``register.ctp``.
+*CrudView* action.
+
+This does use the template provided by the edit action:
+
+.. code-block:: php
+
+public function account() {
+    $this->Crud->mapAction('account', [
+        'className' => 'Crud.Edit',
+        'view' => 'edit',
+    ]);
+    return $this->Crud->execute(null, $this->Auth->user('id'));
+  }
+
+By default, it can be overwritten by providing a custom ``register.ctp``.
 
 .. code-block:: php
 
@@ -46,7 +59,7 @@ public function register() {
     $this->Crud->mapAction('register', [
         'className' => 'Crud.Add',
     ]);
-    $this->Crud->execute();
+    return $this->Crud->execute();
 }
 
 Overriding Template Elements
