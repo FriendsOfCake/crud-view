@@ -33,6 +33,35 @@ title for any of the fields by using the ``scaffold.fields`` configuration
         // The rest of the fields to display here
     ]);
 
+Adding Controller Actions to utilize Crud Actions
+-------------------------------------------------
+
+It's easy to add an action to a controller that makes use of another
+*CrudView* action.
+
+This does use the template provided by the edit action:
+
+.. code-block:: php
+
+    public function account() {
+        $this->Crud->mapAction('account', [
+            'className' => 'Crud.Edit',
+            'view' => 'edit',
+        ]);
+        return $this->Crud->execute(null, $this->Auth->user('id'));
+    }
+
+By default, it can be overwritten by providing a custom ``register.ctp``:
+
+.. code-block:: php
+
+    public function register() {
+        $this->Crud->mapAction('register', [
+            'className' => 'Crud.Add',
+        ]);
+        return $this->Crud->execute();
+    }
+
 Overriding Template Elements
 ----------------------------
 
