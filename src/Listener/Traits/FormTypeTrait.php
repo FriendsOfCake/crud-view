@@ -56,33 +56,41 @@ trait FormTypeTrait
             return [];
         }
 
-        $defaults = [
-            [
+        if ($buttons === null || $buttons === true) {
+            $buttons = $this->_getDefaultExtraButtons();
+        }
+
+        return $buttons;
+    }
+
+    /**
+     * Get default extra buttons
+     *
+     * @return array
+     */
+    protected function _getDefaultExtraButtons()
+    {
+        return [
+            'save_and_continue' => [
                 'title' => __d('crud', 'Save & continue editing'),
-                'options' => ['class' => 'btn btn-success btn-save-continue', 'name' => '_edit', 'value' => true],
+                'options' => ['class' => 'btn btn-success btn-save-continue', 'name' => '_edit', 'value' => '1'],
                 'type' => 'button',
                 '_label' => 'save_and_continue',
             ],
-            [
+            'save_and_create' => [
                 'title' => __d('crud', 'Save & create new'),
-                'options' => ['class' => 'btn btn-success', 'name' => '_add', 'value' => true],
+                'options' => ['class' => 'btn btn-success', 'name' => '_add', 'value' => '1'],
                 'type' => 'button',
                 '_label' => 'save_and_create',
             ],
-            [
+            'back' => [
                 'title' => __d('crud', 'Back'),
                 'url' => ['action' => 'index'],
-                'options' => ['class' => 'btn btn-default', 'role' => 'button', 'value' => true],
+                'options' => ['class' => 'btn btn-default', 'role' => 'button'],
                 'type' => 'link',
                 '_label' => 'back',
             ],
         ];
-
-        if ($buttons === null || $buttons === true) {
-            $buttons = $defaults;
-        }
-
-        return $buttons;
     }
 
     /**
