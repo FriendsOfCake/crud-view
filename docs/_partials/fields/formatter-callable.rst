@@ -37,7 +37,7 @@ only configure the settings for one or two.
     $action = $this->Crud->action();
     $action->config('scaffold.field_settings', [
         'published_time' => [
-            'formatter' => function ($name, Time $value) {
+            'formatter' => function ($name, Time $value, Entity $entity) {
                 return $value->nice() . sprintf(' (Approved by %s)', $entity->approver->name);
             }
         ],
