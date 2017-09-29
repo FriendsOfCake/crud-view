@@ -1,6 +1,4 @@
 <?php
-use Cake\Utility\Text;
-
 $formSidebarExists = $this->exists('form.sidebar');
 if ($this->exists('form.before_create')) {
     echo $this->fetch('form.before_create');
@@ -30,6 +28,9 @@ if ($this->exists('form.before_create')) {
                 </div>
             <?php endif; ?>
         </div>
+        <?php if ($this->exists('form.before_buttons')) : ?>
+            <?= $this->fetch('form.before_buttons'); ?>
+        <?php endif; ?>
         <div class="row">
             <div class="col-lg-<?= $formSidebarExists ? '8' : '12' ?>">
                 <div class="form-group">
