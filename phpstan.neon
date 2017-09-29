@@ -1,3 +1,0 @@
-parameters:
-    ignoreErrors:
-        - '#Property Cake\\View\\View::\$subDir \(string\) does not accept null#'
