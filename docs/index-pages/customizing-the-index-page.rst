@@ -17,6 +17,7 @@ in scope. To limit the fields used, simply specify an array of fields:
 .. include:: /_partials/fields/field-blacklist.rst
 .. include:: /_partials/fields/formatter-callable.rst
 .. include:: /_partials/fields/formatter-element.rst
+.. include:: /_partials/fields/sorting.rst
 
 .. include:: /_partials/pages/index/buttons.rst
 .. include:: /_partials/pages/index/bulk-actions.rst
