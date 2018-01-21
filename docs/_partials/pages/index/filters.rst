@@ -8,11 +8,33 @@ to be installed and filters configured for your model using the search manager.
 .. code-block:: php
 
     <?php
-    class SamplesController extends AppController {
+    namespace App\Controller;
+    use App\Controller\AppController;
 
-        public function index() {
-            $this->Crud->addListener('Crud.Crud');
-            $this->Crud->addListener('Crud.ViewSearch', [
+    class SamplesController extends AppController
+    {
+        public function initialize()
+        {
+            parent::initialize();
+            // Enable PrgComponent so search form submissions
+            // properly populate querystring parameters for the SearchListener
+            $this->loadComponent('Search.Prg', [
+                'actions' => [
+                    'index',
+                ],
+            ]);
+        }
+
+        public function index()
+        {
+            // Enable the SearchListener
+            $this->Crud->addListener('search', 'Crud.Search', [
+                // The search behavior collection to use. Default "default".
+                'collection' => 'admin',
+            ]);
+
+            // Enable the ViewSearch listener
+            $this->Crud->addListener('viewSearch', 'CrudView.ViewSearch', [
                 // Indicates whether is listener is enabled.
                 'enabled' => true,
 
@@ -41,7 +63,7 @@ to be installed and filters configured for your model using the search manager.
                 ]
             ]);
 
-            $this->Crud->execute();
+            return $this->Crud->execute();
         }
     }
 
@@ -50,18 +72,28 @@ Here's an e.g. of how configure filter controls options through search manager i
 .. code-block:: php
 
     <?php
-    // Samples::initialize()
-    $this->searchManager()
-        ->useCollection('backend')
-        ->add('q', 'Search.Like', [
-            'field' => ['title', 'body'],
-            'form' => [
-                'data-foo' => 'bar'
-            ]
-        ])
-        ->add('category_id', 'Search.Value', [
-            'form' => [
-                'type' => 'select',
-                'class' => 'no-selectize'
-            ]
-        ]);
+    namespace App\Model\Table;
+    use Cake\ORM\Table;
+
+    class SamplesTable extends Table
+    {
+        public function initialize(array $config)
+        {
+            parent::initialize($config);
+            $this->addBehavior('Search.Search');
+            $this->searchManager()
+                ->useCollection('default')
+                ->add('q', 'Search.Like', [
+                    'field' => ['title', 'body'],
+                    'form' => [
+                        'data-foo' => 'bar'
+                    ]
+                ])
+                ->add('category_id', 'Search.Value', [
+                    'form' => [
+                        'type' => 'select',
+                        'class' => 'no-selectize'
+                    ]
+                ]);
+        }
+    }
