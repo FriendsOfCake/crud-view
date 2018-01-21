@@ -11,7 +11,7 @@ may be enabled via the ``scaffold.breadcrumbs`` configuration key.
 
 .. warning::
 
-    Settings this configuration key to anything other than an array will
+    Setting this configuration key to anything other than an array will
     result in no breadcrumbs.
 
 Adding Breadcrumbs
