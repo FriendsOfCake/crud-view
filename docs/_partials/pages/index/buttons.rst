@@ -104,6 +104,7 @@ configuration key.
 .. code-block:: php
 
     $action = $this->Crud->action();
+    $action->config('scaffold.actions', ['view', 'edit', 'delete']);
     $action->config('scaffold.action_groups', [
         'Actions' => [
             'view',
@@ -120,6 +121,7 @@ You can specify multiple action groups:
 .. code-block:: php
 
     $action = $this->Crud->action();
+    $action->config('scaffold.actions', ['view', 'edit', 'delete', 'disable', 'delete']);
     $action->config('scaffold.action_groups', [
         'Actions' => [
             'view',
@@ -137,6 +139,7 @@ Finally, you can also set configuration for each entry in an action group:
 .. code-block:: php
 
     $action = $this->Crud->action();
+    $action->config('scaffold.actions', ['view', 'edit', 'delete', 'english', 'spanish']);
     $action->config('scaffold.action_groups', [
         'Actions' => [
             'view',
