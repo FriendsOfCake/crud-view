@@ -25,7 +25,8 @@ to be installed and filters configured for your model using the search manager.
             ]);
         }
 
-        public function index() {
+        public function index()
+        {
             // Enable the SearchListener
             $this->Crud->addListener('search', 'Crud.Search', [
                 // The search behavior collection to use. Default "default".
@@ -62,7 +63,7 @@ to be installed and filters configured for your model using the search manager.
                 ]
             ]);
 
-            $this->Crud->execute();
+            return $this->Crud->execute();
         }
     }
 
