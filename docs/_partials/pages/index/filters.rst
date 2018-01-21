@@ -12,7 +12,7 @@ to be installed and filters configured for your model using the search manager.
 
         public function index() {
             $this->Crud->addListener('Crud.Crud');
-            $this->Crud->addListener('Crud.ViewSearch', [
+            $this->Crud->addListener('viewSearch', 'CrudView.ViewSearch', [
                 // Indicates whether is listener is enabled.
                 'enabled' => true,
 
@@ -51,8 +51,9 @@ Here's an e.g. of how configure filter controls options through search manager i
 
     <?php
     // Samples::initialize()
+    $this->addBehavior('Search.Search');
     $this->searchManager()
-        ->useCollection('backend')
+        ->useCollection('default')
         ->add('q', 'Search.Like', [
             'field' => ['title', 'body'],
             'form' => [
