@@ -10,8 +10,19 @@ to be installed and filters configured for your model using the search manager.
     <?php
     class SamplesController extends AppController {
 
+        public function initialize()
+        {
+            parent::initialize();
+            // Enable PrgComponent so search form submissions
+            // properly populate querystring parameters for the SearchListener
+            $this->loadComponent('Search.Prg', [
+                'actions' => [
+                    'index',
+                ],
+            ]);
+        }
         public function index() {
-            // Enable the search listener
+            // Enable the SearchListener
             $this->Crud->addListener('search', 'Crud.Search', [
                 // The search behavior collection to use. Default "default".
                 'collection' => 'admin',
