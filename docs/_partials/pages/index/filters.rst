@@ -45,7 +45,7 @@ to be installed and filters configured for your model using the search manager.
         }
     }
 
-Here's an e.g. of how configure filter controls options through search manager itself::
+Here's an e.g. of how configure filter controls options through search manager itself:
 
 .. code-block:: php
 
