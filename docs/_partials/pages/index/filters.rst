@@ -8,8 +8,11 @@ to be installed and filters configured for your model using the search manager.
 .. code-block:: php
 
     <?php
-    class SamplesController extends AppController {
+    namespace App\Controller;
+    use App\Controller\AppController;
 
+    class SamplesController extends AppController
+    {
         public function initialize()
         {
             parent::initialize();
@@ -21,6 +24,7 @@ to be installed and filters configured for your model using the search manager.
                 ],
             ]);
         }
+
         public function index() {
             // Enable the SearchListener
             $this->Crud->addListener('search', 'Crud.Search', [
@@ -67,19 +71,28 @@ Here's an e.g. of how configure filter controls options through search manager i
 .. code-block:: php
 
     <?php
-    // Samples::initialize()
-    $this->addBehavior('Search.Search');
-    $this->searchManager()
-        ->useCollection('default')
-        ->add('q', 'Search.Like', [
-            'field' => ['title', 'body'],
-            'form' => [
-                'data-foo' => 'bar'
-            ]
-        ])
-        ->add('category_id', 'Search.Value', [
-            'form' => [
-                'type' => 'select',
-                'class' => 'no-selectize'
-            ]
-        ]);
+    namespace App\Model\Table;
+    use Cake\ORM\Table;
+
+    class SamplesTable extends Table
+    {
+        public function initialize(array $config)
+        {
+            parent::initialize($config);
+            $this->addBehavior('Search.Search');
+            $this->searchManager()
+                ->useCollection('default')
+                ->add('q', 'Search.Like', [
+                    'field' => ['title', 'body'],
+                    'form' => [
+                        'data-foo' => 'bar'
+                    ]
+                ])
+                ->add('category_id', 'Search.Value', [
+                    'form' => [
+                        'type' => 'select',
+                        'class' => 'no-selectize'
+                    ]
+                ]);
+        }
+    }
