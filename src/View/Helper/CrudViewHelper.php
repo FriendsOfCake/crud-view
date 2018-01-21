@@ -82,7 +82,7 @@ class CrudViewHelper extends Helper
         }
 
         if (is_callable($options['formatter'])) {
-            return $options['formatter']($field, $value, $this->getContext(), $options);
+            return $options['formatter']($field, $value, $this->getContext(), $options, $this->getView());
         }
 
         $value = $this->introspect($field, $value, $options);
