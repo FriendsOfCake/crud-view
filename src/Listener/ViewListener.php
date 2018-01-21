@@ -383,6 +383,9 @@ class ViewListener extends BaseListener
                 if (isset($table[$actionName]) || isset($entity[$actionName])) {
                     continue;
                 }
+                if ($config === null) {
+                    $config = [];
+                }
                 list($scope, $actionConfig) = $this->_getControllerActionConfiguration($actionName, $config);
                 $realAction = Hash::get($actionConfig, 'url.action', $actionName);
                 if (!isset(${$scope}[$realAction])) {
