@@ -11,7 +11,13 @@ to be installed and filters configured for your model using the search manager.
     class SamplesController extends AppController {
 
         public function index() {
-            $this->Crud->addListener('Crud.Crud');
+            // Enable the search listener
+            $this->Crud->addListener('search', 'Crud.Search', [
+                // The search behavior collection to use. Default "default".
+                'collection' => 'admin',
+            ]);
+
+            // Enable the ViewSearch listener
             $this->Crud->addListener('viewSearch', 'CrudView.ViewSearch', [
                 // Indicates whether is listener is enabled.
                 'enabled' => true,
