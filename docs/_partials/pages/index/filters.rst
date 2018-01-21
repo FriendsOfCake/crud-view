@@ -34,7 +34,7 @@ to be installed and filters configured for your model using the search manager.
                 // Default `null`.
                 'fields' => [
                     // Key should be the filter name.
-                    'filter_1 => [
+                    'filter_1' => [
                         // Any option which you can use Form::control() options.
                     ],
                     // Control options for other filters.
