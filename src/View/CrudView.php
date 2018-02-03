@@ -3,6 +3,8 @@ namespace CrudView\View;
 
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
+use Cake\Event\Event;
+use Cake\Event\EventListenerInterface;
 use Cake\View\Exception\MissingTemplateException;
 use Cake\View\View;
 use CrudView\Traits\CrudViewConfigTrait;
@@ -10,7 +12,7 @@ use CrudView\Traits\CrudViewConfigTrait;
 /**
  * @property \AssetCompress\View\Helper\AssetCompressHelper $AssetCompress
  */
-class CrudView extends View
+class CrudView extends View implements EventListenerInterface
 {
     use CrudViewConfigTrait;
 
@@ -37,9 +39,33 @@ class CrudView extends View
     {
         parent::initialize();
 
+        $this->getEventManager()->on($this, ['priority' => 9]);
         $this->ensureConfig();
         $this->_setupPaths();
         $this->_setupHelpers();
+    }
+
+    /**
+     * Events this class is interested in.
+     *
+     * @return array
+     */
+    public function implementedEvents()
+    {
+        return [
+            'View.beforeLayout' => 'beforeLayout',
+        ];
+    }
+
+    /**
+     * Handler for View.beforeLayout event.
+     *
+     * @param \Cake\Event\Event $event The View.beforeLayout event
+     * @param string $layoutFileName Layout filename.
+     * @return void
+     */
+    public function beforeLayout(Event $event, $layoutFileName)
+    {
         $this->_loadAssets();
     }
 
@@ -83,25 +109,28 @@ class CrudView extends View
      */
     protected function _setupHelpers()
     {
-        $this->loadHelper('Html', ['className' => 'BootstrapUI.Html']);
-        $this->loadHelper('Form', [
-            'className' => 'BootstrapUI.Form',
-            'widgets' => [
-               'datetime' => ['CrudView\View\Widget\DateTimeWidget', 'select']
-            ]
-        ]);
-        $this->loadHelper('Flash', ['className' => 'BootstrapUI.Flash']);
-        $this->loadHelper('Paginator', ['className' => 'BootstrapUI.Paginator']);
-        if (class_exists('\Cake\View\Helper\BreadcrumbsHelper')) {
-            $this->loadHelper('Breadcrumbs', ['className' => 'BootstrapUI.Breadcrumbs']);
-        }
+        $helpers = [
+            'Html' => ['className' => 'BootstrapUI.Html'],
+            'Form' => [
+                'className' => 'BootstrapUI.Form',
+                'widgets' => [
+                    'datetime' => ['CrudView\View\Widget\DateTimeWidget', 'select']
+                ],
+            ],
+            'Flash' => ['className' => 'BootstrapUI.Flash'],
+            'Paginator' => ['className' => 'BootstrapUI.Paginator'],
+            'CrudView' => ['className' => 'CrudView.CrudView'],
+        ];
 
-        $this->loadHelper('CrudView.CrudView');
-        $this->loadHelper('BootstrapUI.Flash');
+        if (class_exists('\Cake\View\Helper\BreadcrumbsHelper')) {
+            $helpers['Breadcrumbs'] = ['className' => 'BootstrapUI.Breadcrumbs'];
+        }
 
         if (Configure::read('CrudView.useAssetCompress')) {
-            $this->loadHelper('AssetCompress.AssetCompress');
+            $helpers['AssetCompress'] = ['className' => 'AssetCompress.AssetCompress'];
         }
+
+        $this->helpers = array_merge($helpers, $this->helpers);
     }
 
     /**
