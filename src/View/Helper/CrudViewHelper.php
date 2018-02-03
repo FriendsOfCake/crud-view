@@ -33,6 +33,15 @@ class CrudViewHelper extends Helper
     protected $_context;
 
     /**
+     * Default config.
+     *
+     * @var array
+     */
+    protected $_defaultConfig = [
+        'fieldFormatters' => null
+    ];
+
+    /**
      * Set context
      *
      * @param \Cake\ORM\Entity $record Entity.
@@ -122,6 +131,15 @@ class CrudViewHelper extends Helper
         }
 
         $type = $this->columnType($field);
+
+        $fieldFormatters = $this->getConfig('fieldFormatters');
+        if (isset($fieldFormatters[$type])) {
+            if (is_callable($fieldFormatters[$type])) {
+                return $fieldFormatters[$type]($field, $value, $this->getContext(), $options, $this->getView());
+            }
+
+            return $this->{$fieldFormatters[$type]}($field, $value, $options);
+        }
 
         if ($type === 'boolean') {
             return $this->formatBoolean($field, $value, $options);
