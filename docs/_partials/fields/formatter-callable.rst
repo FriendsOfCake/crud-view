@@ -58,3 +58,24 @@ In some cases, it may be useful to access a helper within the callable. For inst
             }
         ],
     ]);
+
+You can also keep your code DRY by configuring the ``CrudViewHelper`` to use
+a callable formatter based on column type. For .e.g.
+
+.. code-block:: php
+
+    // In controller action or preferably in beforeRender()
+    $this->viewBuilder()->setHelpers([
+        'CrudView' => [
+            'className' => 'CrudView.CrudView',
+            'fieldFormatters' => [
+                // Key can be any valid column type of table schema.
+                'datetime' => function ($name, $value, $entity, $options, $View) {
+                    // return a string
+                },
+                'boolean' => function ($name, $value, $entity, $options, $View) {
+                    // return a string
+                },
+            ],
+        ],
+    ]);
