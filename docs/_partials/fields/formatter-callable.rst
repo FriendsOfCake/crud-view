@@ -71,10 +71,10 @@ a callable formatter based on column type. For .e.g.
             'fieldFormatters' => [
                 // Key can be any valid column type of table schema.
                 'datetime' => function ($name, $value, $entity, $options, $View) {
-                    // return a string
+                    return $View->Time->nice($value);
                 },
                 'boolean' => function ($name, $value, $entity, $options, $View) {
-                    // return a string
+                    return $value ? 'Yes' : 'No';
                 },
             ],
         ],
