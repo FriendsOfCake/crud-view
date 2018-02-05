@@ -81,7 +81,10 @@ foreach ($actionGroups['primary'] as $action) {
         continue;
     }
 
-    $config['options']['class'] = ['btn btn-default'];
+    if (empty($config['options']['class'])) {
+        $config['options']['class'] = ['btn btn-default'];
+    }
+
     echo $this->element('action-button', ['config' => $config]);
 }
 unset($actionGroups['primary']);
