@@ -39,7 +39,7 @@
 
     <div class="container-fluid">
         <div class="row">
-            <?php if ($disableSidebar) : ?>
+            <?php if (!empty($disableSidebar)) : ?>
                 <div class="col-sm-12">
                     <?= $this->Flash->render(); ?>
                     <?= $this->element('breadcrumbs') ?>
