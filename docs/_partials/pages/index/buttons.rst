@@ -94,6 +94,10 @@ Crud action classes are mapped but should not all be shown on the main UI.
     $action = $this->Crud->action();
     $action->config('scaffold.actions_blacklist', ['add', 'delete']);
 
+By default, we blacklist the action which is mapped to ``Crud.LookupAction``.
+As this action is meant to be used solely for autocompletion, it *cannot* be removed
+from the ``scaffold.actions_blacklist`` list.
+
 Action Groups
 ~~~~~~~~~~~~~
 
