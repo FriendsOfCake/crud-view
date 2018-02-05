@@ -3,6 +3,7 @@ namespace CrudView\Listener;
 
 use Cake\Collection\Collection;
 use Cake\Core\Configure;
+use Cake\Database\Exception;
 use Cake\Event\Event;
 use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
@@ -45,7 +46,7 @@ class ViewListener extends BaseListener
             $this->associations = $this->_associations(array_keys($related));
         }
 
-        if (!$event->getSubject()->query->contain()) {
+        if (!$event->getSubject()->query->getContain()) {
             $event->getSubject()->query->contain($related);
         }
     }
@@ -262,14 +263,21 @@ class ViewListener extends BaseListener
 
         $data = [
             'modelClass' => $controller->modelClass,
-            'modelSchema' => $table->getSchema(),
-            'displayField' => $table->getDisplayField(),
             'singularHumanName' => Inflector::humanize(Inflector::underscore(Inflector::singularize($controller->modelClass))),
             'pluralHumanName' => Inflector::humanize(Inflector::underscore($controller->getName())),
             'singularVar' => Inflector::singularize($controller->getName()),
             'pluralVar' => Inflector::variable($controller->getName()),
-            'primaryKey' => $table->getPrimaryKey(),
         ];
+
+        try {
+            $data += [
+                'modelSchema' => $table->getSchema(),
+                'displayField' => $table->getDisplayField(),
+                'primaryKey' => $table->getPrimaryKey(),
+            ];
+        } catch (Exception $e) {
+            // May be empty if there is no table object for the action
+        }
 
         if ($scope === 'entity') {
             $data += [
@@ -562,11 +570,21 @@ class ViewListener extends BaseListener
      *
      * If no value can be found, NULL is returned
      *
-     * @return mixed
+     * @return array|string
      */
     protected function _primaryKeyValue()
     {
-        return $this->_deriveFieldFromContext($this->_table()->getPrimaryKey());
+        $fields = (array)$this->_table()->getPrimaryKey();
+        $values = [];
+        foreach ($fields as $field) {
+            $values[] = $this->_deriveFieldFromContext($field);
+        }
+
+        if (count($values) === 1) {
+            return $values[0];
+        }
+
+        return $values;
     }
 
     /**
@@ -676,7 +694,7 @@ class ViewListener extends BaseListener
         $groupedFields = (new Collection($groups))->unfold()->toList();
         $unGroupedFields = array_diff(array_keys($fields), $groupedFields);
 
-        if ($unGroupedFields) {
+        if (!empty($unGroupedFields)) {
             $primayGroup = $action->getConfig('scaffold.form_primary_tab') ?: __d('crud', 'Primary');
 
             $groups = [$primayGroup => $unGroupedFields] + $groups;

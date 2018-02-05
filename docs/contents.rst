@@ -35,6 +35,14 @@ Contents
     Sidebar Navigation <general-configuration/sidebar-navigation>
     Utility Navigation <general-configuration/utility-navigation>
 
+.. _dashboard-pages-docs:
+
+.. toctree::
+   :maxdepth: 3
+   :caption: Dashboard Pages
+
+   Customizing the Dashboard <dashboard-pages/customizing-the-dashboard-page>
+
 .. _index-pages-docs:
 
 .. toctree::

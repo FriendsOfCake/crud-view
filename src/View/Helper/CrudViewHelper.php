@@ -121,7 +121,7 @@ class CrudViewHelper extends Helper
      * @param string $field Name of field.
      * @param mixed $value The value that the field should have within related data.
      * @param array $options Options array.
-     * @return string formatted value
+     * @return array|bool|null|int|string
      */
     public function introspect($field, $value, array $options = [])
     {
@@ -249,7 +249,7 @@ class CrudViewHelper extends Helper
      * Format display field value.
      *
      * @param string $value Display field value.
-     * @param array $options Field options.
+     * @param array $options Options array.
      * @return string
      */
     public function formatDisplayField($value, array $options)

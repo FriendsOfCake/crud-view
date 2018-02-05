@@ -1,6 +1,8 @@
 <?php
 namespace CrudView\Listener\Traits;
 
+use Crud\Action\IndexAction;
+
 trait IndexTypeTrait
 {
     /**
@@ -10,6 +12,10 @@ trait IndexTypeTrait
      */
     public function beforeRenderIndexType()
     {
+        if (!($this->_action() instanceof IndexAction)) {
+            return;
+        }
+
         $controller = $this->_controller();
         $controller->set('indexFinderScopes', $this->_getIndexFinderScopes());
         $controller->set('indexFormats', $this->_getIndexFormats());
