@@ -82,15 +82,6 @@ foreach ($actionGroups['primary'] as $action) {
     }
 
     $config['options']['class'] = ['btn btn-default'];
-    if ($config['method'] !== 'GET') {
-        echo $this->Form->postLink(
-            $config['title'],
-            $config['url'],
-            $config['options']
-        );
-        continue;
-    }
-
     echo $this->element('action-button', ['config' => $config]);
 }
 unset($actionGroups['primary']);
