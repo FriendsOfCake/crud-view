@@ -52,7 +52,7 @@ class DateTimeWidget extends \Cake\View\Widget\DateTimeWidget
             }
         }
 
-        if ($val) {
+        if ($val && !is_string($val)) {
             if ($timezoneAware) {
                 $timestamp = $val->format('U');
                 $dateTimeZone = new DateTimeZone(date_default_timezone_get());
