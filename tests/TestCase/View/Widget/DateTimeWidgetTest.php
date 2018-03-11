@@ -6,12 +6,21 @@ use Cake\View\Form\ContextInterface;
 use Cake\View\StringTemplate;
 use Cake\View\Widget\SelectBoxWidget;
 use CrudView\View\Widget\DateTimeWidget;
+use FriendsOfCake\TestUtilities\CompareTrait;
 
 /**
  * DateTimeWidgetTest
  */
 class DateTimeWidgetTest extends TestCase
 {
+    use CompareTrait;
+
+    public function setUp()
+    {
+        parent::setUp();
+        $this->initComparePath();
+    }
+
     public function testRenderSimple()
     {
         $context = $this->getMockBuilder(ContextInterface::class)->getMock();
@@ -19,25 +28,7 @@ class DateTimeWidgetTest extends TestCase
         $selectBox = new SelectBoxWidget($templates);
         $instance = new DateTimeWidget($templates, $selectBox);
 
-        $expected = [
-            ['div' => true],
-            'input' => [
-                'type',
-                'class',
-                'value',
-                'id',
-                'role',
-                'data-locale',
-                'data-format',
-            ],
-            ['label' => true],
-            'span' => [
-                'class'
-            ],
-            '/label',
-            '/div'
-        ];
         $result = $instance->render(['id' => 'the-id', 'name' => 'the-name', 'val' => '', 'type' => 'x', 'required' => false], $context);
-        $this->assertHtml($expected, $result);
+        $this->assertHtmlSameAsFile('simple.html', $result);
     }
 }
