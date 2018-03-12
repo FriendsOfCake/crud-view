@@ -1,6 +1,7 @@
 <?php
 namespace CrudView\Test\TestCase\View\Widget;
 
+use Cake\I18n\FrozenTime;
 use Cake\TestSuite\TestCase;
 use Cake\View\Form\ContextInterface;
 use Cake\View\StringTemplate;
@@ -56,6 +57,10 @@ class DateTimeWidgetTest extends TestCase
             [
                 'with-string-value.html',
                 ['id' => 'the-id', 'name' => 'the-name', 'val' => '2000-01-01', 'type' => 'x', 'required' => false]
+            ],
+            [
+                'with-date-value.html',
+                ['id' => 'the-id', 'name' => 'the-name', 'val' => (new FrozenTime(strtotime('2000-01-01'))), 'type' => 'x', 'required' => false]
             ]
         ];
     }
