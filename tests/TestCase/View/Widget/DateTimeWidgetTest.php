@@ -21,14 +21,42 @@ class DateTimeWidgetTest extends TestCase
         $this->initComparePath();
     }
 
-    public function testRenderSimple()
+    /**
+     * testRender
+     *
+     * @dataProvider renderProvider
+     * @param string $compareFileName
+     * @param array $data
+     */
+    public function testRenderSimple($compareFileName, $data)
     {
         $context = $this->getMockBuilder(ContextInterface::class)->getMock();
         $templates = new StringTemplate();
         $selectBox = new SelectBoxWidget($templates);
         $instance = new DateTimeWidget($templates, $selectBox);
 
-        $result = $instance->render(['id' => 'the-id', 'name' => 'the-name', 'val' => '', 'type' => 'x', 'required' => false], $context);
-        $this->assertHtmlSameAsFile('simple.html', $result);
+        $result = $instance->render($data, $context);
+        $this->assertHtmlSameAsFile($compareFileName, $result);
+    }
+
+    /**
+     * Returns sets of:
+     *  * file name to compare to
+     *  * data for date time widget
+     *
+     * @return array
+     */
+    public function renderProvider()
+    {
+        return [
+            [
+                'simple.html',
+                ['id' => 'the-id', 'name' => 'the-name', 'val' => '', 'type' => 'x', 'required' => false]
+            ],
+            [
+                'with-string-value.html',
+                ['id' => 'the-id', 'name' => 'the-name', 'val' => '2000-01-01', 'type' => 'x', 'required' => false]
+            ]
+        ];
     }
 }
