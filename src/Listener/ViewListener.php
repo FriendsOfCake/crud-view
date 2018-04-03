@@ -421,14 +421,13 @@ class ViewListener extends BaseListener
             $action = $this->_action($realAction);
             $class = get_class($action);
             $class = substr($class, strrpos($class, '\\') + 1);
-            $config['scope'] = $action->scope();
 
             if ($class === 'DeleteAction') {
-                $config['method'] = 'DELETE';
+                $config += ['method' => 'DELETE'];
             }
 
-            if ($class === 'AddAction') {
-                $config['scope'] = 'table';
+            if (!isset($config['scope'])) {
+                $config['scope'] = $class === 'AddAction' ? 'table' : $action->scope();
             }
         }
 
