@@ -448,7 +448,7 @@ class ViewListener extends BaseListener
             'method' => $method,
             'options' => array_diff_key(
                 $config,
-                array_flip(['method', 'scope', 'className', 'link_title', 'messages', 'url', 'scaffold'])
+                array_flip(['method', 'scope', 'link_title', 'url', 'scaffold', 'callback'])
             )
         ];
         if (!empty($config['callback'])) {
@@ -467,7 +467,7 @@ class ViewListener extends BaseListener
     {
         $actions = $this->_action()->getConfig('scaffold.actions');
         if ($actions === null) {
-            $actions = $this->_crud()->getConfig('actions');
+            $actions = array_keys($this->_crud()->getConfig('actions'));
         }
 
         $extraActions = $this->_action()->getConfig('scaffold.extra_actions') ?: [];
