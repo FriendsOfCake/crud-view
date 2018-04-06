@@ -421,14 +421,13 @@ class ViewListener extends BaseListener
             $action = $this->_action($realAction);
             $class = get_class($action);
             $class = substr($class, strrpos($class, '\\') + 1);
-            $config['scope'] = $action->scope();
 
             if ($class === 'DeleteAction') {
-                $config['method'] = 'DELETE';
+                $config += ['method' => 'DELETE'];
             }
 
-            if ($class === 'AddAction') {
-                $config['scope'] = 'table';
+            if (!isset($config['scope'])) {
+                $config['scope'] = $class === 'AddAction' ? 'table' : $action->scope();
             }
         }
 
@@ -448,7 +447,7 @@ class ViewListener extends BaseListener
             'method' => $method,
             'options' => array_diff_key(
                 $config,
-                array_flip(['method', 'scope', 'className', 'link_title', 'messages', 'url', 'scaffold'])
+                array_flip(['method', 'scope', 'link_title', 'url', 'scaffold', 'callback'])
             )
         ];
         if (!empty($config['callback'])) {
@@ -467,7 +466,7 @@ class ViewListener extends BaseListener
     {
         $actions = $this->_action()->getConfig('scaffold.actions');
         if ($actions === null) {
-            $actions = $this->_crud()->getConfig('actions');
+            $actions = array_keys($this->_crud()->getConfig('actions'));
         }
 
         $extraActions = $this->_action()->getConfig('scaffold.extra_actions') ?: [];
