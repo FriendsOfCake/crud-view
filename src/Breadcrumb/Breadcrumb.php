@@ -54,7 +54,7 @@ class Breadcrumb
     /**
      * Returns the menu item title
      *
-     * @return string
+     * @return string|array
      */
     public function getTitle()
     {

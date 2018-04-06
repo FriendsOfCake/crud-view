@@ -574,7 +574,7 @@ class ViewListener extends BaseListener
      *
      * If no value can be found, NULL is returned
      *
-     * @return string
+     * @return string|null
      */
     protected function _displayFieldValue()
     {
@@ -582,7 +582,7 @@ class ViewListener extends BaseListener
     }
 
     /**
-     * Extract a field value from a either the CakeRequest::getData()
+     * Extract a field value from a either ServerRequest::getData()
      * or Controller::$viewVars for the current model + the supplied field
      *
      * @param string $field Name of field.

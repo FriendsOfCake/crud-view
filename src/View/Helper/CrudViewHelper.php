@@ -252,7 +252,7 @@ class CrudViewHelper extends Helper
      * Format display field value.
      *
      * @param string $value Display field value.
-     * @param mixed $options Field options.
+     * @param array $options Field options.
      * @return string
      */
     public function formatDisplayField($value, array $options)
