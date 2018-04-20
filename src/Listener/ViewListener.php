@@ -78,7 +78,7 @@ class ViewListener extends BaseListener
      */
     public function beforeRender(Event $event)
     {
-        if ($this->_controller()->name === 'Error') {
+        if ($this->_controller()->getName() === 'Error') {
             return;
         }
 
@@ -147,7 +147,7 @@ class ViewListener extends BaseListener
         $scope = $action->getConfig('scope');
 
         $request = $this->_request();
-        $actionName = Inflector::humanize(Inflector::underscore($request->action));
+        $actionName = Inflector::humanize(Inflector::underscore($request->getParam('action')));
         $controllerName = $this->_controllerName();
 
         if ($scope === 'table') {
@@ -218,7 +218,7 @@ class ViewListener extends BaseListener
 
             $models = [];
             foreach ($associations as $assoc) {
-                $models[] = $assoc->name();
+                $models[] = $assoc->getName();
             }
         }
 
@@ -265,9 +265,9 @@ class ViewListener extends BaseListener
             'modelSchema' => $table->getSchema(),
             'displayField' => $table->getDisplayField(),
             'singularHumanName' => Inflector::humanize(Inflector::underscore(Inflector::singularize($controller->modelClass))),
-            'pluralHumanName' => Inflector::humanize(Inflector::underscore($controller->name)),
-            'singularVar' => Inflector::singularize($controller->name),
-            'pluralVar' => Inflector::variable($controller->name),
+            'pluralHumanName' => Inflector::humanize(Inflector::underscore($controller->getName())),
+            'singularVar' => Inflector::singularize($controller->getName()),
+            'pluralVar' => Inflector::variable($controller->getName()),
             'primaryKey' => $table->getPrimaryKey(),
         ];
 
@@ -351,7 +351,7 @@ class ViewListener extends BaseListener
             $inflections[] = 'singularize';
         }
 
-        $baseName = $this->_controller()->name;
+        $baseName = $this->_controller()->getName();
         foreach ($inflections as $inflection) {
             $baseName = Inflector::$inflection($baseName);
         }
@@ -539,13 +539,13 @@ class ViewListener extends BaseListener
                 $associationConfiguration[$type] = [];
             }
 
-            $assocKey = $association->name();
+            $assocKey = $association->getName();
             $associationConfiguration[$type][$assocKey]['model'] = $assocKey;
             $associationConfiguration[$type][$assocKey]['type'] = $type;
-            $associationConfiguration[$type][$assocKey]['primaryKey'] = $association->target()->getPrimaryKey();
-            $associationConfiguration[$type][$assocKey]['displayField'] = $association->target()->getDisplayField();
-            $associationConfiguration[$type][$assocKey]['foreignKey'] = $association->foreignKey();
-            $associationConfiguration[$type][$assocKey]['propertyName'] = $association->property();
+            $associationConfiguration[$type][$assocKey]['primaryKey'] = $association->getTarget()->getPrimaryKey();
+            $associationConfiguration[$type][$assocKey]['displayField'] = $association->getTarget()->getDisplayField();
+            $associationConfiguration[$type][$assocKey]['foreignKey'] = $association->getForeignKey();
+            $associationConfiguration[$type][$assocKey]['propertyName'] = $association->getProperty();
             $associationConfiguration[$type][$assocKey]['plugin'] = pluginSplit($association->className())[0];
             $associationConfiguration[$type][$assocKey]['controller'] = $assocKey;
             $associationConfiguration[$type][$assocKey]['entity'] = Inflector::singularize(Inflector::underscore($assocKey));

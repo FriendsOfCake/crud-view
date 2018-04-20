@@ -3,8 +3,8 @@ $links = [];
 foreach ($actions as $name => $config) {
     $config += ['method' => 'GET'];
 
-    if ((empty($config['url']['controller']) || $this->request->controller === $config['url']['controller']) &&
-        (!empty($config['url']['action']) && $this->request->action === $config['url']['action'])
+    if ((empty($config['url']['controller']) || $this->request->getParam('controller') === $config['url']['controller']) &&
+        (!empty($config['url']['action']) && $this->request->getParam('action') === $config['url']['action'])
     ) {
         continue;
     }
