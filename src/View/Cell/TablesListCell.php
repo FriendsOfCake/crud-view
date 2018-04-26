@@ -19,7 +19,7 @@ class TablesListCell extends Cell
     {
         if (empty($tables)) {
             $connection = ConnectionManager::get('default');
-            $schema = $connection->schemaCollection();
+            $schema = $connection->getSchemaCollection();
             $tables = $schema->listTables();
             ksort($tables);
 
