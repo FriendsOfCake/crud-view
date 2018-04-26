@@ -171,11 +171,8 @@ class CrudViewHelper extends Helper
     public function columnType($field)
     {
         $schema = $this->schema();
-        if (method_exists($schema, 'baseColumnType')) {
-            return $schema->baseColumnType($field);
-        }
 
-        return $schema->columnType($field);
+        return $schema->getColumnType($field);
     }
 
     /**
