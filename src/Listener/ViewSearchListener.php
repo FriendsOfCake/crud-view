@@ -106,7 +106,6 @@ class ViewSearchListener extends BaseListener
 
             $field = $filter->name();
             $input = [
-                'label' => Inflector::humanize(preg_replace('/_id$/', '', $field)),
                 'required' => false,
                 'type' => 'text'
             ];
