@@ -18,7 +18,7 @@ if ($this->exists('form.before_create')) {
                 <?php if ($formTabGroups) : ?>
                     <?= $this->element('form/tabs') ?>
                 <?php else : ?>
-                    <?= $this->Form->inputs($fields, ['legend' => false]) ?>
+                    <?= $this->Form->controls($fields, ['legend' => false]) ?>
                 <?php endif ?>
             </div>
 
