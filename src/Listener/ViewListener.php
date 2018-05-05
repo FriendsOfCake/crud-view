@@ -65,7 +65,7 @@ class ViewListener extends BaseListener
             $this->associations = $this->_associations(array_keys($related));
         }
 
-        if (!$event->getSubject()->query->contain()) {
+        if (!$event->getSubject()->query->getContain()) {
             $event->getSubject()->query->contain($this->_getRelatedModels(['manyToOne', 'oneToOne']));
         }
     }
@@ -211,7 +211,7 @@ class ViewListener extends BaseListener
                 foreach ($associationTypes as $assocType) {
                     $associations = array_merge(
                         $associations,
-                        $this->_table()->associations()->type($assocType)
+                        $this->_table()->associations()->getByType($assocType)
                     );
                 }
             }
