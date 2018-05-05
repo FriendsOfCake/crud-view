@@ -8,7 +8,7 @@ $submitButton = $this->Form->button(__d('crud', 'Apply'), [
     'name' => '_bulk',
 ]);
 
-echo $this->Form->input('action', [
+echo $this->Form->control('action', [
     'empty' => __d('crud', 'Bulk Actions'),
     'label' => [
         'class' => 'col-sm-2 control-label',

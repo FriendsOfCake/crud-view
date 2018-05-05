@@ -14,7 +14,7 @@ if (empty($searchInputs)) {
     ?>
 
     <fieldset>
-        <?= $this->Form->inputs($searchInputs, ['fieldset' => false]); ?>
+        <?= $this->Form->controls($searchInputs, ['fieldset' => false]); ?>
         <?= $this->Form->button(__d('crud', 'Filter results'), ['type' => 'submit', 'class' => 'btn btn-primary']); ?>
     </fieldset>
 
