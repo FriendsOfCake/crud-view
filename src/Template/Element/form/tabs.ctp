@@ -17,7 +17,7 @@ use Cake\Utility\Text;
                 role="tabpanel"
                 class="tab-pane <?= $group === $firstTab ? 'active' : '' ?>"
             >
-                <?= $this->Form->inputs(
+                <?= $this->Form->controls(
                     array_intersect_key($fields, array_flip($groupFields)),
                     ['legend' => false]
                 ) ?>
