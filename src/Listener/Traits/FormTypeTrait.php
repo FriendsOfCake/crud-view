@@ -1,6 +1,8 @@
 <?php
 namespace CrudView\Listener\Traits;
 
+use Crud\Action\AddAction;
+
 trait FormTypeTrait
 {
     /**
@@ -15,6 +17,7 @@ trait FormTypeTrait
         $controller->set('formEnableDirtyCheck', $this->_getFormEnableDirtyCheck());
         $controller->set('formSubmitButtonText', $this->_getFormSubmitButtonText());
         $controller->set('formSubmitExtraButtons', $this->_getFormSubmitExtraButtons());
+        $controller->set('formSubmitExtraLeftButtons', $this->_getFormSubmitExtraLeftButtons());
         $controller->set('formUrl', $this->_getFormUrl());
     }
 
@@ -64,6 +67,27 @@ trait FormTypeTrait
     }
 
     /**
+     * Get extra form submit left buttons.
+     *
+     * @return bool
+     */
+    protected function _getFormSubmitExtraLeftButtons()
+    {
+        $action = $this->_action();
+        $buttons = $action->getConfig('scaffold.form_submit_extra_left_buttons');
+
+        if ($buttons === false) {
+            return [];
+        }
+
+        if ($buttons === null || $buttons === true) {
+            $buttons = $this->_getDefaultExtraLeftButtons();
+        }
+
+        return $buttons;
+    }
+
+    /**
      * Get default extra buttons
      *
      * @return array
@@ -93,6 +117,34 @@ trait FormTypeTrait
         ];
     }
 
+    /**
+     * Get default extra left buttons
+     *
+     * @return array
+     */
+    protected function _getDefaultExtraLeftButtons()
+    {
+        $buttons = [];
+
+        $action = $this->_action();
+        if (!($action instanceof AddAction)) {
+            $buttons[] = [
+                'title' => __d('crud', 'Delete'),
+                'url' => ['action' => 'delete'],
+                'options' => [
+                    'block' => 'form.after_end',
+                    'class' => 'btn btn-danger btn-delete',
+                    'confirm' => __d('crud', 'Are you sure you want to delete this record?'),
+                    'name' => '_delete',
+                    'style' => 'margin-left: 0',
+                ],
+                'type' => 'postLink',
+                '_label' => 'delete',
+            ];
+        }
+
+        return $buttons;
+    }
     /**
      * Get form url.
      *
