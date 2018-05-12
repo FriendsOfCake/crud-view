@@ -57,6 +57,38 @@ configuration key as follows:
 Specified values will override the defaults, and will be output in the order
 specified.
 
+Modifying the Default Extra Left Buttons
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+By default, extra buttons appear on the right-hand side of forms. The left-hand side
+is managed separately, and will show the following by default
+
+- Delete: An embedded postLink for deleting the current entity. This only appears on the
+  pages that are not rendered via ``AddAction``.
+
+
+To use the defaults, you may either omit the configuration key **or** set it
+to true:
+
+.. code-block:: php
+
+    $action = $this->Crud->action();
+    $action->config('scaffold.form_submit_extra_left_buttons', true);
+
+You can also customize this by using the ``scaffold.form_submit_extra_left_buttons``
+configuration key as follows:
+
+.. code-block:: php
+
+    $action = $this->Crud->action();
+    $action->config('scaffold.form_submit_extra_left_buttons', [
+        [
+            'title' => __d('crud', 'Save & continue editing'),
+            'options' => ['class' => 'btn btn-success btn-save-continue', 'name' => '_edit', 'value' => true],
+            'type' => 'button',
+        ],
+    ]);
+
 Disabling the Default Extra Buttons
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -67,3 +99,13 @@ completely:
 
     $action = $this->Crud->action();
     $action->config('scaffold.form_submit_extra_buttons', false);
+
+Disabling the Default Extra Left Buttons
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Disabling the default left extra buttons can also be done in a similar fashion:
+
+.. code-block:: php
+
+    $action = $this->Crud->action();
+    $action->config('scaffold.form_submit_extra_left_buttons', false);
