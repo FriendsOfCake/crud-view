@@ -101,3 +101,7 @@ div.actions-wrapper {
 .pagination-container .pagination {
     margin: 0;
 }
+table tr td.actions {
+    white-space: nowrap;
+    width: 1px;
+}

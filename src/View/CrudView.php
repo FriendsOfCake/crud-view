@@ -60,11 +60,9 @@ class CrudView extends View implements EventListenerInterface
     /**
      * Handler for View.beforeLayout event.
      *
-     * @param \Cake\Event\Event $event The View.beforeLayout event
-     * @param string $layoutFileName Layout filename.
      * @return void
      */
-    public function beforeLayout(Event $event, $layoutFileName)
+    public function beforeLayout()
     {
         $this->_loadAssets();
     }
