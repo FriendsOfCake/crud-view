@@ -64,7 +64,7 @@ By default, extra buttons appear on the right-hand side of forms. The left-hand 
 is managed separately, and will show the following by default
 
 - Delete: An embedded postLink for deleting the current entity. This only appears on the
-  pages that are not rendered via ``AddAction``.
+  pages that are rendered via ``EditAction``.
 
 
 To use the defaults, you may either omit the configuration key **or** set it
