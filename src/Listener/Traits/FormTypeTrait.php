@@ -1,7 +1,7 @@
 <?php
 namespace CrudView\Listener\Traits;
 
-use Crud\Action\AddAction;
+use Crud\Action\EditAction;
 
 trait FormTypeTrait
 {
@@ -127,7 +127,7 @@ trait FormTypeTrait
         $buttons = [];
 
         $action = $this->_action();
-        if (!($action instanceof AddAction)) {
+        if ($action instanceof EditAction) {
             $buttons[] = [
                 'title' => __d('crud', 'Delete'),
                 'url' => ['action' => 'delete'],
