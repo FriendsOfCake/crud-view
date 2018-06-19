@@ -66,7 +66,7 @@ class CrudViewHelper extends Helper
      * Process a single field into an output
      *
      * @param string $field The field to process.
-     * @param EntityInterface $data The entity data.
+     * @param \Cake\Datasource\EntityInterface $data The entity data.
      * @param array $options Processing options.
      * @return string|null|array|bool|int
      */
@@ -102,7 +102,7 @@ class CrudViewHelper extends Helper
     /**
      * Get the current field value
      *
-     * @param EntityInterface $data The entity data.
+     * @param \Cake\Datasource\EntityInterface $data The entity data.
      * @param string $field The field to extract, if null, the field from the entity context is used.
      * @return mixed
      */
