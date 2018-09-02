@@ -17,7 +17,7 @@ class DashboardAction extends BaseAction
     /**
      * HTTP GET handler
      *
-     * @return void|\Cake\Network\Response
+     * @return void|\Cake\Http\Response
      */
     protected function _get()
     {
