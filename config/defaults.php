@@ -24,7 +24,7 @@ return [
             ],
         ],
         'timezoneAwareDateTimeWidget' => false,
-        'useAssetCompress' => Plugin::loaded('AssetCompress'),
+        'useAssetCompress' => Plugin::isLoaded('AssetCompress'),
         'tablesBlacklist' => [
             'phinxlog',
         ],
