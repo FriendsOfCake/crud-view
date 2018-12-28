@@ -1,7 +1,7 @@
 <?php
 namespace CrudView\View\Helper;
 
-use Cake\ORM\Entity;
+use Cake\Datasource\EntityInterface;
 use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
 use Cake\Utility\Text;
@@ -28,7 +28,7 @@ class CrudViewHelper extends Helper
     /**
      * Context
      *
-     * @var \Cake\ORM\Entity
+     * @var \Cake\Datasource\EntityInterface
      */
     protected $_context;
 
@@ -44,10 +44,10 @@ class CrudViewHelper extends Helper
     /**
      * Set context
      *
-     * @param \Cake\ORM\Entity $record Entity.
+     * @param \Cake\Datasource\EntityInterface $record Entity.
      * @return void
      */
-    public function setContext(Entity $record)
+    public function setContext(EntityInterface $record)
     {
         $this->_context = $record;
     }
@@ -55,7 +55,7 @@ class CrudViewHelper extends Helper
     /**
      * Get context
      *
-     * @return \Cake\ORM\Entity
+     * @return \Cake\Datasource\EntityInterface
      */
     public function getContext()
     {
@@ -66,11 +66,11 @@ class CrudViewHelper extends Helper
      * Process a single field into an output
      *
      * @param string $field The field to process.
-     * @param Entity $data The entity data.
+     * @param \Cake\Datasource\EntityInterface $data The entity data.
      * @param array $options Processing options.
      * @return string|null|array|bool|int
      */
-    public function process($field, Entity $data, array $options = [])
+    public function process($field, EntityInterface $data, array $options = [])
     {
         $this->setContext($data);
 
@@ -102,11 +102,11 @@ class CrudViewHelper extends Helper
     /**
      * Get the current field value
      *
-     * @param Entity $data The entity data.
+     * @param \Cake\Datasource\EntityInterface $data The entity data.
      * @param string $field The field to extract, if null, the field from the entity context is used.
      * @return mixed
      */
-    public function fieldValue(Entity $data, $field)
+    public function fieldValue(EntityInterface $data, $field)
     {
         if (empty($data)) {
             $data = $this->getContext();
