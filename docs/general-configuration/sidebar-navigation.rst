@@ -32,12 +32,12 @@ the ``scaffold.tables_blacklist`` configuration key to specify tables to
         'users',
     ]);
 
-You can also specify a global tables blacklist by setting ``Crud.tablesBlacklist``
+You can also specify a global tables blacklist by setting ``CrudView.tablesBlacklist``
 configuration key. By default the ``phinxlog`` table is blacklisted.
 
 .. code-block:: php
 
-    Configure::write('Crud.tablesBlacklist', ['phinxlog']);
+    Configure::write('CrudView.tablesBlacklist', ['phinxlog']);
 
 
 Disabling the Sidebar Navigation
