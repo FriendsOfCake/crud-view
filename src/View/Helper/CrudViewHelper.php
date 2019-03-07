@@ -309,7 +309,7 @@ class CrudViewHelper extends Helper
      */
     public function redirectUrl()
     {
-        $redirectUrl = $this->request->getQuery('_redirect_url');
+        $redirectUrl = $this->getView()->getRequest()->getQuery('_redirect_url');
         $redirectUrlViewVar = $this->getViewVar('_redirect_url');
 
         if (!empty($redirectUrlViewVar)) {
@@ -351,7 +351,7 @@ class CrudViewHelper extends Helper
                 'action' => 'add',
                 '?' => [
                     $relation['foreignKey'] => $this->getViewVar('primaryKeyValue'),
-                    '_redirect_url' => $this->request->getUri()->getPath()
+                    '_redirect_url' => $this->getView()->getRequest()->getUri()->getPath()
                 ]
             ],
             $options
@@ -432,7 +432,7 @@ class CrudViewHelper extends Helper
      */
     public function getCssClasses()
     {
-        $action = (string)$this->request->getParam('action');
+        $action = (string)$this->getView()->getRequest()->getParam('action');
         $pluralVar = $this->getViewVar('pluralVar');
         $viewClasses = (array)$this->getViewVar('viewClasses');
         $args = func_get_args();

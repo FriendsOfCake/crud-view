@@ -9,6 +9,7 @@ php:
 env:
   global:
     - DEFAULT=1
+    - LOWEST=0
 
 matrix:
   fast_finish: true
@@ -19,11 +20,15 @@ matrix:
 
     - php: 7.0
       env: PHPSTAN=1 DEFAULT=0
+      
+    - php: 7.2
+      env: DEFAULT=1 LOWEST=1
 
 before_script:
   - if [[ $TRAVIS_PHP_VERSION != 7.0 ]]; then phpenv config-rm xdebug.ini; fi
 
-  - composer install --prefer-dist --no-interaction
+  - if [[ $LOWEST = 0 ]]; then composer install --prefer-dist --no-interaction; fi
+  - if [[ $LOWEST = 1 ]]; then composer update --prefer-lowest --prefer-dist --no-interaction; fi
 
   - if [[ $PHPCS = 1 ]]; then composer require cakephp/cakephp-codesniffer:dev-master; fi
   - if [[ $PHPSTAN = 1 ]]; then composer require phpstan/phpstan:^0.9; fi
