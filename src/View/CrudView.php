@@ -211,28 +211,29 @@ class CrudView extends View implements EventListenerInterface
         return $output;
     }
 
+
     /**
-     * Returns filename of given action's template file (.ctp) as a string.
+     * Returns filename of given action's template file as a string.
      *
      * @param string|null $name Controller action to find template filename for.
      * @return string Template filename
      * @throws \Cake\View\Exception\MissingTemplateException When a view file could not be found.
      */
-    protected function _getViewFileName($name = null)
+    protected function _getTemplateFileName(?string $name = null): string
     {
         if ($this->templatePath === 'Error') {
-            return parent::_getViewFileName($name);
+            return parent::_getTemplateFileName($name);
         }
         try {
-            return parent::_getViewFileName($name);
+            return parent::_getTemplateFileName($name);
         } catch (MissingTemplateException $exception) {
-            $this->subDir = null;
+            $this->subDir = '';
             $this->templatePath = 'Scaffold';
         }
         try {
-            return parent::_getViewFileName($this->template);
+            return parent::_getTemplateFileName($this->template);
         } catch (MissingTemplateException $exception) {
-            return parent::_getViewFileName($name);
+            return parent::_getTemplateFileName($name);
         }
     }
 }
