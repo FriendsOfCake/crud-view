@@ -37,7 +37,7 @@ class ViewSearchListener extends BaseListener
      *
      * @return array
      */
-    public function implementedEvents()
+    public function implementedEvents(): array
     {
         return [
             'Crud.afterPaginate' => ['callable' => 'afterPaginate'],
@@ -50,10 +50,10 @@ class ViewSearchListener extends BaseListener
      * Only after a crud paginate call does this listener do anything. So listen
      * for that
      *
-     * @param \Cake\Event\Event $event Event.
+     * @param \Cake\Event\EventInterface $event Event.
      * @return void
      */
-    public function afterPaginate(Event $event)
+    public function afterPaginate(EventInterface $event)
     {
         $event;
         if (!$this->_table()->behaviors()->has('Search')) {
