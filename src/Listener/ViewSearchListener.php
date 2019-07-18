@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace CrudView\Listener;
 
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Cake\Routing\Router;
 use Crud\Listener\BaseListener;
 
