@@ -259,13 +259,14 @@ class ViewListener extends BaseListener
     protected function _getPageVariables()
     {
         $table = $this->_table();
+        $modelClass = $table->getAlias();
         $controller = $this->_controller();
         $scope = $this->_action()->getConfig('scope');
 
         $data = [
-            'modelClass' => $controller->modelClass,
+            'modelClass' => $modelClass,
             'singularHumanName' => Inflector::humanize(
-                Inflector::underscore(Inflector::singularize($controller->modelClass))
+                Inflector::underscore(Inflector::singularize($modelClass))
             ),
             'pluralHumanName' => Inflector::humanize(Inflector::underscore($controller->getName())),
             'singularVar' => Inflector::singularize($controller->getName()),
@@ -619,6 +620,7 @@ class ViewListener extends BaseListener
     protected function _deriveFieldFromContext($field)
     {
         $controller = $this->_controller();
+        $modelClass = $table->getAlias();
         $entity = $this->_entity();
         $request = $this->_request();
         $value = $entity->get($field);
@@ -627,12 +629,12 @@ class ViewListener extends BaseListener
             return $value;
         }
 
-        $path = "{$controller->modelClass}.{$field}";
+        $path = "{$modelClass}.{$field}";
         if (!empty($request->getData())) {
             $value = Hash::get((array)$request->getData(), $path);
         }
 
-        $singularVar = Inflector::variable($controller->modelClass);
+        $singularVar = Inflector::variable($modelClass);
         if (!empty($controller->viewVars[$singularVar])) {
             $value = $entity->get($field);
         }
