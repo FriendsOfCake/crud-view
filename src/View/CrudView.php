@@ -24,7 +24,7 @@ class CrudView extends View implements EventListenerInterface
      *
      * @var string
      */
-    public $layout = 'CrudView.default';
+    protected $layout = 'CrudView.default';
 
     /**
      * Initialization hook method.
