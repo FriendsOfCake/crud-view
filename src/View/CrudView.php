@@ -145,7 +145,7 @@ class CrudView extends View implements EventListenerInterface
         if (!empty($extraPaths)) {
             $paths = array_merge($paths, (array)$extraPaths);
         }
-        $paths[] = Plugin::classPath('CrudView') . 'Template' . DS;
+        $paths[] = Plugin::templatePath('CrudView');
 
         Configure::write('App.paths.templates', $paths);
     }
