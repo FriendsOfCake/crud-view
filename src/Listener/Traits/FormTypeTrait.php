@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace CrudView\Listener\Traits;
 
 use Crud\Action\EditAction;
@@ -145,6 +147,7 @@ trait FormTypeTrait
 
         return $buttons;
     }
+
     /**
      * Get form url.
      *

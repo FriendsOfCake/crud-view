@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace CrudView\View\Widget;
 
 use Cake\Core\Configure;
@@ -10,7 +12,6 @@ use DateTimeZone;
 
 class DateTimeWidget extends \Cake\View\Widget\DateTimeWidget
 {
-
     /**
      * Renders a date time widget.
      *
@@ -27,9 +28,9 @@ class DateTimeWidget extends \Cake\View\Widget\DateTimeWidget
         $type = $data['type'];
         $required = $data['required'] ? 'required' : '';
         $disabled = isset($data['disabled']) && $data['disabled'] ? 'disabled' : '';
-        $role = isset($data['role']) ? $data['role'] : 'datetime-picker';
+        $role = $data['role'] ?? 'datetime-picker';
         $format = null;
-        $locale = isset($data['locale']) ? $data['locale'] : I18n::getLocale();
+        $locale = $data['locale'] ?? I18n::getLocale();
 
         $timezoneAware = Configure::read('CrudView.timezoneAwareDateTimeWidget');
 
@@ -56,7 +57,7 @@ class DateTimeWidget extends \Cake\View\Widget\DateTimeWidget
             if ($timezoneAware) {
                 $timestamp = $val->format('U');
                 $dateTimeZone = new DateTimeZone(date_default_timezone_get());
-                $timezoneOffset = ($dateTimeZone->getOffset($val) / 60);
+                $timezoneOffset = $dateTimeZone->getOffset($val) / 60;
             }
             $val = $val->format($type === 'date' ? 'Y-m-d' : 'Y-m-d H:i:s');
         }

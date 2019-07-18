@@ -1,9 +1,9 @@
 <?php
+declare(strict_types=1);
+
 namespace CrudView\Dashboard\Module;
 
 use Cake\Collection\Collection;
-use Cake\Utility\Hash;
-use InvalidArgumentException;
 
 class ActionLinkItem extends LinkItem
 {

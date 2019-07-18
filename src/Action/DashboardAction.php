@@ -1,9 +1,11 @@
 <?php
+declare(strict_types=1);
+
 namespace CrudView\Action;
 
-use CrudView\Dashboard\Dashboard;
 use Crud\Action\BaseAction;
 use Crud\Traits\ViewTrait;
+use CrudView\Dashboard\Dashboard;
 
 class DashboardAction extends BaseAction
 {

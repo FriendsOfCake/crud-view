@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace CrudView\Traits;
 
 use Cake\Core\Configure;

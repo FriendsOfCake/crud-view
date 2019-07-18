@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace CrudView\Test\TestCase\Dashboard;
 
 use Cake\TestSuite\TestCase;
@@ -12,7 +14,7 @@ class DashboardTest extends TestCase
 {
     public function testConstruct()
     {
-        $dashboard = new Dashboard;
+        $dashboard = new Dashboard();
         $expected = __d('CrudView', 'Dashboard');
         $this->assertEquals($expected, $dashboard->get('title'));
 
@@ -38,11 +40,11 @@ class DashboardTest extends TestCase
 
     public function testColumnChildren()
     {
-        $dashboard = new Dashboard;
+        $dashboard = new Dashboard();
         $expected = [];
         $this->assertEquals($expected, $dashboard->getColumnChildren(1));
 
-        $cell = new DashboardTableCell;
+        $cell = new DashboardTableCell();
         $return = $dashboard->addToColumn($cell);
         $this->assertEquals($dashboard, $return);
         $this->assertEquals([$cell], $dashboard->getColumnChildren(1));

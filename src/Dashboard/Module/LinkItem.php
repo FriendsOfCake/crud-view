@@ -1,8 +1,9 @@
 <?php
+declare(strict_types=1);
+
 namespace CrudView\Dashboard\Module;
 
 use Cake\Datasource\EntityTrait;
-use Cake\Utility\Hash;
 use InvalidArgumentException;
 
 class LinkItem
@@ -61,6 +62,7 @@ class LinkItem
 
         return $title;
     }
+
     /**
      * url property setter
      *

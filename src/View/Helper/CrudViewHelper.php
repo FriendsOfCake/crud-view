@@ -1,8 +1,9 @@
 <?php
+declare(strict_types=1);
+
 namespace CrudView\View\Helper;
 
 use Cake\Datasource\EntityInterface;
-use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
 use Cake\Utility\Text;
 use Cake\View\Helper;
@@ -17,7 +18,6 @@ use DateTimeImmutable;
  */
 class CrudViewHelper extends Helper
 {
-
     /**
      * List of helpers used by this helper
      *
@@ -38,7 +38,7 @@ class CrudViewHelper extends Helper
      * @var array
      */
     protected $_defaultConfig = [
-        'fieldFormatters' => null
+        'fieldFormatters' => null,
     ];
 
     /**
@@ -224,7 +224,7 @@ class CrudViewHelper extends Helper
         if ($value === null) {
             return $this->Html->label(__d('crud', 'N/A'), ['type' => 'info']);
         }
-        $format = isset($options['format']) ? $options['format'] : null;
+        $format = $options['format'] ?? null;
 
         if (is_int($value) || is_string($value) || $value instanceof DateTime || $value instanceof DateTimeImmutable) {
             return $this->Time->nice($value, $format);
@@ -293,8 +293,8 @@ class CrudViewHelper extends Helper
                     'plugin' => $details['plugin'],
                     'controller' => $details['controller'],
                     'action' => 'view',
-                    $entity->{$details['primaryKey']}
-                ])
+                    $entity->{$details['primaryKey']},
+                ]),
             ];
         }
 
@@ -329,7 +329,7 @@ class CrudViewHelper extends Helper
             'name' => '_redirect_url',
             'value' => $redirectUrl,
             'id' => null,
-            'secure' => FormHelper::SECURE_SKIP
+            'secure' => FormHelper::SECURE_SKIP,
         ]);
     }
 
@@ -351,8 +351,8 @@ class CrudViewHelper extends Helper
                 'action' => 'add',
                 '?' => [
                     $relation['foreignKey'] => $this->getViewVar('primaryKeyValue'),
-                    '_redirect_url' => $this->getView()->getRequest()->getUri()->getPath()
-                ]
+                    '_redirect_url' => $this->getView()->getRequest()->getUri()->getPath(),
+                ],
             ],
             $options
         );

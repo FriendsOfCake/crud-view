@@ -1,14 +1,14 @@
 <?php
+declare(strict_types=1);
+
 namespace CrudView\Listener;
 
 use Cake\Event\Event;
 use Cake\Routing\Router;
-use Cake\Utility\Inflector;
 use Crud\Listener\BaseListener;
 
 class ViewSearchListener extends BaseListener
 {
-
     /**
      * Default configuration
      *
@@ -29,7 +29,7 @@ class ViewSearchListener extends BaseListener
         'autocomplete' => true,
         'selectize' => true,
         'collection' => 'default',
-        'fields' => null
+        'fields' => null,
     ];
 
     /**
@@ -40,7 +40,7 @@ class ViewSearchListener extends BaseListener
     public function implementedEvents()
     {
         return [
-            'Crud.afterPaginate' => ['callable' => 'afterPaginate']
+            'Crud.afterPaginate' => ['callable' => 'afterPaginate'],
         ];
     }
 
@@ -107,7 +107,7 @@ class ViewSearchListener extends BaseListener
             $field = $filter->name();
             $input = [
                 'required' => false,
-                'type' => 'text'
+                'type' => 'text',
             ];
 
             if (substr($field, -3) === '_id' && $field !== '_id') {
@@ -143,7 +143,7 @@ class ViewSearchListener extends BaseListener
 
             $urlArgs = [];
 
-            $fieldKeys = isset($input['fields']) ? $input['fields'] : ['id' => $field, 'value' => $field];
+            $fieldKeys = $input['fields'] ?? ['id' => $field, 'value' => $field];
             if (is_array($fieldKeys)) {
                 foreach ($fieldKeys as $key => $val) {
                     $urlArgs[$key] = $val;

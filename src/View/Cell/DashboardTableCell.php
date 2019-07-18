@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace CrudView\View\Cell;
 
 use Cake\View\Cell;

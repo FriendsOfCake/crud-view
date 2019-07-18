@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace CrudView\View\Cell;
 
 use Cake\Datasource\ConnectionManager;
@@ -7,7 +9,6 @@ use Cake\View\Cell;
 
 class TablesListCell extends Cell
 {
-
     /**
      * Default cell method.
      *
@@ -41,7 +42,7 @@ class TablesListCell extends Cell
             $config += [
                 'action' => 'index',
                 'title' => Inflector::humanize($table),
-                'controller' => Inflector::camelize($table)
+                'controller' => Inflector::camelize($table),
             ];
 
             $normal[$table] = $config;

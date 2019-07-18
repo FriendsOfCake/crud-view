@@ -1,19 +1,20 @@
 <?php
+declare(strict_types=1);
+
 namespace CrudView\Listener;
 
 use Cake\Collection\Collection;
-use Cake\Core\Configure;
 use Cake\Database\Exception;
 use Cake\Event\Event;
 use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
+use Crud\Listener\BaseListener;
 use CrudView\Listener\Traits\FormTypeTrait;
 use CrudView\Listener\Traits\IndexTypeTrait;
 use CrudView\Listener\Traits\SidebarNavigationTrait;
 use CrudView\Listener\Traits\SiteTitleTrait;
 use CrudView\Listener\Traits\UtilityNavigationTrait;
 use CrudView\Traits\CrudViewConfigTrait;
-use Crud\Listener\BaseListener;
 
 class ViewListener extends BaseListener
 {
@@ -263,7 +264,9 @@ class ViewListener extends BaseListener
 
         $data = [
             'modelClass' => $controller->modelClass,
-            'singularHumanName' => Inflector::humanize(Inflector::underscore(Inflector::singularize($controller->modelClass))),
+            'singularHumanName' => Inflector::humanize(
+                Inflector::underscore(Inflector::singularize($controller->modelClass))
+            ),
             'pluralHumanName' => Inflector::humanize(Inflector::underscore($controller->getName())),
             'singularVar' => Inflector::singularize($controller->getName()),
             'pluralVar' => Inflector::variable($controller->getName()),
@@ -281,7 +284,7 @@ class ViewListener extends BaseListener
 
         if ($scope === 'entity') {
             $data += [
-                'primaryKeyValue' => $this->_primaryKeyValue()
+                'primaryKeyValue' => $this->_primaryKeyValue(),
             ];
         }
 
@@ -310,7 +313,7 @@ class ViewListener extends BaseListener
             if ($scope === 'entity' && !empty($associations['manyToMany'])) {
                 foreach ($associations['manyToMany'] as $alias => $options) {
                     $cols[sprintf('%s._ids', $options['entities'])] = [
-                        'multiple' => true
+                        'multiple' => true,
                     ];
                 }
             }
@@ -379,7 +382,7 @@ class ViewListener extends BaseListener
 
         $actions = $this->_getAllowedActions();
         foreach ($actions as $actionName => $config) {
-            list($scope, $actionConfig) = $this->_getControllerActionConfiguration($actionName, $config);
+            [$scope, $actionConfig] = $this->_getControllerActionConfiguration($actionName, $config);
             ${$scope}[$actionName] = $actionConfig;
         }
 
@@ -394,7 +397,7 @@ class ViewListener extends BaseListener
                 if ($config === null) {
                     $config = [];
                 }
-                list($scope, $actionConfig) = $this->_getControllerActionConfiguration($actionName, $config);
+                [$scope, $actionConfig] = $this->_getControllerActionConfiguration($actionName, $config);
                 $realAction = Hash::get($actionConfig, 'url.action', $actionName);
                 if (!isset(${$scope}[$realAction])) {
                     continue;
@@ -440,10 +443,12 @@ class ViewListener extends BaseListener
         }
 
         // apply defaults if necessary
-        $scope = isset($config['scope']) ? $config['scope'] : 'entity';
-        $method = isset($config['method']) ? $config['method'] : 'GET';
+        $scope = $config['scope'] ?? 'entity';
+        $method = $config['method'] ?? 'GET';
 
-        $title = !empty($config['link_title']) ? $config['link_title'] : Inflector::humanize(Inflector::underscore($actionName));
+        $title = !empty($config['link_title'])
+            ? $config['link_title']
+            : Inflector::humanize(Inflector::underscore($actionName));
         $url = ['action' => $realAction];
         if (isset($config['url'])) {
             $url = $config['url'] + $url;
@@ -456,7 +461,7 @@ class ViewListener extends BaseListener
             'options' => array_diff_key(
                 $config,
                 array_flip(['method', 'scope', 'link_title', 'url', 'scaffold', 'callback'])
-            )
+            ),
         ];
         if (!empty($config['callback'])) {
             $actionConfig['callback'] = $config['callback'];
@@ -556,10 +561,15 @@ class ViewListener extends BaseListener
             $associationConfiguration[$type][$assocKey]['propertyName'] = $association->getProperty();
             $associationConfiguration[$type][$assocKey]['plugin'] = pluginSplit($association->getClassName())[0];
             $associationConfiguration[$type][$assocKey]['controller'] = $assocKey;
-            $associationConfiguration[$type][$assocKey]['entity'] = Inflector::singularize(Inflector::underscore($assocKey));
+            $associationConfiguration[$type][$assocKey]['entity'] = Inflector::singularize(
+                Inflector::underscore($assocKey)
+            );
             $associationConfiguration[$type][$assocKey]['entities'] = Inflector::underscore($assocKey);
 
-            $associationConfiguration[$type][$assocKey] = array_merge($associationConfiguration[$type][$assocKey], $this->_action()->getConfig('association.' . $assocKey) ?: []);
+            $associationConfiguration[$type][$assocKey] = array_merge(
+                $associationConfiguration[$type][$assocKey],
+                $this->_action()->getConfig('association.' . $assocKey) ?: []
+            );
         }
 
         return $associationConfiguration;

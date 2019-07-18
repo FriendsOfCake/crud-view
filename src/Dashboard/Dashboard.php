@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace CrudView\Dashboard;
 
 use Cake\Datasource\EntityTrait;
@@ -45,7 +47,7 @@ class Dashboard
     /**
      * Adds a Cell to a given column
      *
-     * @param Cell $module instance of Cell
+     * @param \Cake\View\Cell $module instance of Cell
      * @param int $column a column number
      * @return $this
      */

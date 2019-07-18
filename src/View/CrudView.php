@@ -1,9 +1,10 @@
 <?php
+declare(strict_types=1);
+
 namespace CrudView\View;
 
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
-use Cake\Event\Event;
 use Cake\Event\EventListenerInterface;
 use Cake\View\Exception\MissingTemplateException;
 use Cake\View\View;
@@ -112,7 +113,7 @@ class CrudView extends View implements EventListenerInterface
             'Form' => [
                 'className' => 'BootstrapUI.Form',
                 'widgets' => [
-                    'datetime' => ['CrudView\View\Widget\DateTimeWidget', 'select']
+                    'datetime' => ['CrudView\View\Widget\DateTimeWidget', 'select'],
                 ],
             ],
             'Flash' => ['className' => 'BootstrapUI.Flash'],

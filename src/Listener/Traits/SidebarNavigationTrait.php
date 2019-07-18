@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace CrudView\Listener\Traits;
 
 trait SidebarNavigationTrait
@@ -12,7 +14,7 @@ trait SidebarNavigationTrait
     {
         $controller = $this->_controller();
         $sidebarNavigation = $this->_getSidebarNavigation();
-        $controller->set('disableSidebar', ($sidebarNavigation === false) ? true : false);
+        $controller->set('disableSidebar', $sidebarNavigation === false ? true : false);
         $controller->set('sidebarNavigation', $sidebarNavigation);
     }
 

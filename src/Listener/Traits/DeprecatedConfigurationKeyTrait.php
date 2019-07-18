@@ -1,9 +1,10 @@
 <?php
+declare(strict_types=1);
+
 namespace CrudView\Listener\Traits;
 
 trait DeprecatedConfigurationKeyTrait
 {
-
     /**
      * Emit a deprecation notice for deprecated configuration key use
      *

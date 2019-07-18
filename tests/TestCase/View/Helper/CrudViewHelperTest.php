@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace CrudView\Test\TestCase\View\Helper;
 
 use Cake\I18n\FrozenTime;
