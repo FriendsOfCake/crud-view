@@ -620,7 +620,7 @@ class ViewListener extends BaseListener
     protected function _deriveFieldFromContext($field)
     {
         $controller = $this->_controller();
-        $modelClass = $table->getAlias();
+        $modelClass = $this->_table()->getAlias();
         $entity = $this->_entity();
         $request = $this->_request();
         $value = $entity->get($field);
@@ -635,7 +635,7 @@ class ViewListener extends BaseListener
         }
 
         $singularVar = Inflector::variable($modelClass);
-        if (!empty($controller->viewVars[$singularVar])) {
+        if ($controller->viewBuilder()->getVar($singularVar)) {
             $value = $entity->get($field);
         }
 
