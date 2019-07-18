@@ -78,5 +78,5 @@ trait SiteTitleTrait
     /**
      * {@inheritDoc}
      */
-    abstract protected function _action($name = null);
+    abstract protected function _action(?string $name = null);
 }

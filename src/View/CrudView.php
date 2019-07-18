@@ -35,7 +35,7 @@ class CrudView extends View implements EventListenerInterface
      *
      * @return void
      */
-    public function initialize()
+    public function initialize(): void
     {
         parent::initialize();
 
@@ -50,7 +50,7 @@ class CrudView extends View implements EventListenerInterface
      *
      * @return array
      */
-    public function implementedEvents()
+    public function implementedEvents(): array
     {
         return [
             'View.beforeLayout' => 'beforeLayout',
@@ -158,7 +158,7 @@ class CrudView extends View implements EventListenerInterface
      * @return string default The block content or $default if the block does not exist.
      * @see ViewBlock::get()
      */
-    public function fetch($name, $default = '')
+    public function fetch(string $name, string $default = ''): string
     {
         $viewblock = '';
         $viewblocks = $this->get('viewblocks', []);
@@ -178,7 +178,7 @@ class CrudView extends View implements EventListenerInterface
      *
      * @return bool
      */
-    public function exists($name)
+    public function exists(string $name): bool
     {
         $viewblocks = $this->get('viewblocks', []);
 

@@ -23,4 +23,4 @@ unset($findRoot);
 chdir($root);
 require $root . '/vendor/cakephp/cakephp/tests/bootstrap.php';
 
-Plugin::load('CrudView', ['path' => dirname(dirname(__FILE__)) . DS]);
+Plugin::getCollection()->add(new \CrudView\Plugin());

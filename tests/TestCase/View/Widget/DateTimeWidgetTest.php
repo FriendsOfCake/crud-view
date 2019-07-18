@@ -16,7 +16,7 @@ class DateTimeWidgetTest extends TestCase
 {
     use CompareTrait;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->initComparePath();

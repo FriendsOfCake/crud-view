@@ -420,9 +420,9 @@ class CrudViewHelper extends Helper
      * @param string $key View variable to get.
      * @return mixed
      */
-    public function getViewVar($key = null)
+    public function getViewVar($key)
     {
-        return Hash::get($this->_View->viewVars, $key);
+        return $this->_View->get($key);
     }
 
     /**
