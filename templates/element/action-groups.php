@@ -25,7 +25,7 @@ foreach ($groups as $key => $group) {
             <?php foreach ($group as $action => $config) : ?>
                 <?php $subaction = is_array($config) ? $action : $config; ?>
                 <?php if (array_key_exists($subaction, $links)): ?>
-                    <li><?= $this->element('action-button', ['config' => $links[$subaction]]); ?></li>
+                    <li class="dropdown-item"><?= $this->element('action-button', ['config' => $links[$subaction]]); ?></li>
                 <?php endif; ?>
             <?php endforeach; ?>
        </ul>
