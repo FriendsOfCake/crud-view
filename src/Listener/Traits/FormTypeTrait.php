@@ -130,19 +130,22 @@ trait FormTypeTrait
 
         $action = $this->_action();
         if ($action instanceof EditAction) {
-            $buttons[] = [
-                'title' => __d('crud', 'Delete'),
-                'url' => ['action' => 'delete'],
-                'options' => [
-                    'block' => 'form.after_end',
-                    'class' => 'btn btn-danger btn-delete',
-                    'confirm' => __d('crud', 'Are you sure you want to delete this record?'),
-                    'name' => '_delete',
-                    'style' => 'margin-left: 0',
-                ],
-                'type' => 'postLink',
-                '_label' => 'delete',
-            ];
+            $blacklist = $action->getConfig('scaffold.actions_blacklist', []);
+            if (!in_array('delete', $blacklist, true)) {
+                $buttons[] = [
+                    'title' => __d('crud', 'Delete'),
+                    'url' => ['action' => 'delete'],
+                    'options' => [
+                        'block' => 'form.after_end',
+                        'class' => 'btn btn-danger btn-delete',
+                        'confirm' => __d('crud', 'Are you sure you want to delete this record?'),
+                        'name' => '_delete',
+                        'style' => 'margin-left: 0',
+                    ],
+                    'type' => 'postLink',
+                    '_label' => 'delete',
+                ];
+            }
         }
 
         return $buttons;
