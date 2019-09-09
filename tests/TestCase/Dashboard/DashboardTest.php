@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace CrudView\Test\TestCase\Dashboard;
 
+use Cake\Http\Response;
+use Cake\Http\ServerRequest;
 use Cake\TestSuite\TestCase;
 use CrudView\Dashboard\Dashboard;
 use CrudView\View\Cell\DashboardTableCell;
@@ -29,13 +31,12 @@ class DashboardTest extends TestCase
         $this->assertEquals($expected, $dashboard->get('title'));
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     * @expectedExceptionMessage Valid columns value must be one of [1, 2, 3, 4, 6, 12]
-     */
     public function testInvalidConstruct()
     {
-        $dashboard = new Dashboard(null, 0);
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Valid columns value must be one of [1, 2, 3, 4, 6, 12]');
+
+        new Dashboard(null, 0);
     }
 
     public function testColumnChildren()
@@ -44,7 +45,7 @@ class DashboardTest extends TestCase
         $expected = [];
         $this->assertEquals($expected, $dashboard->getColumnChildren(1));
 
-        $cell = new DashboardTableCell();
+        $cell = new DashboardTableCell(new ServerRequest(), new Response());
         $return = $dashboard->addToColumn($cell);
         $this->assertEquals($dashboard, $return);
         $this->assertEquals([$cell], $dashboard->getColumnChildren(1));

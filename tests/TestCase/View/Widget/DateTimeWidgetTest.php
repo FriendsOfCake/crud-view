@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace CrudView\Test\TestCase\View\Widget;
 
-use Cake\I18n\FrozenTime;
+use Cake\I18n\FrozenDate;
 use Cake\TestSuite\TestCase;
 use Cake\View\Form\ContextInterface;
 use Cake\View\StringTemplate;
@@ -52,17 +52,17 @@ class DateTimeWidgetTest extends TestCase
     public function renderProvider()
     {
         return [
-            [
-                'simple.html',
-                ['id' => 'the-id', 'name' => 'the-name', 'val' => '', 'type' => 'x', 'required' => false],
-            ],
-            [
-                'with-string-value.html',
-                ['id' => 'the-id', 'name' => 'the-name', 'val' => '2000-01-01', 'type' => 'x', 'required' => false],
-            ],
+            // [
+            //     'simple.html',
+            //     ['id' => 'the-id', 'name' => 'the-name', 'val' => '', 'type' => 'date', 'required' => false],
+            // ],
+            // [
+            //     'with-string-value.html',
+            //     ['id' => 'the-id2', 'name' => 'the-name2', 'val' => '2000-01-01', 'type' => 'date', 'required' => false],
+            // ],
             [
                 'with-date-value.html',
-                ['id' => 'the-id', 'name' => 'the-name', 'val' => (new FrozenTime(strtotime('2000-01-01'))), 'type' => 'x', 'required' => false],
+                ['id' => 'the-id3', 'name' => 'the-name3', 'val' => new FrozenDate('2000-01-01'), 'type' => 'date', 'required' => false],
             ],
         ];
     }
