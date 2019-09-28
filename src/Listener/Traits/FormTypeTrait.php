@@ -50,7 +50,7 @@ trait FormTypeTrait
     /**
      * Get extra form submit buttons.
      *
-     * @return bool
+     * @return array
      */
     protected function _getFormSubmitExtraButtons()
     {
@@ -71,7 +71,7 @@ trait FormTypeTrait
     /**
      * Get extra form submit left buttons.
      *
-     * @return bool
+     * @return array
      */
     protected function _getFormSubmitExtraLeftButtons()
     {

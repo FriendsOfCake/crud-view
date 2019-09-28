@@ -14,7 +14,7 @@ class TablesListCell extends Cell
      *
      * @param array $tables Tables list.
      * @param array $blacklist Blacklisted tables list.
-     * @return array
+     * @return $this
      */
     public function display($tables = null, $blacklist = null)
     {

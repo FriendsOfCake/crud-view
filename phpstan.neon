@@ -1,10 +1,12 @@
 parameters:
+    level: 5
     universalObjectCratesClasses:
         - Crud\Event\Subject
     ignoreErrors:
-        - '#Access to an undefined property object::\$element#'
-        - '#Access to an undefined property object::\$params#'
-        - '#Access to an undefined property object::\$query#'
-        - '#Access to an undefined property object::\$type#'
-        - '#Parameter \#1 $dateTime of method Cake\\View\\Helper\\TimeHelper::timeAgoInWords\(\) expects Cake\\Chronos\\ChronosInterface|DateTime|int|string, DateTime|DateTimeImmutable|int|string given#'
         - '#Parameter \#1 $dateString of method Cake\\View\\Helper\\TimeHelper::nice() expects DateTime|int|string|null, DateTime|DateTimeImmutable|int|string given#'
+        -
+            message: '#Result of || is always false#'
+            path: 'src/Listener/ViewListener.php'
+        -
+            message: '#Call to an undefined method Cake\\ORM\\Table::searchManager\(\)#'
+            path: 'src/Listener/ViewSearchListener.php'
