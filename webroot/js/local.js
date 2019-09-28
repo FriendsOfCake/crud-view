@@ -42,6 +42,20 @@ var CrudView = {
         $(selector).selectize({plugins: ['remove_button']});
     },
 
+    select2: function (selector) {
+        $(selector).each(function () {
+            var $this = $(this),
+                config = {theme: 'bootstrap4'};
+
+            if (!$this.prop('multiple') && $this.find('option:first').val() === '') {
+                config.allowClear = true;
+                config.placeholder = '';
+            }
+
+            $(this).select2(config);
+        });
+    },
+
     autocomplete: function (selector) {
         $(selector).each(function (i, e) {
             e = $(e);
@@ -103,7 +117,7 @@ var CrudView = {
     initialize: function() {
         this.bulkActionForm('.bulk-actions');
         this.datePicker('[role=datetime-picker]');
-        this.selectize('select:not(.autocomplete, .no-selectize)');
+        this.select2('select:not(.autocomplete, .no-select2)');
         this.autocomplete('input.autocomplete, select.autocomplete');
         this.dirtyForms();
         this.dropdown();
