@@ -13,29 +13,8 @@ var CrudView = {
         }
     },
 
-    datePicker: function (selector) {
-        $(selector).each(function() {
-            var picker = $(this);
-            var date = null;
-
-            if (picker.data('timestamp') && picker.data('timezone-offset')) {
-                var timezoneOffset = picker.data('timezone-offset');
-                date = new Date(picker.data('timestamp') * 1000);
-
-                picker.parents('form').on('submit', function () {
-                    var timezoneDiff = timezoneOffset + date.getTimezoneOffset();
-                    var currentDate = picker.data('DateTimePicker').date();
-                    var convertedDate = currentDate.add(timezoneDiff, 'minutes');
-                    picker.data('DateTimePicker').date(convertedDate);
-                });
-            }
-
-            picker.datetimepicker({
-                locale: $(this).data('locale'),
-                format: $(this).data('format'),
-                date: date ? date : picker.val()
-            });
-        });
+    datetimePicker: function (selector) {
+        $(selector).flatpickr();
     },
 
     selectize: function (selector) {
@@ -69,10 +48,10 @@ var CrudView = {
                         url: e.data('url'),
                         dataType: 'json',
                         data: data,
-                        error: function() {
+                        error: function () {
                             callback();
                         },
-                        success: function(res) {
+                        success: function (res) {
                             callback($.map(res.data, function (name, id) {
                                 return {value: id, text: name};
                             }));
@@ -100,16 +79,16 @@ var CrudView = {
         })
     },
 
-    initialize: function() {
+    initialize: function () {
         this.bulkActionForm('.bulk-actions');
-        this.datePicker('[role=datetime-picker]');
         this.selectize('select:not(.autocomplete, .no-selectize)');
+        this.datetimePicker('.flatpickr');
         this.autocomplete('input.autocomplete, select.autocomplete');
         this.dirtyForms();
         this.dropdown();
     }
 };
 
-$(function() {
+$(function () {
     CrudView.initialize();
 });
