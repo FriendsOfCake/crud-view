@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace CrudView\View;
@@ -210,7 +211,6 @@ class CrudView extends View implements EventListenerInterface
 
         return $output;
     }
-
 
     /**
      * Returns filename of given action's template file as a string.

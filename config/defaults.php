@@ -1,5 +1,6 @@
 <?php
-use \Cake\Core\Plugin;
+
+use Cake\Core\Plugin;
 
 return [
     'CrudView' => [
@@ -20,7 +21,7 @@ return [
                 'https://cdn.jsdelivr.net/jquery.dirtyforms/1.2.2/jquery.dirtyforms.min.js',
             ],
             'script' => [
-                'CrudView.local'
+                'CrudView.local',
             ],
         ],
         'timezoneAwareDateTimeWidget' => false,
@@ -28,5 +29,5 @@ return [
         'tablesBlacklist' => [
             'phinxlog',
         ],
-    ]
+    ],
 ];
