@@ -13,7 +13,7 @@ var CrudView = {
         }
     },
 
-    datetimePicker: function (selector) {
+    flatpickr: function (selector) {
         $(selector).flatpickr();
     },
 
@@ -82,7 +82,7 @@ var CrudView = {
     initialize: function () {
         this.bulkActionForm('.bulk-actions');
         this.selectize('select:not(.autocomplete, .no-selectize)');
-        this.datetimePicker('.flatpickr');
+        this.flatpickr('.flatpickr');
         this.autocomplete('input.autocomplete, select.autocomplete');
         this.dirtyForms();
         this.dropdown();
