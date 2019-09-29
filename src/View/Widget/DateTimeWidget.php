@@ -88,10 +88,10 @@ class DateTimeWidget extends \BootstrapUI\View\Widget\DateTimeWidget
             $this->_templates->add([
                 'datetimePicker' =>
                     '<div {{attrs}}>'
-                    . '<div class="input-group-prepend">'
+                    . '{{input}}'
+                    . '<div class="input-group-append">'
                     . '<span data-toggle class="input-group-text"><i class="fa fa-calendar-alt"></i></span>'
                     . '</div>'
-                    . '{{input}}'
                     . '</div>',
             ]);
         }
