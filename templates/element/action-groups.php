@@ -21,7 +21,7 @@ foreach ($groups as $key => $group) {
             '#',
             ['class' => 'btn btn-default dropdown-toggle', 'escape' => false, 'data-toggle' => 'dropdown', 'aria-haspopup' => true, 'aria-expanded' => false]
         ) ?>
-        <ul class="dropdown-menu pull-right">
+        <ul class="dropdown-menu dropdown-menu-right">
             <?php foreach ($group as $action => $config) : ?>
                 <?php $subaction = is_array($config) ? $action : $config; ?>
                 <?php if (array_key_exists($subaction, $links)): ?>
