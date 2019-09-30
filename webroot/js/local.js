@@ -117,7 +117,7 @@ var CrudView = {
     initialize: function() {
         this.bulkActionForm('.bulk-actions');
         this.datePicker('[role=datetime-picker]');
-        this.select2('select:not(.autocomplete, .no-select2)');
+        this.select2('select[multiple]:not(.no-select2), .select2');
         this.autocomplete('input.autocomplete, select.autocomplete');
         this.dirtyForms();
         this.dropdown();
