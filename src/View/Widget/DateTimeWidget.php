@@ -85,16 +85,18 @@ class DateTimeWidget extends \BootstrapUI\View\Widget\DateTimeWidget
         unset($datetimePicker['iconClass']);
 
         if ($this->_templates->get('datetimePicker') === null) {
+            // phpcs:disable
             $this->_templates->add([
                 'datetimePicker' =>
                     '<div {{attrs}}>'
                     . '{{input}}'
                     . '<div class="input-group-append">'
-                    . '<span data-toggle class="input-group-text"><i class="fa fa-calendar-alt"></i></span>'
-                    . '<span data-clear class="input-group-text"><i class="fa fa-times"></i></span>'
+                    . '<button type="button" class="btn input-group-text" data-toggle><i class="' . $iconClass . '"></i></button>'
+                    . '<button type="button" class="btn input-group-text" data-clear><i class="fa fa-times"></i></button>'
                     . '</div>'
                     . '</div>',
             ]);
+            // phpcs:enable
         }
 
         $data = $this->_templates->addClass($data, 'form-control');
