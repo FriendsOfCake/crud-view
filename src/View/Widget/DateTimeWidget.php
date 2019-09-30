@@ -91,6 +91,7 @@ class DateTimeWidget extends \BootstrapUI\View\Widget\DateTimeWidget
                     . '{{input}}'
                     . '<div class="input-group-append">'
                     . '<span data-toggle class="input-group-text"><i class="fa fa-calendar-alt"></i></span>'
+                    . '<span data-clear class="input-group-text"><i class="fa fa-times"></i></span>'
                     . '</div>'
                     . '</div>',
             ]);
