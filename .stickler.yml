@@ -5,6 +5,9 @@ linters:
     extensions: 'php,ctp'
     fixer: true
 
+branches:
+  ignore: ['cake-4.x']
+
 fixers:
   enable: true
   workflow: commit
