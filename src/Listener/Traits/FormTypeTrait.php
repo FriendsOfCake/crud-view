@@ -112,7 +112,7 @@ trait FormTypeTrait
             'back' => [
                 'title' => __d('crud', 'Back'),
                 'url' => ['action' => 'index'],
-                'options' => ['class' => 'btn btn-default', 'role' => 'button'],
+                'options' => ['class' => 'btn btn-secondary', 'role' => 'button'],
                 'type' => 'link',
                 '_label' => 'back',
             ],

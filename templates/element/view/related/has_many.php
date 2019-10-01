@@ -17,7 +17,7 @@ foreach ($relations as $alias => $details):
     <div class="related">
         <h3><?= __d('crud', 'Related {0}', [Inflector::humanize($details['controller'])]); ?></h3>
         <div class="actions-wrapper">
-            <?= $this->CrudView->createRelationLink($alias, $details, array('class' => 'btn btn-default'));?>
+            <?= $this->CrudView->createRelationLink($alias, $details, array('class' => 'btn btn-secondary'));?>
         </div>
         <?php
         if (${$viewVar}->{$details['entities']}):
@@ -53,9 +53,9 @@ foreach ($relations as $alias => $details):
                             }
                             ?>
                             <td class="actions">
-                                <?= $this->Html->link(__d('crud', 'View'), array('plugin' => $details['plugin'], 'controller' => $details['controller'], 'action' => 'view', ${$otherSingularVar}[$details['primaryKey']]), array('class' => 'btn btn-default')); ?>
-                                <?= $this->Html->link(__d('crud', 'Edit'), array('plugin' => $details['plugin'], 'controller' => $details['controller'], 'action' => 'edit', ${$otherSingularVar}[$details['primaryKey']]), array('class' => 'btn btn-default')); ?>
-                                <?= $this->Html->link(__d('crud', 'Delete'), array('plugin' => $details['plugin'], 'controller' => $details['controller'], 'action' => 'delete', ${$otherSingularVar}[$details['primaryKey']]), array('class' => 'btn btn-default')); ?>
+                                <?= $this->Html->link(__d('crud', 'View'), array('plugin' => $details['plugin'], 'controller' => $details['controller'], 'action' => 'view', ${$otherSingularVar}[$details['primaryKey']]), array('class' => 'btn btn-secondary')); ?>
+                                <?= $this->Html->link(__d('crud', 'Edit'), array('plugin' => $details['plugin'], 'controller' => $details['controller'], 'action' => 'edit', ${$otherSingularVar}[$details['primaryKey']]), array('class' => 'btn btn-secondary')); ?>
+                                <?= $this->Html->link(__d('crud', 'Delete'), array('plugin' => $details['plugin'], 'controller' => $details['controller'], 'action' => 'delete', ${$otherSingularVar}[$details['primaryKey']]), array('class' => 'btn btn-secondary')); ?>
                             </td>
                         </tr>
                         <?php

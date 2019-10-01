@@ -42,7 +42,7 @@ class ActionLinkItemTest extends TestCase
         $this->assertEquals($expected, $item->get('actions'));
 
         $actions = $item->get('actions');
-        $expected = ['class' => ['btn btn-default']];
+        $expected = ['class' => ['btn btn-secondary']];
         $this->assertEquals($expected, $actions[0]->get('options'));
     }
 }
