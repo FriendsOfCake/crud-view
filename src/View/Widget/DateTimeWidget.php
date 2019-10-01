@@ -1,174 +1,157 @@
 <?php
-
 declare(strict_types=1);
 
 namespace CrudView\View\Widget;
 
 use Cake\Core\Configure;
-use Cake\Database\Type;
-use Cake\I18n\I18n;
 use Cake\View\Form\ContextInterface;
-use DateTimeInterface;
-use DateTimeZone;
 
-class DateTimeWidget extends \Cake\View\Widget\DateTimeWidget
+class DateTimeWidget extends \BootstrapUI\View\Widget\DateTimeWidget
 {
     /**
-     * Renders a date time widget.
+     * Render flatpickr
      *
-     * @param array $data Data to render with.
-     * @param \Cake\View\Form\ContextInterface $context The current form context.
-     * @return string A generated select box.
-     * @throws \RuntimeException When option data is invalid.
+     * @param array $data Data
+     * @param \Cake\View\Form\ContextInterface $context Context.
+     * @return string
      */
     public function render(array $data, ContextInterface $context): string
     {
-        $id = $data['id'];
-        $name = $data['name'];
-        $val = $data['val'];
-        $type = $data['type'];
-        $required = $data['required'] ? 'required' : '';
-        $disabled = isset($data['disabled']) && $data['disabled'] ? 'disabled' : '';
-        $role = $data['role'] ?? 'datetime-picker';
-        $format = null;
-        $locale = $data['locale'] ?? I18n::getLocale();
+        $datetimePicker = Configure::read('CrudView.datetimePicker', false);
+        if (isset($data['datetimePicker'])) {
+            $defaults = $datetimePicker;
 
-        $timezoneAware = Configure::read('CrudView.timezoneAwareDateTimeWidget');
+            $datetimePicker = $data['datetimePicker'];
+            unset($data['datetimePicker']);
 
-        $timestamp = null;
-        $timezoneOffset = null;
+            if ($datetimePicker === false) {
+                return $this->_withInputGroup($data, $context);
+            }
 
+            if (is_array($defaults)) {
+                $datetimePicker += $defaults;
+            }
+        }
+
+        if ($datetimePicker === false) {
+            return $this->_withInputGroup($data, $context);
+        }
+
+        $datetimePicker += [
+            'data-alt-input-class' => '',
+            'data-wrap' => 'true',
+        ];
+
+        $data += [
+            'name' => '',
+            'val' => null,
+            'type' => 'datetime-local',
+            'escape' => true,
+            'timezone' => null,
+            'templateVars' => [],
+            'data-input' => '',
+        ];
+
+        $data['value'] = $this->formatDateTime($data['val'], $data);
+        unset($data['val'], $data['timezone']);
+
+        // This is the format for value POSTed to server
+        $datetimePicker['data-date-format'] = $this->formatMap[$data['type']];
+        $datetimePicker['data-date-format'] = $this->convertPHPToDatePickerFormat($datetimePicker['data-date-format']);
+
+        // This just to allow upgrading easier
         if (isset($data['data-format'])) {
-            $format = $this->_convertPHPToMomentFormat($data['data-format']);
+            $datetimePicker['data-alt-format'] = $data['data-format'];
+            unset($data['data-format']);
+        }
+        // This is the format that will be display to user
+        if (isset($datetimePicker['data-alt-format'])) {
+            $datetimePicker['data-alt-format'] = $this->convertPHPToDatePickerFormat(
+                $datetimePicker['data-alt-format']
+            );
+            $datetimePicker['data-alt-input'] = 'true';
         }
 
-        if (!($val instanceof DateTimeInterface) && !empty($val)) {
-            switch ($type) {
-                case 'date':
-                case 'time':
-                    $val = Type::build($type)->marshal($val);
-                    break;
-
-                default:
-                    $val = Type::build('datetime')->marshal($val);
+        if ($data['type'] === 'time' || $data['type'] === 'datetime-local') {
+            if ($data['type'] === 'time') {
+                $datetimePicker['data-no-calendar'] = 'true';
             }
+
+            $datetimePicker['data-enable-time'] = 'true';
+            $datetimePicker += ['data-enable-seconds' => 'true'];
         }
 
-        if ($val && !is_string($val)) {
-            if ($timezoneAware) {
-                $timestamp = $val->format('U');
-                $dateTimeZone = new DateTimeZone(date_default_timezone_get());
-                $timezoneOffset = $dateTimeZone->getOffset($val) / 60;
-            }
-            $val = $val->format($type === 'date' ? 'Y-m-d' : 'Y-m-d H:i:s');
+        $iconClass = 'fa fa-calendar-alt';
+        if (isset($datetimePicker['iconClass'])) {
+            $iconClass = $data['iconClass'];
+        } elseif ($data['type'] === 'time') {
+            $iconClass = 'fa fa-clock';
         }
 
-        if ($format === null) {
-            if ($type === 'date') {
-                $format = 'L';
-            } elseif ($type === 'time') {
-                $format = 'LT';
-            } else {
-                $format = 'L LT';
-            }
+        unset($datetimePicker['iconClass']);
+
+        if ($this->_templates->get('datetimePicker') === null) {
+            // phpcs:disable
+            $this->_templates->add([
+                'datetimePicker' =>
+                    '<div {{attrs}}>'
+                    . '{{input}}'
+                    . '<div class="input-group-append">'
+                    . '<button data-toggle type="button" class="btn input-group-text"><i class="' . $iconClass . '"></i></button>'
+                    . '<button data-clear type="button" class="btn input-group-text"><i class="fa fa-times"></i></button>'
+                    . '</div>'
+                    . '</div>',
+            ]);
+            // phpcs:enable
         }
 
-        $icon = $type === 'time'
-            ? 'time'
-            : 'calendar';
-
-        $widget = <<<html
-            <div class="input-group $type">
-                <input
-                    type="text"
-                    class="form-control"
-                    name="$name"
-                    value="$val"
-                    id="$id"
-                    role="$role"
-                    data-locale="$locale"
-                    data-format="$format"
-html;
-        if ($timezoneAware && isset($timestamp, $timezoneOffset)) {
-            $widget .= <<<html
-                    data-timestamp="$timestamp"
-                    data-timezone-offset="$timezoneOffset"
-html;
+        $data = $this->_templates->addClass($data, 'form-control');
+        $noWrap = false;
+        if ($datetimePicker['data-wrap'] === 'true') {
+            $datetimePicker['class'] = ['input-group', 'flatpickr'];
+        } else {
+            $data += $datetimePicker;
+            $data = $this->_templates->addClass($data, 'flatpickr');
+            $noWrap = true;
         }
-        $widget .= <<<html
-                    $required
-                    $disabled
-                />
-                <label for="$id" class="input-group-addon">
-                    <span class="glyphicon glyphicon-$icon"></span>
-                </label>
-            </div>
-html;
 
-        return $widget;
+        $input = $this->_templates->format('input', [
+            'name' => $data['name'],
+            'type' => 'text',
+            'templateVars' => $data['templateVars'],
+            'attrs' => $this->_templates->formatAttributes(
+                $data,
+                ['name', 'type']
+            ),
+        ]);
+
+        if ($noWrap) {
+            return $input;
+        }
+
+        return $this->_templates->format('datetimePicker', [
+            'input' => $input,
+            'iconClass' => $iconClass,
+            'attrs' => $this->_templates->formatAttributes($datetimePicker),
+            'templateVars' => $data['templateVars'],
+        ]);
     }
 
     /**
-     * Converts PHP date format to one supported by MomentJS.
+     * Converts PHP date format to one supported by flatpickr.
      *
      * @param string $format PHP date format.
-     * @return string MomentJS date format.
-     * @see http://stackoverflow.com/a/30192680
+     * @return string flatpickr date format.
+     * @see https://flatpickr.js.org/formatting/
      */
-    protected function _convertPHPToMomentFormat($format)
+    protected function convertPHPToDatePickerFormat(string $format)
     {
         $replacements = [
-            'd' => 'DD',
-            'D' => 'ddd',
-            'j' => 'D',
-            'l' => 'dddd',
-            'N' => 'E',
-            'S' => 'o',
-            'w' => 'e',
-            'z' => 'DDD',
-            'W' => 'W',
-            'F' => 'MMMM',
-            'm' => 'MM',
-            'M' => 'MMM',
-            'n' => 'M',
-            't' => '', // no equivalent
-            'L' => '', // no equivalent
-            'o' => 'YYYY',
-            'Y' => 'YYYY',
-            'y' => 'YY',
-            'a' => 'a',
-            'A' => 'A',
-            'B' => '', // no equivalent
-            'g' => 'h',
-            'G' => 'H',
-            'h' => 'hh',
-            'H' => 'HH',
-            'i' => 'mm',
-            's' => 'ss',
-            'u' => 'SSS',
-            'I' => '', // no equivalent
-            'O' => '', // no equivalent
-            'P' => '', // no equivalent
-            'T' => '', // no equivalent
-            'Z' => '', // no equivalent
-            'c' => '', // no equivalent
-            'r' => '', // no equivalent
-            'U' => 'X',
+            's' => 'S',
+            'A' => 'K',
         ];
-        $momentFormat = strtr($format, $replacements);
+        $datePickerFormat = strtr($format, $replacements);
 
-        return $momentFormat;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function secureFields(array $data): array
-    {
-        if (!isset($data['name']) || $data['name'] === '') {
-            return [];
-        }
-
-        return [$data['name']];
+        return $datePickerFormat;
     }
 }

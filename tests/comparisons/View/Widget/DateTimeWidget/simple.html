@@ -1,19 +1,30 @@
 <div
-  class="input-group date">
+  data-alt-input-class=""
+  data-wrap="true"
+  data-date-format="Y-m-d"
+  class="input-group flatpickr">
   <input
     type="text"
-    class="form-control"
     name="the-name"
-    value=""
     id="the-id"
-    role="datetime-picker"
-    data-locale="en_US"
-    data-format="L" />
-  <label
-    for="the-id"
-    class="input-group-addon">
-    <span
-      class="glyphicon glyphicon-calendar">
-    </span>
-  </label>
+    data-input=""
+    value=""
+    class="form-control"/>
+  <div
+    class="input-group-append">
+    <button data-toggle
+      type="button"
+      class="btn input-group-text">
+      <i
+        class="fa fa-calendar-alt">
+      </i>
+    </button>
+    <button data-clear
+      type="button"
+      class="btn input-group-text">
+      <i
+        class="fa fa-times">
+      </i>
+    </button>
+  </div>
 </div>

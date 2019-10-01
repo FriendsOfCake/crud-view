@@ -1,9 +1,9 @@
 <?php
-
 declare(strict_types=1);
 
 namespace CrudView\Test\TestCase\View\Widget;
 
+use Cake\Core\Configure;
 use Cake\I18n\FrozenDate;
 use Cake\TestSuite\TestCase;
 use Cake\View\Form\ContextInterface;
@@ -22,7 +22,9 @@ class DateTimeWidgetTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
+
         $this->initComparePath();
+        Configure::write('CrudView.datetimePicker', []);
     }
 
     /**
@@ -35,7 +37,9 @@ class DateTimeWidgetTest extends TestCase
     public function testRenderSimple($compareFileName, $data)
     {
         $context = $this->getMockBuilder(ContextInterface::class)->getMock();
-        $templates = new StringTemplate();
+        $templates = new StringTemplate([
+            'input' => '<input type="{{type}}" name="{{name}}"{{attrs}}/>',
+        ]);
         $selectBox = new SelectBoxWidget($templates);
         $instance = new DateTimeWidget($templates, $selectBox);
 
@@ -53,17 +57,57 @@ class DateTimeWidgetTest extends TestCase
     public function renderProvider()
     {
         return [
-            // [
-            //     'simple.html',
-            //     ['id' => 'the-id', 'name' => 'the-name', 'val' => '', 'type' => 'date', 'required' => false],
-            // ],
-            // [
-            //     'with-string-value.html',
-            //     ['id' => 'the-id2', 'name' => 'the-name2', 'val' => '2000-01-01', 'type' => 'date', 'required' => false],
-            // ],
+            [
+                'simple.html',
+                [
+                    'id' => 'the-id',
+                    'name' => 'the-name',
+                    'val' => '',
+                    'type' => 'date',
+                    'required' => false,
+                ],
+            ],
+            [
+                'with-string-value.html',
+                [
+                    'id' => 'the-id2',
+                    'name' => 'the-name2',
+                    'val' => '2000-01-01',
+                    'type' => 'date',
+                    'required' => false,
+                ],
+            ],
             [
                 'with-date-value.html',
-                ['id' => 'the-id3', 'name' => 'the-name3', 'val' => new FrozenDate('2000-01-01'), 'type' => 'date', 'required' => false],
+                [
+                    'id' => 'the-id3',
+                    'name' => 'the-name3',
+                    'val' => new FrozenDate('2000-01-01'),
+                    'type' => 'date',
+                    'required' => false,
+                ],
+            ],
+            [
+                'no-datetime-picker.html',
+                [
+                    'id' => 'the-id4',
+                    'name' => 'the-name4',
+                    'val' => '',
+                    'type' => 'date',
+                    'required' => false,
+                    'datetimePicker' => false,
+                ],
+            ],
+            [
+                'no-wrap.html',
+                [
+                    'id' => 'the-id5',
+                    'name' => 'the-name5',
+                    'val' => '',
+                    'type' => 'date',
+                    'required' => false,
+                    'datetimePicker' => ['data-wrap' => 'false'],
+                ],
             ],
         ];
     }
