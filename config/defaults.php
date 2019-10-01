@@ -9,6 +9,8 @@ return [
             'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/css/bootstrap.css',
             'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css',
             'https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.2/css/selectize.bootstrap3.min.css',
+            'https://cdn.jsdelivr.net/npm/select2@4.0/dist/css/select2.min.css',
+            'https://cdn.jsdelivr.net/npm/@ttskch/select2-bootstrap4-theme@1.2/dist/select2-bootstrap4.css',
             'CrudView.local',
         ],
         'js' => [
@@ -18,6 +20,7 @@ return [
                 'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment-with-locales.min.js',
                 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js',
                 'https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.2/js/standalone/selectize.min.js',
+                'https://cdn.jsdelivr.net/npm/select2@4.0',
                 'https://cdn.jsdelivr.net/jquery.dirtyforms/1.2.2/jquery.dirtyforms.min.js',
             ],
             'script' => [
