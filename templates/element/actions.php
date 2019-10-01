@@ -67,6 +67,7 @@ foreach ($actions as $name => $config) {
 ?>
 
 <?php
+$btns = [];
 // render primary actions at first
 foreach ($actionGroups['primary'] as $action) {
     if (!isset($links[$action])) {
@@ -83,9 +84,14 @@ foreach ($actionGroups['primary'] as $action) {
         $config['options']['class'] = ['btn btn-default'];
     }
 
-    echo $this->element('action-button', ['config' => $config]);
+    $btns[] = $this->element('action-button', ['config' => $config]);
 }
 unset($actionGroups['primary']);
 
 // render grouped actions
-echo $this->element('action-groups', ['groups' => $actionGroups, 'links' => $links]);
+$groupedBtns = trim($this->element('action-groups', ['groups' => $actionGroups, 'links' => $links]));
+if ($groupedBtns) {
+    $btns[] = $groupedBtns;
+}
+
+echo implode('&nbsp;', $btns);
