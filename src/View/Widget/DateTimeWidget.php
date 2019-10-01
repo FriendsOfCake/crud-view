@@ -75,7 +75,7 @@ class DateTimeWidget extends \BootstrapUI\View\Widget\DateTimeWidget
             $datetimePicker += ['data-enable-seconds' => 'true'];
         }
 
-        $iconClass = 'fa fa-calendar';
+        $iconClass = 'fa fa-calendar-alt';
         if (isset($datetimePicker['iconClass'])) {
             $iconClass = $data['iconClass'];
         } elseif ($data['type'] === 'time') {
@@ -91,8 +91,8 @@ class DateTimeWidget extends \BootstrapUI\View\Widget\DateTimeWidget
                     '<div {{attrs}}>'
                     . '{{input}}'
                     . '<div class="input-group-append">'
-                    . '<button type="button" class="btn input-group-text" data-toggle><i class="' . $iconClass . '"></i></button>'
-                    . '<button type="button" class="btn input-group-text" data-clear><i class="fa fa-times"></i></button>'
+                    . '<button data-toggle type="button" class="btn input-group-text"><i class="' . $iconClass . '"></i></button>'
+                    . '<button data-clear type="button" class="btn input-group-text"><i class="fa fa-times"></i></button>'
                     . '</div>'
                     . '</div>',
             ]);
