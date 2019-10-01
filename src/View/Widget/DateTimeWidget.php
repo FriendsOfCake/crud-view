@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace CrudView\View\Widget;
@@ -9,6 +8,13 @@ use Cake\View\Form\ContextInterface;
 
 class DateTimeWidget extends \BootstrapUI\View\Widget\DateTimeWidget
 {
+    /**
+     * Render flatpickr
+     *
+     * @param array $data Data
+     * @param \Cake\View\Form\ContextInterface $context Context.
+     * @return string
+     */
     public function render(array $data, ContextInterface $context): string
     {
         $datetimePicker = Configure::read('CrudView.datetimePicker', false);
