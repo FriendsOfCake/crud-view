@@ -81,7 +81,7 @@ foreach ($actionGroups['primary'] as $action) {
     }
 
     if (empty($config['options']['class'])) {
-        $config['options']['class'] = ['btn btn-default'];
+        $config['options']['class'] = ['btn btn-secondary'];
     }
 
     $btns[] = $this->element('action-button', ['config' => $config]);

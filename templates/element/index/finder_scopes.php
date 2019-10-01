@@ -5,7 +5,7 @@ if (empty($indexFinderScopes)) {
 
 $finder = $this->request->query('finder');
 foreach ($indexFinderScopes as $indexFinderScope) {
-    $scopeOptions = ['class' => 'btn btn-default btn-sm', 'role' => 'button'];
+    $scopeOptions = ['class' => 'btn btn-secondary btn-sm', 'role' => 'button'];
     $scopeFinder = $indexFinderScope['finder'];
 
     if (empty($finder) && $scopeFinder === 'all') {

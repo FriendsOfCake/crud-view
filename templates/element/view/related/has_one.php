@@ -15,7 +15,7 @@ foreach ($associations['oneToOne'] as $alias => $details):
         <?= $this->Html->link(
             __d('crud', 'View {0}', [Inflector::humanize(Inflector::underscore($alias))]),
             array('plugin' => $details['plugin'], 'controller' => $details['controller'], 'action' => 'view', ${$viewVar}[$alias][$details['primaryKey']]),
-            array('class' => 'btn btn-default')
+            array('class' => 'btn btn-secondary')
         ); ?>
     </div>
 
