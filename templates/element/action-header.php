@@ -16,6 +16,6 @@ if (!$this->exists('actions')) {
 }
 ?>
 <h2><?= $this->get('title'); ?></h2>
-<div class="actions-wrapper">
+<div class="actions-wrapper mb-3">
     <?= $this->fetch('actions'); ?>
 </div>
