@@ -72,10 +72,6 @@ h2 .actions {
     padding-right:33px;
 }
 
-div.actions-wrapper {
-    margin: 10px 0;
-}
-
 .text-truncate {
   white-space: nowrap;
   overflow: hidden;
