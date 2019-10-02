@@ -52,20 +52,21 @@ h2 .actions {
     margin-left: 15px;
 }
 
-.search-filters .form-inline .form-group {
-    padding-left:10px;
-}
-
 .search-filters .form-inline .form-group label {
-    padding-right:10px;
+    margin-right: .25rem !important;
 }
 
-.search-filters .form-inline .form-control {
-    min-width:90px !important;
+.search-filters .form-inline .form-group {
+    margin-right: .5rem !important;
 }
 
-.search-filters .form-inline .form-control input, .search-filters .form-inline .form-control select {
-    min-width:90px !important;
+.search-filters .form-inline .form-group,
+.search-filters .form-inline button {
+    margin-bottom: 1rem !important;
+}
+
+.search-filters .form-inline .form-control input {
+    min-width: 90px !important;
 }
 
 .selectize-input.items.full {
