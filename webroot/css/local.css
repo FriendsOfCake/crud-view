@@ -52,7 +52,8 @@ h2 .actions {
     margin-left: 15px;
 }
 
-.search-filters .form-inline .form-group label {
+.search-filters .form-inline .form-group label,
+.search-filters .form-inline .btn {
     margin-right: .25rem !important;
 }
 
@@ -60,8 +61,7 @@ h2 .actions {
     margin-right: .5rem !important;
 }
 
-.search-filters .form-inline .form-group,
-.search-filters .form-inline button {
+.search-filters .form-inline .form-group {
     margin-bottom: 1rem !important;
 }
 
