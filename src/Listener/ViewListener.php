@@ -429,6 +429,12 @@ class ViewListener extends BaseListener
     protected function _getControllerActionConfiguration($actionName, $config)
     {
         $realAction = Hash::get($config, 'url.action', $actionName);
+        $url = ['action' => $realAction];
+
+        if (isset($config['url'])) {
+            $url = $config['url'] + $url;
+        }
+
         if ($this->_crud()->isActionMapped($realAction)) {
             $action = $this->_action($realAction);
             $class = get_class($action);
@@ -436,6 +442,7 @@ class ViewListener extends BaseListener
 
             if ($class === 'DeleteAction') {
                 $config += ['method' => 'DELETE'];
+                $url['?']['_redirect_url'] = $this->_request()->getRequestTarget();
             }
 
             if (!isset($config['scope'])) {
@@ -450,10 +457,6 @@ class ViewListener extends BaseListener
         $title = !empty($config['link_title'])
             ? $config['link_title']
             : Inflector::humanize(Inflector::underscore($actionName));
-        $url = ['action' => $realAction];
-        if (isset($config['url'])) {
-            $url = $config['url'] + $url;
-        }
 
         $actionConfig = [
             'title' => $title,
