@@ -66,7 +66,10 @@ class ViewSearchListener extends BaseListener
         }
 
         $fields = $this->fields();
-        $this->_controller()->set('searchInputs', $fields);
+
+        $this->_controller()->viewBuilder()
+            ->setVar('searchInputs', $fields)
+            ->setHelpers(['Search.Search']);
     }
 
     /**
