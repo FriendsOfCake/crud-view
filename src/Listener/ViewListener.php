@@ -5,7 +5,7 @@ namespace CrudView\Listener;
 
 use Cake\Collection\Collection;
 use Cake\Database\Exception;
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
 use Crud\Listener\BaseListener;
@@ -35,10 +35,10 @@ class ViewListener extends BaseListener
     /**
      * [beforeFind description]
      *
-     * @param \Cake\Event\Event $event Event.
+     * @param \Cake\Event\EventInterface $event Event.
      * @return void
      */
-    public function beforeFind(Event $event)
+    public function beforeFind(EventInterface $event)
     {
         $related = $this->_getRelatedModels();
         if ($related === []) {
@@ -55,10 +55,10 @@ class ViewListener extends BaseListener
     /**
      * [beforePaginate description]
      *
-     * @param \Cake\Event\Event $event Event.
+     * @param \Cake\Event\EventInterface $event Event.
      * @return void
      */
-    public function beforePaginate(Event $event)
+    public function beforePaginate(EventInterface $event)
     {
         $related = $this->_getRelatedModels();
         if ($related === []) {
@@ -75,10 +75,10 @@ class ViewListener extends BaseListener
     /**
      * beforeRender event
      *
-     * @param \Cake\Event\Event $event Event.
+     * @param \Cake\Event\EventInterface $event Event.
      * @return void
      */
-    public function beforeRender(Event $event)
+    public function beforeRender(EventInterface $event)
     {
         if ($this->_controller()->getName() === 'Error') {
             return;
@@ -123,10 +123,10 @@ class ViewListener extends BaseListener
     /**
      * Make sure flash messages are properly handled by BootstrapUI.FlashHelper
      *
-     * @param \Cake\Event\Event $event Event.
+     * @param \Cake\Event\EventInterface $event Event.
      * @return void
      */
-    public function setFlash(Event $event)
+    public function setFlash(EventInterface $event)
     {
         unset($event->getSubject()->params['class']);
         $event->getSubject()->element = ltrim($event->getSubject()->type);
