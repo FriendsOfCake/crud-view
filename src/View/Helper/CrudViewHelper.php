@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace CrudView\View\Helper;
 
+use Cake\Database\Schema\TableSchemaInterface;
 use Cake\Datasource\EntityInterface;
 use Cake\Utility\Inflector;
 use Cake\Utility\Text;
@@ -47,7 +48,7 @@ class CrudViewHelper extends Helper
      * @param \Cake\Datasource\EntityInterface $record Entity.
      * @return void
      */
-    public function setContext(EntityInterface $record)
+    public function setContext(EntityInterface $record): void
     {
         $this->_context = $record;
     }
@@ -57,7 +58,7 @@ class CrudViewHelper extends Helper
      *
      * @return \Cake\Datasource\EntityInterface
      */
-    public function getContext()
+    public function getContext(): EntityInterface
     {
         return $this->_context;
     }
@@ -70,7 +71,7 @@ class CrudViewHelper extends Helper
      * @param array $options Processing options.
      * @return string|null|array|bool|int
      */
-    public function process($field, EntityInterface $data, array $options = [])
+    public function process(string $field, EntityInterface $data, array $options = [])
     {
         $this->setContext($data);
 
@@ -106,7 +107,7 @@ class CrudViewHelper extends Helper
      * @param string $field The field to extract, if null, the field from the entity context is used.
      * @return mixed
      */
-    public function fieldValue(EntityInterface $data, $field)
+    public function fieldValue(EntityInterface $data, string $field)
     {
         if (empty($data)) {
             $data = $this->getContext();
@@ -123,7 +124,7 @@ class CrudViewHelper extends Helper
      * @param array $options Options array.
      * @return array|bool|null|int|string
      */
-    public function introspect($field, $value, array $options = [])
+    public function introspect(string $field, $value, array $options = [])
     {
         $output = $this->relation($field);
         if ($output) {
@@ -168,7 +169,7 @@ class CrudViewHelper extends Helper
      * @param string $field Field to get column type for
      * @return string
      */
-    public function columnType($field)
+    public function columnType(string $field): string
     {
         $schema = $this->schema();
 
@@ -183,7 +184,7 @@ class CrudViewHelper extends Helper
      * @param array $options Options array
      * @return string
      */
-    public function formatBoolean($field, $value, $options)
+    public function formatBoolean(string $field, $value, array $options): string
     {
         return (bool)$value ?
             $this->Html->label(__d('crud', 'Yes'), ['type' => empty($options['inverted']) ? 'success' : 'danger']) :
@@ -198,7 +199,7 @@ class CrudViewHelper extends Helper
      * @param array $options Options array.
      * @return string
      */
-    public function formatDate($field, $value, array $options)
+    public function formatDate(string $field, $value, array $options): string
     {
         if ($value === null) {
             return $this->Html->label(__d('crud', 'N/A'), ['type' => 'info']);
@@ -219,7 +220,7 @@ class CrudViewHelper extends Helper
      * @param array $options Options array.
      * @return string
      */
-    public function formatTime($field, $value, array $options)
+    public function formatTime(string $field, $value, array $options): string
     {
         if ($value === null) {
             return $this->Html->label(__d('crud', 'N/A'), ['type' => 'info']);
@@ -240,7 +241,7 @@ class CrudViewHelper extends Helper
      * @param mixed $value Value of field.
      * @return string
      */
-    public function formatString($field, $value)
+    public function formatString(string $field, $value): string
     {
         return h(Text::truncate((string)$value, 200));
     }
@@ -252,7 +253,7 @@ class CrudViewHelper extends Helper
      * @param array $options Options array.
      * @return string
      */
-    public function formatDisplayField($value, array $options)
+    public function formatDisplayField($value, array $options): string
     {
         return $this->createViewLink($value, ['escape' => false]);
     }
@@ -263,7 +264,7 @@ class CrudViewHelper extends Helper
      * @param string $field Name of field.
      * @return mixed Array of data to output, false if no match found
      */
-    public function relation($field)
+    public function relation(string $field)
     {
         $associations = $this->associations();
         if (empty($associations['manyToOne'])) {
@@ -307,7 +308,7 @@ class CrudViewHelper extends Helper
      *
      * @return string|null
      */
-    public function redirectUrl()
+    public function redirectUrl(): ?string
     {
         $redirectUrl = $this->getView()->getRequest()->getQuery('_redirect_url');
         $redirectUrlViewVar = $this->getViewVar('_redirect_url');
@@ -341,7 +342,7 @@ class CrudViewHelper extends Helper
      * @param array $options Options array to be passed to the link function
      * @return string
      */
-    public function createRelationLink($alias, $relation, $options = [])
+    public function createRelationLink(string $alias, array $relation, array $options = []): string
     {
         return $this->Html->link(
             __d('crud', 'Add {0}', [Inflector::singularize(Inflector::humanize(Inflector::underscore($alias)))]),
@@ -365,7 +366,7 @@ class CrudViewHelper extends Helper
      * @param array $options Options array to be passed to the link function
      * @return string
      */
-    public function createViewLink($title, $options = [])
+    public function createViewLink(string $title, array $options = []): string
     {
         return $this->Html->link(
             $title,
@@ -379,7 +380,7 @@ class CrudViewHelper extends Helper
      *
      * @return string
      */
-    public function currentModel()
+    public function currentModel(): string
     {
         return $this->getViewVar('modelClass');
     }
@@ -389,7 +390,7 @@ class CrudViewHelper extends Helper
      *
      * @return \Cake\Database\Schema\TableSchemaInterface
      */
-    public function schema()
+    public function schema(): TableSchemaInterface
     {
         return $this->getViewVar('modelSchema');
     }
@@ -399,7 +400,7 @@ class CrudViewHelper extends Helper
      *
      * @return string
      */
-    public function viewVar()
+    public function viewVar(): string
     {
         return $this->getViewVar('viewVar');
     }
@@ -409,9 +410,9 @@ class CrudViewHelper extends Helper
      *
      * @return array List of associations.
      */
-    public function associations()
+    public function associations(): array
     {
-        return $this->getViewVar('associations');
+        return $this->getViewVar('associations') ?? [];
     }
 
     /**
@@ -420,7 +421,7 @@ class CrudViewHelper extends Helper
      * @param string $key View variable to get.
      * @return mixed
      */
-    public function getViewVar($key)
+    public function getViewVar(string $key)
     {
         return $this->_View->get($key);
     }
@@ -430,7 +431,7 @@ class CrudViewHelper extends Helper
      *
      * @return string
      */
-    public function getCssClasses()
+    public function getCssClasses(): string
     {
         $action = (string)$this->getView()->getRequest()->getParam('action');
         $pluralVar = $this->getViewVar('pluralVar');
@@ -438,6 +439,7 @@ class CrudViewHelper extends Helper
         $args = func_get_args();
 
         return implode(
+            ' ',
             array_unique(array_merge(
                 [
                     'scaffold-action',
@@ -447,8 +449,7 @@ class CrudViewHelper extends Helper
                 ],
                 $args,
                 $viewClasses
-            )),
-            ' '
+            ))
         );
     }
 }

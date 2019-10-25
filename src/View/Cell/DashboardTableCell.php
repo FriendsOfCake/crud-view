@@ -20,7 +20,7 @@ class DashboardTableCell extends Cell
      * @param array $links A array of LinkItem objects
      * @return void
      */
-    public function display($title, array $links = [])
+    public function display($title, array $links = []): void
     {
         if (is_array($title)) {
             $links = $title;

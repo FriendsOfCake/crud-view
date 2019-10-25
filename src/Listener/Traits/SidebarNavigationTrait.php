@@ -3,6 +3,9 @@ declare(strict_types=1);
 
 namespace CrudView\Listener\Traits;
 
+use Cake\Controller\Controller;
+use Crud\Action\BaseAction;
+
 trait SidebarNavigationTrait
 {
     /**
@@ -10,7 +13,7 @@ trait SidebarNavigationTrait
      *
      * @return void
      */
-    public function beforeRenderSidebarNavigation()
+    public function beforeRenderSidebarNavigation(): void
     {
         $controller = $this->_controller();
         $sidebarNavigation = $this->_getSidebarNavigation();
@@ -33,10 +36,10 @@ trait SidebarNavigationTrait
     /**
      * {@inheritDoc}
      */
-    abstract protected function _controller();
+    abstract protected function _controller(): Controller;
 
     /**
      * {@inheritDoc}
      */
-    abstract protected function _action(?string $name = null);
+    abstract protected function _action(?string $name = null): BaseAction;
 }

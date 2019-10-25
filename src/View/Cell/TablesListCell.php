@@ -16,7 +16,7 @@ class TablesListCell extends Cell
      * @param array $blacklist Blacklisted tables list.
      * @return $this
      */
-    public function display($tables = null, $blacklist = null)
+    public function display(?array $tables = null, ?array $blacklist = null)
     {
         if (empty($tables)) {
             $connection = ConnectionManager::get('default');

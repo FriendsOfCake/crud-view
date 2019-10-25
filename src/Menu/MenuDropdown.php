@@ -25,7 +25,7 @@ class MenuDropdown
      * @param string $title The name of the dropdown
      * @param array $entries Array of MenuDivider|MenuItem entries
      */
-    public function __construct($title, array $entries = [])
+    public function __construct(string $title, array $entries = [])
     {
         $this->title = $title;
         $this->entries = $entries;
@@ -36,7 +36,7 @@ class MenuDropdown
      *
      * @return string
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -46,7 +46,7 @@ class MenuDropdown
      *
      * @return array
      */
-    public function getEntries()
+    public function getEntries(): array
     {
         return $this->entries;
     }

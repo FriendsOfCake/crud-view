@@ -17,7 +17,7 @@ class Dashboard
      * @param string $title The name of the group
      * @param int $columns Number of columns
      */
-    public function __construct($title = null, $columns = 1)
+    public function __construct(?string $title = null, int $columns = 1)
     {
         if ($title === null) {
             $title = __d('CrudView', 'Dashboard');
@@ -34,7 +34,7 @@ class Dashboard
      * @param int $column a column number
      * @return array
      */
-    public function getColumnChildren($column)
+    public function getColumnChildren(int $column): array
     {
         $children = $this->get('children');
         if (isset($children[$column])) {
@@ -51,7 +51,7 @@ class Dashboard
      * @param int $column a column number
      * @return $this
      */
-    public function addToColumn(Cell $module, $column = 1)
+    public function addToColumn(Cell $module, int $column = 1)
     {
         $children = $this->get('children');
         $children[$column][] = $module;
@@ -67,7 +67,7 @@ class Dashboard
      * @return int
      * @throws \InvalidArgumentException the column count is invalid
      */
-    protected function _setColumns($value)
+    protected function _setColumns(int $value)
     {
         $columnMap = [
             1 => 12,

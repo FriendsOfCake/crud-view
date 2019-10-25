@@ -14,7 +14,7 @@ trait CrudViewConfigTrait
      *
      * @return bool
      */
-    public function ensureConfig()
+    public function ensureConfig(): bool
     {
         $config = Configure::read('CrudView');
         if ($config !== null) {

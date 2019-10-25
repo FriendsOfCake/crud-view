@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace CrudView\Listener\Traits;
 
+use Cake\Controller\Controller;
+use Crud\Action\BaseAction;
 use Crud\Action\EditAction;
 
 trait FormTypeTrait
@@ -12,7 +14,7 @@ trait FormTypeTrait
      *
      * @return void
      */
-    protected function beforeRenderFormType()
+    protected function beforeRenderFormType(): void
     {
         $controller = $this->_controller();
 
@@ -28,7 +30,7 @@ trait FormTypeTrait
      *
      * @return bool
      */
-    protected function _getFormEnableDirtyCheck()
+    protected function _getFormEnableDirtyCheck(): bool
     {
         $action = $this->_action();
 
@@ -38,9 +40,9 @@ trait FormTypeTrait
     /**
      * Get form submit button text.
      *
-     * @return bool
+     * @return string
      */
-    protected function _getFormSubmitButtonText()
+    protected function _getFormSubmitButtonText(): string
     {
         $action = $this->_action();
 
@@ -52,7 +54,7 @@ trait FormTypeTrait
      *
      * @return array
      */
-    protected function _getFormSubmitExtraButtons()
+    protected function _getFormSubmitExtraButtons(): array
     {
         $action = $this->_action();
         $buttons = $action->getConfig('scaffold.form_submit_extra_buttons');
@@ -73,7 +75,7 @@ trait FormTypeTrait
      *
      * @return array
      */
-    protected function _getFormSubmitExtraLeftButtons()
+    protected function _getFormSubmitExtraLeftButtons(): array
     {
         $action = $this->_action();
         $buttons = $action->getConfig('scaffold.form_submit_extra_left_buttons');
@@ -94,7 +96,7 @@ trait FormTypeTrait
      *
      * @return array
      */
-    protected function _getDefaultExtraButtons()
+    protected function _getDefaultExtraButtons(): array
     {
         return [
             'save_and_continue' => [
@@ -124,7 +126,7 @@ trait FormTypeTrait
      *
      * @return array
      */
-    protected function _getDefaultExtraLeftButtons()
+    protected function _getDefaultExtraLeftButtons(): array
     {
         $buttons = [];
 
@@ -166,10 +168,10 @@ trait FormTypeTrait
     /**
      * {@inheritDoc}
      */
-    abstract protected function _controller();
+    abstract protected function _controller(): Controller;
 
     /**
      * {@inheritDoc}
      */
-    abstract protected function _action(?string $name = null);
+    abstract protected function _action(?string $name = null): BaseAction;
 }
