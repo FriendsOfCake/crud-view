@@ -144,7 +144,7 @@ class DateTimeWidget extends \BootstrapUI\View\Widget\DateTimeWidget
      * @return string flatpickr date format.
      * @see https://flatpickr.js.org/formatting/
      */
-    protected function convertPHPToDatePickerFormat(string $format)
+    protected function convertPHPToDatePickerFormat(string $format): string
     {
         $replacements = [
             's' => 'S',

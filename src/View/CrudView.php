@@ -63,7 +63,7 @@ class CrudView extends View implements EventListenerInterface
      *
      * @return void
      */
-    public function beforeLayout()
+    public function beforeLayout(): void
     {
         $this->_loadAssets();
     }
@@ -75,7 +75,7 @@ class CrudView extends View implements EventListenerInterface
      *
      * @return void
      */
-    protected function _loadAssets()
+    protected function _loadAssets(): void
     {
         if (Configure::read('CrudView.useAssetCompress')) {
             $this->AssetCompress->css('CrudView.crudview', ['block' => true]);
@@ -106,7 +106,7 @@ class CrudView extends View implements EventListenerInterface
      *
      * @return void
      */
-    protected function _setupHelpers()
+    protected function _setupHelpers(): void
     {
         $helpers = [
             'Html' => ['className' => 'BootstrapUI.Html'],
@@ -137,7 +137,7 @@ class CrudView extends View implements EventListenerInterface
      *
      * @return void
      */
-    protected function _setupPaths()
+    protected function _setupPaths(): void
     {
         $paths = Configure::read('App.paths.templates');
 
@@ -193,7 +193,7 @@ class CrudView extends View implements EventListenerInterface
      *
      * @return string
      */
-    protected function _createViewblock($data)
+    protected function _createViewblock(array $data): string
     {
         $output = '';
         foreach ($data as $key => $type) {

@@ -78,7 +78,7 @@ class Breadcrumb
      *
      * @return array
      */
-    public function getOptions()
+    public function getOptions(): array
     {
         return $this->options;
     }

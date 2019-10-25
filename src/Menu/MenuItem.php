@@ -35,7 +35,7 @@ class MenuItem
      *   external URL (starts with http://)
      * @param array $options Array of options and HTML attributes.
      */
-    public function __construct($title, $url = null, array $options = [])
+    public function __construct(string $title, $url = null, array $options = [])
     {
         $this->title = $title;
         $this->url = $url;
@@ -47,7 +47,7 @@ class MenuItem
      *
      * @return string
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -67,7 +67,7 @@ class MenuItem
      *
      * @return array
      */
-    public function getOptions()
+    public function getOptions(): array
     {
         return $this->options;
     }

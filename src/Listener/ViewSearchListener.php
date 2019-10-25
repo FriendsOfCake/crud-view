@@ -53,7 +53,7 @@ class ViewSearchListener extends BaseListener
      * @param \Cake\Event\EventInterface $event Event.
      * @return void
      */
-    public function afterPaginate(EventInterface $event)
+    public function afterPaginate(EventInterface $event): void
     {
         $event;
         if (!$this->_table()->behaviors()->has('Search')) {
@@ -77,7 +77,7 @@ class ViewSearchListener extends BaseListener
      *
      * @return array
      */
-    public function fields()
+    public function fields(): array
     {
         return $this->getConfig('fields') ?: $this->_deriveFields();
     }
@@ -87,7 +87,7 @@ class ViewSearchListener extends BaseListener
      *
      * @return array
      */
-    protected function _deriveFields()
+    protected function _deriveFields(): array
     {
         $config = $this->getConfig();
         $table = $this->_table();
