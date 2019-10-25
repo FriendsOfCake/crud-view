@@ -606,9 +606,9 @@ class ViewListener extends BaseListener
      *
      * If no value can be found, NULL is returned
      *
-     * @return string|null
+     * @return string|int|null
      */
-    protected function _displayFieldValue(): ?string
+    protected function _displayFieldValue()
     {
         return $this->_deriveFieldFromContext($this->_table()->getDisplayField());
     }
