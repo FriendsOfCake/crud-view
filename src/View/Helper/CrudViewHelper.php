@@ -29,7 +29,7 @@ class CrudViewHelper extends Helper
     /**
      * Context
      *
-     * @var \Cake\Datasource\EntityInterface|null
+     * @var \Cake\Datasource\EntityInterface
      */
     protected $_context;
 
@@ -56,9 +56,9 @@ class CrudViewHelper extends Helper
     /**
      * Get context
      *
-     * @return \Cake\Datasource\EntityInterface|null
+     * @return \Cake\Datasource\EntityInterface
      */
-    public function getContext(): ?EntityInterface
+    public function getContext(): EntityInterface
     {
         return $this->_context;
     }
