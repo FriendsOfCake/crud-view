@@ -16,7 +16,7 @@ class ViewSearchListener extends BaseListener
      *
      * - `enabled`: Indicates whether is listener is enabled.
      * - `autocomplete`: Whether to use auto complete for select fields. Default `true`.
-     * - `selectize`: Whether to use selectize for select fields. Default `true`.
+     * - `select2`: Whether to use select2 for select fields. Default `true`.
      * - `collection`: The search behavior collection to use. Default "default".
      * - `fields`: Config for generating filter controls. If `null` the
      *   filter controls will be derived based on filter collection. You can use
@@ -27,7 +27,7 @@ class ViewSearchListener extends BaseListener
     protected $_defaultConfig = [
         'enabled' => null,
         'autocomplete' => true,
-        'selectize' => true,
+        'select2' => true,
         'collection' => 'default',
         'fields' => null,
     ];
@@ -131,8 +131,8 @@ class ViewSearchListener extends BaseListener
 
             if (!empty($input['options'])) {
                 $input['empty'] = true;
-                if (empty($input['class']) && !$config['selectize']) {
-                    $input['class'] = 'no-selectize';
+                if (empty($input['class']) && !$config['select2']) {
+                    $input['class'] = 'no-select2';
                 }
 
                 $fields[$field] = $input;
