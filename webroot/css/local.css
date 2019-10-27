@@ -69,8 +69,8 @@ h2 .actions {
     min-width: 90px !important;
 }
 
-.selectize-input.items.full {
-    padding-right:33px;
+.search-filters .form-inline select.autocomplete {
+    min-width: 150px;
 }
 
 .text-truncate {
