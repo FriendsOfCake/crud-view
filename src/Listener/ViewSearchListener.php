@@ -5,6 +5,7 @@ namespace CrudView\Listener;
 
 use Cake\Event\EventInterface;
 use Cake\Routing\Router;
+use Cake\Utility\Hash;
 use Crud\Listener\BaseListener;
 
 class ViewSearchListener extends BaseListener
@@ -84,7 +85,9 @@ class ViewSearchListener extends BaseListener
         $schema = $this->_table()->getSchema();
         $request = $this->_request();
 
-        if (!$fields) {
+        if ($fields) {
+            $fields = Hash::normalize($fields);
+        } else {
             $filters = $this->_table()->searchManager()->getFilters($config['collection']);
 
             foreach ($filters as $filter) {
@@ -107,7 +110,7 @@ class ViewSearchListener extends BaseListener
                 $input['type'] = 'select';
             }
 
-            $input = $opts + $input;
+            $input = (array)$opts + $input;
 
             $input['value'] = $request->getQuery($field);
 
