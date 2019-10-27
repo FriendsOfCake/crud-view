@@ -55,7 +55,6 @@ class ViewSearchListener extends BaseListener
      */
     public function afterPaginate(EventInterface $event): void
     {
-        $event;
         if (!$this->_table()->behaviors()->has('Search')) {
             return;
         }
@@ -79,35 +78,26 @@ class ViewSearchListener extends BaseListener
      */
     public function fields(): array
     {
-        return $this->getConfig('fields') ?: $this->_deriveFields();
-    }
-
-    /**
-     * Derive field options for search filter inputs based on filter collection.
-     *
-     * @return array
-     */
-    protected function _deriveFields(): array
-    {
+        $fields = $this->getConfig('fields') ?: [];
         $config = $this->getConfig();
-        $table = $this->_table();
 
-        if (method_exists($table, 'searchConfiguration')) {
-            $searchManager = $table->searchConfiguration();
-        } else {
-            $searchManager = $table->searchManager();
-        }
-
-        $fields = [];
-        $schema = $table->getSchema();
+        $schema = $this->_table()->getSchema();
         $request = $this->_request();
 
-        foreach ($searchManager->getFilters($config['collection']) as $filter) {
-            if ($filter->getConfig('form') === false) {
-                continue;
-            }
+        if (!$fields) {
+            $filters = $this->_table()->searchManager()->getFilters($config['collection']);
 
-            $field = $filter->name();
+            foreach ($filters as $filter) {
+                $opts = $filter->getConfig('form');
+                if ($opts === false) {
+                    continue;
+                }
+
+                $fields[$filter->name()] = $opts ?: [];
+            }
+        }
+
+        foreach ($fields as $field => $opts) {
             $input = [
                 'required' => false,
                 'type' => 'text',
@@ -117,10 +107,7 @@ class ViewSearchListener extends BaseListener
                 $input['type'] = 'select';
             }
 
-            $filterFormConfig = $filter->getConfig('form');
-            if (!empty($filterFormConfig)) {
-                $input = $filterFormConfig + $input;
-            }
+            $input = $opts + $input;
 
             $input['value'] = $request->getQuery($field);
 

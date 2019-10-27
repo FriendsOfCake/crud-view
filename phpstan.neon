@@ -10,3 +10,9 @@ parameters:
         -
             message: '#Call to an undefined method Cake\\ORM\\Table::searchManager\(\)#'
             path: 'src/Listener/ViewSearchListener.php'
+        -
+            message: '#Result of && is always false#'
+            path: 'src/Listener/ViewSearchListener.php'
+        -
+            message: "#Strict comparison using !== between 'select' and 'select' will always evaluate to false#"
+            path: 'src/Listener/ViewSearchListener.php'
