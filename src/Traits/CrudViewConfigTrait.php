@@ -18,7 +18,7 @@ trait CrudViewConfigTrait
     {
         $config = Configure::read('CrudView');
         if ($config !== null) {
-            return $config;
+            return true;
         }
 
         return Configure::load('CrudView.defaults');
