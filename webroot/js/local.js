@@ -36,41 +36,45 @@ var CrudView = {
     },
 
     autocomplete: function (selector) {
-        $(selector).each(function (i, e) {
-            e = $(e);
-            e.selectize({
-                maxItems: e.data('max-items') || 1,
-                maxOptions: e.data('max-options') || 10,
-                hideSelected: e.data('hide-selected'),
-                closeAfterSelect: e.data('close-after-select'),
-                create: !e.data('exact-match'),
-                persist: false,
-                render: {
-                    'option_create': function(data, escape) {
-                        return '<div class="create">🔍 <strong> ' + escape(data.input) + '</strong>&hellip;</div>';
-                    }
-                },
-                load: function (query, callback) {
-                    var data = {};
+        $(selector).each(function (i, ele) {
+            var $ele = $(ele);
 
-                    data[e.data('filter-field') || e.attr('name')] = query;
+            $ele.select2({
+                theme: 'bootstrap4',
+                minimumInputLength: 1,
+                ajax: {
+                    delay: 250,
+                    url: $ele.data('url'),
+                    dataType: 'json',
+                    data: function (params) {
+                        var query = {};
+                        query[$ele.data('filter-field') || $ele.attr('name')] = params.term;
 
-                    if (e.data('dependent-on') && $('#' + e.data('dependent-on')).val()) {
-                        data[e.data('dependent-on-field')] = $('#' + e.data('dependent-on')).val();
-                    }
-                    $.ajax({
-                        url: e.data('url'),
-                        dataType: 'json',
-                        data: data,
-                        error: function () {
-                            callback();
-                        },
-                        success: function (res) {
-                            callback($.map(res.data, function (name, id) {
-                                return {value: id, text: name};
-                            }));
+                        if ($ele.data('dependent-on') && $('#' + $ele.data('dependent-on')).val()) {
+                            data[$ele.data('dependent-on-field')] = $('#' + $ele.data('dependent-on')).val();
                         }
-                    });
+
+                        return query;
+                    },
+                    processResults: function (data, params) {
+                        var results = [];
+                        var inputType = $ele.data('inputType');
+
+                        if (data.data) {
+                            $.each(data.data, function(id, text) {
+                                if (text.indexOf(params.term) > -1) {
+                                    results.push({
+                                        id: inputType === 'text' ? text : id,
+                                        text: text
+                                    });
+                                }
+                            });
+                        }
+
+                        return {
+                            results: results
+                        };
+                    }
                 }
             });
         });
