@@ -58,12 +58,13 @@ var CrudView = {
                     },
                     processResults: function (data, params) {
                         var results = [];
+                        var inputType = $ele.data('inputType');
 
                         if (data.data) {
                             $.each(data.data, function(id, text) {
                                 if (text.indexOf(params.term) > -1) {
                                     results.push({
-                                        id: id,
+                                        id: inputType === 'text' ? text : id,
                                         text: text
                                     });
                                 }

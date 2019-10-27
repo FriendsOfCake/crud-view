@@ -144,6 +144,14 @@ class ViewSearchListener extends BaseListener
                 $input['class'] = 'autocomplete';
             }
 
+            if (
+                strpos($input['class'], 'autocomplete') !== false
+                && $input['type'] !== 'select'
+            ) {
+                $input['data-input-type'] = 'text';
+                $input['type'] = 'select';
+            }
+
             $urlArgs = [];
 
             $fieldKeys = $input['fields'] ?? ['id' => $field, 'value' => $field];
