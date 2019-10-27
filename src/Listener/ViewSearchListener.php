@@ -137,6 +137,7 @@ class ViewSearchListener extends BaseListener
             ) {
                 $input['data-input-type'] = 'text';
                 $input['type'] = 'select';
+                $input['data-tags'] = 'true';
             }
 
             $urlArgs = [];
