@@ -137,6 +137,10 @@ class ViewSearchListener extends BaseListener
             ) {
                 $input['type'] = 'select';
 
+                if (!empty($input['value'])) {
+                    $input['options'][$input['value']] = $input['value'];
+                }
+
                 $input += [
                     'data-input-type' => 'text',
                     'data-tags' => 'true',
