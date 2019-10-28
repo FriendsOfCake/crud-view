@@ -135,7 +135,8 @@ class ViewSearchListener extends BaseListener
             }
 
             if (
-                strpos($input['class'], 'autocomplete') !== false
+                !empty($input['class'])
+                && strpos($input['class'], 'autocomplete') !== false
                 && $input['type'] !== 'select'
             ) {
                 $input['type'] = 'select';
