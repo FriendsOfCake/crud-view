@@ -63,7 +63,7 @@ class CrudView extends View implements EventListenerInterface
      *
      * @return void
      */
-    public function beforeLayout(): void
+    public function beforeLayout()
     {
         $this->_loadAssets();
     }
