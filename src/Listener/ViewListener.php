@@ -28,7 +28,7 @@ class ViewListener extends BaseListener
     /**
      * Default associations config
      *
-     * @var array
+     * @var array|null
      */
     protected $associations = null;
 
@@ -161,15 +161,20 @@ class ViewListener extends BaseListener
         }
 
         $primaryKeyValue = $this->_primaryKeyValue();
-        if ($primaryKeyValue === null) {
+        if ($primaryKeyValue === []) {
             return sprintf('%s %s', $actionName, $controllerName);
         }
 
         $displayFieldValue = $this->_displayFieldValue();
-        if ($displayFieldValue === null || $this->_table()->getDisplayField() == $this->_table()->getPrimaryKey()) {
+        if (
+            $displayFieldValue === null
+            || $this->_table()->getDisplayField() === $this->_table()->getPrimaryKey()
+        ) {
+            /** @psalm-var string $primaryKeyValue */
             return sprintf('%s %s #%s', $actionName, $controllerName, $primaryKeyValue);
         }
 
+        /** @psalm-var string $primaryKeyValue */
         return sprintf('%s %s #%s: %s', $actionName, $controllerName, $primaryKeyValue, $displayFieldValue);
     }
 
@@ -410,7 +415,9 @@ class ViewListener extends BaseListener
         }
 
         foreach ($actionBlacklist as $actionName) {
+            /** @psalm-suppress EmptyArrayAccess */
             unset($table[$actionName]);
+            /** @psalm-suppress EmptyArrayAccess */
             unset($entity[$actionName]);
         }
 
@@ -438,6 +445,7 @@ class ViewListener extends BaseListener
         if ($this->_crud()->isActionMapped($realAction)) {
             $action = $this->_action($realAction);
             $class = get_class($action);
+            /** @psalm-suppress PossiblyFalseOperand */
             $class = substr($class, strrpos($class, '\\') + 1);
 
             if ($class === 'DeleteAction') {
@@ -549,6 +557,7 @@ class ViewListener extends BaseListener
             $keys = array_intersect($keys, array_map('strtolower', $whitelist));
         }
         foreach ($keys as $associationName) {
+            /** @var \Cake\ORM\Association $association */
             $association = $associations->get($associationName);
             $type = $association->type();
 
@@ -610,6 +619,7 @@ class ViewListener extends BaseListener
      */
     protected function _displayFieldValue()
     {
+        /** @psalm-suppress PossiblyInvalidArgument */
         return $this->_deriveFieldFromContext($this->_table()->getDisplayField());
     }
 
@@ -700,6 +710,7 @@ class ViewListener extends BaseListener
     protected function _getFormTabGroups(array $fields = []): array
     {
         $action = $this->_action();
+        /** @var array $groups */
         $groups = $action->getConfig('scaffold.form_tab_groups');
 
         if (empty($groups)) {

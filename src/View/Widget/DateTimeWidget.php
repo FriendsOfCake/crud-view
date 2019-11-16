@@ -115,6 +115,10 @@ class DateTimeWidget extends \BootstrapUI\View\Widget\DateTimeWidget
             $noWrap = true;
         }
 
+        /**
+         * @psalm-suppress PossiblyInvalidArrayOffset
+         * @psalm-suppress PossiblyInvalidArgument
+         */
         $input = $this->_templates->format('input', [
             'name' => $data['name'],
             'type' => 'text',
@@ -129,6 +133,7 @@ class DateTimeWidget extends \BootstrapUI\View\Widget\DateTimeWidget
             return $input;
         }
 
+        /** @psalm-suppress PossiblyInvalidArrayOffset */
         return $this->_templates->format('datetimePicker', [
             'input' => $input,
             'iconClass' => $iconClass,

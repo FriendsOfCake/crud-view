@@ -200,9 +200,9 @@ class CrudView extends View implements EventListenerInterface
             if ($type === 'element') {
                 $output = $this->element($key);
             } elseif ($type === 'Html::css') {
-                $output .= $this->Html->css($key);
+                $output .= (string)$this->Html->css($key);
             } elseif ($type === 'Html::script') {
-                $output .= $this->Html->script($key);
+                $output .= (string)$this->Html->script($key);
             } else {
                 $output .= $key;
             }

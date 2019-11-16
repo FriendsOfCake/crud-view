@@ -9,8 +9,7 @@ use Cake\Utility\Inflector;
 use Cake\Utility\Text;
 use Cake\View\Helper;
 use Cake\View\Helper\FormHelper;
-use DateTime;
-use DateTimeImmutable;
+use DateTimeInterface;
 
 /**
  * @property \BootstrapUI\View\Helper\FormHelper $Form
@@ -103,11 +102,11 @@ class CrudViewHelper extends Helper
     /**
      * Get the current field value
      *
-     * @param \Cake\Datasource\EntityInterface $data The entity data.
+     * @param \Cake\Datasource\EntityInterface|null $data The entity data.
      * @param string $field The field to extract, if null, the field from the entity context is used.
      * @return mixed
      */
-    public function fieldValue(EntityInterface $data, string $field)
+    public function fieldValue(?EntityInterface $data, string $field)
     {
         if (empty($data)) {
             $data = $this->getContext();
@@ -135,10 +134,12 @@ class CrudViewHelper extends Helper
 
         $fieldFormatters = $this->getConfig('fieldFormatters');
         if (isset($fieldFormatters[$type])) {
+            /** @psalm-suppress PossiblyNullArrayOffset */
             if (is_callable($fieldFormatters[$type])) {
                 return $fieldFormatters[$type]($field, $value, $this->getContext(), $options, $this->getView());
             }
 
+            /** @psalm-suppress PossiblyNullArrayOffset */
             return $this->{$fieldFormatters[$type]}($field, $value, $options);
         }
 
@@ -167,9 +168,9 @@ class CrudViewHelper extends Helper
      * Get column type from schema.
      *
      * @param string $field Field to get column type for
-     * @return string
+     * @return string|null
      */
-    public function columnType(string $field): string
+    public function columnType(string $field): ?string
     {
         $schema = $this->schema();
 
@@ -205,7 +206,12 @@ class CrudViewHelper extends Helper
             return $this->Html->label(__d('crud', 'N/A'), ['type' => 'info']);
         }
 
-        if (is_int($value) || is_string($value) || $value instanceof DateTime || $value instanceof DateTimeImmutable) {
+        /** @psalm-suppress ArgumentTypeCoercion */
+        if (
+            is_int($value)
+            || is_string($value)
+            || $value instanceof DateTimeInterface
+        ) {
             return $this->Time->timeAgoInWords($value, $options);
         }
 
@@ -227,7 +233,12 @@ class CrudViewHelper extends Helper
         }
         $format = $options['format'] ?? null;
 
-        if (is_int($value) || is_string($value) || $value instanceof DateTime || $value instanceof DateTimeImmutable) {
+        /** @psalm-suppress ArgumentTypeCoercion */
+        if (
+            is_int($value)
+            || is_string($value)
+            || $value instanceof DateTimeInterface
+        ) {
             return $this->Time->nice($value, $format);
         }
 
@@ -272,9 +283,6 @@ class CrudViewHelper extends Helper
         }
 
         $data = $this->getContext();
-        if (empty($data)) {
-            return false;
-        }
 
         foreach ($associations['manyToOne'] as $alias => $details) {
             if ($field !== $details['foreignKey']) {
