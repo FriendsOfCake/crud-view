@@ -42,15 +42,7 @@ class DateTimeWidget extends \BootstrapUI\View\Widget\DateTimeWidget
             'data-wrap' => 'true',
         ];
 
-        $data += [
-            'name' => '',
-            'val' => null,
-            'type' => 'datetime-local',
-            'escape' => true,
-            'timezone' => null,
-            'templateVars' => [],
-            'data-input' => '',
-        ];
+        $data = $this->mergeDefaults($data, $context) + ['data-input' => ''];
 
         $data['value'] = $this->formatDateTime($data['val'], $data);
         unset($data['val'], $data['timezone']);
