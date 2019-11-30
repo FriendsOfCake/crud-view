@@ -1,6 +1,6 @@
 alabaster==0.7.12
 Babel==2.7.0
-cakephp-theme==1.1.2
+cakephp-theme==1.1.3
 certifi==2019.11.28
 chardet==3.0.4
 docutils==0.15.2
