@@ -1,5 +1,5 @@
 <?php
-use \Cake\Core\Plugin;
+use Cake\Core\Plugin;
 
 return [
     'CrudView' => [
