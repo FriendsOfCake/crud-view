@@ -1,5 +1,6 @@
 <?php
 namespace CrudView;
+
 use Cake\Core\BasePlugin;
 
 /**
