@@ -61,6 +61,7 @@ class LinkItem
 
         return $title;
     }
+
     /**
      * url property setter
      *
