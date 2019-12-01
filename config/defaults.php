@@ -4,27 +4,32 @@ declare(strict_types=1);
 
 use Cake\Core\Plugin;
 
+// The function `parse_ini_file` may be disabled
+$assets = parse_ini_string(file_get_contents(dirname(__FILE__) . '/asset_compress.ini'), true);
+
+// Fix the CrudView local.css file for use Html::css()
+foreach ($assets['crudview.css']['files'] as $i => $file) {
+    if ($file === 'plugin:CrudView:css/local.css') {
+        $assets['crudview.css']['files'][$i] = 'CrudView.local';
+        break;
+    }
+}
+
+// Fix the CrudView local.css file for use Html::css()
+foreach ($assets['crudview.js']['files'] as $i => $file) {
+    if ($file === 'plugin:CrudView:js/local.js') {
+        $assets['crudview.js']['files'][$i] = 'CrudView.local';
+        break;
+    }
+}
+
 return [
     'CrudView' => [
         'siteTitle' => 'Crud View',
-        'css' => [
-            'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/css/bootstrap.css',
-            'https://cdn.jsdelivr.net/npm/flatpickr@4.6.3/dist/flatpickr.min.css',
-            'https://cdn.jsdelivr.net/npm/select2@4.0/dist/css/select2.min.css',
-            'https://cdn.jsdelivr.net/npm/@ttskch/select2-bootstrap4-theme@1.2/dist/select2-bootstrap4.css',
-            'CrudView.local',
-        ],
+        'css' => $assets['crudview.css']['files'],
         'js' => [
-            'headjs' => [
-                'https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js',
-                'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/js/bootstrap.min.js',
-                'https://cdn.jsdelivr.net/npm/flatpickr@4.6',
-                'https://cdn.jsdelivr.net/npm/select2@4.0',
-                'https://cdn.jsdelivr.net/jquery.dirtyforms/1.2.2/jquery.dirtyforms.min.js',
-            ],
-            'script' => [
-                'CrudView.local',
-            ],
+            'headjs' => $assets['crudview_head.js']['files'],
+            'script' => $assets['crudview.js']['files'],
         ],
         'datetimePicker' => false,
         'useAssetCompress' => Plugin::isLoaded('AssetCompress'),

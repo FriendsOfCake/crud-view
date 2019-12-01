@@ -61,6 +61,7 @@ provide your own menu to be rendered in its place:
     use CrudView\Menu\MenuItem;
 
     $this->Crud->action()->config('scaffold.sidebar_navigation', [
+        new MenuItem('Section Header'),
         new MenuItem(
             'CrudView Docs',
             'https://crud-view.readthedocs.io/en/latest/contents.html',
