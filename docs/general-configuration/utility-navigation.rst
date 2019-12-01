@@ -5,7 +5,7 @@ The "utility navigation" shown at the top right normally shows the current user
 and a link to log out. It can be controlled via the
 ``scaffold.utility_navigation`` configuration key
 
-Disabling the Sidebar Navigation
+Disabling the Utility Navigation
 --------------------------------
 
 The utility navigation can also be completely disabled by setting the value to ``false``.
