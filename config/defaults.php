@@ -1,27 +1,32 @@
 <?php
 use Cake\Core\Plugin;
 
+// The function `parse_ini_file` may be disabled
+$assets = parse_ini_string(file_get_contents('asset_compress.ini'), true);
+
+// Fix the CrudView local.css file for use Html::css()
+foreach ($assets['crudview.css']['files'] as $i => $file) {
+    if ($file === 'plugin:CrudView:css/local.css') {
+        $assets['crudview.css']['files'][$i] = 'CrudView.local';
+        break;
+    }
+}
+
+// Fix the CrudView local.css file for use Html::css()
+foreach ($assets['crudview.js']['files'] as $i => $file) {
+    if ($file === 'plugin:CrudView:js/local.js') {
+        $assets['crudview.js']['files'][$i] = 'CrudView.local';
+        break;
+    }
+}
+
 return [
     'CrudView' => [
         'siteTitle' => 'Crud View',
-        'css' => [
-            'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.css',
-            'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css',
-            'https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css',
-            'CrudView.local',
-        ],
+        'css' => $assets['crudview.css']['files'],
         'js' => [
-            'headjs' => [
-                'https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js',
-                'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js',
-                'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js',
-                'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js',
-                'https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.js',
-                'https://cdn.jsdelivr.net/jquery.dirtyforms/1.2.3/jquery.dirtyforms.min.js',
-            ],
-            'script' => [
-                'CrudView.local'
-            ],
+            'headjs' => $assets['crudview_head.js']['files'],
+            'script' => $assets['crudview.js']['files'],
         ],
         'timezoneAwareDateTimeWidget' => false,
         'useAssetCompress' => Plugin::isLoaded('AssetCompress'),
