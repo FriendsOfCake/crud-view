@@ -29,14 +29,14 @@
         }
     ],
     "require": {
-        "cakephp/cakephp": "4.x-dev",
-        "friendsofcake/crud": "dev-cake-4.x",
-        "friendsofcake/bootstrap-ui": "dev-cake-4-bs-4"
+        "cakephp/cakephp": "^4.0",
+        "friendsofcake/crud": "^6.0",
+        "friendsofcake/bootstrap-ui": "^3.0"
     },
     "require-dev": {
-        "friendsofcake/cakephp-test-utilities": "dev-cake-4.x",
-        "markstory/asset_compress": "4.x-dev",
-        "phpunit/phpunit": "^8.0"
+        "friendsofcake/cakephp-test-utilities": "^2.0",
+        "markstory/asset_compress": "^4.0",
+        "phpunit/phpunit": "~8.5.0"
     },
     "autoload": {
         "psr-4": {
@@ -54,6 +54,6 @@
         "wiki": "http://cakephp.nu/cakephp-crud/",
         "irc": "irc://irc.freenode.org/friendsofcake"
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "beta",
     "prefer-stable": true
 }
