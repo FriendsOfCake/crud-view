@@ -1,5 +1,6 @@
 parameters:
     level: 7
+    checkMissingIterableValueType: false
     universalObjectCratesClasses:
         - Crud\Event\Subject
     ignoreErrors:
@@ -10,3 +11,6 @@ parameters:
         -
             message: '#Call to an undefined method Cake\\ORM\\Table::searchManager\(\)#'
             path: 'src/Listener/ViewSearchListener.php'
+        -
+            message: '#Method CrudView\\Action\\DashboardAction::_get\(\) should return Cake\\Http\\Response|void but return statement is missing#'
+            path: 'src/Action/DashboardAction.php'
