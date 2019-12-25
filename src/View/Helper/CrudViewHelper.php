@@ -188,8 +188,8 @@ class CrudViewHelper extends Helper
     public function formatBoolean(string $field, $value, array $options): string
     {
         return (bool)$value ?
-            $this->Html->label(__d('crud', 'Yes'), ['type' => empty($options['inverted']) ? 'success' : 'danger']) :
-            $this->Html->label(__d('crud', 'No'), ['type' => empty($options['inverted']) ? 'danger' : 'success']);
+            $this->Html->badge(__d('crud', 'Yes'), ['class' => empty($options['inverted']) ? 'success' : 'danger']) :
+            $this->Html->badge(__d('crud', 'No'), ['class' => empty($options['inverted']) ? 'danger' : 'success']);
     }
 
     /**
@@ -203,7 +203,7 @@ class CrudViewHelper extends Helper
     public function formatDate(string $field, $value, array $options): string
     {
         if ($value === null) {
-            return $this->Html->label(__d('crud', 'N/A'), ['type' => 'info']);
+            return $this->Html->badge(__d('crud', 'N/A'), ['class' => 'info']);
         }
 
         /** @psalm-suppress ArgumentTypeCoercion */
@@ -215,7 +215,7 @@ class CrudViewHelper extends Helper
             return $this->Time->timeAgoInWords($value, $options);
         }
 
-        return $this->Html->label(__d('crud', 'N/A'), ['type' => 'info']);
+        return $this->Html->badge(__d('crud', 'N/A'), ['class' => 'info']);
     }
 
     /**
@@ -229,7 +229,7 @@ class CrudViewHelper extends Helper
     public function formatTime(string $field, $value, array $options): string
     {
         if ($value === null) {
-            return $this->Html->label(__d('crud', 'N/A'), ['type' => 'info']);
+            return $this->Html->badge(__d('crud', 'N/A'), ['class' => 'info']);
         }
         $format = $options['format'] ?? null;
 
@@ -242,7 +242,7 @@ class CrudViewHelper extends Helper
             return $this->Time->nice($value, $format);
         }
 
-        return $this->Html->label(__d('crud', 'N/A'), ['type' => 'info']);
+        return $this->Html->badge(__d('crud', 'N/A'), ['class' => 'info']);
     }
 
     /**

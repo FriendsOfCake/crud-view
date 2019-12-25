@@ -6,7 +6,8 @@ namespace CrudView\Breadcrumb;
 class ActiveBreadcrumb extends Breadcrumb
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
+     * @psalm-suppress MissingParamType
      */
     public function __construct($title, $url = null, array $options = [])
     {
