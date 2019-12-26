@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace CrudView\Listener\Traits;
 
 use Cake\Controller\Controller;
-use Cake\ORM\Table;
 use Crud\Action\BaseAction;
 use Crud\Action\IndexAction;
 
