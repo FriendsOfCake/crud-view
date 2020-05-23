@@ -176,7 +176,6 @@ class CrudView extends View implements EventListenerInterface
      * Check if a block exists
      *
      * @param string $name Name of the block
-     *
      * @return bool
      */
     public function exists(string $name): bool
@@ -190,7 +189,6 @@ class CrudView extends View implements EventListenerInterface
      * Constructs a ViewBlock from an array of configured data
      *
      * @param array $data ViewBlock data
-     *
      * @return string
      */
     protected function _createViewblock(array $data): string

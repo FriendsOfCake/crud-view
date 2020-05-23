@@ -75,12 +75,12 @@ trait SiteTitleTrait
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     abstract protected function _controller(): Controller;
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     abstract protected function _action(?string $name = null): BaseAction;
 }
