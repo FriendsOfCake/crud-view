@@ -161,7 +161,7 @@ class ViewListener extends BaseListener
         }
 
         $primaryKeyValue = $this->_primaryKeyValue();
-        if ($primaryKeyValue === []) {
+        if (empty($primaryKeyValue)) {
             return sprintf('%s %s', $actionName, $controllerName);
         }
 
