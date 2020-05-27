@@ -75,12 +75,11 @@ class DateTimeWidget extends \BootstrapUI\View\Widget\DateTimeWidget
 
         $iconClass = 'fa fa-calendar-alt';
         if (isset($datetimePicker['iconClass'])) {
-            $iconClass = $data['iconClass'];
+            $iconClass = $datetimePicker['iconClass'];
+            unset($datetimePicker['iconClass']);
         } elseif ($data['type'] === 'time') {
             $iconClass = 'fa fa-clock';
         }
-
-        unset($datetimePicker['iconClass']);
 
         if ($this->_templates->get('datetimePicker') === null) {
             // phpcs:disable

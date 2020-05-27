@@ -11,3 +11,6 @@ docs export-ignore
 .github export-ignore
 .coveralls.yml export-ignore
 Makefile export-ignore
+phpstan.neon export-ignore
+phpstan-baseline.neon export-ignore
+psalm.xml export-ignore

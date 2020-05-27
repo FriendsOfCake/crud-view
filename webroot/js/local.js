@@ -98,6 +98,10 @@ var CrudView = {
         })
     },
 
+    tooltip: function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    },
+
     initialize: function () {
         this.bulkActionForm('.bulk-actions');
         this.flatpickr('.flatpickr');
@@ -105,6 +109,7 @@ var CrudView = {
         this.autocomplete('input.autocomplete, select.autocomplete');
         this.dirtyForms();
         this.dropdown();
+        this.tooltip();
     }
 };
 

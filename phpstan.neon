@@ -1,16 +1,8 @@
+includes:
+    - phpstan-baseline.neon
+
 parameters:
     level: 7
     checkMissingIterableValueType: false
     universalObjectCratesClasses:
         - Crud\Event\Subject
-    ignoreErrors:
-        - '#Parameter \#1 $dateString of method Cake\\View\\Helper\\TimeHelper::nice() expects DateTime|int|string|null, DateTime|DateTimeImmutable|int|string given#'
-        -
-            message: '#Result of || is always false#'
-            path: 'src/Listener/ViewListener.php'
-        -
-            message: '#Call to an undefined method Cake\\ORM\\Table::searchManager\(\)#'
-            path: 'src/Listener/ViewSearchListener.php'
-        -
-            message: '#Method CrudView\\Action\\DashboardAction::_get\(\) should return Cake\\Http\\Response|void but return statement is missing#'
-            path: 'src/Action/DashboardAction.php'
