@@ -10,16 +10,16 @@
                 <th>
                     <?php
                     if (!empty($options['disableSort'])) {
-                        echo isset($options['title']) ? $options['title'] : \Cake\Utility\Inflector::humanize($field);
+                        echo $options['title'] ?? \Cake\Utility\Inflector::humanize($field);
                     } else {
-                        echo $this->Paginator->sort($field, isset($options['title']) ? $options['title'] : null, $options);
+                        echo $this->Paginator->sort($field, $options['title'] ?? null, $options);
                     }
                     ?>
                 </th>
                 <?php
             endforeach;
             ?>
-            <?php if ($actionsExist = !empty($actions['entity'])): ?>
+            <?php if ($actionsExist = !empty($actions['entity'])) : ?>
                 <th><?= __d('crud', 'Actions'); ?></th>
             <?php endif; ?>
         </tr>
@@ -33,10 +33,10 @@
                 <?= $this->element('index/bulk_actions/record', compact('bulkActions', 'primaryKey', 'singularVar')); ?>
                 <?= $this->element('index/table_columns', compact('singularVar')); ?>
 
-                <?php if ($actionsExist): ?>
+                <?php if ($actionsExist) : ?>
                     <td class="actions"><?= $this->element('actions', [
                         'singularVar' => $singularVar,
-                        'actions' => $actions['entity']
+                        'actions' => $actions['entity'],
                     ]); ?></td>
                 <?php endif; ?>
             </tr>

@@ -5,7 +5,7 @@ if (empty($associations['oneToOne'])) {
     return;
 }
 
-foreach ($associations['oneToOne'] as $alias => $details):
+foreach ($associations['oneToOne'] as $alias => $details) :
     $alias = $details['propertyName'];
     ?>
 <div class="related">
@@ -14,8 +14,8 @@ foreach ($associations['oneToOne'] as $alias => $details):
     <div class="actions-wrapper">
         <?= $this->Html->link(
             __d('crud', 'View {0}', [Inflector::humanize(Inflector::underscore($alias))]),
-            array('plugin' => $details['plugin'], 'controller' => $details['controller'], 'action' => 'view', ${$viewVar}[$alias][$details['primaryKey']]),
-            array('class' => 'btn btn-secondary')
+            ['plugin' => $details['plugin'], 'controller' => $details['controller'], 'action' => 'view', ${$viewVar}[$alias][$details['primaryKey']]],
+            ['class' => 'btn btn-secondary']
         ); ?>
     </div>
 
@@ -24,7 +24,6 @@ foreach ($associations['oneToOne'] as $alias => $details):
         ?>
         <dl>
             <?php
-            $i = 0;
             $otherFields = array_keys(${$viewVar}->{$alias}->toArray());
             foreach ($otherFields as $field) {
                 ?>
@@ -32,11 +31,10 @@ foreach ($associations['oneToOne'] as $alias => $details):
                 <dd><?= $this->CrudView->process($field, ${$viewVar}->{$alias}, $details); ?>&nbsp;</dd>
                 <?php
             }
-        ?>
+            ?>
         </dl>
         <?php
     endif;
     ?>
 </div>
-<?php
-endforeach;
+<?php endforeach; ?>

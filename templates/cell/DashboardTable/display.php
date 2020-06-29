@@ -5,7 +5,7 @@
 <?php if (!empty($links)) : ?>
 <table class="table">
     <tbody>
-        <?php foreach ($links as $link): ?>
+        <?php foreach ($links as $link) : ?>
         <tr>
             <td><?= $this->Html->link($link->get('title'), $link->get('url'), $link->get('options')) ?></td>
             <?php if ($link->get('actions')) : ?>

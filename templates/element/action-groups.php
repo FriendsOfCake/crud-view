@@ -37,5 +37,4 @@ foreach ($groups as $key => $group) {
             <?php endforeach; ?>
        </div>
    </div>
-<?php
-endforeach;
+<?php endforeach; ?>

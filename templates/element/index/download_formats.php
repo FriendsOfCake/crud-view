@@ -7,7 +7,7 @@ if (empty($indexFormats)) {
 <?= __d('crud', 'Download') ?>:
 <?php foreach ($indexFormats as $indexFormat) : ?>
     <?= $this->Html->link($indexFormat['title'], $indexFormat['url'], [
-        'target' => '_blank'
+        'target' => '_blank',
     ]); ?>
 <?php endforeach; ?>
 </div>

@@ -3,7 +3,8 @@ $links = [];
 foreach ($actions as $name => $config) {
     $config += ['method' => 'GET'];
 
-    if ((empty($config['url']['controller']) || $this->request->getParam('controller') === $config['url']['controller']) &&
+    if (
+        (empty($config['url']['controller']) || $this->request->getParam('controller') === $config['url']['controller']) &&
         (!empty($config['url']['action']) && $this->request->getParam('action') === $config['url']['action'])
     ) {
         continue;
@@ -17,13 +18,13 @@ foreach ($actions as $name => $config) {
     if ($config['method'] === 'DELETE') {
         $linkOptions += [
             'block' => 'action_link_forms',
-            'confirm' => __d('crud', 'Are you sure you want to delete record #{0}?', [$singularVar->{$primaryKey}])
+            'confirm' => __d('crud', 'Are you sure you want to delete record #{0}?', [$singularVar->{$primaryKey}]),
         ];
     }
 
     if ($config['method'] !== 'GET') {
         $linkOptions += [
-            'method' => $config['method']
+            'method' => $config['method'],
         ];
     }
 
@@ -61,7 +62,7 @@ foreach ($actions as $name => $config) {
         'title' => $config['title'],
         'url' => $url,
         'options' => $linkOptions,
-        'method' => $config['method']
+        'method' => $config['method'],
     ];
 }
 ?>

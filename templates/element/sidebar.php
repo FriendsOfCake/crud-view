@@ -1,8 +1,8 @@
 <?php
 use Cake\Core\Configure;
 use Cake\Utility\Hash;
-use CrudView\Menu\MenuItem;
 use CrudView\Menu\MenuDivider;
+use CrudView\Menu\MenuItem;
 
 if ($sidebarNavigation === false) {
     return;
@@ -18,19 +18,19 @@ if ($sidebarNavigation === false) {
                     'blacklist' => array_merge(
                         (array)Hash::get($actionConfig, 'scaffold.tables_blacklist'),
                         (array)Configure::read('CrudView.tablesBlacklist')
-                    )
+                    ),
                 ]) ?>
             <?php else : ?>
                 <?php
-                    foreach ($sidebarNavigation as $entry) {
-                        if ($entry instanceof MenuItem) {
-                            echo $this->element('menu/item', ['item' => $entry]);
-                        } elseif ($entry instanceof MenuDivider) {
-                            echo '<hr />';
-                        } else {
-                            throw new \Exception('Invalid Menu Item class');
-                        }
+                foreach ($sidebarNavigation as $entry) {
+                    if ($entry instanceof MenuItem) {
+                        echo $this->element('menu/item', ['item' => $entry]);
+                    } elseif ($entry instanceof MenuDivider) {
+                        echo '<hr />';
+                    } else {
+                        throw new \Exception('Invalid Menu Item class');
                     }
+                }
                 ?>
             <?php endif; ?>
         </ul>

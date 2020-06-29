@@ -11,16 +11,16 @@ if (empty($associations['oneToMany'])) {
 $relations = array_merge($associations['oneToMany'], $associations['manyToMany']);
 
 $i = 0;
-foreach ($relations as $alias => $details):
+foreach ($relations as $alias => $details) :
     $otherSingularVar = $details['propertyName'];
     ?>
     <div class="related">
         <h3><?= __d('crud', 'Related {0}', [Inflector::humanize($details['controller'])]); ?></h3>
         <div class="actions-wrapper">
-            <?= $this->CrudView->createRelationLink($alias, $details, array('class' => 'btn btn-secondary'));?>
+            <?= $this->CrudView->createRelationLink($alias, $details, ['class' => 'btn btn-secondary']);?>
         </div>
         <?php
-        if (${$viewVar}->{$details['entities']}):
+        if (${$viewVar}->{$details['entities']}) :
             ?>
             <table class="table table-bordered table-hover">
                 <thead>
@@ -33,7 +33,7 @@ foreach ($relations as $alias => $details):
                         }
 
                         foreach ($otherFields as $field) {
-                            echo "<th>" . Inflector::humanize($field) . "</th>";
+                            echo '<th>' . Inflector::humanize($field) . '</th>';
                         }
                         ?>
                         <th class="actions">Actions</th>
@@ -53,9 +53,9 @@ foreach ($relations as $alias => $details):
                             }
                             ?>
                             <td class="actions">
-                                <?= $this->Html->link(__d('crud', 'View'), array('plugin' => $details['plugin'], 'controller' => $details['controller'], 'action' => 'view', ${$otherSingularVar}[$details['primaryKey']]), array('class' => 'btn btn-secondary')); ?>
-                                <?= $this->Html->link(__d('crud', 'Edit'), array('plugin' => $details['plugin'], 'controller' => $details['controller'], 'action' => 'edit', ${$otherSingularVar}[$details['primaryKey']]), array('class' => 'btn btn-secondary')); ?>
-                                <?= $this->Html->link(__d('crud', 'Delete'), array('plugin' => $details['plugin'], 'controller' => $details['controller'], 'action' => 'delete', ${$otherSingularVar}[$details['primaryKey']]), array('class' => 'btn btn-secondary')); ?>
+                                <?= $this->Html->link(__d('crud', 'View'), ['plugin' => $details['plugin'], 'controller' => $details['controller'], 'action' => 'view', ${$otherSingularVar}[$details['primaryKey']]], ['class' => 'btn btn-secondary']); ?>
+                                <?= $this->Html->link(__d('crud', 'Edit'), ['plugin' => $details['plugin'], 'controller' => $details['controller'], 'action' => 'edit', ${$otherSingularVar}[$details['primaryKey']]], ['class' => 'btn btn-secondary']); ?>
+                                <?= $this->Html->link(__d('crud', 'Delete'), ['plugin' => $details['plugin'], 'controller' => $details['controller'], 'action' => 'delete', ${$otherSingularVar}[$details['primaryKey']]], ['class' => 'btn btn-secondary']); ?>
                             </td>
                         </tr>
                         <?php
@@ -67,5 +67,4 @@ foreach ($relations as $alias => $details):
         endif;
         ?>
     </div>
-<?php
-endforeach;
+<?php endforeach; ?>

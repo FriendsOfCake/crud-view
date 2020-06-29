@@ -22,14 +22,14 @@
                 </button>
                 <?php
                     $siteTitleContent = $siteTitle;
-                    if (!empty($siteTitleImage)) {
-                        $siteTitleContent = $this->Html->image($siteTitleImage);
-                    }
-                    if (empty($siteTitleLink)) {
-                        echo $this->Html->tag('span', $siteTitleContent, ['class' => 'navbar-brand', 'escape' => false]);
-                    } else {
-                        echo $this->Html->link($siteTitleContent, $siteTitleLink, ['class' => 'navbar-brand', 'escape' => false]);
-                    }
+                if (!empty($siteTitleImage)) {
+                    $siteTitleContent = $this->Html->image($siteTitleImage);
+                }
+                if (empty($siteTitleLink)) {
+                    echo $this->Html->tag('span', $siteTitleContent, ['class' => 'navbar-brand', 'escape' => false]);
+                } else {
+                    echo $this->Html->link($siteTitleContent, $siteTitleLink, ['class' => 'navbar-brand', 'escape' => false]);
+                }
                 ?>
             </div>
 

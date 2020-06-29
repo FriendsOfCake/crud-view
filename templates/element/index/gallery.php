@@ -25,10 +25,10 @@ foreach ($fields as $field => $options) {
             ?>
             <div class="thumbnail">
                 <?php
-                    if (empty($imageContent)) {
-                        $imageContent = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
-                    }
-                    echo $this->Html->image($imageContent, $imageOptions + ['alt' => $imageAltContent]);
+                if (empty($imageContent)) {
+                    $imageContent = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
+                }
+                echo $this->Html->image($imageContent, $imageOptions + ['alt' => $imageAltContent]);
                 ?>
                 <div class="caption gallery-content">
                     <h3 class="text-truncate"><?= $titleContent ?></h3>
@@ -37,10 +37,10 @@ foreach ($fields as $field => $options) {
                         <p><?= $bodyContent ?></p>
                     <?php endif; ?>
 
-                    <?php if ($actionsExist): ?>
+                    <?php if ($actionsExist) : ?>
                         <p><?= $this->element('actions', [
                             'singularVar' => $singularVar,
-                            'actions' => $actions['entity']
+                            'actions' => $actions['entity'],
                         ]); ?></p>
                     <?php endif; ?>
                 </div>

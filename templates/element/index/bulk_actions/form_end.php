@@ -20,6 +20,6 @@ echo $this->Form->control('action', [
         'select' => '<div class="col-sm-10"><select name="{{name}}"{{attrs}}>{{content}}</select>' . $submitButton . '</div>',
     ],
     'type' => 'select',
-    'class' => 'no-selectize'
+    'class' => 'no-selectize',
 ]);
 echo $this->Form->end();
