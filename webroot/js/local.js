@@ -105,7 +105,7 @@ var CrudView = {
     initialize: function () {
         this.bulkActionForm('.bulk-actions');
         this.flatpickr('.flatpickr');
-        this.select2('select[multiple]:not(.no-select2), .select2');
+        this.select2('select[multiple]:not(.no-select2), select.select2');
         this.autocomplete('input.autocomplete, select.autocomplete');
         this.dirtyForms();
         this.dropdown();
