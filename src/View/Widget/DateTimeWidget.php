@@ -8,6 +8,19 @@ use Cake\View\Form\ContextInterface;
 
 class DateTimeWidget extends \BootstrapUI\View\Widget\DateTimeWidget
 {
+    // phpcs:disable
+    /**
+     * @var string
+     */
+    protected $defaultTemplate = '<div {{attrs}}>'
+        . '{{input}}'
+        . '<div class="input-group-append">'
+        . '<button data-toggle title="Toggle" type="button" class="btn input-group-text"><i class="{{toggleIconClass}}"></i></button>'
+        . '<button data-clear title="Clear" type="button" class="btn input-group-text"><i class="{{clearIconClass}}"></i></button>'
+        . '</div>'
+        . '</div>';
+    // phpcs:enable
+
     /**
      * Render flatpickr
      *
@@ -48,8 +61,7 @@ class DateTimeWidget extends \BootstrapUI\View\Widget\DateTimeWidget
         unset($data['val'], $data['timezone']);
 
         // This is the format for value POSTed to server
-        $datetimePicker['data-date-format'] = $this->formatMap[$data['type']];
-        $datetimePicker['data-date-format'] = $this->convertPHPToDatePickerFormat($datetimePicker['data-date-format']);
+        $datetimePicker['data-date-format'] = $this->convertPHPToDatePickerFormat($this->formatMap[$data['type']]);
 
         // This just to allow upgrading easier
         if (isset($data['data-format'])) {
@@ -73,37 +85,33 @@ class DateTimeWidget extends \BootstrapUI\View\Widget\DateTimeWidget
             $datetimePicker += ['data-enable-seconds' => 'true'];
         }
 
-        $iconClass = 'fa fa-calendar-alt';
+        $clearIconClass = 'fa fa-times';
+        $toggleIconClass = 'fa fa-calendar-alt';
         if (isset($datetimePicker['iconClass'])) {
-            $iconClass = $datetimePicker['iconClass'];
+            $toggleIconClass = $datetimePicker['iconClass'];
             unset($datetimePicker['iconClass']);
         } elseif ($data['type'] === 'time') {
-            $iconClass = 'fa fa-clock';
+            $toggleIconClass = 'fa fa-clock';
         }
 
         if ($this->_templates->get('datetimePicker') === null) {
-            // phpcs:disable
-            $this->_templates->add([
-                'datetimePicker' =>
-                    '<div {{attrs}}>'
-                    . '{{input}}'
-                    . '<div class="input-group-append">'
-                    . '<button data-toggle type="button" class="btn input-group-text"><i class="' . $iconClass . '"></i></button>'
-                    . '<button data-clear type="button" class="btn input-group-text"><i class="fa fa-times"></i></button>'
-                    . '</div>'
-                    . '</div>',
-            ]);
-            // phpcs:enable
+            $this->_templates->add(['datetimePicker' => $this->defaultTemplate]);
         }
 
         $data = $this->_templates->addClass($data, 'form-control');
-        $noWrap = false;
-        if ($datetimePicker['data-wrap'] === 'true') {
+        $wrap = $datetimePicker['data-wrap'] === 'true';
+        if ($wrap) {
+            if (isset($data['class'])) {
+                $datetimePicker['data-alt-input-class'] = $data['class'];
+            }
             $datetimePicker['class'] = ['input-group', 'flatpickr'];
+            if (isset($data['datetimePicker'])) {
+                $datetimePicker = $data['datetimePicker'] + $datetimePicker;
+                unset($data['datetimePicker']);
+            }
         } else {
             $data += $datetimePicker;
             $data = $this->_templates->addClass($data, 'flatpickr');
-            $noWrap = true;
         }
 
         /**
@@ -120,16 +128,20 @@ class DateTimeWidget extends \BootstrapUI\View\Widget\DateTimeWidget
             ),
         ]);
 
-        if ($noWrap) {
+        if (!$wrap) {
             return $input;
         }
 
         /** @psalm-suppress PossiblyInvalidArrayOffset */
         return $this->_templates->format('datetimePicker', [
             'input' => $input,
-            'iconClass' => $iconClass,
-            'attrs' => $this->_templates->formatAttributes($datetimePicker),
+            'toggleIconClass' => $toggleIconClass,
+            'clearIconClass' => $clearIconClass,
             'templateVars' => $data['templateVars'],
+            'attrs' => $this->_templates->formatAttributes(
+                $datetimePicker,
+                ['toggleIconClass', 'clearIconClass']
+            ),
         ]);
     }
 

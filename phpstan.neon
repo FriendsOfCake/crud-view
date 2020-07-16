@@ -1,8 +1,10 @@
 includes:
-    - phpstan-baseline.neon
+	- phpstan-baseline.neon
 
 parameters:
-    level: 7
-    checkMissingIterableValueType: false
-    universalObjectCratesClasses:
-        - Crud\Event\Subject
+	level: 7
+	checkMissingIterableValueType: false
+	paths:
+		- src
+	universalObjectCratesClasses:
+		- Crud\Event\Subject

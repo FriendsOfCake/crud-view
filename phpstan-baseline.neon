@@ -1,57 +1,27 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Access to an undefined property object\\:\\:\\$query\\.$#"
-			count: 4
-			path: src/Listener/ViewListener.php
-
-		-
-			message: "#^Access to an undefined property object\\:\\:\\$params\\.$#"
-			count: 1
-			path: src/Listener/ViewListener.php
-
-		-
-			message: "#^Access to an undefined property object\\:\\:\\$element\\.$#"
-			count: 1
-			path: src/Listener/ViewListener.php
-
-		-
-			message: "#^Access to an undefined property object\\:\\:\\$type\\.$#"
-			count: 1
-			path: src/Listener/ViewListener.php
-
-		-
-			message: "#^Parameter \\#2 \\$arr2 of function array_diff_key expects array, array\\|false given\\.$#"
-			count: 1
-			path: src/Listener/ViewListener.php
-
-		-
-			message: "#^Result of \\|\\| is always false\\.$#"
-			count: 1
-			path: src/Listener/ViewListener.php
-
-		-
-			message: "#^Cannot unset offset mixed on array\\(\\)\\.$#"
-			count: 2
-			path: src/Listener/ViewListener.php
-
-		-
-			message: "#^Parameter \\#1 \\$field of method CrudView\\\\Listener\\\\ViewListener\\:\\:_deriveFieldFromContext\\(\\) expects string, array\\<string\\>\\|string\\|null given\\.$#"
-			count: 1
-			path: src/Listener/ViewListener.php
-
-		-
-			message: "#^Call to an undefined method Cake\\\\ORM\\\\Table\\:\\:searchManager\\(\\)\\.$#"
-			count: 1
-			path: src/Listener/ViewSearchListener.php
-
-		-
 			message: "#^Offset 'data\\-wrap' does not exist on array\\(\\?'data\\-enable\\-seconds' \\=\\> 'true', 'data\\-date\\-format' \\=\\> string, \\?'data\\-enable\\-time' \\=\\> 'true', \\?'data\\-alt\\-format' \\=\\> mixed, \\?'data\\-alt\\-input' \\=\\> 'true', \\?'data\\-no\\-calendar' \\=\\> 'true'\\)\\.$#"
 			count: 1
 			path: src/View/Widget/DateTimeWidget.php
 
 		-
-			message: "#^Binary operation \"\\+\\=\" between array\\<string\\>\\|string and array\\('data\\-date\\-format' \\=\\> string, \\?'data\\-alt\\-format' \\=\\> mixed, \\?'data\\-alt\\-input' \\=\\> 'true', \\?'data\\-no\\-calendar' \\=\\> 'true', \\?'data\\-enable\\-seconds' \\=\\> 'true', \\?'data\\-enable\\-time' \\=\\> 'true', 'data\\-wrap' \\=\\> mixed\\) results in an error\\.$#"
+			message: "#^Cannot assign offset 'class' to array\\<string\\>\\|string\\.$#"
+			count: 1
+			path: src/View/Widget/DateTimeWidget.php
+
+		-
+			message: "#^Cannot assign offset 'datetimePicker' to array\\<string\\>\\|string\\.$#"
+			count: 1
+			path: src/View/Widget/DateTimeWidget.php
+
+		-
+			message: "#^Binary operation \"\\+\" between string and array\\(\\?'data\\-enable\\-seconds' \\=\\> 'true', 'data\\-date\\-format' \\=\\> string, \\?'data\\-enable\\-time' \\=\\> 'true', \\?'data\\-alt\\-format' \\=\\> mixed, \\?'data\\-alt\\-input' \\=\\> 'true', \\?'data\\-no\\-calendar' \\=\\> 'true', \\?'data\\-alt\\-input\\-class' \\=\\> string, 'class' \\=\\> array\\('input\\-group', 'flatpickr'\\)\\) results in an error\\.$#"
+			count: 1
+			path: src/View/Widget/DateTimeWidget.php
+
+		-
+			message: "#^Binary operation \"\\+\\=\" between array\\<string\\>\\|string and array\\(\\?'data\\-enable\\-seconds' \\=\\> 'true', 'data\\-date\\-format' \\=\\> string, \\?'data\\-enable\\-time' \\=\\> 'true', \\?'data\\-alt\\-format' \\=\\> mixed, \\?'data\\-alt\\-input' \\=\\> 'true', \\?'data\\-no\\-calendar' \\=\\> 'true'\\) results in an error\\.$#"
 			count: 1
 			path: src/View/Widget/DateTimeWidget.php
 
