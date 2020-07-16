@@ -17,10 +17,6 @@ var CrudView = {
         $(selector).flatpickr();
     },
 
-    selectize: function (selector) {
-        $(selector).selectize({plugins: ['remove_button']});
-    },
-
     select2: function (selector) {
         $(selector).each(function () {
             var $this = $(this),
