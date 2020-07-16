@@ -85,13 +85,13 @@ class DateTimeWidget extends \BootstrapUI\View\Widget\DateTimeWidget
             $datetimePicker += ['data-enable-seconds' => 'true'];
         }
 
-        $clearIconClass = 'fa fa-times';
-        $toggleIconClass = 'fa fa-calendar-alt';
+        $clearIconClass = 'fas fa-times';
+        $toggleIconClass = 'fas fa-calendar-alt';
         if (isset($datetimePicker['iconClass'])) {
             $toggleIconClass = $datetimePicker['iconClass'];
             unset($datetimePicker['iconClass']);
         } elseif ($data['type'] === 'time') {
-            $toggleIconClass = 'fa fa-clock';
+            $toggleIconClass = 'fas fa-clock';
         }
 
         if ($this->_templates->get('datetimePicker') === null) {
