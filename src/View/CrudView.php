@@ -222,7 +222,7 @@ class CrudView extends View implements EventListenerInterface
             return parent::_getTemplateFileName($name);
         } catch (MissingTemplateException $exception) {
             $this->subDir = '';
-            $this->templatePath = 'Scaffold';
+            $this->templatePath = 'scaffold';
         }
         try {
             return parent::_getTemplateFileName($this->template);
