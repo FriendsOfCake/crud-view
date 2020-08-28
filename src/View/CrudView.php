@@ -118,12 +118,9 @@ class CrudView extends View implements EventListenerInterface
             ],
             'Flash' => ['className' => 'BootstrapUI.Flash'],
             'Paginator' => ['className' => 'BootstrapUI.Paginator'],
+            'Breadcrumbs' => ['className' => 'BootstrapUI.Breadcrumbs'],
             'CrudView' => ['className' => 'CrudView.CrudView'],
         ];
-
-        if (class_exists('\Cake\View\Helper\BreadcrumbsHelper')) {
-            $helpers['Breadcrumbs'] = ['className' => 'BootstrapUI.Breadcrumbs'];
-        }
 
         if (Configure::read('CrudView.useAssetCompress')) {
             $helpers['AssetCompress'] = ['className' => 'AssetCompress.AssetCompress'];
