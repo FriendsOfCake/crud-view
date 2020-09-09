@@ -15,10 +15,33 @@ class DateTimeWidget extends \BootstrapUI\View\Widget\DateTimeWidget
     protected $defaultTemplate = '<div {{attrs}}>'
         . '{{input}}'
         . '<div class="input-group-append">'
-        . '<button data-toggle title="Toggle" type="button" class="btn input-group-text"><i class="{{toggleIconClass}}"></i></button>'
-        . '<button data-clear title="Clear" type="button" class="btn input-group-text"><i class="{{clearIconClass}}"></i></button>'
+        . '<button data-toggle title="Toggle" type="button" class="btn input-group-text">{{toggleIcon}}</button>'
+        . '<button data-clear title="Clear" type="button" class="btn input-group-text">{{clearIcon}}</button>'
         . '</div>'
         . '</div>';
+
+    /**
+     * @var string
+     */
+    protected $calendarIcon = '<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-calendar" fill="currentColor" xmlns="http://www.w3.org/2000/svg">'
+        . '<path fill-rule="evenodd" d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>'
+        . '</svg>';
+
+    /**
+     * @var string
+     */
+    protected $clockIcon = '<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-clock" fill="currentColor" xmlns="http://www.w3.org/2000/svg">'
+        . '<path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm8-7A8 8 0 1 1 0 8a8 8 0 0 1 16 0z"/>'
+        . '<path fill-rule="evenodd" d="M7.5 3a.5.5 0 0 1 .5.5v5.21l3.248 1.856a.5.5 0 0 1-.496.868l-3.5-2A.5.5 0 0 1 7 9V3.5a.5.5 0 0 1 .5-.5z"/>'
+        . '</svg>';
+
+    /**
+     * @var string
+     */
+    protected $clearIcon = '<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-x-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">'
+        . '<path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>'
+        . '<path fill-rule="evenodd" d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>'
+        . '</svg>';
     // phpcs:enable
 
     /**
@@ -85,13 +108,13 @@ class DateTimeWidget extends \BootstrapUI\View\Widget\DateTimeWidget
             $datetimePicker += ['data-enable-seconds' => 'true'];
         }
 
-        $clearIconClass = 'fas fa-times';
-        $toggleIconClass = 'fas fa-calendar-alt';
+        $clearIcon = $this->clearIcon;
+        $toggleIcon = $this->calendarIcon;
         if (isset($datetimePicker['iconClass'])) {
-            $toggleIconClass = $datetimePicker['iconClass'];
+            $toggleIcon = $datetimePicker['iconClass'];
             unset($datetimePicker['iconClass']);
         } elseif ($data['type'] === 'time') {
-            $toggleIconClass = 'fas fa-clock';
+            $toggleIcon = $this->clockIcon;
         }
 
         if ($this->_templates->get('datetimePicker') === null) {
@@ -135,12 +158,12 @@ class DateTimeWidget extends \BootstrapUI\View\Widget\DateTimeWidget
         /** @psalm-suppress PossiblyInvalidArrayOffset */
         return $this->_templates->format('datetimePicker', [
             'input' => $input,
-            'toggleIconClass' => $toggleIconClass,
-            'clearIconClass' => $clearIconClass,
+            'toggleIcon' => $toggleIcon,
+            'clearIcon' => $clearIcon,
             'templateVars' => $data['templateVars'],
             'attrs' => $this->_templates->formatAttributes(
                 $datetimePicker,
-                ['toggleIconClass', 'clearIconClass']
+                ['toggleIcon', 'clearIcon']
             ),
         ]);
     }
