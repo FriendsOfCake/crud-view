@@ -554,7 +554,7 @@ class ViewListener extends BaseListener
 
         $keys = $associations->keys();
         if (!empty($whitelist)) {
-            $keys = array_intersect($keys, array_map('strtolower', $whitelist));
+            $keys = array_intersect($keys, $whitelist);
         }
         foreach ($keys as $associationName) {
             /** @var \Cake\ORM\Association $association */
