@@ -15,7 +15,7 @@ not set, it will fallback to the following alternative:
 .. code-block:: php
 
     $action = $this->Crud->action();
-    $action->config('scaffold.site_title', 'My Admin Site');
+    $action->setConfig('scaffold.site_title', 'My Admin Site');
 
 Site Title Link
 ---------------
@@ -27,7 +27,7 @@ route arrays are supported.
 .. code-block:: php
 
     $action = $this->Crud->action();
-    $action->config('scaffold.site_title_link', '/');
+    $action->setConfig('scaffold.site_title_link', '/');
 
 Site Title Image
 ----------------
@@ -38,7 +38,7 @@ title link. If set, it replaces ``scaffold.site_title``.
 
     $action = $this->Crud->action();
     // Use an image included in your codebase
-    $action->config('scaffold.site_title_image', 'site_image.png');
+    $action->setConfig('scaffold.site_title_image', 'site_image.png');
 
     // Use an exact url
-    $action->config('scaffold.site_title_image', 'http://www.google.com/images/logos/google_logo_41.png');
+    $action->setConfig('scaffold.site_title_image', 'http://www.google.com/images/logos/google_logo_41.png');

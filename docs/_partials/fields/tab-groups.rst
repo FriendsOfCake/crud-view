@@ -7,7 +7,7 @@ configuration key:
 .. code-block:: php
 
     $action = $this->Crud->action();
-    $action->config('scaffold.form_tab_groups', [
+    $action->setConfig('scaffold.form_tab_groups', [
         'First Tab Header' => ['field_1', 'field_2'],
         'Second Tab Header' => ['field_3', 'field_4'],
     ]);
@@ -19,4 +19,4 @@ the primary group's name using `scaffold.form_primary_tab` config.
 .. code-block:: php
 
     $action = $this->Crud->action();
-    $action->config('scaffold.form_primary_tab', 'Key Info');
+    $action->setConfig('scaffold.form_primary_tab', 'Key Info');

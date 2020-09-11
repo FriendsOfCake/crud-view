@@ -22,6 +22,6 @@ array of key/value pairs, where the key is the url and the value is the title.
 .. code-block:: php
 
     $action = $this->Crud->action();
-    $action->config('scaffold.bulk_actions', [
+    $action->setConfig('scaffold.bulk_actions', [
         Router::url(['action' => 'deleteAll']) => __('Delete records'),
     ]);

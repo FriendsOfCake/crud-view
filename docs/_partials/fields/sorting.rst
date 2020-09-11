@@ -8,7 +8,7 @@ the ``disableSort`` option:
 .. code-block:: php
 
     $action = $this->Crud->action();
-    $action->config('scaffold.fields', [
+    $action->setConfig('scaffold.fields', [
         'title' => [
             'disableSort' => true,
         ]

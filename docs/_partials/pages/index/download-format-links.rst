@@ -17,7 +17,7 @@ Each sub-array should contain ``title`` and ``url`` parameters.
     // include the querystring argument as specified or you will lose any
     // currently applied filters
     $action = $this->Crud->action();
-    $action->config('scaffold.index_formats', [
+    $action->setConfig('scaffold.index_formats', [
         [
             'title' => 'JSON',
             'url' => ['_ext' => 'json', '?' => $this->request->getQueryParams()]
@@ -83,7 +83,7 @@ can be modified to add a CSV Download Link.
             $this->set('_extract', ['id', 'active', 'title', 'created']);
         }
 
-        $this->Crud->action()->config('scaffold.index_formats', [
+        $this->Crud->action()->setConfig('scaffold.index_formats', [
             [
                 'title' => 'CSV',
                 'url' => ['_ext' => 'csv', '?' => $this->request->getQueryParams()]

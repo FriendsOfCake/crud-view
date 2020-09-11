@@ -10,12 +10,12 @@ key:
     $action = $this->Crud->action();
 
     // restrict to just the add button, which will show up globally
-    $action->config('scaffold.actions', [
+    $action->setConfig('scaffold.actions', [
         'add'
     ]);
 
     // restrict to just the delete/edit/view actions, which are scoped to entities
-    $action->config('scaffold.actions', [
+    $action->setConfig('scaffold.actions', [
         'delete',
         'edit',
         'view',
@@ -27,7 +27,7 @@ generating action buttons.
 .. code-block:: php
 
     $action = $this->Crud->action();
-    $action->config('scaffold.actions', [
+    $action->setConfig('scaffold.actions', [
         'duplicate' => [
             // An alternative title for the action
             'link_title' => 'Duplicate this record',
@@ -60,7 +60,7 @@ the link by default:
 
     // For the PostsController, will generate
     // /posts/translate/english/1
-    $action->config('scaffold.actions', [
+    $action->setConfig('scaffold.actions', [
         'translate' => [
             'url' => ['action' => 'translate', 'english']
         ]
@@ -76,7 +76,7 @@ specified.
 
     // For the PostsController, will generate
     // /posts/translate/1/english
-    $action->config('scaffold.actions', [
+    $action->setConfig('scaffold.actions', [
         'translate' => [
             'url' => ['action' => 'translate', ':primaryKey:', 'english']
         ]
@@ -92,7 +92,7 @@ Crud action classes are mapped but should not all be shown on the main UI.
 .. code-block:: php
 
     $action = $this->Crud->action();
-    $action->config('scaffold.actions_blacklist', ['add', 'delete']);
+    $action->setConfig('scaffold.actions_blacklist', ['add', 'delete']);
 
 By default, we blacklist the action which is mapped to ``Crud.LookupAction``.
 As this action is meant to be used solely for autocompletion, it *cannot* be removed
@@ -108,8 +108,8 @@ configuration key.
 .. code-block:: php
 
     $action = $this->Crud->action();
-    $action->config('scaffold.actions', ['view', 'edit', 'delete']);
-    $action->config('scaffold.action_groups', [
+    $action->setConfig('scaffold.actions', ['view', 'edit', 'delete']);
+    $action->setConfig('scaffold.action_groups', [
         'Actions' => [
             'view',
             'edit',
@@ -125,8 +125,8 @@ You can specify multiple action groups:
 .. code-block:: php
 
     $action = $this->Crud->action();
-    $action->config('scaffold.actions', ['view', 'edit', 'delete', 'disable', 'delete']);
-    $action->config('scaffold.action_groups', [
+    $action->setConfig('scaffold.actions', ['view', 'edit', 'delete', 'disable', 'delete']);
+    $action->setConfig('scaffold.action_groups', [
         'Actions' => [
             'view',
             'edit',
@@ -143,8 +143,8 @@ Finally, you can also set configuration for each entry in an action group:
 .. code-block:: php
 
     $action = $this->Crud->action();
-    $action->config('scaffold.actions', ['view', 'edit', 'delete', 'english', 'spanish']);
-    $action->config('scaffold.action_groups', [
+    $action->setConfig('scaffold.actions', ['view', 'edit', 'delete', 'english', 'spanish']);
+    $action->setConfig('scaffold.action_groups', [
         'Actions' => [
             'view',
             'edit',

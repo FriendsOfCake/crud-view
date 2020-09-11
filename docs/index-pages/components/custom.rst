@@ -6,7 +6,7 @@ To use a custom index element, you can set the ``scaffold.index_type`` config op
 .. code-block:: php
 
     $action = $this->Crud->action();
-    $action->config('scaffold.index_type', 'an_element');
+    $action->setConfig('scaffold.index_type', 'an_element');
 
 Available Variables
 -------------------

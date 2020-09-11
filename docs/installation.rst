@@ -6,7 +6,7 @@ Installing CRUD view requires only a few steps
 Requirements
 ------------
 
-* CakePHP 3.x
+* CakePHP 4.x
 
 Getting the Code
 ----------------

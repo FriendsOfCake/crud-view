@@ -16,7 +16,7 @@ to the same index action by passing some search arguments:
 .. code-block:: php
 
     $action = $this->Crud->action();
-    $action->config('scaffold.fields', [
+    $action->setConfig('scaffold.fields', [
         'published_time' => [
             'formatter' => 'element',
             'element' => 'search/published_time',
@@ -29,7 +29,7 @@ it is just a matter of creating the element file with the right content:
 
 .. code-block:: php
 
-    // src/Template/Element/search/published_time.ctp
+    // templates/element/search/published_time.ctp
 
     echo $this->Html->link($value->timeAgoInWords(), [
         'action' => $options['action'],

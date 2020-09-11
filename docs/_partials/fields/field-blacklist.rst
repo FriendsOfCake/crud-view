@@ -8,4 +8,4 @@ functionality:
 .. code-block:: php
 
     $action = $this->Crud->action();
-    $action->config('scaffold.fields_blacklist', ['created', 'modified']);
+    $action->setConfig('scaffold.fields_blacklist', ['created', 'modified']);

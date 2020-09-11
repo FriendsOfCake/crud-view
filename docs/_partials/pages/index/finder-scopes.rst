@@ -12,7 +12,7 @@ Each sub-array should contain ``title`` and ``finder`` parameters.
 
 .. code-block:: php
 
-    $this->Crud->action()->config('scaffold.index_finder_scopes', [
+    $this->Crud->action()->setConfig('scaffold.index_finder_scopes', [
             [
                 'title' => __('All'),
                 'finder' => 'all',
@@ -54,7 +54,7 @@ result-set. This can be done in the mapped action as follows:
 
     public function index()
     {
-        $this->Crud->action()->config('scaffold.index_finder_scopes', [
+        $this->Crud->action()->setConfig('scaffold.index_finder_scopes', [
             [
                 'title' => __('All'),
                 'finder' => 'all',

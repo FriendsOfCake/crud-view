@@ -24,7 +24,7 @@ The ``scaffold.breadcrumbs`` configuration key takes an array of
 
     use CrudView\Breadcrumb\Breadcrumb;
 
-    $this->Crud->action()->config('scaffold.breadcrumbs', [
+    $this->Crud->action()->setConfig('scaffold.breadcrumbs', [
         new BreadCrumb('Home'),
     ]);
 
@@ -35,7 +35,7 @@ breadcrumb entries. However, they also take ``url`` and ``options`` arrays:
 
     use CrudView\Breadcrumb\Breadcrumb;
 
-    $this->Crud->action()->config('scaffold.breadcrumbs', [
+    $this->Crud->action()->setConfig('scaffold.breadcrumbs', [
         new BreadCrumb('Home', ['controller' => 'Posts', 'action' => 'index'], ['class' => 'derp']),
     ]);
 
@@ -51,14 +51,14 @@ You may also set any given breadcrumb to "active" by either setting the
     // Using the "class" option method:
     use CrudView\Breadcrumb\Breadcrumb;
 
-    $this->Crud->action()->config('scaffold.breadcrumbs', [
+    $this->Crud->action()->setConfig('scaffold.breadcrumbs', [
         new BreadCrumb('Home', '#', ['class' => 'active']),
     ]);
 
     // Using the ActiveBreadCrumb method:
     use CrudView\Breadcrumb\ActiveBreadCrumb;
 
-    $this->Crud->action()->config('scaffold.breadcrumbs', [
+    $this->Crud->action()->setConfig('scaffold.breadcrumbs', [
         new ActiveBreadCrumb('Home', '#'),
     ]);
 

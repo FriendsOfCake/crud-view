@@ -9,7 +9,7 @@ To use the "Dashboard", the custom ``DashboardAction`` needs to be mapped:
 
 .. code-block:: php
 
-    public function initialize()
+    public function initialize(): void
     {
         parent::initialize();
 
@@ -91,7 +91,7 @@ show a single subheading for your Dashboard.
 
 In addition to showing a title, it is also possible to show a list of links. This can
 be done by adding a ``links`` key with an array of ``LinkItem`` objects as the value.
-Links containing urls for external websites will open in a new window by default. 
+Links containing urls for external websites will open in a new window by default.
 
 .. code-block:: php
 

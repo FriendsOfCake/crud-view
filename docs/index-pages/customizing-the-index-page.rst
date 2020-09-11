@@ -11,7 +11,7 @@ in scope. To limit the fields used, simply specify an array of fields:
 .. code-block:: php
 
     $action = $this->Crud->action();
-    $action->config('scaffold.fields', ['title', 'description']);
+    $action->setConfig('scaffold.fields', ['title', 'description']);
 
 .. include:: /_partials/fields/field-settings.rst
 .. include:: /_partials/fields/field-blacklist.rst

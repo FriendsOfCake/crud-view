@@ -28,7 +28,7 @@ title for any of the fields by using the ``scaffold.fields`` configuration
 .. code-block:: php
 
     $action = $this->Crud->action();
-    $action->config('scaffold.fields', [
+    $action->setConfig('scaffold.fields', [
         'author_id' => ['label' => 'Author Name'],
         // The rest of the fields to display here
     ]);
@@ -66,10 +66,10 @@ Overriding Template Elements
 ----------------------------
 
 All the *CrudView* templates are built from several elements that can be
-overridden by creating them in your own ``src/Template/Element`` folder. The
+overridden by creating them in your own ``templates/element`` folder. The
 following sections will list all the elements that can be overridden for each
 type of action.
 
 In general, if you want to override a template, it is a good idea to copy the
 original implementation from
-``vendor/friendsofcake/crud-view/src/Template/Element``
+``vendor/friendsofcake/crud-view/templates/element``
