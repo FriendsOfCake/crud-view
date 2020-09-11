@@ -54,6 +54,5 @@
         "wiki": "http://cakephp.nu/cakephp-crud/",
         "irc": "irc://irc.freenode.org/friendsofcake"
     },
-    "minimum-stability": "beta",
     "prefer-stable": true
 }
