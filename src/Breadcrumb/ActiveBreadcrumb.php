@@ -5,6 +5,7 @@ namespace CrudView\Breadcrumb;
 
 class ActiveBreadcrumb extends Breadcrumb
 {
+    // phpcs:ignore
     /**
      * // phpcs:ignore
      * @inheritDoc
