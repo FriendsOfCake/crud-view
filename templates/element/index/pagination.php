@@ -6,6 +6,8 @@
             <?php
             if ($this->Paginator->hasPage(2)) {
                 echo $this->Paginator->links([
+                    'first' => true,
+                    'last' => true,
                     'prev' => true,
                     'next' => true,
                 ]);
