@@ -25,6 +25,7 @@ foreach ($actions as $name => $config) {
     if ($config['method'] !== 'GET') {
         $linkOptions += [
             'method' => $config['method'],
+            'block' => 'action_link_forms',
         ];
     }
 
@@ -33,6 +34,11 @@ foreach ($actions as $name => $config) {
         unset($config['callback']);
         $config['options'] = $linkOptions;
         $links[$name] = $callback($config, !empty($singularVar) ? $singularVar : null, $this);
+
+        if ($links[$name]['method'] !== 'GET' && !isset($links[$name]['options']['block'])) {
+            $links[$name]['options']['block'] = 'action_link_forms';
+        }
+
         continue;
     }
 
