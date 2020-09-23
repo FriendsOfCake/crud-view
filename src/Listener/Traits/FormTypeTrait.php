@@ -1,6 +1,10 @@
 <?php
+declare(strict_types=1);
+
 namespace CrudView\Listener\Traits;
 
+use Cake\Controller\Controller;
+use Crud\Action\BaseAction;
 use Crud\Action\EditAction;
 
 trait FormTypeTrait
@@ -10,7 +14,7 @@ trait FormTypeTrait
      *
      * @return void
      */
-    protected function beforeRenderFormType()
+    protected function beforeRenderFormType(): void
     {
         $controller = $this->_controller();
 
@@ -26,7 +30,7 @@ trait FormTypeTrait
      *
      * @return bool
      */
-    protected function _getFormEnableDirtyCheck()
+    protected function _getFormEnableDirtyCheck(): bool
     {
         $action = $this->_action();
 
@@ -36,9 +40,9 @@ trait FormTypeTrait
     /**
      * Get form submit button text.
      *
-     * @return bool
+     * @return string
      */
-    protected function _getFormSubmitButtonText()
+    protected function _getFormSubmitButtonText(): string
     {
         $action = $this->_action();
 
@@ -48,9 +52,9 @@ trait FormTypeTrait
     /**
      * Get extra form submit buttons.
      *
-     * @return bool
+     * @return array
      */
-    protected function _getFormSubmitExtraButtons()
+    protected function _getFormSubmitExtraButtons(): array
     {
         $action = $this->_action();
         $buttons = $action->getConfig('scaffold.form_submit_extra_buttons');
@@ -69,9 +73,9 @@ trait FormTypeTrait
     /**
      * Get extra form submit left buttons.
      *
-     * @return bool
+     * @return array
      */
-    protected function _getFormSubmitExtraLeftButtons()
+    protected function _getFormSubmitExtraLeftButtons(): array
     {
         $action = $this->_action();
         $buttons = $action->getConfig('scaffold.form_submit_extra_left_buttons');
@@ -92,7 +96,7 @@ trait FormTypeTrait
      *
      * @return array
      */
-    protected function _getDefaultExtraButtons()
+    protected function _getDefaultExtraButtons(): array
     {
         return [
             'save_and_continue' => [
@@ -110,7 +114,7 @@ trait FormTypeTrait
             'back' => [
                 'title' => __d('crud', 'Back'),
                 'url' => ['action' => 'index'],
-                'options' => ['class' => 'btn btn-default', 'role' => 'button'],
+                'options' => ['class' => 'btn btn-secondary', 'role' => 'button'],
                 'type' => 'link',
                 '_label' => 'back',
             ],
@@ -122,25 +126,28 @@ trait FormTypeTrait
      *
      * @return array
      */
-    protected function _getDefaultExtraLeftButtons()
+    protected function _getDefaultExtraLeftButtons(): array
     {
         $buttons = [];
 
         $action = $this->_action();
         if ($action instanceof EditAction) {
-            $buttons[] = [
-                'title' => __d('crud', 'Delete'),
-                'url' => ['action' => 'delete'],
-                'options' => [
-                    'block' => 'form.after_end',
-                    'class' => 'btn btn-danger btn-delete',
-                    'confirm' => __d('crud', 'Are you sure you want to delete this record?'),
-                    'name' => '_delete',
-                    'style' => 'margin-left: 0',
-                ],
-                'type' => 'postLink',
-                '_label' => 'delete',
-            ];
+            $blacklist = $action->getConfig('scaffold.actions_blacklist', []);
+            if (!in_array('delete', $blacklist, true)) {
+                $buttons[] = [
+                    'title' => __d('crud', 'Delete'),
+                    'url' => ['action' => 'delete'],
+                    'options' => [
+                        'block' => 'form.after_end',
+                        'class' => 'btn btn-danger btn-delete',
+                        'confirm' => __d('crud', 'Are you sure you want to delete this record?'),
+                        'name' => '_delete',
+                        'style' => 'margin-left: 0',
+                    ],
+                    'type' => 'postLink',
+                    '_label' => 'delete',
+                ];
+            }
         }
 
         return $buttons;
@@ -159,12 +166,12 @@ trait FormTypeTrait
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
-    abstract protected function _controller();
+    abstract protected function _controller(): Controller;
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
-    abstract protected function _action($name = null);
+    abstract protected function _action(?string $name = null): BaseAction;
 }

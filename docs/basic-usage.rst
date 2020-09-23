@@ -14,7 +14,7 @@ action to the ``Crud`` component and the ``CrudView.View`` as a listener.
 
 .. code-block:: php
 
-    public function initialize()
+    public function initialize(): void
     {
         $this->loadComponent('Crud.Crud', [
             'actions' => [
@@ -35,6 +35,8 @@ page.
 .. code-block:: php
 
     <?php
+    declare(strict_types=1);
+
     namespace App\Controller;
 
     class ArticlesController extends AppController
@@ -55,7 +57,7 @@ writing.
     public function index()
     {
         $action = $this->Crud->action(); // Gets the IndexAction object
-        debug($action->config()); // Show all configuration related to this action
+        debug($action->getConfig()); // Show all configuration related to this action
         return $this->Crud->execute();
     }
 
@@ -77,7 +79,7 @@ Fore example you may want to not fetch the ``Authors`` association of the
     public function index()
     {
         $action = $this->Crud->action();
-        $action->config('scaffold.relations_blacklist', ['Authors', ...]);
+        $action->setConfig('scaffold.relations_blacklist', ['Authors', ...]);
         return $this->Crud->execute();
     }
 
@@ -89,7 +91,7 @@ the ``scaffold.relations`` configuration key:
     public function index()
     {
         $action = $this->Crud->action();
-        $action->config('scaffold.relations', ['Categories', 'Tags']);
+        $action->setConfig('scaffold.relations', ['Categories', 'Tags']);
         return $this->Crud->execute();
     }
 
@@ -125,7 +127,7 @@ displayed in the index table:
     public function index()
     {
         $action = $this->Crud->action();
-        $action->config('scaffold.fields_blacklist', ['created', 'modified']);
+        $action->setConfig('scaffold.fields_blacklist', ['created', 'modified']);
         return $this->Crud->execute();
     }
 
@@ -137,7 +139,7 @@ appear in the index table:
     public function index()
     {
         $action = $this->Crud->action();
-        $action->config('scaffold.fields', ['title', 'body', 'category', 'published_time']);
+        $action->setConfig('scaffold.fields', ['title', 'body', 'category', 'published_time']);
         return $this->Crud->execute();
     }
 
@@ -157,7 +159,7 @@ table:
     public function index()
     {
         $action = $this->Crud->action();
-        $action->config('scaffold.actions_blacklist', ['delete']);
+        $action->setConfig('scaffold.actions_blacklist', ['delete']);
         return $this->Crud->execute();
     }
 
@@ -169,7 +171,7 @@ specifically displayed in the index view:
     public function index()
     {
         $action = $this->Crud->action();
-        $action->config('scaffold.actions', ['view', 'add', 'edit']);
+        $action->setConfig('scaffold.actions', ['view', 'add', 'edit']);
         return $this->Crud->execute();
     }
 
@@ -215,7 +217,7 @@ the ``Crud`` component. This is the recommended configuration:
 
 .. code-block:: php
 
-    public function initialize()
+    public function initialize(): void
     {
         $this->loadComponent('Crud.Crud', [
             'actions' => [
@@ -251,7 +253,7 @@ fields in the form:
     public function add()
     {
         $action = $this->Crud->action();
-        $action->config('scaffold.fields_blacklist', ['created', 'modified']);
+        $action->setConfig('scaffold.fields_blacklist', ['created', 'modified']);
         return $this->Crud->execute();
     }
 
@@ -263,7 +265,7 @@ form by using the ``scaffold.fields`` configuration key:
     public function edit()
     {
         $action = $this->Crud->action();
-        $action->config('scaffold.fields', ['title', 'body', 'category_id']);
+        $action->setConfig('scaffold.fields', ['title', 'body', 'category_id']);
         return $this->Crud->execute();
     }
 
@@ -276,7 +278,7 @@ add the ``placeholder`` property to the ``title`` input:
     public function add()
     {
         $action = $this->Crud->action();
-        $action->config('scaffold.fields', [
+        $action->setConfig('scaffold.fields', [
             'title' => ['placeholder' => 'Insert a title here'],
             'body',
             'category_id'
@@ -335,7 +337,7 @@ to be saved. For this case, you may use the ``scaffold.relations`` and
     {
         $action $this->Crud->action();
         // Only fetch association info for Categories and Tags
-        $action->config('scaffold.relations', ['Categories', 'Tags']);
+        $action->setConfig('scaffold.relations', ['Categories', 'Tags']);
         return $this->Crud->execute();
     }
 
@@ -348,7 +350,7 @@ specify those association that should not be added to ``contain()``:
     {
         $action $this->Crud->action();
         // Only fetch association info for Categories and Tags
-        $action->config('scaffold.relations_blacklist', ['Authors']);
+        $action->setConfig('scaffold.relations_blacklist', ['Authors']);
         return $this->Crud->execute();
     }
 
@@ -364,7 +366,7 @@ buttons. If you wish to only keep the "Save" button, you set the
     public function add()
     {
         $action = $this->Crud->action();
-        $action->config('scaffold.form_submit_extra_buttons', false);
+        $action->setConfig('scaffold.form_submit_extra_buttons', false);
         return $this->Crud->execute();
     }
 
@@ -410,7 +412,7 @@ displayed in the view table:
     public function view()
     {
         $action = $this->Crud->action();
-        $action->config('scaffold.fields_blacklist', ['created', 'modified']);
+        $action->setConfig('scaffold.fields_blacklist', ['created', 'modified']);
         return $this->Crud->execute();
     }
 
@@ -422,7 +424,7 @@ appear in the index table:
     public function view()
     {
         $action = $this->Crud->action();
-        $action->config('scaffold.fields', ['title', 'body', 'category', 'published_time']);
+        $action->setConfig('scaffold.fields', ['title', 'body', 'category', 'published_time']);
         return $this->Crud->execute();
     }
 
@@ -441,7 +443,7 @@ Fore example you may want to not fetch the ``Authors`` association of the
     public function view()
     {
         $action = $this->Crud->action();
-        $action->config('scaffold.relations_blacklist', ['Authors', ...]);
+        $action->setConfig('scaffold.relations_blacklist', ['Authors', ...]);
         return $this->Crud->execute();
     }
 
@@ -453,7 +455,7 @@ the ``scaffold.relations`` configuration key:
     public function view()
     {
         $action = $this->Crud->action();
-        $action->config('scaffold.relations', ['Categories', 'Tags']);
+        $action->setConfig('scaffold.relations', ['Categories', 'Tags']);
         return $this->Crud->execute();
     }
 

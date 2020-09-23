@@ -8,12 +8,14 @@ to be installed and filters configured for your model using the search manager.
 .. code-block:: php
 
     <?php
+    declare(strict_types=1);
+
     namespace App\Controller;
     use App\Controller\AppController;
 
     class SamplesController extends AppController
     {
-        public function initialize()
+        public function initialize(): void
         {
             parent::initialize();
             // Enable PrgComponent so search form submissions
@@ -72,14 +74,17 @@ Here's an e.g. of how configure filter controls options through search manager i
 .. code-block:: php
 
     <?php
+    declare(strict_types=1);
+
     namespace App\Model\Table;
     use Cake\ORM\Table;
 
     class SamplesTable extends Table
     {
-        public function initialize(array $config)
+        public function initialize(array $config): void
         {
             parent::initialize($config);
+
             $this->addBehavior('Search.Search');
             $this->searchManager()
                 ->useCollection('default')

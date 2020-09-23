@@ -22,4 +22,4 @@ However, you may force a user prompt by enabling dirty form checks using the
 .. code-block:: php
 
     $action = $this->Crud->action();
-    $action->config('scaffold.form_enable_dirty_check', true);
+    $action->setConfig('scaffold.form_enable_dirty_check', true);

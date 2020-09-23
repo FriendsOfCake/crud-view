@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace CrudView\View\Cell;
 
 use Cake\View\Cell;
@@ -18,7 +20,7 @@ class DashboardTableCell extends Cell
      * @param array $links A array of LinkItem objects
      * @return void
      */
-    public function display($title, array $links = [])
+    public function display($title, array $links = []): void
     {
         if (is_array($title)) {
             $links = $title;

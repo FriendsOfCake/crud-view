@@ -1,10 +1,10 @@
+includes:
+	- phpstan-baseline.neon
+
 parameters:
-    universalObjectCratesClasses:
-        - Crud\Event\Subject
-    ignoreErrors:
-        - '#Access to an undefined property object::\$element#'
-        - '#Access to an undefined property object::\$params#'
-        - '#Access to an undefined property object::\$query#'
-        - '#Access to an undefined property object::\$type#'
-        - '#Parameter \#1 $dateTime of method Cake\\View\\Helper\\TimeHelper::timeAgoInWords\(\) expects Cake\\Chronos\\ChronosInterface|DateTime|int|string, DateTime|DateTimeImmutable|int|string given#'
-        - '#Parameter \#1 $dateString of method Cake\\View\\Helper\\TimeHelper::nice() expects DateTime|int|string|null, DateTime|DateTimeImmutable|int|string given#'
+	level: 7
+	checkMissingIterableValueType: false
+	paths:
+		- src
+	universalObjectCratesClasses:
+		- Crud\Event\Subject

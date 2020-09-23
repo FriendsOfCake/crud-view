@@ -19,8 +19,8 @@ The blog index type has two main options:
 .. code-block:: php
 
     $action = $this->Crud->action();
-    $action->config('scaffold.index_title_field', 'name');
-    $action->config('scaffold.index_body_field', 'content');
+    $action->setConfig('scaffold.index_title_field', 'name');
+    $action->setConfig('scaffold.index_body_field', 'content');
 
 Available Variables
 -------------------

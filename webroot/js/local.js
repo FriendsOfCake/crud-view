@@ -13,71 +13,65 @@ var CrudView = {
         }
     },
 
-    datePicker: function (selector) {
-        $(selector).each(function() {
-            var picker = $(this);
-            var date = null;
+    flatpickr: function (selector) {
+        $(selector).flatpickr();
+    },
 
-            if (picker.data('timestamp') && picker.data('timezone-offset')) {
-                var timezoneOffset = picker.data('timezone-offset');
-                date = new Date(picker.data('timestamp') * 1000);
+    select2: function (selector) {
+        $(selector).each(function () {
+            var $this = $(this),
+                config = {theme: 'bootstrap4'};
 
-                picker.parents('form').on('submit', function () {
-                    var timezoneDiff = timezoneOffset + date.getTimezoneOffset();
-                    var currentDate = picker.data('DateTimePicker').date();
-                    var convertedDate = currentDate.add(timezoneDiff, 'minutes');
-                    picker.data('DateTimePicker').date(convertedDate);
-                });
+            if (!$this.prop('multiple') && $this.find('option:first').val() === '') {
+                config.allowClear = true;
+                config.placeholder = '';
             }
 
-            picker.datetimepicker({
-                locale: $(this).data('locale'),
-                format: $(this).data('format'),
-                date: date ? date : picker.val()
-            });
+            $(this).select2(config);
         });
     },
 
-    selectize: function (selector) {
-        $(selector).selectize({plugins: ['remove_button']});
-    },
-
     autocomplete: function (selector) {
-        $(selector).each(function (i, e) {
-            e = $(e);
-            e.selectize({
-                maxItems: e.data('max-items') || 1,
-                maxOptions: e.data('max-options') || 10,
-                hideSelected: e.data('hide-selected'),
-                closeAfterSelect: e.data('close-after-select'),
-                create: !e.data('exact-match'),
-                persist: false,
-                render: {
-                    'option_create': function(data, escape) {
-                        return '<div class="create">🔍 <strong> ' + escape(data.input) + '</strong>&hellip;</div>';
-                    }
-                },
-                load: function (query, callback) {
-                    var data = {};
+        $(selector).each(function (i, ele) {
+            var $ele = $(ele);
 
-                    data[e.data('filter-field') || e.attr('name')] = query;
+            $ele.select2({
+                theme: 'bootstrap4',
+                minimumInputLength: 1,
+                ajax: {
+                    delay: 250,
+                    url: $ele.data('url'),
+                    dataType: 'json',
+                    data: function (params) {
+                        var query = {};
+                        query[$ele.data('filter-field') || $ele.attr('name')] = params.term;
 
-                    if (e.data('dependent-on') && $('#' + e.data('dependent-on')).val()) {
-                        data[e.data('dependent-on-field')] = $('#' + e.data('dependent-on')).val();
-                    }
-                    $.ajax({
-                        url: e.data('url'),
-                        dataType: 'json',
-                        data: data,
-                        error: function() {
-                            callback();
-                        },
-                        success: function(res) {
-                            callback($.map(res.data, function (name, id) {
-                                return {value: id, text: name};
-                            }));
+                        if ($ele.data('dependent-on') && $('#' + $ele.data('dependent-on')).val()) {
+                            data[$ele.data('dependent-on-field')] = $('#' + $ele.data('dependent-on')).val();
                         }
-                    });
+
+                        return query;
+                    },
+                    processResults: function (data, params) {
+                        var results = [],
+                            inputType = $ele.data('inputType'),
+                            term = params.term.toLowerCase();
+
+                        if (data.data) {
+                            $.each(data.data, function(id, text) {
+                                if (text.toLowerCase().indexOf(term) > -1) {
+                                    results.push({
+                                        id: inputType === 'text' ? text : id,
+                                        text: text
+                                    });
+                                }
+                            });
+                        }
+
+                        return {
+                            results: results
+                        };
+                    }
                 }
             });
         });
@@ -100,16 +94,21 @@ var CrudView = {
         })
     },
 
-    initialize: function() {
+    tooltip: function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    },
+
+    initialize: function () {
         this.bulkActionForm('.bulk-actions');
-        this.datePicker('[role=datetime-picker]');
-        this.selectize('select:not(.autocomplete, .no-selectize)');
+        this.flatpickr('.flatpickr');
+        this.select2('select[multiple]:not(.no-select2), select.select2');
         this.autocomplete('input.autocomplete, select.autocomplete');
         this.dirtyForms();
         this.dropdown();
+        this.tooltip();
     }
 };
 
-$(function() {
+$(function () {
     CrudView.initialize();
 });

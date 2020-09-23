@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 use Cake\Core\Plugin;
 
 // The function `parse_ini_file` may be disabled
@@ -28,10 +31,10 @@ return [
             'headjs' => $assets['crudview_head.js']['files'],
             'script' => $assets['crudview.js']['files'],
         ],
-        'timezoneAwareDateTimeWidget' => false,
+        'datetimePicker' => false,
         'useAssetCompress' => Plugin::isLoaded('AssetCompress'),
         'tablesBlacklist' => [
             'phinxlog',
         ],
-    ]
+    ],
 ];

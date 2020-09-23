@@ -14,7 +14,7 @@ You can specify the exact tables to show in the sidebar via the
 .. code-block:: php
 
     // only show the posts table
-    $this->Crud->action()->config('scaffold.tables', ['posts']);
+    $this->Crud->action()->setConfig('scaffold.tables', ['posts']);
 
 
 Blacklisting tables
@@ -27,7 +27,7 @@ the ``scaffold.tables_blacklist`` configuration key to specify tables to
 .. code-block:: php
 
     // do not show the ``phinxlog`` and ``users`` tables
-    $this->Crud->action()->config('scaffold.tables_blacklist', [
+    $this->Crud->action()->setConfig('scaffold.tables_blacklist', [
         'phinxlog',
         'users',
     ]);
@@ -47,7 +47,7 @@ The sidebar navigation can also be completely disabled by setting the value to `
 
 .. code-block:: php
 
-    $this->Crud->action()->config('scaffold.sidebar_navigation', false);
+    $this->Crud->action()->setConfig('scaffold.sidebar_navigation', false);
 
 Custom Menus
 ------------
@@ -60,7 +60,7 @@ provide your own menu to be rendered in its place:
     use CrudView\Menu\MenuDivider;
     use CrudView\Menu\MenuItem;
 
-    $this->Crud->action()->config('scaffold.sidebar_navigation', [
+    $this->Crud->action()->setConfig('scaffold.sidebar_navigation', [
         new MenuItem('Section Header'),
         new MenuItem(
             'CrudView Docs',

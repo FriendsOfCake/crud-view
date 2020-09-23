@@ -1,9 +1,10 @@
 <?php
+declare(strict_types=1);
+
 namespace CrudView\View;
 
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
-use Cake\Event\Event;
 use Cake\Event\EventListenerInterface;
 use Cake\View\Exception\MissingTemplateException;
 use Cake\View\View;
@@ -23,7 +24,7 @@ class CrudView extends View implements EventListenerInterface
      *
      * @var string
      */
-    public $layout = 'CrudView.default';
+    protected $layout = 'CrudView.default';
 
     /**
      * Initialization hook method.
@@ -35,7 +36,7 @@ class CrudView extends View implements EventListenerInterface
      *
      * @return void
      */
-    public function initialize()
+    public function initialize(): void
     {
         parent::initialize();
 
@@ -50,7 +51,7 @@ class CrudView extends View implements EventListenerInterface
      *
      * @return array
      */
-    public function implementedEvents()
+    public function implementedEvents(): array
     {
         return [
             'View.beforeLayout' => 'beforeLayout',
@@ -74,7 +75,7 @@ class CrudView extends View implements EventListenerInterface
      *
      * @return void
      */
-    protected function _loadAssets()
+    protected function _loadAssets(): void
     {
         if (Configure::read('CrudView.useAssetCompress')) {
             $this->AssetCompress->css('CrudView.crudview', ['block' => true]);
@@ -105,24 +106,21 @@ class CrudView extends View implements EventListenerInterface
      *
      * @return void
      */
-    protected function _setupHelpers()
+    protected function _setupHelpers(): void
     {
         $helpers = [
             'Html' => ['className' => 'BootstrapUI.Html'],
             'Form' => [
                 'className' => 'BootstrapUI.Form',
                 'widgets' => [
-                    'datetime' => ['CrudView\View\Widget\DateTimeWidget', 'select']
+                    'datetime' => ['CrudView\View\Widget\DateTimeWidget', 'select'],
                 ],
             ],
             'Flash' => ['className' => 'BootstrapUI.Flash'],
             'Paginator' => ['className' => 'BootstrapUI.Paginator'],
+            'Breadcrumbs' => ['className' => 'BootstrapUI.Breadcrumbs'],
             'CrudView' => ['className' => 'CrudView.CrudView'],
         ];
-
-        if (class_exists('\Cake\View\Helper\BreadcrumbsHelper')) {
-            $helpers['Breadcrumbs'] = ['className' => 'BootstrapUI.Breadcrumbs'];
-        }
 
         if (Configure::read('CrudView.useAssetCompress')) {
             $helpers['AssetCompress'] = ['className' => 'AssetCompress.AssetCompress'];
@@ -136,7 +134,7 @@ class CrudView extends View implements EventListenerInterface
      *
      * @return void
      */
-    protected function _setupPaths()
+    protected function _setupPaths(): void
     {
         $paths = Configure::read('App.paths.templates');
 
@@ -144,7 +142,7 @@ class CrudView extends View implements EventListenerInterface
         if (!empty($extraPaths)) {
             $paths = array_merge($paths, (array)$extraPaths);
         }
-        $paths[] = Plugin::classPath('CrudView') . 'Template' . DS;
+        $paths[] = Plugin::templatePath('CrudView');
 
         Configure::write('App.paths.templates', $paths);
     }
@@ -158,7 +156,7 @@ class CrudView extends View implements EventListenerInterface
      * @return string default The block content or $default if the block does not exist.
      * @see ViewBlock::get()
      */
-    public function fetch($name, $default = '')
+    public function fetch(string $name, string $default = ''): string
     {
         $viewblock = '';
         $viewblocks = $this->get('viewblocks', []);
@@ -175,10 +173,9 @@ class CrudView extends View implements EventListenerInterface
      * Check if a block exists
      *
      * @param string $name Name of the block
-     *
      * @return bool
      */
-    public function exists($name)
+    public function exists(string $name): bool
     {
         $viewblocks = $this->get('viewblocks', []);
 
@@ -189,19 +186,18 @@ class CrudView extends View implements EventListenerInterface
      * Constructs a ViewBlock from an array of configured data
      *
      * @param array $data ViewBlock data
-     *
      * @return string
      */
-    protected function _createViewblock($data)
+    protected function _createViewblock(array $data): string
     {
         $output = '';
         foreach ($data as $key => $type) {
             if ($type === 'element') {
                 $output = $this->element($key);
             } elseif ($type === 'Html::css') {
-                $output .= $this->Html->css($key);
+                $output .= (string)$this->Html->css($key);
             } elseif ($type === 'Html::script') {
-                $output .= $this->Html->script($key);
+                $output .= (string)$this->Html->script($key);
             } else {
                 $output .= $key;
             }
@@ -211,27 +207,27 @@ class CrudView extends View implements EventListenerInterface
     }
 
     /**
-     * Returns filename of given action's template file (.ctp) as a string.
+     * Returns filename of given action's template file as a string.
      *
      * @param string|null $name Controller action to find template filename for.
      * @return string Template filename
      * @throws \Cake\View\Exception\MissingTemplateException When a view file could not be found.
      */
-    protected function _getViewFileName($name = null)
+    protected function _getTemplateFileName(?string $name = null): string
     {
         if ($this->templatePath === 'Error') {
-            return parent::_getViewFileName($name);
+            return parent::_getTemplateFileName($name);
         }
         try {
-            return parent::_getViewFileName($name);
+            return parent::_getTemplateFileName($name);
         } catch (MissingTemplateException $exception) {
-            $this->subDir = null;
-            $this->templatePath = 'Scaffold';
+            $this->subDir = '';
+            $this->templatePath = 'scaffold';
         }
         try {
-            return parent::_getViewFileName($this->template);
+            return parent::_getTemplateFileName($this->template);
         } catch (MissingTemplateException $exception) {
-            return parent::_getViewFileName($name);
+            return parent::_getTemplateFileName($name);
         }
     }
 }

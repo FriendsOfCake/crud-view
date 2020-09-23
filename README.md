@@ -9,8 +9,6 @@ Automated admin backend based on your [Crud](https://github.com/friendsofcake/cr
 
 # Installation
 
-For CakePHP 3.x:
-
 ```shell
 composer require friendsofcake/crud-view
 ```

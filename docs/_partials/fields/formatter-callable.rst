@@ -21,7 +21,7 @@ wanted to also display who approved the article:
 .. code-block:: php
 
     $action = $this->Crud->action();
-    $action->config('scaffold.fields', [
+    $action->setConfig('scaffold.fields', [
         'title',
         'published_time' => [
             'formatter' => function ($name, $value, $entity) {
@@ -37,7 +37,7 @@ only configure the settings for one or two.
 .. code-block:: php
 
     $action = $this->Crud->action();
-    $action->config('scaffold.field_settings', [
+    $action->setConfig('scaffold.field_settings', [
         'published_time' => [
             'formatter' => function ($name, Time $value, Entity $entity) {
                 return $value->nice() . sprintf(' (Approved by %s)', $entity->approver->name);
@@ -50,7 +50,7 @@ In some cases, it may be useful to access a helper within the callable. For inst
 .. code-block:: php
 
     $action = $this->Crud->action();
-    $action->config('scaffold.fields', [
+    $action->setConfig('scaffold.fields', [
         'title',
         'external_id' => [
             'formatter' => function ($name, $value, $entity, $options, $View) {

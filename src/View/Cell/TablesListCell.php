@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace CrudView\View\Cell;
 
 use Cake\Datasource\ConnectionManager;
@@ -7,15 +9,14 @@ use Cake\View\Cell;
 
 class TablesListCell extends Cell
 {
-
     /**
      * Default cell method.
      *
      * @param array $tables Tables list.
      * @param array $blacklist Blacklisted tables list.
-     * @return array
+     * @return $this
      */
-    public function display($tables = null, $blacklist = null)
+    public function display(?array $tables = null, ?array $blacklist = null)
     {
         if (empty($tables)) {
             $connection = ConnectionManager::get('default');
@@ -41,7 +42,7 @@ class TablesListCell extends Cell
             $config += [
                 'action' => 'index',
                 'title' => Inflector::humanize($table),
-                'controller' => Inflector::camelize($table)
+                'controller' => Inflector::camelize($table),
             ];
 
             $normal[$table] = $config;

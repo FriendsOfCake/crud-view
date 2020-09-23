@@ -1,37 +1,28 @@
 /******************************************************************************
- * Use cloudflare's glyphicons
- *****************************************************************************/
-@font-face {
-    font-family: 'Glyphicons Halflings';
-
-    src: url('https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/fonts/glyphicons-halflings-regular.eot');
-    src: url('https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'),
-         url('https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/fonts/glyphicons-halflings-regular.woff2') format('woff2'),
-         url('https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/fonts/glyphicons-halflings-regular.woff') format('woff'),
-         url('https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/fonts/glyphicons-halflings-regular.ttf') format('truetype'),
-         url('https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
-}
-
-
-/******************************************************************************
  * Generic form hacks
  *****************************************************************************/
+
 .bulk-action {
     width: 32px;
 }
+
 .bulk-action .checkbox {
     margin-bottom: 0;
 }
+
 .bulk-action-submit {
     width: 50%;
 }
+
 .bulk-action-submit label {
     width: auto;
 }
+
 .bulk-action-submit select {
     display: inline-block;
     width: 50%;
 }
+
 .bulk-action-submit input {
     width: auto;
 }
@@ -48,68 +39,68 @@ div.input {
     margin-bottom: 10px
 }
 
-.btn {
-    margin-left: 5px
-}
 h2 .actions {
     margin-left: 15px;
 }
 
+.search-filters .form-inline .form-group label,
+.search-filters .form-inline .btn {
+    margin-right: .25rem !important;
+}
+
 .search-filters .form-inline .form-group {
-    padding-left:10px;
+    margin-right: .5rem !important;
 }
 
-.search-filters .form-inline .form-group label {
-    padding-right:10px;
+.search-filters .form-inline .form-group {
+    margin-bottom: 1rem !important;
 }
 
-.search-filters .form-inline .form-control {
-    min-width:90px !important;
+.search-filters .form-inline .form-control input {
+    min-width: 90px !important;
 }
 
-.search-filters .form-inline .form-control input, .search-filters .form-inline .form-control select {
-    min-width:90px !important;
-}
-
-.selectize-input.items.full {
-    padding-right:33px;
-}
-
-div.actions-wrapper {
-    margin: 10px 0;
+.search-filters .form-inline select.autocomplete {
+    min-width: 150px;
 }
 
 .text-truncate {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
+
 .gallery-content {
     text-align: center;
 }
+
 .pagination-wrapper {
     clear: both;
     margin: 20px 0;
     text-align: center;
 }
+
 .download-links {
     float: left;
 }
+
 .pagination-container {
     float: right
 }
+
 .pagination-container .pagination {
     margin: 0;
 }
+
 table tr td.actions {
     white-space: nowrap;
     width: 1px;
 }
 
 .nav > li > .nav-header {
-  border-radius: 4px;
-  display: block;
-  font-weight: bold;
-  padding: 10px 15px;
-  position: relative;
+    border-radius: 4px;
+    display: block;
+    font-weight: bold;
+    padding: 10px 15px;
+    position: relative;
 }

@@ -1,14 +1,15 @@
 <?php
+declare(strict_types=1);
+
 namespace CrudView\Listener;
 
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Cake\Routing\Router;
-use Cake\Utility\Inflector;
+use Cake\Utility\Hash;
 use Crud\Listener\BaseListener;
 
 class ViewSearchListener extends BaseListener
 {
-
     /**
      * Default configuration
      *
@@ -16,7 +17,7 @@ class ViewSearchListener extends BaseListener
      *
      * - `enabled`: Indicates whether is listener is enabled.
      * - `autocomplete`: Whether to use auto complete for select fields. Default `true`.
-     * - `selectize`: Whether to use selectize for select fields. Default `true`.
+     * - `select2`: Whether to use select2 for select fields. Default `true`.
      * - `collection`: The search behavior collection to use. Default "default".
      * - `fields`: Config for generating filter controls. If `null` the
      *   filter controls will be derived based on filter collection. You can use
@@ -27,9 +28,9 @@ class ViewSearchListener extends BaseListener
     protected $_defaultConfig = [
         'enabled' => null,
         'autocomplete' => true,
-        'selectize' => true,
+        'select2' => true,
         'collection' => 'default',
-        'fields' => null
+        'fields' => null,
     ];
 
     /**
@@ -37,10 +38,10 @@ class ViewSearchListener extends BaseListener
      *
      * @return array
      */
-    public function implementedEvents()
+    public function implementedEvents(): array
     {
         return [
-            'Crud.afterPaginate' => ['callable' => 'afterPaginate']
+            'Crud.afterPaginate' => ['callable' => 'afterPaginate'],
         ];
     }
 
@@ -50,12 +51,11 @@ class ViewSearchListener extends BaseListener
      * Only after a crud paginate call does this listener do anything. So listen
      * for that
      *
-     * @param \Cake\Event\Event $event Event.
+     * @param \Cake\Event\EventInterface $event Event.
      * @return void
      */
-    public function afterPaginate(Event $event)
+    public function afterPaginate(EventInterface $event): void
     {
-        $event;
         if (!$this->_table()->behaviors()->has('Search')) {
             return;
         }
@@ -66,7 +66,10 @@ class ViewSearchListener extends BaseListener
         }
 
         $fields = $this->fields();
-        $this->_controller()->set('searchInputs', $fields);
+
+        $this->_controller()->viewBuilder()
+            ->setVar('searchInputs', $fields)
+            ->setHelpers(['Search.Search']);
     }
 
     /**
@@ -74,50 +77,40 @@ class ViewSearchListener extends BaseListener
      *
      * @return array
      */
-    public function fields()
+    public function fields(): array
     {
-        return $this->getConfig('fields') ?: $this->_deriveFields();
-    }
-
-    /**
-     * Derive field options for search filter inputs based on filter collection.
-     *
-     * @return array
-     */
-    protected function _deriveFields()
-    {
+        $fields = $this->getConfig('fields') ?: [];
         $config = $this->getConfig();
-        $table = $this->_table();
 
-        if (method_exists($table, 'searchConfiguration')) {
-            $searchManager = $table->searchConfiguration();
-        } else {
-            $searchManager = $table->searchManager();
-        }
-
-        $fields = [];
-        $schema = $table->getSchema();
+        $schema = $this->_table()->getSchema();
         $request = $this->_request();
 
-        foreach ($searchManager->getFilters($config['collection']) as $filter) {
-            if ($filter->getConfig('form') === false) {
-                continue;
-            }
+        if ($fields) {
+            $fields = Hash::normalize($fields);
+        } else {
+            $filters = $this->_table()->searchManager()->getFilters($config['collection']);
 
-            $field = $filter->name();
+            foreach ($filters as $filter) {
+                $opts = $filter->getConfig('form');
+                if ($opts === false) {
+                    continue;
+                }
+
+                $fields[$filter->name()] = $opts ?: [];
+            }
+        }
+
+        foreach ($fields as $field => $opts) {
             $input = [
                 'required' => false,
-                'type' => 'text'
+                'type' => 'text',
             ];
 
             if (substr($field, -3) === '_id' && $field !== '_id') {
                 $input['type'] = 'select';
             }
 
-            $filterFormConfig = $filter->getConfig('form');
-            if (!empty($filterFormConfig)) {
-                $input = $filterFormConfig + $input;
-            }
+            $input = (array)$opts + $input;
 
             $input['value'] = $request->getQuery($field);
 
@@ -128,8 +121,8 @@ class ViewSearchListener extends BaseListener
 
             if (!empty($input['options'])) {
                 $input['empty'] = true;
-                if (empty($input['class']) && !$config['selectize']) {
-                    $input['class'] = 'no-selectize';
+                if (empty($input['class']) && !$config['select2']) {
+                    $input['class'] = 'no-select2';
                 }
 
                 $fields[$field] = $input;
@@ -141,9 +134,28 @@ class ViewSearchListener extends BaseListener
                 $input['class'] = 'autocomplete';
             }
 
+            if (
+                !empty($input['class'])
+                && strpos($input['class'], 'autocomplete') !== false
+                && $input['type'] !== 'select'
+            ) {
+                $input['type'] = 'select';
+
+                if (!empty($input['value'])) {
+                    $input['options'][$input['value']] = $input['value'];
+                }
+
+                $input += [
+                    'data-input-type' => 'text',
+                    'data-tags' => 'true',
+                    'data-allow-clear' => 'true',
+                    'data-placeholder' => '',
+                ];
+            }
+
             $urlArgs = [];
 
-            $fieldKeys = isset($input['fields']) ? $input['fields'] : ['id' => $field, 'value' => $field];
+            $fieldKeys = $input['fields'] ?? ['id' => $field, 'value' => $field];
             if (is_array($fieldKeys)) {
                 foreach ($fieldKeys as $key => $val) {
                     $urlArgs[$key] = $val;
@@ -151,7 +163,7 @@ class ViewSearchListener extends BaseListener
             }
 
             unset($input['fields']);
-            $url = array_merge(['action' => 'lookup', '_ext' => 'json'], $urlArgs);
+            $url = array_merge(['action' => 'lookup', '_ext' => 'json'], ['?' => $urlArgs]);
             $input['data-url'] = Router::url($url);
 
             $fields[$field] = $input;

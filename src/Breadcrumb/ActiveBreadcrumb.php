@@ -1,12 +1,15 @@
 <?php
-namespace CrudView\Breadcrumb;
+declare(strict_types=1);
 
-use CrudView\Breadcrumb\Breadcrumb;
+namespace CrudView\Breadcrumb;
 
 class ActiveBreadcrumb extends Breadcrumb
 {
+    // phpcs:ignore
     /**
-     * {@inheritDoc}
+     * // phpcs:ignore
+     * @inheritDoc
+     * @psalm-suppress MissingParamType
      */
     public function __construct($title, $url = null, array $options = [])
     {

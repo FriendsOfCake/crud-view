@@ -8,7 +8,7 @@ to specify settings for a few of the fields, you can use the
 .. code-block:: php
 
     $action = $this->Crud->action();
-    $action->config('scaffold.field_settings', [
+    $action->setConfig('scaffold.field_settings', [
         'title' => [
             // options here
         ]

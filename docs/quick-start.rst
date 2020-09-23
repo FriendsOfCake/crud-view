@@ -19,13 +19,15 @@ If you haven't configured the CRUD plugin already, add the following lines to yo
 .. code-block:: php
 
     <?php
+    declare(strict_types=1);
+
     namespace App\Controller;
 
     class AppController extends \Cake\Controller\Controller
     {
         use \Crud\Controller\ControllerTrait;
 
-        public function initialize()
+        public function initialize(): void
         {
             parent::initialize();
 
@@ -60,24 +62,11 @@ If you haven't configured the CRUD plugin already, add the following lines to yo
          * @param \Cake\Event\Event $event The beforeRender event.
          * @return void
          */
-        public function beforeRender(\Cake\Event\Event $event)
+        public function beforeRender(\Cake\Event\EventInterface $event)
         {
-            // For CakePHP 3.4+
             if ($this->viewBuilder()->getClassName() === null) {
                 $this->viewBuilder()->setClassName('CrudView\View\CrudView');
-            }            
-            
-            // For CakePHP 3.1+
-            if ($this->viewBuilder()->className() === null) {
-                $this->viewBuilder()->className('CrudView\View\CrudView');
             }
-
-            // For CakePHP 3.0
-            /*
-            if ($this->viewClass === null) {
-                $this->viewClass = 'CrudView\View\CrudView';
-            }
-            */
         }
     }
 

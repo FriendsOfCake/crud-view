@@ -1,9 +1,9 @@
 <?php
+declare(strict_types=1);
+
 namespace CrudView\Dashboard\Module;
 
 use Cake\Collection\Collection;
-use Cake\Utility\Hash;
-use InvalidArgumentException;
 
 class ActionLinkItem extends LinkItem
 {
@@ -39,7 +39,7 @@ class ActionLinkItem extends LinkItem
     protected function _setActions($actions)
     {
         return (new Collection($actions))->map(function ($value) {
-            $options = (array)$value->get('options') + ['class' => ['btn btn-default']];
+            $options = (array)$value->get('options') + ['class' => ['btn btn-secondary']];
             $value->set('options', $options);
 
             return $value;

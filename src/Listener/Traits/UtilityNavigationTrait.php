@@ -1,6 +1,10 @@
 <?php
+declare(strict_types=1);
+
 namespace CrudView\Listener\Traits;
 
+use Cake\Controller\Controller;
+use Crud\Action\BaseAction;
 use CrudView\Menu\MenuItem;
 
 trait UtilityNavigationTrait
@@ -10,7 +14,7 @@ trait UtilityNavigationTrait
      *
      * @return void
      */
-    public function beforeRenderUtilityNavigation()
+    public function beforeRenderUtilityNavigation(): void
     {
         $controller = $this->_controller();
         $controller->set('utilityNavigation', $this->_getUtilityNavigation());
@@ -21,7 +25,7 @@ trait UtilityNavigationTrait
      *
      * @return array
      */
-    protected function _getUtilityNavigation()
+    protected function _getUtilityNavigation(): array
     {
         $action = $this->_action();
 
@@ -37,12 +41,12 @@ trait UtilityNavigationTrait
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
-    abstract protected function _controller();
+    abstract protected function _controller(): Controller;
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
-    abstract protected function _action($name = null);
+    abstract protected function _action(?string $name = null): BaseAction;
 }

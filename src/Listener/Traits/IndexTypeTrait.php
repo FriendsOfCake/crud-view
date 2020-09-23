@@ -1,6 +1,10 @@
 <?php
+declare(strict_types=1);
+
 namespace CrudView\Listener\Traits;
 
+use Cake\Controller\Controller;
+use Crud\Action\BaseAction;
 use Crud\Action\IndexAction;
 
 trait IndexTypeTrait
@@ -10,7 +14,7 @@ trait IndexTypeTrait
      *
      * @return void
      */
-    public function beforeRenderIndexType()
+    public function beforeRenderIndexType(): void
     {
         if (!($this->_action() instanceof IndexAction)) {
             return;
@@ -30,9 +34,9 @@ trait IndexTypeTrait
      * Returns a list of finder scopes, where the key is the title
      * and the value is the finder to link to
      *
-     * @return string
+     * @return array
      */
-    protected function _getIndexFinderScopes()
+    protected function _getIndexFinderScopes(): array
     {
         $action = $this->_action();
 
@@ -43,9 +47,9 @@ trait IndexTypeTrait
      * Returns a list of index formats, where the key is the link title
      * and the value is the url to route to
      *
-     * @return string
+     * @return array
      */
-    protected function _getIndexFormats()
+    protected function _getIndexFormats(): array
     {
         $action = $this->_action();
 
@@ -57,7 +61,7 @@ trait IndexTypeTrait
      *
      * @return string
      */
-    protected function _getIndexType()
+    protected function _getIndexType(): string
     {
         $action = $this->_action();
 
@@ -74,7 +78,7 @@ trait IndexTypeTrait
      *
      * @return string
      */
-    protected function _getIndexTitleField()
+    protected function _getIndexTitleField(): string
     {
         $action = $this->_action();
 
@@ -91,7 +95,7 @@ trait IndexTypeTrait
      *
      * @return string
      */
-    protected function _getIndexBodyField()
+    protected function _getIndexBodyField(): string
     {
         $action = $this->_action();
 
@@ -108,7 +112,7 @@ trait IndexTypeTrait
      *
      * @return string
      */
-    protected function _getIndexImageField()
+    protected function _getIndexImageField(): string
     {
         $action = $this->_action();
 
@@ -125,7 +129,7 @@ trait IndexTypeTrait
      *
      * @return string
      */
-    protected function _getIndexGalleryCssClasses()
+    protected function _getIndexGalleryCssClasses(): string
     {
         $action = $this->_action();
 
@@ -138,17 +142,17 @@ trait IndexTypeTrait
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
-    abstract protected function _controller();
+    abstract protected function _controller(): Controller;
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
-    abstract protected function _action($name = null);
+    abstract protected function _action(?string $name = null): BaseAction;
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     abstract protected function _table();
 }

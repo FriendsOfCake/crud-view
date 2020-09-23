@@ -6,7 +6,7 @@ Render your index page as a gallery.
 .. code-block:: php
 
     $action = $this->Crud->action();
-    $action->config('scaffold.index_type', 'gallery');
+    $action->setConfig('scaffold.index_type', 'gallery');
 
 Customizing the Gallery fields
 ------------------------------
@@ -26,10 +26,10 @@ The gallery index type has several options:
 .. code-block:: php
 
     $action = $this->Crud->action();
-    $action->config('scaffold.index_title_field', 'name');
-    $action->config('scaffold.index_image_field', 'image');
-    $action->config('scaffold.index_body_field', 'content');
-    $action->config('scaffold.index_gallery_css_classes', 'col-sm-4 col-md-2');
+    $action->setConfig('scaffold.index_title_field', 'name');
+    $action->setConfig('scaffold.index_image_field', 'image');
+    $action->setConfig('scaffold.index_body_field', 'content');
+    $action->setConfig('scaffold.index_gallery_css_classes', 'col-sm-4 col-md-2');
 
 Customizing Gallery Field Output
 --------------------------------
@@ -40,7 +40,7 @@ configuration key for formatting each field:
 .. code-block:: php
 
     $action = $this->Crud->action();
-    $action->config('scaffold.fields', [
+    $action->setConfig('scaffold.fields', [
         'image' => [
             'width' => '240',
             'height' => '240'

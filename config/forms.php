@@ -1,5 +1,5 @@
 <?php
-$config = [
+return [
     'fieldset' => '{{content}}',
 
     'formGroup' => '{{label}}<div class="col-sm-10">{{input}}{{error}}</div>',

@@ -10,7 +10,7 @@ You can change the submit button text from it's default using the
 .. code-block:: php
 
     $action = $this->Crud->action();
-    $action->config('scaffold.form_submit_button_text', _('Submit'));
+    $action->setConfig('scaffold.form_submit_button_text', _('Submit'));
 
 Modifying the Default Extra Buttons
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -27,7 +27,7 @@ to true:
 .. code-block:: php
 
     $action = $this->Crud->action();
-    $action->config('scaffold.form_submit_extra_buttons', true);
+    $action->setConfig('scaffold.form_submit_extra_buttons', true);
 
 You can also customize this by using the ``scaffold.form_submit_extra_buttons``
 configuration key as follows:
@@ -35,7 +35,7 @@ configuration key as follows:
 .. code-block:: php
 
     $action = $this->Crud->action();
-    $action->config('scaffold.form_submit_extra_buttons', [
+    $action->setConfig('scaffold.form_submit_extra_buttons', [
         [
             'title' => __d('crud', 'Save & continue editing'),
             'options' => ['class' => 'btn btn-success btn-save-continue', 'name' => '_edit', 'value' => true],
@@ -73,7 +73,7 @@ to true:
 .. code-block:: php
 
     $action = $this->Crud->action();
-    $action->config('scaffold.form_submit_extra_left_buttons', true);
+    $action->setConfig('scaffold.form_submit_extra_left_buttons', true);
 
 You can also customize this by using the ``scaffold.form_submit_extra_left_buttons``
 configuration key as follows:
@@ -81,7 +81,7 @@ configuration key as follows:
 .. code-block:: php
 
     $action = $this->Crud->action();
-    $action->config('scaffold.form_submit_extra_left_buttons', [
+    $action->setConfig('scaffold.form_submit_extra_left_buttons', [
         [
             'title' => __d('crud', 'Save & continue editing'),
             'options' => ['class' => 'btn btn-success btn-save-continue', 'name' => '_edit', 'value' => true],
@@ -98,7 +98,7 @@ completely:
 .. code-block:: php
 
     $action = $this->Crud->action();
-    $action->config('scaffold.form_submit_extra_buttons', false);
+    $action->setConfig('scaffold.form_submit_extra_buttons', false);
 
 Disabling the Default Extra Left Buttons
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -108,4 +108,4 @@ Disabling the default left extra buttons can also be done in a similar fashion:
 .. code-block:: php
 
     $action = $this->Crud->action();
-    $action->config('scaffold.form_submit_extra_left_buttons', false);
+    $action->setConfig('scaffold.form_submit_extra_left_buttons', false);

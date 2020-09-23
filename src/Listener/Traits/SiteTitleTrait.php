@@ -1,7 +1,11 @@
 <?php
+declare(strict_types=1);
+
 namespace CrudView\Listener\Traits;
 
+use Cake\Controller\Controller;
 use Cake\Core\Configure;
+use Crud\Action\BaseAction;
 
 trait SiteTitleTrait
 {
@@ -10,7 +14,7 @@ trait SiteTitleTrait
      *
      * @return void
      */
-    public function beforeRenderSiteTitle()
+    public function beforeRenderSiteTitle(): void
     {
         $controller = $this->_controller();
 
@@ -24,7 +28,7 @@ trait SiteTitleTrait
      *
      * @return string
      */
-    protected function _getSiteTitle()
+    protected function _getSiteTitle(): string
     {
         $action = $this->_action();
 
@@ -41,7 +45,7 @@ trait SiteTitleTrait
      *
      * @return string
      */
-    protected function _getSiteTitleLink()
+    protected function _getSiteTitleLink(): string
     {
         $action = $this->_action();
 
@@ -58,7 +62,7 @@ trait SiteTitleTrait
      *
      * @return string
      */
-    protected function _getSiteTitleImage()
+    protected function _getSiteTitleImage(): string
     {
         $action = $this->_action();
 
@@ -71,12 +75,12 @@ trait SiteTitleTrait
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
-    abstract protected function _controller();
+    abstract protected function _controller(): Controller;
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
-    abstract protected function _action($name = null);
+    abstract protected function _action(?string $name = null): BaseAction;
 }

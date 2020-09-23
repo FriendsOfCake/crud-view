@@ -1,8 +1,9 @@
 <?php
+declare(strict_types=1);
+
 namespace CrudView\Dashboard\Module;
 
 use Cake\Datasource\EntityTrait;
-use Cake\Utility\Hash;
 use InvalidArgumentException;
 
 class LinkItem
@@ -40,7 +41,7 @@ class LinkItem
      *   external URL (starts with http://)
      * @param array $options Array of options and HTML attributes.
      */
-    public function __construct($title, $url, $options = [])
+    public function __construct($title, $url, array $options = [])
     {
         $this->set('title', $title);
         $this->set('url', $url);
@@ -51,7 +52,7 @@ class LinkItem
      * title property setter
      *
      * @param string|array|null $title A title for the link
-     * @return string
+     * @return string|array
      */
     protected function _setTitle($title)
     {

@@ -1,7 +1,10 @@
 <?php
+declare(strict_types=1);
+
 namespace CrudView\Test\TestCase\View\Helper;
 
 use Cake\I18n\FrozenTime;
+use Cake\ORM\Entity;
 use Cake\TestSuite\TestCase;
 use Cake\View\View;
 use CrudView\View\Helper\CrudViewHelper;
@@ -30,7 +33,7 @@ class CrudViewHelperTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -45,8 +48,13 @@ class CrudViewHelperTest extends TestCase
     {
         $this->CrudView = $this->getMockBuilder(CrudViewHelper::class)
             ->setConstructorArgs([$this->View])
-            ->setMethods(['columnType'])
+            ->setMethods(['columnType', 'getContext'])
             ->getMock();
+
+        $this->CrudView
+            ->expects($this->any())
+            ->method('getContext')
+            ->will($this->returnValue(new Entity()));
 
         $this->CrudView
             ->expects($this->any())

@@ -1,13 +1,15 @@
 <?php
+declare(strict_types=1);
+
 namespace CrudView\Test\TestCase\View;
 
 use Cake\TestSuite\TestCase;
 use CrudView\View\CrudView;
 
 /**
- * ViewTest class
+ * CrudViewTest class
  */
-class ViewTest extends TestCase
+class CrudViewTest extends TestCase
 {
     public function testCreation()
     {
@@ -19,9 +21,9 @@ class ViewTest extends TestCase
                 'helpers' => [
                     'CrudView' => [
                         'className' => 'CrudView.CrudView',
-                        'fieldFormatters' => ['datetime' => 'formatTime']
-                    ]
-                ]
+                        'fieldFormatters' => ['datetime' => 'formatTime'],
+                    ],
+                ],
             ]
         );
 

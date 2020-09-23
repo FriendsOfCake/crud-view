@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace CrudView\Traits;
 
 use Cake\Core\Configure;
@@ -12,11 +14,11 @@ trait CrudViewConfigTrait
      *
      * @return bool
      */
-    public function ensureConfig()
+    public function ensureConfig(): bool
     {
         $config = Configure::read('CrudView');
         if ($config !== null) {
-            return $config;
+            return true;
         }
 
         return Configure::load('CrudView.defaults');

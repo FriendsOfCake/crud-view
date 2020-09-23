@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace CrudView\Breadcrumb;
 
 class Breadcrumb
@@ -76,7 +78,7 @@ class Breadcrumb
      *
      * @return array
      */
-    public function getOptions()
+    public function getOptions(): array
     {
         return $this->options;
     }

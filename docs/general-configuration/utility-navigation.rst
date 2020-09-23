@@ -12,7 +12,7 @@ The utility navigation can also be completely disabled by setting the value to `
 
 .. code-block:: php
 
-    $this->Crud->action()->config('scaffold.utility_navigation', false);
+    $this->Crud->action()->setConfig('scaffold.utility_navigation', false);
 
 Custom Menus
 ------------
@@ -27,7 +27,7 @@ provide your own menu to be rendered in its place:
     use CrudView\Menu\MenuItem;
 
     $action = $this->Crud->action();
-    $action->config('scaffold.utility_navigation', [
+    $action->setConfig('scaffold.utility_navigation', [
         new MenuItem(
             'CrudView Docs',
             'https://crud-view.readthedocs.io/en/latest/contents.html',

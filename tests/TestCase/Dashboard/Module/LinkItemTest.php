@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace CrudView\Test\TestCase\Dashboard;
 
 use Cake\TestSuite\TestCase;
@@ -23,31 +25,28 @@ class LinkItemTest extends TestCase
         $this->assertEquals($expected, $item->get('options'));
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     * @expectedExceptionMessage Missing title for LinkItem action
-     */
     public function testInvalidTitle()
     {
-        $item = new LinkItem('', null);
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Missing title for LinkItem action');
+
+        new LinkItem('', null);
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     * @expectedExceptionMessage Invalid url specified for LinkItem
-     */
     public function testInvalidNullUrl()
     {
-        $item = new LinkItem('Title', null);
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Invalid url specified for LinkItem');
+
+        new LinkItem('Title', null);
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     * @expectedExceptionMessage Invalid url specified for LinkItem
-     */
     public function testInvalidEmptyUrl()
     {
-        $item = new LinkItem('Title', '');
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Invalid url specified for LinkItem');
+
+        new LinkItem('Title', '');
     }
 
     public function testOptions()
