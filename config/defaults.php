@@ -1,11 +1,14 @@
 <?php
-
 declare(strict_types=1);
 
 use Cake\Core\Plugin;
 
 // The function `parse_ini_file` may be disabled
-$assets = parse_ini_string(file_get_contents(dirname(__FILE__) . '/asset_compress.ini'), true);
+$assets = parse_ini_string(
+    file_get_contents(dirname(__FILE__) . '/asset_compress.ini'),
+    true,
+    INI_SCANNER_RAW
+);
 
 // Fix the CrudView local.css file for use Html::css()
 foreach ($assets['crudview.css']['files'] as $i => $file) {
