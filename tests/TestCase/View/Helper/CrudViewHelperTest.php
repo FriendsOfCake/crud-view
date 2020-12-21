@@ -17,7 +17,7 @@ class CrudViewHelperTest extends TestCase
     /**
      * Helper to be tested
      *
-     * @var \Cake\View\Helper\CrudViewHelper
+     * @var \Crud\View\Helper\CrudViewHelper
      */
     public $CrudView;
 
@@ -70,7 +70,7 @@ class CrudViewHelperTest extends TestCase
             'datetime' => 'formatTime',
         ]);
         $result = $this->CrudView->introspect('created', $value);
-        $this->assertEquals($this->CrudView->Time->nice($value), $result);
+        $this->assertEquals($this->CrudView->Time->format($value, 'KK:mm:ss a'), $result);
 
         $this->CrudView->setConfig('fieldFormatters', [
             'datetime' => function () {

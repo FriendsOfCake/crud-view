@@ -231,7 +231,7 @@ class CrudViewHelper extends Helper
         if ($value === null) {
             return $this->Html->badge(__d('crud', 'N/A'), ['class' => 'info']);
         }
-        $format = $options['format'] ?? null;
+        $format = $options['format'] ?? 'KK:mm:ss a';
 
         /** @psalm-suppress ArgumentTypeCoercion */
         if (
@@ -239,7 +239,7 @@ class CrudViewHelper extends Helper
             || is_string($value)
             || $value instanceof DateTimeInterface
         ) {
-            return $this->Time->nice($value, $format);
+            return (string)$this->Time->format($value, $format);
         }
 
         return $this->Html->badge(__d('crud', 'N/A'), ['class' => 'info']);
