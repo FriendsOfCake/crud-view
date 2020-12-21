@@ -1,0 +1,77 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  testsuite:
+    runs-on: ubuntu-18.04
+    strategy:
+      fail-fast: false
+      matrix:
+        prefer-lowest: ['']
+        php-version: ['7.2', '7.4', '8.0']
+        include:
+          - php-version: '7.2'
+            prefer-lowest: 'prefer-lowest'
+
+    steps:
+    - uses: actions/checkout@v1
+      with:
+        fetch-depth: 1
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ matrix.php-version }}
+        extensions: mbstring, intl, pdo_${{ matrix.db-type }}
+        coverage: pcov
+
+    - name: Composer install
+      run: |
+        if ${{ matrix.prefer-lowest == 'prefer-lowest' }}; then
+          composer update --prefer-lowest --prefer-stable
+        else
+          composer install
+        fi
+
+    - name: Run PHPUnit
+      run: |
+        if [[ ${{ matrix.php-version }} == '7.4' ]]; then
+          vendor/bin/phpunit --coverage-clover=coverage.xml
+        else
+          vendor/bin/phpunit
+        fi
+
+    - name: Code Coverage Report
+      if: matrix.php-version == '7.4'
+      uses: codecov/codecov-action@v1
+
+  cs-stan:
+    name: Coding Standard & Static Analysis
+    runs-on: ubuntu-18.04
+
+    steps:
+    - uses: actions/checkout@v1
+      with:
+        fetch-depth: 1
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '7.4'
+        extensions: mbstring, intl
+        coverage: none
+
+    - name: Composer Install
+      run: composer require --dev cakephp/cakephp-codesniffer:^4.1 psalm/phar:^3.18 phpstan/phpstan:^0.12
+
+    - name: Run phpcs
+      run: vendor/bin/phpcs --report=checkstyle --standard=vendor/cakephp/cakephp-codesniffer/CakePHP src/ tests/
+
+    - name: Run psalm
+      if: success() || failure()
+      run: vendor/bin/psalm.phar --output-format=github
+
+    - name: Run phpstan
+      if: success() || failure()
+      run: vendor/bin/phpstan.phar analyse --error-format=github
