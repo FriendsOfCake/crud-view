@@ -61,12 +61,12 @@ parameters:
 			path: src/View/Widget/DateTimeWidget.php
 
 		-
-			message: "#^Binary operation \"\\+\" between string and array\\(\\?'data\\-enable\\-seconds' \\=\\> 'true', 'data\\-date\\-format' \\=\\> string, \\?'data\\-enable\\-time' \\=\\> 'true', \\?'data\\-alt\\-format' \\=\\> mixed, \\?'data\\-alt\\-input' \\=\\> 'true', \\?'data\\-no\\-calendar' \\=\\> 'true', \\?'data\\-alt\\-input\\-class' \\=\\> string, 'class' \\=\\> array\\('input\\-group', 'flatpickr'\\)\\) results in an error\\.$#"
+			message: "#^Binary operation \"\\+\" between string and array\\('data\\-date\\-format' \\=\\> string, \\?'data\\-alt\\-format' \\=\\> mixed, \\?'data\\-alt\\-input' \\=\\> 'true', \\?'data\\-no\\-calendar' \\=\\> 'true', \\?'data\\-enable\\-seconds' \\=\\> 'true', \\?'data\\-enable\\-time' \\=\\> 'true', 'data\\-wrap' \\=\\> mixed, \\?'data\\-alt\\-input\\-class' \\=\\> string, \\.\\.\\.\\) results in an error\\.$#"
 			count: 1
 			path: src/View/Widget/DateTimeWidget.php
 
 		-
-			message: "#^Binary operation \"\\+\\=\" between array\\<string\\>\\|string and array\\(\\?'data\\-enable\\-seconds' \\=\\> 'true', 'data\\-date\\-format' \\=\\> string, \\?'data\\-enable\\-time' \\=\\> 'true', \\?'data\\-alt\\-format' \\=\\> mixed, \\?'data\\-alt\\-input' \\=\\> 'true', \\?'data\\-no\\-calendar' \\=\\> 'true'\\) results in an error\\.$#"
+			message: "#^Binary operation \"\\+\\=\" between array\\<string\\>\\|string and array\\('data\\-date\\-format' \\=\\> string, \\?'data\\-alt\\-format' \\=\\> mixed, \\?'data\\-alt\\-input' \\=\\> 'true', \\?'data\\-no\\-calendar' \\=\\> 'true', \\?'data\\-enable\\-seconds' \\=\\> 'true', \\?'data\\-enable\\-time' \\=\\> 'true', 'data\\-wrap' \\=\\> mixed\\) results in an error\\.$#"
 			count: 1
 			path: src/View/Widget/DateTimeWidget.php
 
