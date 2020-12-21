@@ -23,7 +23,7 @@ class CrudViewHelper extends Helper
      *
      * @var array
      */
-    public $helpers = ['Form', 'Html', 'Time'];
+    protected $helpers = ['Form', 'Html', 'Time'];
 
     /**
      * Context
