@@ -206,7 +206,6 @@ class CrudViewHelper extends Helper
             return $this->Html->badge(__d('crud', 'N/A'), ['class' => 'info']);
         }
 
-        /** @psalm-suppress ArgumentTypeCoercion */
         if (
             is_int($value)
             || is_string($value)
@@ -228,21 +227,14 @@ class CrudViewHelper extends Helper
      */
     public function formatTime(string $field, $value, array $options): string
     {
-        if ($value === null) {
+        $format = $options['format'] ?? 'KK:mm:ss a';
+        /** @var string $value */
+        $value = $this->Time->format($value, $format, '');
+        if ($value === '') {
             return $this->Html->badge(__d('crud', 'N/A'), ['class' => 'info']);
         }
-        $format = $options['format'] ?? 'KK:mm:ss a';
 
-        /** @psalm-suppress ArgumentTypeCoercion */
-        if (
-            is_int($value)
-            || is_string($value)
-            || $value instanceof DateTimeInterface
-        ) {
-            return (string)$this->Time->format($value, $format);
-        }
-
-        return $this->Html->badge(__d('crud', 'N/A'), ['class' => 'info']);
+        return $value;
     }
 
     /**

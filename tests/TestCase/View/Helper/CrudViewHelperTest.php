@@ -37,9 +37,11 @@ class CrudViewHelperTest extends TestCase
     {
         parent::setUp();
 
-        $this->View = $this->getMockBuilder(View::class)
-            ->onlyMethods([])
-            ->getMock();
+        $this->View = new View(null, null, null, [
+            'helpers' => [
+                'Html' => ['className' => 'BootstrapUI.Html'],
+            ],
+        ]);
 
         static::setAppNamespace();
     }
@@ -71,6 +73,12 @@ class CrudViewHelperTest extends TestCase
         ]);
         $result = $this->CrudView->introspect('created', $value);
         $this->assertEquals($this->CrudView->Time->format($value, 'KK:mm:ss a'), $result);
+
+        $result = $this->CrudView->introspect('created', 'invalid');
+        $this->assertEquals('<span class="badge-info badge">N/A</span>', $result);
+
+        $result = $this->CrudView->introspect('created', null);
+        $this->assertEquals('<span class="badge-info badge">N/A</span>', $result);
 
         $this->CrudView->setConfig('fieldFormatters', [
             'datetime' => function () {
