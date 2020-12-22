@@ -24,7 +24,7 @@ class CrudViewHelperTest extends TestCase
     /**
      * Mocked view
      *
-     * @var \Cake\View\View|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Cake\View\View&\PHPUnit_Framework_MockObject_MockObject
      */
     public $View;
 
@@ -38,7 +38,7 @@ class CrudViewHelperTest extends TestCase
         parent::setUp();
 
         $this->View = $this->getMockBuilder(View::class)
-            ->setMethods()
+            ->onlyMethods([])
             ->getMock();
 
         static::setAppNamespace();
@@ -48,7 +48,7 @@ class CrudViewHelperTest extends TestCase
     {
         $this->CrudView = $this->getMockBuilder(CrudViewHelper::class)
             ->setConstructorArgs([$this->View])
-            ->setMethods(['columnType', 'getContext'])
+            ->onlyMethods(['columnType', 'getContext'])
             ->getMock();
 
         $this->CrudView

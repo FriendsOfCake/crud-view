@@ -36,6 +36,7 @@ class DateTimeWidgetTest extends TestCase
      */
     public function testRenderSimple($compareFileName, $data)
     {
+        /** @var \Cake\View\Form\ContextInterface $context */
         $context = $this->getMockBuilder(ContextInterface::class)->getMock();
         $templates = new StringTemplate([
             'input' => '<input type="{{type}}" name="{{name}}"{{attrs}}/>',
