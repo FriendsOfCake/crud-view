@@ -9,9 +9,9 @@ if ($sidebarNavigation === false) {
 }
 ?>
 
-<div class="collapse navbar-collapse navbar-ex1-collapse navbar-left bs-sidebar">
+<div class="collapse navbar-collapse show navbar-ex1-collapse navbar-left bs-sidebar">
     <nav>
-        <ul class="nav nav-pills nav-stacked">
+        <ul class="nav nav-pills flex-column bg-light">
             <?php if ($sidebarNavigation === null) : ?>
                 <?= $this->cell('CrudView.TablesList', [
                     'tables' => Hash::get($actionConfig, 'scaffold.tables'),

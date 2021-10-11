@@ -1,9 +1,8 @@
 <?php
-foreach ($tables as $table => $config) {
-    ?>
-    <li><?= $this->Html->link($config['title'], [
-        'controller' => $config['controller'],
-        'action' => $config['action'],
-    ]); ?></li>
-    <?php
+
+use CrudView\Menu\MenuItem;
+
+foreach ($tables as $entry) {
+    $menu = new MenuItem($entry['title'], ['controller' => $entry['controller'], 'action' => 'index']);
+    echo $this->element('menu/item', ['item' => $menu, 'itemClass' => 'nav-link']);
 }

@@ -1,5 +1,5 @@
 <div class="table-responsive">
-    <table class="table table-hover table-condensed">
+    <table class="table table-hover table-sm">
     <thead>
         <tr>
             <?= $this->element('index/bulk_actions/table', compact('bulkActions', 'primaryKey', 'singularVar')); ?>

@@ -16,7 +16,7 @@ foreach ($relations as $alias => $details) :
     ?>
     <div class="related">
         <h3><?= __d('crud', 'Related {0}', [Inflector::humanize($details['controller'])]); ?></h3>
-        <div class="actions-wrapper">
+        <div class="actions-wrapper mb-3">
             <?= $this->CrudView->createRelationLink($alias, $details, ['class' => 'btn btn-secondary']);?>
         </div>
         <?php
