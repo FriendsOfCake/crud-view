@@ -49,7 +49,7 @@ class CrudView extends View implements EventListenerInterface
     /**
      * Events this class is interested in.
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function implementedEvents(): array
     {

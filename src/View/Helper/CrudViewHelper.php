@@ -35,7 +35,7 @@ class CrudViewHelper extends Helper
     /**
      * Default config.
      *
-     * @var array
+     * @var array<string, mixed>
      */
     protected $_defaultConfig = [
         'fieldFormatters' => null,

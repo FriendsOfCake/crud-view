@@ -36,7 +36,7 @@ class ViewSearchListener extends BaseListener
     /**
      * Events this listerner is interested in.
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function implementedEvents(): array
     {
