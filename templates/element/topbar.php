@@ -4,7 +4,7 @@ if (empty($utilityNavigation)) {
 }
 ?>
 
-<ul class="nav navbar-nav navbar-right navbar-user">
+<ul class="nav justify-content-end" role="navigation">
     <?php
     foreach ($utilityNavigation as $entry) {
         if ($entry instanceof \CrudView\Menu\MenuItem) {
