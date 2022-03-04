@@ -36,7 +36,7 @@
     "require-dev": {
         "friendsofcake/cakephp-test-utilities": "^2.0",
         "markstory/asset_compress": "^4.0",
-        "phpunit/phpunit": "~8.5.0"
+        "phpunit/phpunit": "~8.5.0 || ^9.3"
     },
     "autoload": {
         "psr-4": {

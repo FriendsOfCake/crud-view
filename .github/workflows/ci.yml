@@ -57,7 +57,7 @@ jobs:
         php-version: '7.4'
         extensions: mbstring, intl
         coverage: none
-        tools: vimeo/psalm:4.15, phpstan:1.2
+        tools: vimeo/psalm:4.22, phpstan:1.4
 
     - name: Composer Install
       run: composer require --dev cakephp/cakephp-codesniffer:^4.1

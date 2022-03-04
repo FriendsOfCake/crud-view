@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 
+use Cake\Core\Configure;
 use Cake\Core\Plugin;
 
 /*
@@ -26,3 +27,7 @@ chdir($root);
 require $root . '/vendor/cakephp/cakephp/tests/bootstrap.php';
 
 Plugin::getCollection()->add(new \CrudView\Plugin());
+
+Configure::write('Error.ignoredDeprecationPaths', [
+    'src/TestSuite/Fixture/FixtureInjector.php',
+]);
