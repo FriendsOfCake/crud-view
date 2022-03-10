@@ -55,7 +55,15 @@ foreach ($relations as $alias => $details) :
                             <td class="actions">
                                 <?= $this->Html->link(__d('crud', 'View'), ['plugin' => $details['plugin'], 'controller' => $details['controller'], 'action' => 'view', ${$otherSingularVar}[$details['primaryKey']]], ['class' => 'btn btn-secondary']); ?>
                                 <?= $this->Html->link(__d('crud', 'Edit'), ['plugin' => $details['plugin'], 'controller' => $details['controller'], 'action' => 'edit', ${$otherSingularVar}[$details['primaryKey']]], ['class' => 'btn btn-secondary']); ?>
-                                <?= $this->Html->link(__d('crud', 'Delete'), ['plugin' => $details['plugin'], 'controller' => $details['controller'], 'action' => 'delete', ${$otherSingularVar}[$details['primaryKey']]], ['class' => 'btn btn-secondary']); ?>
+                                <?= $this->Form->postLink(
+                                    __d('crud', 'Delete'),
+                                    ['plugin' => $details['plugin'], 'controller' => $details['controller'], 'action' => 'delete', ${$otherSingularVar}[$details['primaryKey']]],
+                                    [
+                                        'class' => 'btn btn-danger btn-delete',
+                                        'confirm' => __d('crud', 'Are you sure you want to delete this record?'),
+                                        'name' => '_delete',
+                                    ]
+                                ); ?>
                             </td>
                         </tr>
                         <?php
