@@ -181,8 +181,7 @@ class DateTimeWidget extends \BootstrapUI\View\Widget\DateTimeWidget
             's' => 'S',
             'A' => 'K',
         ];
-        $datePickerFormat = strtr($format, $replacements);
 
-        return $datePickerFormat;
+        return strtr($format, $replacements);
     }
 }

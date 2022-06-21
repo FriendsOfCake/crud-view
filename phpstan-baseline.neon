@@ -6,11 +6,6 @@ parameters:
 			path: src/Listener/ViewListener.php
 
 		-
-			message: "#^Access to an undefined property object\\:\\:\\$params\\.$#"
-			count: 1
-			path: src/Listener/ViewListener.php
-
-		-
 			message: "#^Access to an undefined property object\\:\\:\\$query\\.$#"
 			count: 4
 			path: src/Listener/ViewListener.php
@@ -21,7 +16,7 @@ parameters:
 			path: src/Listener/ViewListener.php
 
 		-
-			message: "#^Cannot unset offset mixed on array\\{\\}\\.$#"
+			message: "#^Cannot unset offset mixed on array\\.$#"
 			count: 2
 			path: src/Listener/ViewListener.php
 
@@ -46,32 +41,22 @@ parameters:
 			path: src/Listener/ViewSearchListener.php
 
 		-
-			message: "#^Binary operation \"\\+\" between string and array\\{data\\-enable\\-seconds\\?\\: 'true', data\\-date\\-format\\: string, data\\-enable\\-time\\?\\: 'true', data\\-alt\\-format\\?\\: mixed, data\\-alt\\-input\\?\\: 'true', data\\-no\\-calendar\\?\\: 'true', data\\-alt\\-input\\-class\\?\\: string, class\\: array\\{'input\\-group', 'flatpickr'\\}\\} results in an error\\.$#"
+			message: "#^Binary operation \"\\+\" between string and array\\{data\\-enable\\-seconds\\?\\: 'true', data\\-date\\-format\\: string, data\\-alt\\-format\\?\\: mixed, data\\-alt\\-input\\?\\: 'true', data\\-no\\-calendar\\?\\: 'true', data\\-enable\\-time\\?\\: 'true', data\\-alt\\-input\\-class\\?\\: string, class\\: array\\{'input\\-group', 'flatpickr'\\}\\} results in an error\\.$#"
 			count: 1
 			path: src/View/Widget/DateTimeWidget.php
 
 		-
-			message: "#^Binary operation \"\\+\\=\" between array\\<string\\>\\|string and array\\{data\\-enable\\-seconds\\?\\: 'true', data\\-date\\-format\\: string, data\\-enable\\-time\\?\\: 'true', data\\-alt\\-format\\?\\: mixed, data\\-alt\\-input\\?\\: 'true', data\\-no\\-calendar\\?\\: 'true'\\} results in an error\\.$#"
+			message: "#^Binary operation \"\\+\\=\" between array\\<string\\>\\|string and array\\{data\\-enable\\-seconds\\?\\: 'true', data\\-date\\-format\\: string, data\\-alt\\-format\\?\\: mixed, data\\-alt\\-input\\?\\: 'true', data\\-no\\-calendar\\?\\: 'true', data\\-enable\\-time\\?\\: 'true'\\} results in an error\\.$#"
 			count: 1
 			path: src/View/Widget/DateTimeWidget.php
 
 		-
-			message: "#^Cannot assign offset 'class' to array\\<string\\>\\|string\\.$#"
+			message: "#^Offset 'data\\-wrap' does not exist on array\\{data\\-enable\\-seconds\\?\\: 'true', data\\-date\\-format\\: string, data\\-alt\\-format\\?\\: mixed, data\\-alt\\-input\\?\\: 'true', data\\-no\\-calendar\\?\\: 'true', data\\-enable\\-time\\?\\: 'true'\\}\\.$#"
 			count: 1
 			path: src/View/Widget/DateTimeWidget.php
 
 		-
-			message: "#^Cannot assign offset 'datetimePicker' to array\\<string\\>\\|string\\.$#"
-			count: 1
-			path: src/View/Widget/DateTimeWidget.php
-
-		-
-			message: "#^Offset 'data\\-wrap' does not exist on array\\{data\\-enable\\-seconds\\?\\: 'true', data\\-date\\-format\\: string, data\\-enable\\-time\\?\\: 'true', data\\-alt\\-format\\?\\: mixed, data\\-alt\\-input\\?\\: 'true', data\\-no\\-calendar\\?\\: 'true'\\}\\.$#"
-			count: 1
-			path: src/View/Widget/DateTimeWidget.php
-
-		-
-			message: "#^Offset 'iconClass' on array\\{data\\-enable\\-seconds\\?\\: 'true', data\\-date\\-format\\: string, data\\-enable\\-time\\?\\: 'true', data\\-alt\\-format\\?\\: mixed, data\\-alt\\-input\\?\\: 'true', data\\-no\\-calendar\\?\\: 'true'\\} in isset\\(\\) does not exist\\.$#"
+			message: "#^Offset 'iconClass' on array\\{data\\-enable\\-seconds\\?\\: 'true', data\\-date\\-format\\: string, data\\-alt\\-format\\?\\: mixed, data\\-alt\\-input\\?\\: 'true', data\\-no\\-calendar\\?\\: 'true', data\\-enable\\-time\\?\\: 'true'\\} in isset\\(\\) does not exist\\.$#"
 			count: 1
 			path: src/View/Widget/DateTimeWidget.php
 

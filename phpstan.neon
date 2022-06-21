@@ -8,3 +8,5 @@ parameters:
 		- src
 	universalObjectCratesClasses:
 		- Crud\Event\Subject
+	bootstrapFiles:
+		- vendor/cakephp/cakephp/src/Database/Exception/DatabaseException.php
