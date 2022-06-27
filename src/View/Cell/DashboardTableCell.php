@@ -16,11 +16,11 @@ class DashboardTableCell extends Cell
      * If the first argument is an array, it will replace the second
      * `$links` argument and `$title` will be set to an empty string.
      *
-     * @param string|array $title A title to display
+     * @param array|string $title A title to display
      * @param array $links A array of LinkItem objects
      * @return void
      */
-    public function display($title, array $links = []): void
+    public function display(string|array $title, array $links = []): void
     {
         if (is_array($title)) {
             $links = $title;

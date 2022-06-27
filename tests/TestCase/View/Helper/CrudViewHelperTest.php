@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace CrudView\Test\TestCase\View\Helper;
 
-use Cake\I18n\FrozenTime;
+use Cake\I18n\DateTime;
 use Cake\ORM\Entity;
 use Cake\TestSuite\TestCase;
 use Cake\View\View;
@@ -14,19 +14,12 @@ use CrudView\View\Helper\CrudViewHelper;
  */
 class CrudViewHelperTest extends TestCase
 {
-    /**
-     * Helper to be tested
-     *
-     * @var \Crud\View\Helper\CrudViewHelper
-     */
-    public $CrudView;
+    protected CrudViewHelper $CrudView;
 
     /**
-     * Mocked view
-     *
      * @var \Cake\View\View&\PHPUnit_Framework_MockObject_MockObject
      */
-    public $View;
+    protected $View;
 
     /**
      * setUp method
@@ -64,7 +57,7 @@ class CrudViewHelperTest extends TestCase
             ->with('created')
             ->will($this->returnValue('datetime'));
 
-        $value = new FrozenTime();
+        $value = new DateTime();
         $result = $this->CrudView->introspect('created', $value);
         $this->assertEquals('just now', $result);
 
@@ -75,10 +68,10 @@ class CrudViewHelperTest extends TestCase
         $this->assertEquals($this->CrudView->Time->format($value, 'KK:mm:ss a'), $result);
 
         $result = $this->CrudView->introspect('created', 'invalid');
-        $this->assertEquals('<span class="badge-info badge">N/A</span>', $result);
+        $this->assertEquals('<span class="bg-info badge">N/A</span>', $result);
 
         $result = $this->CrudView->introspect('created', null);
-        $this->assertEquals('<span class="badge-info badge">N/A</span>', $result);
+        $this->assertEquals('<span class="bg-info badge">N/A</span>', $result);
 
         $this->CrudView->setConfig('fieldFormatters', [
             'datetime' => function () {

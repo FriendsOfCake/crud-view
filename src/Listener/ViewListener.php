@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace CrudView\Listener;
 
 use Cake\Collection\Collection;
-use Cake\Database\Exception;
+use Cake\Database\Exception\DatabaseException;
 use Cake\Event\EventInterface;
 use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
@@ -30,7 +30,7 @@ class ViewListener extends BaseListener
      *
      * @var array|null
      */
-    protected $associations = null;
+    protected ?array $associations = null;
 
     /**
      * [beforeFind description]
@@ -199,7 +199,7 @@ class ViewListener extends BaseListener
      * The user can choose to suppress specific relations using the blacklist
      * functionality.
      *
-     * @param string[] $associationTypes List of association types.
+     * @param array<string> $associationTypes List of association types.
      * @return array
      */
     protected function _getRelatedModels(array $associationTypes = []): array
@@ -284,7 +284,7 @@ class ViewListener extends BaseListener
                 'displayField' => $table->getDisplayField(),
                 'primaryKey' => $table->getPrimaryKey(),
             ];
-        } catch (Exception $e) {
+        } catch (DatabaseException) {
             // May be empty if there is no table object for the action
         }
 
@@ -317,7 +317,7 @@ class ViewListener extends BaseListener
 
             $scope = $action->getConfig('scope');
             if ($scope === 'entity' && !empty($associations['manyToMany'])) {
-                foreach ($associations['manyToMany'] as $alias => $options) {
+                foreach ($associations['manyToMany'] as $options) {
                     $cols[sprintf('%s._ids', $options['entities'])] = [
                         'multiple' => true,
                     ];
@@ -595,7 +595,7 @@ class ViewListener extends BaseListener
      *
      * @return array|string
      */
-    protected function _primaryKeyValue()
+    protected function _primaryKeyValue(): array|string
     {
         $fields = (array)$this->_table()->getPrimaryKey();
         $values = [];
@@ -617,7 +617,7 @@ class ViewListener extends BaseListener
      *
      * @return string|int|null
      */
-    protected function _displayFieldValue()
+    protected function _displayFieldValue(): string|int|null
     {
         /** @psalm-suppress PossiblyInvalidArgument */
         return $this->_deriveFieldFromContext($this->_table()->getDisplayField());
@@ -630,7 +630,7 @@ class ViewListener extends BaseListener
      * @param string $field Name of field.
      * @return mixed
      */
-    protected function _deriveFieldFromContext(string $field)
+    protected function _deriveFieldFromContext(string $field): mixed
     {
         $controller = $this->_controller();
         $modelClass = $this->_table()->getAlias();

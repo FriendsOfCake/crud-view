@@ -10,32 +10,32 @@ class MenuItem
      *
      * @var string
      **/
-    protected $title;
+    protected string $title;
 
     /**
      * Cake-relative URL or array of URL parameters, or
      * external URL (starts with http://)
      *
-     * @var string|array|null
+     * @var array|string|null
      */
-    protected $url = null;
+    protected string|array|null $url = null;
 
     /**
      * Array of options and HTML attributes.
      *
      * @var array
      **/
-    protected $options = [];
+    protected array $options = [];
 
     /**
      * Contains an HTML link.
      *
      * @param string $title The content to be wrapped by `<a>` tags.
-     * @param string|array|null $url Cake-relative URL or array of URL parameters, or
+     * @param array|string|null $url Cake-relative URL or array of URL parameters, or
      *   external URL (starts with http://)
      * @param array $options Array of options and HTML attributes.
      */
-    public function __construct(string $title, $url = null, array $options = [])
+    public function __construct(string $title, string|array|null $url = null, array $options = [])
     {
         $this->title = $title;
         $this->url = $url;
@@ -55,9 +55,9 @@ class MenuItem
     /**
      * Returns the menu item ur
      *
-     * @return string|array|null
+     * @return array|string|null
      */
-    public function getUrl()
+    public function getUrl(): string|array|null
     {
         return $this->url;
     }

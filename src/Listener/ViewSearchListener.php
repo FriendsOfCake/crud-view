@@ -25,7 +25,7 @@ class ViewSearchListener extends BaseListener
      *
      * @var array
      */
-    protected $_defaultConfig = [
+    protected array $_defaultConfig = [
         'enabled' => null,
         'autocomplete' => true,
         'select2' => true,
