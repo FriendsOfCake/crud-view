@@ -5,6 +5,7 @@ namespace CrudView\Test\TestCase\Dashboard;
 
 use Cake\TestSuite\TestCase;
 use CrudView\Dashboard\Module\LinkItem;
+use InvalidArgumentException;
 
 /**
  * LinkItemTest class
@@ -27,7 +28,7 @@ class LinkItemTest extends TestCase
 
     public function testInvalidTitle()
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Missing title for LinkItem action');
 
         new LinkItem('', null);
@@ -35,7 +36,7 @@ class LinkItemTest extends TestCase
 
     public function testInvalidNullUrl()
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid url specified for LinkItem');
 
         new LinkItem('Title', null);
@@ -43,7 +44,7 @@ class LinkItemTest extends TestCase
 
     public function testInvalidEmptyUrl()
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid url specified for LinkItem');
 
         new LinkItem('Title', '');

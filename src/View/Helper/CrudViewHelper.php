@@ -23,21 +23,21 @@ class CrudViewHelper extends Helper
      *
      * @var array
      */
-    protected $helpers = ['Form', 'Html', 'Time'];
+    protected array $helpers = ['Form', 'Html', 'Time'];
 
     /**
      * Context
      *
      * @var \Cake\Datasource\EntityInterface
      */
-    protected $_context;
+    protected EntityInterface $_context;
 
     /**
      * Default config.
      *
      * @var array<string, mixed>
      */
-    protected $_defaultConfig = [
+    protected array $_defaultConfig = [
         'fieldFormatters' => null,
     ];
 
@@ -68,9 +68,9 @@ class CrudViewHelper extends Helper
      * @param string $field The field to process.
      * @param \Cake\Datasource\EntityInterface $data The entity data.
      * @param array $options Processing options.
-     * @return string|null|array|bool|int
+     * @return array|string|int|bool|null
      */
-    public function process(string $field, EntityInterface $data, array $options = [])
+    public function process(string $field, EntityInterface $data, array $options = []): string|array|bool|int|null
     {
         $this->setContext($data);
 
@@ -106,7 +106,7 @@ class CrudViewHelper extends Helper
      * @param string $field The field to extract, if null, the field from the entity context is used.
      * @return mixed
      */
-    public function fieldValue(?EntityInterface $data, string $field)
+    public function fieldValue(?EntityInterface $data, string $field): mixed
     {
         if (empty($data)) {
             $data = $this->getContext();
@@ -121,9 +121,9 @@ class CrudViewHelper extends Helper
      * @param string $field Name of field.
      * @param mixed $value The value that the field should have within related data.
      * @param array $options Options array.
-     * @return array|bool|null|int|string
+     * @return array|string|int|bool|null
      */
-    public function introspect(string $field, $value, array $options = [])
+    public function introspect(string $field, mixed $value, array $options = []): array|bool|int|string|null
     {
         $output = $this->relation($field);
         if ($output) {
@@ -185,7 +185,7 @@ class CrudViewHelper extends Helper
      * @param array $options Options array
      * @return string
      */
-    public function formatBoolean(string $field, $value, array $options): string
+    public function formatBoolean(string $field, mixed $value, array $options): string
     {
         return (bool)$value ?
             $this->Html->badge(__d('crud', 'Yes'), ['class' => empty($options['inverted']) ? 'success' : 'danger']) :
@@ -200,7 +200,7 @@ class CrudViewHelper extends Helper
      * @param array $options Options array.
      * @return string
      */
-    public function formatDate(string $field, $value, array $options): string
+    public function formatDate(string $field, mixed $value, array $options): string
     {
         if ($value === null) {
             return $this->Html->badge(__d('crud', 'N/A'), ['class' => 'info']);
@@ -225,7 +225,7 @@ class CrudViewHelper extends Helper
      * @param array $options Options array.
      * @return string
      */
-    public function formatTime(string $field, $value, array $options): string
+    public function formatTime(string $field, mixed $value, array $options): string
     {
         $format = $options['format'] ?? 'KK:mm:ss a';
         /** @var string $value */
@@ -244,7 +244,7 @@ class CrudViewHelper extends Helper
      * @param mixed $value Value of field.
      * @return string
      */
-    public function formatString(string $field, $value): string
+    public function formatString(string $field, mixed $value): string
     {
         return h(Text::truncate((string)$value, 200));
     }
@@ -256,7 +256,7 @@ class CrudViewHelper extends Helper
      * @param array $options Options array.
      * @return string
      */
-    public function formatDisplayField($value, array $options): string
+    public function formatDisplayField(string $value, array $options): string
     {
         return $this->createViewLink($value, ['escape' => false]);
     }
@@ -267,7 +267,7 @@ class CrudViewHelper extends Helper
      * @param string $field Name of field.
      * @return mixed Array of data to output, false if no match found
      */
-    public function relation(string $field)
+    public function relation(string $field): mixed
     {
         $associations = $this->associations();
         if (empty($associations['manyToOne'])) {
@@ -421,7 +421,7 @@ class CrudViewHelper extends Helper
      * @param string $key View variable to get.
      * @return mixed
      */
-    public function getViewVar(string $key)
+    public function getViewVar(string $key): mixed
     {
         return $this->_View->get($key);
     }

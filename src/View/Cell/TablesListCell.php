@@ -14,11 +14,12 @@ class TablesListCell extends Cell
      *
      * @param array $tables Tables list.
      * @param array $blacklist Blacklisted tables list.
-     * @return $this
+     * @return void
      */
-    public function display(?array $tables = null, ?array $blacklist = null)
+    public function display(?array $tables = null, ?array $blacklist = null): void
     {
         if (empty($tables)) {
+            /** @var \Cake\Database\Connection $connection */
             $connection = ConnectionManager::get('default');
             $schema = $connection->getSchemaCollection();
             $tables = $schema->listTables();
@@ -48,6 +49,6 @@ class TablesListCell extends Cell
             $normal[$table] = $config;
         }
 
-        return $this->set('tables', $normal);
+        $this->set('tables', $normal);
     }
 }

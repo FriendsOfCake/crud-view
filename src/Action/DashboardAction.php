@@ -11,7 +11,7 @@ class DashboardAction extends BaseAction
 {
     use ViewTrait;
 
-    protected $_defaultConfig = [
+    protected array $_defaultConfig = [
         'enabled' => true,
         'view' => null,
     ];
@@ -19,9 +19,9 @@ class DashboardAction extends BaseAction
     /**
      * HTTP GET handler
      *
-     * @return void|\Cake\Http\Response
+     * @return void
      */
-    protected function _get()
+    protected function _get(): void
     {
         $pageTitle = $this->getConfig('scaffold.page_title', __d('CrudView', 'Dashboard'));
         $this->setConfig('scaffold.page_title', $pageTitle);

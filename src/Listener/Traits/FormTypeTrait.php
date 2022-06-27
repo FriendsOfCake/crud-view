@@ -156,9 +156,9 @@ trait FormTypeTrait
     /**
      * Get form url.
      *
-     * @return mixed
+     * @return array|string|null
      */
-    protected function _getFormUrl()
+    protected function _getFormUrl(): array|string|null
     {
         $action = $this->_action();
 

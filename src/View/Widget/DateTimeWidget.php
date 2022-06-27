@@ -3,10 +3,11 @@ declare(strict_types=1);
 
 namespace CrudView\View\Widget;
 
+use BootstrapUI\View\Widget\DateTimeWidget as BUIDateTimeWidget;
 use Cake\Core\Configure;
 use Cake\View\Form\ContextInterface;
 
-class DateTimeWidget extends \BootstrapUI\View\Widget\DateTimeWidget
+class DateTimeWidget extends BUIDateTimeWidget
 {
     // phpcs:disable
     /**

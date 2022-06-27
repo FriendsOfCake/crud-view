@@ -67,7 +67,7 @@ class Dashboard
      * @return int
      * @throws \InvalidArgumentException the column count is invalid
      */
-    protected function _setColumns(int $value)
+    protected function _setColumns(int $value): int
     {
         $columnMap = [
             1 => 12,

@@ -5,32 +5,23 @@
     stopOnFailure="false"
     bootstrap="./tests/bootstrap.php"
     >
-    <php>
-        <ini name="memory_limit" value="-1"/>
-    </php>
-
-    <!-- Add any additional test suites you want to run here -->
     <testsuites>
         <testsuite name="CrudView Tests">
             <directory>./tests/TestCase</directory>
         </testsuite>
-        <!-- Add plugin test suites here. -->
     </testsuites>
 
-    <!-- Setup a listener for fixtures -->
-    <listeners>
-        <listener
-        class="\Cake\TestSuite\Fixture\FixtureInjector"
-        file="./vendor/cakephp/cakephp/src/TestSuite/Fixture/FixtureInjector.php">
-            <arguments>
-                <object class="\Cake\TestSuite\Fixture\FixtureManager" />
-            </arguments>
-        </listener>
-    </listeners>
+    <extensions>
+        <extension class="Cake\TestSuite\Fixture\PHPUnitExtension"/>
+    </extensions>
 
-    <filter>
-        <whitelist>
-            <directory suffix=".php">./src/</directory>
-        </whitelist>
-    </filter>
+    <coverage>
+        <include>
+            <directory suffix=".php">src/</directory>
+        </include>
+    </coverage>
+
+    <php>
+        <!-- <env name="FIXTURE_SCHEMA_METADATA" value="./tests/schema.php"/> -->
+    </php>
 </phpunit>

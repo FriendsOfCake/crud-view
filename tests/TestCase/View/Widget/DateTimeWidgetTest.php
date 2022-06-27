@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace CrudView\Test\TestCase\View\Widget;
 
 use Cake\Core\Configure;
-use Cake\I18n\FrozenDate;
+use Cake\I18n\Date;
 use Cake\TestSuite\TestCase;
 use Cake\View\Form\ContextInterface;
 use Cake\View\StringTemplate;
@@ -83,7 +83,7 @@ class DateTimeWidgetTest extends TestCase
                 [
                     'id' => 'the-id3',
                     'name' => 'the-name3',
-                    'val' => new FrozenDate('2000-01-01'),
+                    'val' => new Date('2000-01-01'),
                     'type' => 'date',
                     'required' => false,
                 ],
