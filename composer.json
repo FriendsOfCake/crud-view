@@ -30,8 +30,8 @@
     ],
     "require": {
         "cakephp/cakephp": "^4.0",
-        "friendsofcake/crud": "^6.0",
-        "friendsofcake/bootstrap-ui": "^3.0"
+        "friendsofcake/bootstrap-ui": "^3.0",
+        "friendsofcake/crud": "^6.0"
     },
     "require-dev": {
         "friendsofcake/cakephp-test-utilities": "^2.0",
@@ -54,5 +54,11 @@
         "wiki": "http://cakephp.nu/cakephp-crud/",
         "irc": "irc://irc.freenode.org/friendsofcake"
     },
-    "prefer-stable": true
+    "prefer-stable": true,
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    }
 }
