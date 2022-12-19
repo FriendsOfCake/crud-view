@@ -133,7 +133,10 @@ trait FormTypeTrait
         $action = $this->_action();
         if ($action instanceof EditAction) {
             $blacklist = $action->getConfig('scaffold.actions_blacklist', []);
-            if (!in_array('delete', $blacklist, true)) {
+            if (
+                !in_array('delete', $blacklist, true) &&
+                $this->_crud()->action('delete')->enabled()
+            ) {
                 $buttons[] = [
                     'title' => __d('crud', 'Delete'),
                     'url' => ['action' => 'delete'],

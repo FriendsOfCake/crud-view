@@ -504,7 +504,10 @@ class ViewListener extends BaseListener
         $blacklist = (array)$this->_action()->getConfig('scaffold.actions_blacklist');
         $blacklist = array_combine($blacklist, $blacklist);
         foreach ($this->_crud()->getConfig('actions') as $action => $config) {
-            if ($config['className'] === 'Crud.Lookup') {
+            if (
+                $config['className'] === 'Crud.Lookup' ||
+                !$this->_crud()->action($action)->enabled()
+            ) {
                 $blacklist[$action] = $action;
             }
         }
