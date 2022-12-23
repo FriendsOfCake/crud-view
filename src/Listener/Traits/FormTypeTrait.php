@@ -135,6 +135,7 @@ trait FormTypeTrait
             $blacklist = $action->getConfig('scaffold.actions_blacklist', []);
             if (
                 !in_array('delete', $blacklist, true) &&
+                $this->_crud()->isActionMapped('delete') &&
                 $this->_crud()->action('delete')->enabled()
             ) {
                 $buttons[] = [
