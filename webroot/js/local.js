@@ -47,7 +47,7 @@ var CrudView = {
                         query[$ele.data('filter-field') || $ele.attr('name')] = params.term;
 
                         if ($ele.data('dependent-on') && $('#' + $ele.data('dependent-on')).val()) {
-                            data[$ele.data('dependent-on-field')] = $('#' + $ele.data('dependent-on')).val();
+                            query[$ele.data('dependent-on-field')] = $('#' + $ele.data('dependent-on')).val();
                         }
 
                         return query;
