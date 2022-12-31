@@ -37,6 +37,7 @@ class ViewListener extends BaseListener
      *
      * @param \Cake\Event\EventInterface $event Event.
      * @return void
+     * @psalm-param \Cake\Event\EventInterface<\Crud\Event\Subject> $event
      */
     public function beforeFind(EventInterface $event): void
     {
@@ -57,6 +58,7 @@ class ViewListener extends BaseListener
      *
      * @param \Cake\Event\EventInterface $event Event.
      * @return void
+     * @psalm-param \Cake\Event\EventInterface<\Crud\Event\Subject> $event
      */
     public function beforePaginate(EventInterface $event): void
     {
@@ -77,6 +79,7 @@ class ViewListener extends BaseListener
      *
      * @param \Cake\Event\EventInterface $event Event.
      * @return void
+     * @psalm-param \Cake\Event\EventInterface<\Crud\Event\Subject> $event
      */
     public function beforeRender(EventInterface $event): void
     {
@@ -125,6 +128,7 @@ class ViewListener extends BaseListener
      *
      * @param \Cake\Event\EventInterface $event Event.
      * @return void
+     * @psalm-param \Cake\Event\EventInterface<\Crud\Event\Subject> $event
      */
     public function setFlash(EventInterface $event): void
     {
