@@ -59,7 +59,7 @@ jobs:
         php-version: '8.1'
         extensions: mbstring, intl
         coverage: none
-        tools: vimeo/psalm:4.23, phpstan:1.7, cs2pr
+        tools: vimeo/psalm:4, phpstan:1.9, cs2pr
 
     - name: Composer Install
       run: composer require --dev cakephp/cakephp-codesniffer:5.x-dev

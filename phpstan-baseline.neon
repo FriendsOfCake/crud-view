@@ -1,22 +1,7 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Access to an undefined property object\\:\\:\\$element\\.$#"
-			count: 1
-			path: src/Listener/ViewListener.php
-
-		-
-			message: "#^Access to an undefined property object\\:\\:\\$query\\.$#"
-			count: 4
-			path: src/Listener/ViewListener.php
-
-		-
-			message: "#^Access to an undefined property object\\:\\:\\$type\\.$#"
-			count: 1
-			path: src/Listener/ViewListener.php
-
-		-
-			message: "#^Cannot unset offset mixed on array\\.$#"
+			message: "#^Cannot unset offset mixed on array\\{\\}\\.$#"
 			count: 2
 			path: src/Listener/ViewListener.php
 
