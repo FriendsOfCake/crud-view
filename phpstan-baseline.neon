@@ -26,32 +26,7 @@ parameters:
 			path: src/Listener/ViewSearchListener.php
 
 		-
-			message: "#^Call to method css\\(\\) on an unknown class AssetCompress\\\\View\\\\Helper\\\\AssetCompressHelper\\.$#"
-			count: 1
-			path: src/View/CrudView.php
-
-		-
-			message: "#^Call to method script\\(\\) on an unknown class AssetCompress\\\\View\\\\Helper\\\\AssetCompressHelper\\.$#"
-			count: 2
-			path: src/View/CrudView.php
-
-		-
-			message: "#^Binary operation \"\\+\" between string and array\\{data\\-enable\\-seconds\\?\\: 'true', data\\-date\\-format\\: string, data\\-alt\\-format\\?\\: mixed, data\\-alt\\-input\\?\\: 'true', data\\-no\\-calendar\\?\\: 'true', data\\-enable\\-time\\?\\: 'true', data\\-alt\\-input\\-class\\?\\: string, class\\: array\\{'input\\-group', 'flatpickr'\\}\\} results in an error\\.$#"
-			count: 1
-			path: src/View/Widget/DateTimeWidget.php
-
-		-
-			message: "#^Binary operation \"\\+\\=\" between array\\<string\\>\\|string\\|null and array\\{data\\-enable\\-seconds\\?\\: 'true', data\\-date\\-format\\: string, data\\-alt\\-format\\?\\: mixed, data\\-alt\\-input\\?\\: 'true', data\\-no\\-calendar\\?\\: 'true', data\\-enable\\-time\\?\\: 'true'\\} results in an error\\.$#"
-			count: 1
-			path: src/View/Widget/DateTimeWidget.php
-
-		-
-			message: "#^Offset 'data\\-wrap' does not exist on array\\{data\\-enable\\-seconds\\?\\: 'true', data\\-date\\-format\\: string, data\\-alt\\-format\\?\\: mixed, data\\-alt\\-input\\?\\: 'true', data\\-no\\-calendar\\?\\: 'true', data\\-enable\\-time\\?\\: 'true'\\}\\.$#"
-			count: 1
-			path: src/View/Widget/DateTimeWidget.php
-
-		-
-			message: "#^Offset 'iconClass' on array\\{data\\-enable\\-seconds\\?\\: 'true', data\\-date\\-format\\: string, data\\-alt\\-format\\?\\: mixed, data\\-alt\\-input\\?\\: 'true', data\\-no\\-calendar\\?\\: 'true', data\\-enable\\-time\\?\\: 'true'\\} in isset\\(\\) does not exist\\.$#"
+			message: "#^Binary operation \"\\+\" between string and non\\-empty\\-array results in an error\\.$#"
 			count: 1
 			path: src/View/Widget/DateTimeWidget.php
 

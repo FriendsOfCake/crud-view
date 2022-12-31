@@ -1,16 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="4.x-dev@">
-  <file src="src/View/CrudView.php">
-    <UndefinedDocblockClass occurrences="3">
-      <code>$this-&gt;AssetCompress</code>
-      <code>$this-&gt;AssetCompress</code>
-      <code>$this-&gt;AssetCompress</code>
-    </UndefinedDocblockClass>
+<files psalm-version="dev-master@">
+  <file src="src/Listener/ViewListener.php">
+    <UndefinedPropertyAssignment occurrences="1">
+      <code>$event-&gt;getSubject()-&gt;element</code>
+    </UndefinedPropertyAssignment>
+  </file>
+  <file src="src/Listener/ViewSearchListener.php">
+    <PossiblyUndefinedArrayOffset occurrences="1">
+      <code>$input['type']</code>
+    </PossiblyUndefinedArrayOffset>
   </file>
   <file src="src/View/Widget/DateTimeWidget.php">
     <PossiblyNullArrayAccess occurrences="2">
       <code>$data['name']</code>
       <code>$data['templateVars']</code>
     </PossiblyNullArrayAccess>
+    <PossiblyUndefinedArrayOffset occurrences="1">
+      <code>$data['type']</code>
+    </PossiblyUndefinedArrayOffset>
   </file>
 </files>

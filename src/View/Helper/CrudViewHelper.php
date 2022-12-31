@@ -9,7 +9,6 @@ use Cake\Utility\Inflector;
 use Cake\Utility\Text;
 use Cake\View\Helper;
 use Cake\View\Helper\FormHelper;
-use DateTimeInterface;
 
 /**
  * @property \BootstrapUI\View\Helper\FormHelper $Form
@@ -206,15 +205,7 @@ class CrudViewHelper extends Helper
             return $this->Html->badge(__d('crud', 'N/A'), ['class' => 'info']);
         }
 
-        if (
-            is_int($value)
-            || is_string($value)
-            || $value instanceof DateTimeInterface
-        ) {
-            return $this->Time->timeAgoInWords($value, $options);
-        }
-
-        return $this->Html->badge(__d('crud', 'N/A'), ['class' => 'info']);
+        return $this->Time->timeAgoInWords($value, $options);
     }
 
     /**

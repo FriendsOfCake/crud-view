@@ -35,6 +35,7 @@
     },
     "require-dev": {
         "friendsofcake/cakephp-test-utilities": "dev-cake-5.x",
+        "markstory/asset_compress": "5.x-dev",
         "phpunit/phpunit": "^9.5.19"
     },
     "autoload": {
@@ -53,11 +54,12 @@
         "wiki": "http://cakephp.nu/cakephp-crud/",
         "irc": "irc://irc.freenode.org/friendsofcake"
     },
-    "prefer-stable": true,
     "config": {
         "sort-packages": true,
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": true
         }
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }

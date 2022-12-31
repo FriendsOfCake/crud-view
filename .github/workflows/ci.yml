@@ -4,51 +4,12 @@ on: [push, pull_request]
 
 jobs:
   testsuite:
-    runs-on: ubuntu-20.04
-    strategy:
-      fail-fast: false
-      matrix:
-        prefer-lowest: ['']
-        php-version: ['8.1', '8.2']
-        include:
-          - php-version: '8.1'
-            prefer-lowest: 'prefer-lowest'
-
-    steps:
-    - uses: actions/checkout@v3
-
-    - name: Setup PHP
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: ${{ matrix.php-version }}
-        extensions: mbstring, intl, pdo_${{ matrix.db-type }}
-        coverage: pcov
-
-    - name: Composer install
-      run: |
-        if ${{ matrix.prefer-lowest == 'prefer-lowest' }}; then
-          composer update --prefer-lowest --prefer-stable
-        elif ${{ matrix.php-version == '8.2' }}; then
-          composer update --ignore-platform-req=php
-        else
-          composer update
-        fi
-
-    - name: Run PHPUnit
-      run: |
-        if [[ ${{ matrix.php-version }} == '8.1' ]]; then
-          vendor/bin/phpunit --coverage-clover=coverage.xml
-        else
-          vendor/bin/phpunit
-        fi
-
-    - name: Code Coverage Report
-      if: matrix.php-version == '8.1'
-      uses: codecov/codecov-action@v3
+    uses: cakephp/.github/.github/workflows/testsuite-without-db.yml@5.x
+    secrets: inherit
 
   cs-stan:
     name: Coding Standard & Static Analysis
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
 
     steps:
     - uses: actions/checkout@v3
@@ -59,10 +20,10 @@ jobs:
         php-version: '8.1'
         extensions: mbstring, intl
         coverage: none
-        tools: vimeo/psalm:4, phpstan:1.9, cs2pr
+        tools: vimeo/psalm:5, phpstan:1.9, cs2pr
 
     - name: Composer Install
-      run: composer require --dev cakephp/cakephp-codesniffer:5.x-dev
+      run: composer require --dev cakephp/cakephp-codesniffer:^5.0
 
     - name: Run phpcs
       run: vendor/bin/phpcs --report=checkstyle --standard=vendor/cakephp/cakephp-codesniffer/CakePHP src/ tests/ | cs2pr

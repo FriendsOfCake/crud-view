@@ -17,7 +17,7 @@ class CrudViewHelperTest extends TestCase
     protected CrudViewHelper $CrudView;
 
     /**
-     * @var \Cake\View\View&\PHPUnit_Framework_MockObject_MockObject
+     * @var \Cake\View\View&\PHPUnit\Framework\MockObject\MockObject
      */
     protected $View;
 
