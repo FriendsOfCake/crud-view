@@ -153,18 +153,20 @@ class ViewSearchListener extends BaseListener
                 ];
             }
 
-            $urlArgs = [];
+            if (!isset($input['data-url'])) {
+                $urlArgs = [];
 
-            $fieldKeys = $input['fields'] ?? ['id' => $field, 'value' => $field];
-            if (is_array($fieldKeys)) {
-                foreach ($fieldKeys as $key => $val) {
-                    $urlArgs[$key] = $val;
+                $fieldKeys = $input['fields'] ?? ['id' => $field, 'value' => $field];
+                if (is_array($fieldKeys)) {
+                    foreach ($fieldKeys as $key => $val) {
+                        $urlArgs[$key] = $val;
+                    }
                 }
+
+                $input['data-url'] = Router::url(['action' => 'lookup', '_ext' => 'json', '?' => $urlArgs]);
             }
 
             unset($input['fields']);
-            $url = array_merge(['action' => 'lookup', '_ext' => 'json'], ['?' => $urlArgs]);
-            $input['data-url'] = Router::url($url);
 
             $fields[$field] = $input;
         }
