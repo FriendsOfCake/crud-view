@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace CrudView\View\Helper;
 
-use Cake\Database\Schema\TableSchemaInterface;
 use Cake\Datasource\EntityInterface;
+use Cake\Datasource\SchemaInterface;
 use Cake\Utility\Inflector;
 use Cake\Utility\Text;
 use Cake\View\Helper;
@@ -388,9 +388,9 @@ class CrudViewHelper extends Helper
     /**
      * Get model schema.
      *
-     * @return \Cake\Database\Schema\TableSchemaInterface
+     * @return \Cake\Datasource\SchemaInterface
      */
-    public function schema(): TableSchemaInterface
+    public function schema(): SchemaInterface
     {
         return $this->getViewVar('modelSchema');
     }
