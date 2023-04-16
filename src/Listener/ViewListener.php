@@ -68,7 +68,7 @@ class ViewListener extends BaseListener
         }
 
         if (!$event->getSubject()->query->getContain()) {
-            $event->getSubject()->query->contain($this->_getRelatedModels(['manyToOne', 'oneToOne']));
+            $event->getSubject()->query->contain($this->_getRelatedModels(['belongsTo', 'hasOne']));
         }
     }
 
