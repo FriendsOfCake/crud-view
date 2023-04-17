@@ -134,6 +134,7 @@ class ViewSearchListener extends BaseListener
                 $input['class'] = 'autocomplete';
             }
 
+            /** @psalm-suppress PossiblyUndefinedArrayOffset */
             if (
                 !empty($input['class'])
                 && strpos($input['class'], 'autocomplete') !== false
