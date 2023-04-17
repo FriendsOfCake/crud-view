@@ -4,18 +4,18 @@ on: [push, pull_request]
 
 jobs:
   testsuite:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-22.04
     strategy:
       fail-fast: false
       matrix:
-        prefer-lowest: ['']
-        php-version: ['7.4', '8.0', '8.1']
+        php-version: ['7.4', '8.0', '8.1', '8.2']
+        dependencies: ['highest']
         include:
           - php-version: '7.2'
-            prefer-lowest: 'prefer-lowest'
+            dependencies: 'lowest'
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
     - name: Setup PHP
       uses: shivammathur/setup-php@v2
@@ -25,12 +25,9 @@ jobs:
         coverage: pcov
 
     - name: Composer install
-      run: |
-        if ${{ matrix.prefer-lowest == 'prefer-lowest' }}; then
-          composer update --prefer-lowest --prefer-stable
-        else
-          composer install
-        fi
+      uses: ramsey/composer-install@v2
+      with:
+        dependency-versions: ${{ matrix.dependencies }}
 
     - name: Run PHPUnit
       run: |
@@ -42,14 +39,14 @@ jobs:
 
     - name: Code Coverage Report
       if: matrix.php-version == '7.4'
-      uses: codecov/codecov-action@v2
+      uses: codecov/codecov-action@v3
 
   cs-stan:
     name: Coding Standard & Static Analysis
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-22.04
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
     - name: Setup PHP
       uses: shivammathur/setup-php@v2
@@ -57,7 +54,7 @@ jobs:
         php-version: '7.4'
         extensions: mbstring, intl
         coverage: none
-        tools: vimeo/psalm:4, phpstan:1.9
+        tools: vimeo/psalm:5.9, phpstan:1.10
 
     - name: Composer Install
       run: composer require --dev cakephp/cakephp-codesniffer:^4.1

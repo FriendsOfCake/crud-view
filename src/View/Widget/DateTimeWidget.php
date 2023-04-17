@@ -110,6 +110,7 @@ class DateTimeWidget extends \BootstrapUI\View\Widget\DateTimeWidget
 
         $clearIcon = $this->clearIcon;
         $toggleIcon = $this->calendarIcon;
+        /** @psalm-suppress PossiblyUndefinedArrayOffset */
         if (isset($datetimePicker['iconClass'])) {
             $toggleIcon = $datetimePicker['iconClass'];
             unset($datetimePicker['iconClass']);
