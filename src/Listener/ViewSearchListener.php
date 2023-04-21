@@ -115,8 +115,13 @@ class ViewSearchListener extends BaseListener
             $input['value'] = $request->getQuery($field);
 
             if (empty($input['options']) && $schema->getColumnType($field) === 'boolean') {
-                $input['options'] = ['No', 'Yes'];
+                $input['options'] = [__d('crud', 'No'), __d('crud', 'Yes')];
                 $input['type'] = 'select';
+            }
+
+            /** @psalm-suppress PossiblyUndefinedArrayOffset */
+            if ($input['type'] === 'select') {
+                $input += ['empty' => true];
             }
 
             if (!empty($input['options'])) {

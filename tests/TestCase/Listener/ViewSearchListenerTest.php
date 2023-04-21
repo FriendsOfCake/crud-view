@@ -48,26 +48,58 @@ class ViewSearchListenerTest extends TestCase
 
     public function testFields()
     {
-        $this->listener->setConfig(['fields' => ['category_id']]);
+        $this->listener->setConfig(['fields' => [
+            'name',
+            'is_active',
+            'user_id',
+            'custom_select' => ['empty' => false, 'type' => 'select'],
+        ]]);
 
         $fields = $this->listener->fields();
         $expected = [
-            'category_id' => [
+            'name' => [
                 'required' => false,
                 'type' => 'select',
                 'value' => null,
                 'class' => 'autocomplete',
-                'data-url' => '/blogs/lookup.json?id=category_id&value=category_id',
+                'data-url' => '/blogs/lookup.json?id=name&value=name',
+                'data-input-type' => 'text',
+                'data-tags' => 'true',
+                'data-allow-clear' => 'true',
+                'data-placeholder' => '',
+            ],
+            'is_active' => [
+                'required' => false,
+                'type' => 'select',
+                'value' => null,
+                'empty' => true,
+                'options' => ['No', 'Yes'],
+            ],
+            'user_id' => [
+                'required' => false,
+                'type' => 'select',
+                'empty' => true,
+                'value' => null,
+                'class' => 'autocomplete',
+                'data-url' => '/blogs/lookup.json?id=user_id&value=user_id',
+            ],
+            'custom_select' => [
+                'required' => false,
+                'type' => 'select',
+                'empty' => false,
+                'value' => null,
+                'class' => 'autocomplete',
+                'data-url' => '/blogs/lookup.json?id=custom_select&value=custom_select',
             ],
         ];
         $this->assertEquals($expected, $fields);
 
         $this->listener->setConfig([
-            'fields' => ['category_id' => ['data-url' => '/custom']],
+            'fields' => ['name' => ['data-url' => '/custom']],
         ], null, true);
 
         $fields = $this->listener->fields();
-        $expected['category_id']['data-url'] = '/custom';
+        $expected['name']['data-url'] = '/custom';
         $this->assertEquals($expected, $fields);
     }
 }
