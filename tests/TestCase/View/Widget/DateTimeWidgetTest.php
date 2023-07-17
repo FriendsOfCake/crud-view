@@ -55,7 +55,7 @@ class DateTimeWidgetTest extends TestCase
      *
      * @return array
      */
-    public function renderProvider()
+    public static function renderProvider()
     {
         return [
             [

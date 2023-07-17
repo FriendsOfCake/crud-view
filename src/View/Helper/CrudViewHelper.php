@@ -9,6 +9,8 @@ use Cake\Utility\Inflector;
 use Cake\Utility\Text;
 use Cake\View\Helper;
 use Cake\View\Helper\FormHelper;
+use function Cake\Core\h;
+use function Cake\I18n\__d;
 
 /**
  * @property \BootstrapUI\View\Helper\FormHelper $Form

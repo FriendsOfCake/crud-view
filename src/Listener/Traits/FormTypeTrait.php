@@ -6,6 +6,7 @@ namespace CrudView\Listener\Traits;
 use Cake\Controller\Controller;
 use Crud\Action\BaseAction;
 use Crud\Action\EditAction;
+use function Cake\I18n\__d;
 
 trait FormTypeTrait
 {

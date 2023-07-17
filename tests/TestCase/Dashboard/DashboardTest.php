@@ -9,6 +9,7 @@ use Cake\TestSuite\TestCase;
 use CrudView\Dashboard\Dashboard;
 use CrudView\View\Cell\DashboardTableCell;
 use InvalidArgumentException;
+use function Cake\I18n\__d;
 
 /**
  * DashboardTest class
