@@ -6,6 +6,7 @@ namespace CrudView\Dashboard;
 use Cake\Datasource\EntityTrait;
 use Cake\View\Cell;
 use InvalidArgumentException;
+use function Cake\I18n\__d;
 
 class Dashboard
 {

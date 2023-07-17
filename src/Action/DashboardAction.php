@@ -6,6 +6,7 @@ namespace CrudView\Action;
 use Crud\Action\BaseAction;
 use Crud\Traits\ViewTrait;
 use CrudView\Dashboard\Dashboard;
+use function Cake\I18n\__d;
 
 class DashboardAction extends BaseAction
 {

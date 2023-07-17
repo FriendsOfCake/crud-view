@@ -15,6 +15,7 @@ use CrudView\Listener\Traits\SidebarNavigationTrait;
 use CrudView\Listener\Traits\SiteTitleTrait;
 use CrudView\Listener\Traits\UtilityNavigationTrait;
 use CrudView\Traits\CrudViewConfigTrait;
+use function Cake\I18n\__d;
 
 class ViewListener extends BaseListener
 {
