@@ -8,6 +8,9 @@ use Cake\Routing\Router;
 use Cake\Utility\Hash;
 use Crud\Listener\BaseListener;
 
+/**
+ * @method \Cake\ORM\Table _model()
+ */
 class ViewSearchListener extends BaseListener
 {
     /**
@@ -56,7 +59,7 @@ class ViewSearchListener extends BaseListener
      */
     public function afterPaginate(EventInterface $event): void
     {
-        if (!$this->_table()->behaviors()->has('Search')) {
+        if (!$this->_model()->behaviors()->has('Search')) {
             return;
         }
 
@@ -82,13 +85,13 @@ class ViewSearchListener extends BaseListener
         $fields = $this->getConfig('fields') ?: [];
         $config = $this->getConfig();
 
-        $schema = $this->_table()->getSchema();
+        $schema = $this->_model()->getSchema();
         $request = $this->_request();
 
         if ($fields) {
             $fields = Hash::normalize($fields);
         } else {
-            $filters = $this->_table()->searchManager()->getFilters($config['collection']);
+            $filters = $this->_model()->searchManager()->getFilters($config['collection']);
 
             foreach ($filters as $filter) {
                 $opts = $filter->getConfig('form');

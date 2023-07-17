@@ -15,8 +15,12 @@ use CrudView\Listener\Traits\SidebarNavigationTrait;
 use CrudView\Listener\Traits\SiteTitleTrait;
 use CrudView\Listener\Traits\UtilityNavigationTrait;
 use CrudView\Traits\CrudViewConfigTrait;
+use function Cake\Core\pluginSplit;
 use function Cake\I18n\__d;
 
+/**
+ * @method \Cake\ORM\Table _model()
+ */
 class ViewListener extends BaseListener
 {
     use CrudViewConfigTrait;
@@ -134,6 +138,7 @@ class ViewListener extends BaseListener
     public function setFlash(EventInterface $event): void
     {
         unset($event->getSubject()->params['class']);
+        /** @psalm-suppress UndefinedPropertyAssignment */
         $event->getSubject()->element = ltrim($event->getSubject()->type);
     }
 
@@ -173,7 +178,7 @@ class ViewListener extends BaseListener
         $displayFieldValue = $this->_displayFieldValue();
         if (
             $displayFieldValue === null
-            || $this->_table()->getDisplayField() === $this->_table()->getPrimaryKey()
+            || $this->_model()->getDisplayField() === $this->_model()->getPrimaryKey()
         ) {
             /** @psalm-var string $primaryKeyValue */
             return sprintf('%s %s #%s', $actionName, $controllerName, $primaryKeyValue);
@@ -218,12 +223,12 @@ class ViewListener extends BaseListener
         if (empty($models)) {
             $associations = [];
             if (empty($associationTypes)) {
-                $associations = $this->_table()->associations();
+                $associations = $this->_model()->associations();
             } else {
                 foreach ($associationTypes as $assocType) {
                     $associations = array_merge(
                         $associations,
-                        $this->_table()->associations()->getByType($assocType)
+                        $this->_model()->associations()->getByType($assocType)
                     );
                 }
             }
@@ -268,7 +273,7 @@ class ViewListener extends BaseListener
      */
     protected function _getPageVariables(): array
     {
-        $table = $this->_table();
+        $table = $this->_model();
         $modelClass = $table->getAlias();
         $controller = $this->_controller();
         $scope = $this->_action()->getConfig('scope');
@@ -317,7 +322,7 @@ class ViewListener extends BaseListener
         }
 
         if (empty($scaffoldFields) || $action->getConfig('scaffold.autoFields')) {
-            $cols = $this->_table()->getSchema()->columns();
+            $cols = $this->_model()->getSchema()->columns();
             $cols = Hash::normalize($cols);
 
             $scope = $action->getConfig('scope');
@@ -554,7 +559,7 @@ class ViewListener extends BaseListener
      */
     protected function _associations(array $whitelist = []): array
     {
-        $table = $this->_table();
+        $table = $this->_model();
 
         $associationConfiguration = [];
 
@@ -605,7 +610,7 @@ class ViewListener extends BaseListener
      */
     protected function _primaryKeyValue(): array|string
     {
-        $fields = (array)$this->_table()->getPrimaryKey();
+        $fields = (array)$this->_model()->getPrimaryKey();
         $values = [];
         foreach ($fields as $field) {
             $values[] = $this->_deriveFieldFromContext($field);
@@ -628,7 +633,7 @@ class ViewListener extends BaseListener
     protected function _displayFieldValue(): string|int|null
     {
         /** @psalm-suppress PossiblyInvalidArgument */
-        return $this->_deriveFieldFromContext($this->_table()->getDisplayField());
+        return $this->_deriveFieldFromContext($this->_model()->getDisplayField());
     }
 
     /**
@@ -641,7 +646,7 @@ class ViewListener extends BaseListener
     protected function _deriveFieldFromContext(string $field): mixed
     {
         $controller = $this->_controller();
-        $modelClass = $this->_table()->getAlias();
+        $modelClass = $this->_model()->getAlias();
         $entity = $this->_entity();
         $request = $this->_request();
         $value = $entity->get($field);

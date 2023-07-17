@@ -84,7 +84,7 @@ trait IndexTypeTrait
 
         $field = $action->getConfig('scaffold.index_title_field');
         if ($field === null) {
-            $field = $this->_table()->getDisplayField();
+            $field = $this->_model()->getDisplayField();
         }
 
         return $field;
@@ -154,5 +154,5 @@ trait IndexTypeTrait
     /**
      * @inheritDoc
      */
-    abstract protected function _table();
+    abstract protected function _model();
 }
