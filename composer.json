@@ -29,13 +29,13 @@
         }
     ],
     "require": {
-        "cakephp/cakephp": "5.x-dev",
-        "friendsofcake/crud": "dev-cake-5",
-        "friendsofcake/bootstrap-ui": "dev-cake-5"
+        "cakephp/cakephp": "^5.0",
+        "friendsofcake/crud": "^7.0",
+        "friendsofcake/bootstrap-ui": "^5.0"
     },
     "require-dev": {
-        "friendsofcake/cakephp-test-utilities": "dev-cake-5.x",
-        "markstory/asset_compress": "5.x-dev",
+        "friendsofcake/cakephp-test-utilities": "^3.0",
+        "markstory/asset_compress": "^5.0",
         "phpunit/phpunit": "^10.1"
     },
     "autoload": {
@@ -59,7 +59,5 @@
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": true
         }
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true
+    }
 }
