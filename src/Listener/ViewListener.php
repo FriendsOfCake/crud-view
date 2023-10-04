@@ -606,9 +606,9 @@ class ViewListener extends BaseListener
      *
      * If no value can be found, NULL is returned
      *
-     * @return array|string
+     * @return array|string|int|null
      */
-    protected function _primaryKeyValue(): array|string
+    protected function _primaryKeyValue(): array|string|int|null
     {
         $fields = (array)$this->_model()->getPrimaryKey();
         $values = [];
