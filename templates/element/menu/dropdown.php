@@ -1,5 +1,5 @@
 <li class="dropdown alerts-dropdown">
-    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?= $dropdown->getTitle() ?></a>
+    <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown"><?= $dropdown->getTitle() ?></a>
     <ul class="dropdown-menu">
         <?php
         foreach ($dropdown->getEntries() as $entry) {

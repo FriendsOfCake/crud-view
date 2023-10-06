@@ -6,7 +6,7 @@ use Cake\Utility\Text;
         <?php $firstTab = key($formTabGroups) ?>
         <?php foreach ($formTabGroups as $group => $groupFields) : ?>
             <li role="presentation" <?= $group === $firstTab ? 'class="active"' : '' ?>>
-                <a href="#tab-<?= mb_strtolower(Text::slug($group)) ?>" role="tab" data-toggle="tab"><?= $group ?></a>
+                <a href="#tab-<?= mb_strtolower(Text::slug($group)) ?>" role="tab" data-bs-toggle="tab"><?= $group ?></a>
             </li>
         <?php endforeach ?>
     </ul>

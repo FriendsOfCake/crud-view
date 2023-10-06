@@ -16,7 +16,7 @@ foreach ($groups as $key => $group) {
 
 <?php foreach ($groups as $key => $group) : ?>
     <div class='btn-group' role="group">
-        <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+        <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
             <?= $key ?>
         </button>
         <div class="dropdown-menu dropdown-menu-right">
