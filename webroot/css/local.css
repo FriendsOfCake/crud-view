@@ -43,21 +43,25 @@ h2 .actions {
     margin-left: 15px;
 }
 
-.search-filters .form-inline .form-group label,
-.search-filters .form-inline .btn {
-    margin-right: .25rem !important;
-}
 
-.search-filters .form-inline .form-group {
-    margin-right: .5rem !important;
-}
-
-.search-filters .form-inline .form-group {
-    margin-bottom: 1rem !important;
+.search-filters .form-inline .col-auto {
+    margin-bottom: var(--bs-gutter-y) !important;
 }
 
 .search-filters .form-inline .form-control input {
     min-width: 90px !important;
+}
+
+.search-filters .form-inline option {
+    color: var(--bs-body-color);
+    font-style: normal;
+}
+
+.search-filters .form-inline select:invalid,
+.search-filters .form-inline select:has(option[value=""]:checked),
+.search-filters .form-inline option[value=""] {
+    font-style: italic;
+    color: #777;
 }
 
 .search-filters .form-inline select.autocomplete {

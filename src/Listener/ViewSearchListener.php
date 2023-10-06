@@ -6,7 +6,9 @@ namespace CrudView\Listener;
 use Cake\Event\EventInterface;
 use Cake\Routing\Router;
 use Cake\Utility\Hash;
+use Cake\Utility\Inflector;
 use Crud\Listener\BaseListener;
+use function Cake\I18n\__d;
 
 /**
  * @method \Cake\ORM\Table _model()
@@ -82,14 +84,14 @@ class ViewSearchListener extends BaseListener
      */
     public function fields(): array
     {
-        $fields = $this->getConfig('fields') ?: [];
+        $fields = Hash::normalize($this->getConfig('fields'), default: []) ?: [];
         $config = $this->getConfig();
 
         $schema = $this->_model()->getSchema();
         $request = $this->_request();
 
         if ($fields) {
-            $fields = Hash::normalize($fields);
+            $fields = Hash::normalize($fields, default: []);
         } else {
             $filters = $this->_model()->searchManager()->getFilters($config['collection']);
 
@@ -109,21 +111,21 @@ class ViewSearchListener extends BaseListener
                 'type' => 'text',
             ];
 
-            if (substr($field, -3) === '_id' && $field !== '_id') {
+            if (str_ends_with($field, '_id') && $field !== '_id') {
                 $input['type'] = 'select';
             }
 
-            $input = (array)$opts + $input;
+            $input = $opts + $input;
 
             $input['value'] = $request->getQuery($field);
 
             if (empty($input['options']) && $schema->getColumnType($field) === 'boolean') {
-                $input['options'] = ['No', 'Yes'];
+                $input['options'] = [__d('crud', 'No'), __d('crud', 'Yes')];
                 $input['type'] = 'select';
             }
 
             if (!empty($input['options'])) {
-                $input['empty'] = true;
+                $input['empty'] ??= $this->getPlaceholder($field);
                 if (empty($input['class']) && !$config['select2']) {
                     $input['class'] = 'no-select2';
                 }
@@ -156,6 +158,13 @@ class ViewSearchListener extends BaseListener
                 ];
             }
 
+            if ($input['type'] === 'text') {
+                $input['placeholder'] ??= $this->getPlaceholder($field);
+            }
+            if ($input['type'] === 'select') {
+                $input['empty'] ??= $this->getPlaceholder($field);
+            }
+
             $urlArgs = [];
 
             $fieldKeys = $input['fields'] ?? ['id' => $field, 'value' => $field];
@@ -173,5 +182,18 @@ class ViewSearchListener extends BaseListener
         }
 
         return $fields;
+    }
+
+    protected function getPlaceholder(string $field): string
+    {
+        if (str_contains($field, '.')) {
+            [, $field] = explode('.', $field);
+        }
+
+        if (str_ends_with($field, '_id') && $field !== '_id') {
+            $field = substr($field, 0, -3);
+        }
+
+        return Inflector::humanize($field);
     }
 }
