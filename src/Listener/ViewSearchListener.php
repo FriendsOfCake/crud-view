@@ -124,6 +124,11 @@ class ViewSearchListener extends BaseListener
                 $input['type'] = 'select';
             }
 
+            /** @psalm-suppress PossiblyUndefinedArrayOffset */
+            if ($input['type'] === 'select') {
+                $input += ['empty' => true];
+            }
+
             if (!empty($input['options'])) {
                 $input['empty'] ??= $this->getPlaceholder($field);
                 if (empty($input['class']) && !$config['select2']) {
@@ -139,6 +144,7 @@ class ViewSearchListener extends BaseListener
                 $input['class'] = 'autocomplete';
             }
 
+            /** @psalm-suppress PossiblyUndefinedArrayOffset */
             if (
                 !empty($input['class'])
                 && strpos($input['class'], 'autocomplete') !== false
@@ -166,17 +172,20 @@ class ViewSearchListener extends BaseListener
             }
 
             $urlArgs = [];
+            if (!isset($input['data-url'])) {
+                $urlArgs = [];
 
-            $fieldKeys = $input['fields'] ?? ['id' => $field, 'value' => $field];
-            if (is_array($fieldKeys)) {
-                foreach ($fieldKeys as $key => $val) {
-                    $urlArgs[$key] = $val;
+                $fieldKeys = $input['fields'] ?? ['id' => $field, 'value' => $field];
+                if (is_array($fieldKeys)) {
+                    foreach ($fieldKeys as $key => $val) {
+                        $urlArgs[$key] = $val;
+                    }
                 }
+
+                $input['data-url'] = Router::url(['action' => 'lookup', '_ext' => 'json', '?' => $urlArgs]);
             }
 
             unset($input['fields']);
-            $url = array_merge(['action' => 'lookup', '_ext' => 'json'], ['?' => $urlArgs]);
-            $input['data-url'] = Router::url($url);
 
             $fields[$field] = $input;
         }
