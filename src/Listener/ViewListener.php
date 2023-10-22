@@ -239,18 +239,12 @@ class ViewListener extends BaseListener
             }
         }
 
-        $models = Hash::normalize($models);
+        $models = Hash::normalize($models, default: []);
 
         $blacklist = $this->_action()->getConfig('scaffold.relations_blacklist');
         if (!empty($blacklist)) {
             $blacklist = Hash::normalize($blacklist);
-            $models = array_diff_key($models, $blacklist);
-        }
-
-        foreach ($models as $key => $value) {
-            if (!is_array($value)) {
-                $models[$key] = [];
-            }
+            $models = array_diff_key($models, array_flip($blacklist));
         }
 
         return $models;
@@ -316,14 +310,14 @@ class ViewListener extends BaseListener
     protected function _scaffoldFields(array $associations = []): array
     {
         $action = $this->_action();
-        $scaffoldFields = (array)$action->getConfig('scaffold.fields');
-        if (!empty($scaffoldFields)) {
-            $scaffoldFields = Hash::normalize($scaffoldFields);
-        }
+        $scaffoldFields = Hash::normalize(
+            (array)$action->getConfig('scaffold.fields'),
+            default: []
+        );
 
         if (empty($scaffoldFields) || $action->getConfig('scaffold.autoFields')) {
             $cols = $this->_model()->getSchema()->columns();
-            $cols = Hash::normalize($cols);
+            $cols = Hash::normalize($cols, default: []);
 
             $scope = $action->getConfig('scope');
             if ($scope === 'entity' && !empty($associations['manyToMany'])) {
@@ -338,24 +332,20 @@ class ViewListener extends BaseListener
         }
 
         // Check for blacklisted fields
-        $blacklist = $action->getConfig('scaffold.fields_blacklist');
-        if (!empty($blacklist)) {
+        $blacklist = $this->_blacklist();
+        if ($blacklist) {
             $scaffoldFields = array_diff_key($scaffoldFields, array_combine($blacklist, $blacklist));
         }
 
         // Make sure all array values are an array
         foreach ($scaffoldFields as $field => $options) {
-            if (!is_array($options)) {
-                $scaffoldFields[$field] = (array)$options;
-            }
-
             $scaffoldFields[$field] += ['formatter' => null];
         }
 
-        $fieldSettings = $action->getConfig('scaffold.field_settings');
-        if (empty($fieldSettings)) {
-            $fieldSettings = [];
-        }
+        $fieldSettings = Hash::normalize(
+            (array)$action->getConfig('scaffold.field_settings'),
+            default: []
+        );
         $fieldSettings = array_intersect_key($fieldSettings, $scaffoldFields);
         $scaffoldFields = Hash::merge($scaffoldFields, $fieldSettings);
 
@@ -405,13 +395,10 @@ class ViewListener extends BaseListener
         $actionBlacklist = [];
         $groups = $this->_action()->getConfig('scaffold.action_groups') ?: [];
         foreach ($groups as $group) {
-            $group = Hash::normalize($group);
+            $group = Hash::normalize($group, default: []);
             foreach ($group as $actionName => $config) {
                 if (isset($table[$actionName]) || isset($entity[$actionName])) {
                     continue;
-                }
-                if ($config === null) {
-                    $config = [];
                 }
                 [$scope, $actionConfig] = $this->_getControllerActionConfiguration($actionName, $config);
                 $realAction = Hash::get($actionConfig, 'url.action', $actionName);
@@ -507,8 +494,8 @@ class ViewListener extends BaseListener
         $extraActions = $this->_action()->getConfig('scaffold.extra_actions') ?: [];
 
         $allActions = array_merge(
-            $this->_normalizeActions($actions),
-            $this->_normalizeActions($extraActions)
+            Hash::normalize($actions, default: []),
+            Hash::normalize($extraActions, default: [])
         );
 
         $blacklist = (array)$this->_action()->getConfig('scaffold.actions_blacklist');
@@ -523,32 +510,6 @@ class ViewListener extends BaseListener
         }
 
         return array_diff_key($allActions, $blacklist);
-    }
-
-    /**
-     * Convert mixed action configs to unified structure
-     *
-     * [
-     *   'ACTION_1' => [..config...],
-     *   'ACTION_2' => [..config...],
-     *   'ACTION_N' => [..config...]
-     * ]
-     *
-     * @param array $actions Actions
-     * @return array
-     */
-    protected function _normalizeActions(array $actions): array
-    {
-        $normalized = [];
-        foreach ($actions as $key => $config) {
-            if (is_array($config)) {
-                $normalized[$key] = $config;
-            } else {
-                $normalized[$config] = [];
-            }
-        }
-
-        return $normalized;
     }
 
     /**
