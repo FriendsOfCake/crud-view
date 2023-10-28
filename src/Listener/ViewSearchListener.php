@@ -124,11 +124,6 @@ class ViewSearchListener extends BaseListener
                 $input['type'] = 'select';
             }
 
-            /** @psalm-suppress PossiblyUndefinedArrayOffset */
-            if ($input['type'] === 'select') {
-                $input += ['empty' => true];
-            }
-
             if (!empty($input['options'])) {
                 $input['empty'] ??= $this->getPlaceholder($field);
                 if (empty($input['class']) && !$config['select2']) {
