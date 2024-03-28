@@ -56,7 +56,7 @@ class LinkItem
      */
     protected function _setTitle(string|array|null $title): string|array
     {
-        if (empty($title)) {
+        if ($title === null || $title === '') {
             throw new InvalidArgumentException('Missing title for LinkItem action');
         }
 
@@ -72,7 +72,7 @@ class LinkItem
      */
     protected function _setUrl(string|array|null $url): string|array
     {
-        if ($url === null || empty($url)) {
+        if ($url === null || $url === '') {
             throw new InvalidArgumentException('Invalid url specified for LinkItem');
         }
 
@@ -87,10 +87,6 @@ class LinkItem
      */
     protected function _setOptions(array $options): string|array
     {
-        if (empty($options)) {
-            $options = [];
-        }
-
         $url = $this->get('url');
         if (!is_array($url)) {
             $isHttp = substr($url, 0, 7) === 'http://';

@@ -151,6 +151,7 @@ class ViewSearchListener extends BaseListener
                     $input['options'][$input['value']] = $input['value'];
                 }
 
+                /** @psalm-suppress PossiblyInvalidOperand */
                 $input += [
                     'data-input-type' => 'text',
                     'data-tags' => 'true',
@@ -188,6 +189,12 @@ class ViewSearchListener extends BaseListener
         return $fields;
     }
 
+    /**
+     * Get placeholder text for a field.
+     *
+     * @param string $field Field name.
+     * @return string
+     */
     protected function getPlaceholder(string $field): string
     {
         if (str_contains($field, '.')) {

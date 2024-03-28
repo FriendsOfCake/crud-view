@@ -15,17 +15,17 @@ use CrudView\Listener\ViewSearchListener;
  */
 class ViewSearchListenerTest extends TestCase
 {
-    protected $fixtures = ['plugin.CrudView.Blogs'];
+    protected array $fixtures = ['plugin.CrudView.Blogs'];
 
     /**
      * @var \Cake\Controller\Controller;
      */
-    protected $controller;
+    protected Controller $controller;
 
     /**
      * @var \CrudView\Listener\ViewSearchListener
      */
-    protected $listener;
+    protected ViewSearchListener $listener;
 
     public function setUp(): void
     {
@@ -39,7 +39,8 @@ class ViewSearchListenerTest extends TestCase
             'params' => ['controller' => 'Blogs', 'action' => 'index', 'plugin' => null, '_ext' => null],
         ]);
 
-        $this->controller = new Controller($request, null, 'Blogs');
+        $this->controller = new Controller($request, 'Blogs');
+        $this->controller->loadComponent('Crud.Crud');
 
         $this->listener = new ViewSearchListener($this->controller);
 
@@ -67,6 +68,7 @@ class ViewSearchListenerTest extends TestCase
                 'data-tags' => 'true',
                 'data-allow-clear' => 'true',
                 'data-placeholder' => '',
+                'empty' => 'Name',
             ],
             'is_active' => [
                 'required' => false,

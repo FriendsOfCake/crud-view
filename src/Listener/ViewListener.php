@@ -171,7 +171,7 @@ class ViewListener extends BaseListener
         }
 
         $primaryKeyValue = $this->_primaryKeyValue();
-        if (empty($primaryKeyValue)) {
+        if ($primaryKeyValue === null) {
             return sprintf('%s %s', $actionName, $controllerName);
         }
 
@@ -612,7 +612,7 @@ class ViewListener extends BaseListener
         $request = $this->_request();
         $value = $entity->get($field);
 
-        if ($value) {
+        if ($value !== null) {
             return $value;
         }
 
