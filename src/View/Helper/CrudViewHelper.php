@@ -3,12 +3,15 @@ declare(strict_types=1);
 
 namespace CrudView\View\Helper;
 
+use BackedEnum;
+use Cake\Database\Type\EnumLabelInterface;
 use Cake\Datasource\EntityInterface;
 use Cake\Datasource\SchemaInterface;
 use Cake\Utility\Inflector;
 use Cake\Utility\Text;
 use Cake\View\Helper;
 use Cake\View\Helper\FormHelper;
+use UnitEnum;
 use function Cake\Core\h;
 use function Cake\I18n\__d;
 
@@ -156,6 +159,10 @@ class CrudViewHelper extends Helper
             return $this->formatTime($field, $value, $options);
         }
 
+        if (str_starts_with($type, 'enum-')) {
+            return $this->formatEnum($field, $value, $options);
+        }
+
         $value = $this->formatString($field, $value);
 
         if ($field === $this->getViewVar('displayField')) {
@@ -228,6 +235,23 @@ class CrudViewHelper extends Helper
         }
 
         return $value;
+    }
+
+    /**
+     * Format an enum for display
+     *
+     * @param string $field Name of field.
+     * @param int|string|\UnitEnum|\BackedEnum $value Value of field.
+     * @return string
+     */
+    public function formatEnum(string $field, int|string|UnitEnum|BackedEnum $value, array $options): string
+    {
+        if (is_scalar($value)) {
+            return $value;
+        }
+
+        return $value instanceof EnumLabelInterface ?
+            $value->label() : Inflector::humanize(Inflector::underscore($value->name));
     }
 
     /**
