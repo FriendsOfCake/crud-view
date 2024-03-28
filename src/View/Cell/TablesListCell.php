@@ -18,13 +18,14 @@ class TablesListCell extends Cell
      */
     public function display(?array $tables = null, ?array $blacklist = null): void
     {
-        if (empty($tables)) {
+        if ($tables === null) {
             /** @var \Cake\Database\Connection $connection */
             $connection = ConnectionManager::get('default');
             $schema = $connection->getSchemaCollection();
             $tables = $schema->listTables();
             ksort($tables);
 
+            /** @psalm-suppress RiskyTruthyFalsyComparison */
             if (!empty($blacklist)) {
                 $tables = array_diff($tables, $blacklist);
             }

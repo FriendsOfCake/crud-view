@@ -1,17 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="dev-master@">
-  <file src="src/Listener/ViewSearchListener.php">
-    <PossiblyUndefinedArrayOffset occurrences="1">
-      <code>$input['type']</code>
-    </PossiblyUndefinedArrayOffset>
-  </file>
+<files psalm-version="5.23.1@8471a896ccea3526b26d082f4461eeea467f10a4">
   <file src="src/View/Widget/DateTimeWidget.php">
-    <PossiblyNullArrayAccess occurrences="2">
-      <code>$data['name']</code>
-      <code>$data['templateVars']</code>
+    <PossiblyNullArrayAccess>
+      <code><![CDATA[$data['name']]]></code>
+      <code><![CDATA[$data['templateVars']]]></code>
     </PossiblyNullArrayAccess>
-    <PossiblyUndefinedArrayOffset occurrences="1">
-      <code>$data['type']</code>
-    </PossiblyUndefinedArrayOffset>
   </file>
 </files>
