@@ -9,7 +9,7 @@
         <bootstrap class="Cake\TestSuite\Fixture\Extension\PHPUnitExtension"/>
     </extensions>
     <php>
-        <!-- <env name="FIXTURE_SCHEMA_METADATA" value="./tests/schema.php"/> -->
+        <env name="FIXTURE_SCHEMA_METADATA" value="./tests/schema.php"/>
     </php>
     <source>
         <include>
