@@ -241,11 +241,15 @@ class CrudViewHelper extends Helper
      * Format an enum for display
      *
      * @param string $field Name of field.
-     * @param \UnitEnum|\BackedEnum|string|int $value Value of field.
+     * @param \UnitEnum|\BackedEnum|string|int|null $value Value of field.
      * @return string
      */
-    public function formatEnum(string $field, UnitEnum|BackedEnum|string|int $value, array $options): string
+    public function formatEnum(string $field, UnitEnum|BackedEnum|string|int|null $value, array $options): string
     {
+        if ($value === null) {
+            return $this->Html->badge(__d('crud', 'N/A'), ['class' => 'info']);
+        }
+
         if (is_scalar($value)) {
             return (string)$value;
         }
