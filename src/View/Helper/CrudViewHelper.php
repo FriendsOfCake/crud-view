@@ -347,11 +347,12 @@ class CrudViewHelper extends Helper
             return null;
         }
 
+        $this->Form->unlockField('_redirect_url');
+
         return $this->Form->hidden('_redirect_url', [
             'name' => '_redirect_url',
             'value' => $redirectUrl,
             'id' => null,
-            'secure' => FormHelper::SECURE_SKIP,
         ]);
     }
 
