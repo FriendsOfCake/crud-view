@@ -239,12 +239,9 @@ class ViewListener extends BaseListener
             }
         }
 
-        $models = Hash::normalize($models, default: []);
-
         $blacklist = $this->_action()->getConfig('scaffold.relations_blacklist');
         if (!empty($blacklist)) {
-            $blacklist = Hash::normalize($blacklist);
-            $models = array_diff_key($models, array_flip($blacklist));
+            $models = array_diff($models, $blacklist);
         }
 
         return $models;
