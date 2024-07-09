@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace CrudView\View\Helper;
 
 use BackedEnum;
+use Cake\Core\Exception\CakeException;
 use Cake\Database\Type\EnumLabelInterface;
 use Cake\Datasource\EntityInterface;
 use Cake\Datasource\SchemaInterface;
@@ -347,7 +348,11 @@ class CrudViewHelper extends Helper
             return null;
         }
 
-        $this->Form->unlockField('_redirect_url');
+        try {
+            $this->Form->unlockField('_redirect_url');
+        } catch (CakeException) {
+            // If FormProtectorComponent is not loaded, FormHelper::unlockField() throws an exception
+        }
 
         return $this->Form->hidden('_redirect_url', [
             'name' => '_redirect_url',
