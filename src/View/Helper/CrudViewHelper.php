@@ -312,7 +312,7 @@ class CrudViewHelper extends Helper
 
             return [
                 'alias' => $alias,
-                'output' => $this->Html->link($entity->{$details['displayField']}, [
+                'output' => $this->Html->link((string)$entity->{$details['displayField']}, [
                     'plugin' => $details['plugin'],
                     'controller' => $details['controller'],
                     'action' => 'view',
