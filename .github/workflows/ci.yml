@@ -17,10 +17,10 @@ jobs:
     - name: Setup PHP
       uses: shivammathur/setup-php@v2
       with:
-        php-version: '8.1'
+        php-version: '8.3'
         extensions: mbstring, intl
         coverage: none
-        tools: vimeo/psalm:5, phpstan:1.10, cs2pr
+        tools: vimeo/psalm:5, phpstan:1.11, cs2pr
 
     - name: Composer Install
       run: composer require --dev cakephp/cakephp-codesniffer:^5.0

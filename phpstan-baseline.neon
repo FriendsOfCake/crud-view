@@ -31,12 +31,12 @@ parameters:
 			path: src/View/Widget/DateTimeWidget.php
 
 		-
-			message: "#^Offset 'name' does not exist on array\\<string\\>\\|string\\.$#"
+			message: "#^Offset 'name' does not exist on array\\<string\\>\\|string\\|null\\.$#"
 			count: 1
 			path: src/View/Widget/DateTimeWidget.php
 
 		-
-			message: "#^Offset 'templateVars' does not exist on array\\<string\\>\\|string\\.$#"
+			message: "#^Offset 'templateVars' does not exist on array\\<string\\>\\|string\\|null\\.$#"
 			count: 2
 			path: src/View/Widget/DateTimeWidget.php
 

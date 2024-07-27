@@ -2,10 +2,11 @@ includes:
 	- phpstan-baseline.neon
 
 parameters:
-	level: 7
-	checkMissingIterableValueType: false
-	checkGenericClassInNonGenericObjectType: false
+	level: 8
 	paths:
 		- src
 	universalObjectCratesClasses:
 		- Crud\Event\Subject
+	ignoreErrors:
+		- identifier: missingType.iterableValue
+		- identifier: missingType.generics

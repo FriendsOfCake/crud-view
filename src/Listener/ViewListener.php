@@ -33,9 +33,9 @@ class ViewListener extends BaseListener
     /**
      * Default associations config
      *
-     * @var array|null
+     * @var array
      */
-    protected ?array $associations = null;
+    protected array $associations;
 
     /**
      * [beforeFind description]
@@ -96,7 +96,8 @@ class ViewListener extends BaseListener
             $this->_entity = $event->getSubject()->entity;
         }
 
-        if ($this->associations === null) {
+        /** @psalm-suppress RedundantPropertyInitializationCheck */
+        if (!isset($this->associations)) {
             $this->associations = $this->_associations(array_keys($this->_getRelatedModels()));
         }
 
