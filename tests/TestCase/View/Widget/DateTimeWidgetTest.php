@@ -11,6 +11,7 @@ use Cake\View\StringTemplate;
 use Cake\View\Widget\SelectBoxWidget;
 use CrudView\View\Widget\DateTimeWidget;
 use FriendsOfCake\TestUtilities\CompareTrait;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * DateTimeWidgetTest
@@ -30,10 +31,10 @@ class DateTimeWidgetTest extends TestCase
     /**
      * testRender
      *
-     * @dataProvider renderProvider
      * @param string $compareFileName
      * @param array $data
      */
+    #[DataProvider('renderProvider')]
     public function testRenderSimple($compareFileName, $data)
     {
         /** @var \Cake\View\Form\ContextInterface $context */

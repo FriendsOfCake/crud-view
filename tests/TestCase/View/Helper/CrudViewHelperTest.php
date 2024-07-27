@@ -49,13 +49,13 @@ class CrudViewHelperTest extends TestCase
         $this->CrudView
             ->expects($this->any())
             ->method('getContext')
-            ->will($this->returnValue(new Entity()));
+            ->willReturn(new Entity());
 
         $this->CrudView
             ->expects($this->any())
             ->method('columnType')
             ->with('created')
-            ->will($this->returnValue('datetime'));
+            ->willReturn('datetime');
 
         $value = new DateTime();
         $result = $this->CrudView->introspect('created', $value);
