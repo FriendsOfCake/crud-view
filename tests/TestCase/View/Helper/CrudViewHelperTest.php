@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace CrudView\Test\TestCase\View\Helper;
 
 use Cake\I18n\DateTime;
-use Cake\ORM\Entity;
 use Cake\TestSuite\TestCase;
 use Cake\View\View;
 use CrudView\View\Helper\CrudViewHelper;
@@ -14,12 +13,11 @@ use CrudView\View\Helper\CrudViewHelper;
  */
 class CrudViewHelperTest extends TestCase
 {
+    protected array $fixtures = ['plugin.CrudView.Blogs', 'plugin.CrudView.Users'];
+
     protected CrudViewHelper $CrudView;
 
-    /**
-     * @var \Cake\View\View&\PHPUnit\Framework\MockObject\MockObject
-     */
-    protected $View;
+    protected View $View;
 
     /**
      * setUp method
@@ -36,28 +34,21 @@ class CrudViewHelperTest extends TestCase
             ],
         ]);
 
+        $this->CrudView = new CrudViewHelper($this->View);
+
+        $this->fetchTable('Blogs')->belongsTo('Users');
+
         static::setAppNamespace();
     }
 
     public function testIntrospect()
     {
-        $this->CrudView = $this->getMockBuilder(CrudViewHelper::class)
-            ->setConstructorArgs([$this->View])
-            ->onlyMethods(['columnType', 'getContext'])
-            ->getMock();
+        $entity = $this->fetchTable('Blogs')->find()->first();
+        $entity->created = new DateTime();
 
-        $this->CrudView
-            ->expects($this->any())
-            ->method('getContext')
-            ->willReturn(new Entity());
+        $this->CrudView->setContext($entity);
 
-        $this->CrudView
-            ->expects($this->any())
-            ->method('columnType')
-            ->with('created')
-            ->willReturn('datetime');
-
-        $value = new DateTime();
+        $value = $entity->created;
         $result = $this->CrudView->introspect('created', $value);
         $this->assertEquals('just now', $result);
 
@@ -80,5 +71,17 @@ class CrudViewHelperTest extends TestCase
         ]);
         $result = $this->CrudView->introspect('created', $value);
         $this->assertEquals('formatted time', $result);
+    }
+
+    public function testProcess()
+    {
+        $entity = $this->fetchTable('Blogs')->find()
+            ->contain('Users')
+            ->first();
+
+        $this->assertSame(
+            'on 1/1/00',
+            $this->CrudView->process('user.birth_date', $entity)
+        );
     }
 }

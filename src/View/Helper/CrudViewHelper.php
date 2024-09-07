@@ -10,6 +10,7 @@ use Cake\Datasource\EntityInterface;
 use Cake\Datasource\SchemaInterface;
 use Cake\Utility\Inflector;
 use Cake\Utility\Text;
+use Cake\View\Form\EntityContext;
 use Cake\View\Helper;
 use UnitEnum;
 use function Cake\Core\h;
@@ -30,11 +31,11 @@ class CrudViewHelper extends Helper
     protected array $helpers = ['Form', 'Html', 'Time'];
 
     /**
-     * Context
+     * Entity context
      *
-     * @var \Cake\Datasource\EntityInterface
+     * @var \Cake\View\Form\EntityContext
      */
-    protected EntityInterface $_context;
+    protected EntityContext $_context;
 
     /**
      * Default config.
@@ -53,15 +54,15 @@ class CrudViewHelper extends Helper
      */
     public function setContext(EntityInterface $record): void
     {
-        $this->_context = $record;
+        $this->_context = new EntityContext(['entity' => $record]);
     }
 
     /**
      * Get context
      *
-     * @return \Cake\Datasource\EntityInterface
+     * @return \Cake\View\Form\EntityContext
      */
-    public function getContext(): EntityInterface
+    public function getContext(): EntityContext
     {
         return $this->_context;
     }
@@ -78,11 +79,11 @@ class CrudViewHelper extends Helper
     {
         $this->setContext($data);
 
-        $value = $this->fieldValue($data, $field);
+        $value = $this->getContext()->val($field, ['schemaDefault' => false]);
         $options += ['formatter' => null];
 
         if ($options['formatter'] === 'element') {
-            $context = $this->getContext();
+            $context = $this->getContext()->entity();
 
             return $this->_View->element($options['element'], compact('context', 'field', 'value', 'options'));
         }
@@ -95,7 +96,7 @@ class CrudViewHelper extends Helper
         }
 
         if (is_callable($options['formatter'])) {
-            return $options['formatter']($field, $value, $this->getContext(), $options, $this->getView());
+            return $options['formatter']($field, $value, $this->getContext()->entity(), $options, $this->getView());
         }
 
         $value = $this->introspect($field, $value, $options);
@@ -112,8 +113,8 @@ class CrudViewHelper extends Helper
      */
     public function fieldValue(?EntityInterface $data, string $field): mixed
     {
-        if (empty($data)) {
-            $data = $this->getContext();
+        if ($data === null) {
+            return $this->getContext()->val($field, ['schemaDefault' => false]);
         }
 
         return $data->get($field);
@@ -140,7 +141,7 @@ class CrudViewHelper extends Helper
         if (isset($fieldFormatters[$type])) {
             /** @psalm-suppress PossiblyNullArrayOffset */
             if (is_callable($fieldFormatters[$type])) {
-                return $fieldFormatters[$type]($field, $value, $this->getContext(), $options, $this->getView());
+                return $fieldFormatters[$type]($field, $value, $this->getContext()->entity(), $options, $this->getView());
             }
 
             /** @psalm-suppress PossiblyNullArrayOffset */
@@ -180,9 +181,7 @@ class CrudViewHelper extends Helper
      */
     public function columnType(string $field): ?string
     {
-        $schema = $this->schema();
-
-        return $schema->getColumnType($field);
+        return $this->getContext()->type($field);
     }
 
     /**
@@ -295,7 +294,7 @@ class CrudViewHelper extends Helper
             return false;
         }
 
-        $data = $this->getContext();
+        $data = $this->getContext()->entity();
 
         foreach ($associations['manyToOne'] as $alias => $details) {
             if ($field !== $details['foreignKey']) {
@@ -396,7 +395,7 @@ class CrudViewHelper extends Helper
     {
         return $this->Html->link(
             $title,
-            ['action' => 'view', $this->getContext()->get($this->getViewVar('primaryKey'))],
+            ['action' => 'view', $this->getContext()->entity()->get($this->getViewVar('primaryKey'))],
             $options
         );
     }
