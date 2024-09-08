@@ -6,6 +6,7 @@ namespace CrudView\View\Helper;
 use BackedEnum;
 use Cake\Chronos\ChronosDate;
 use Cake\Chronos\ChronosTime;
+use Cake\Core\Configure;
 use Cake\Core\Exception\CakeException;
 use Cake\Database\Type\EnumLabelInterface;
 use Cake\Datasource\EntityInterface;
@@ -52,6 +53,11 @@ class CrudViewHelper extends Helper
         'dateFormat' => null,
         'timeFormat' => null,
     ];
+
+    public function initialize(array $config): void
+    {
+        $this->setConfig(Configure::read('CrudView.helperConfig', []));
+    }
 
     /**
      * Set context
