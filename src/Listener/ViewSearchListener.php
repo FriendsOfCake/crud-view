@@ -84,7 +84,8 @@ class ViewSearchListener extends BaseListener
      */
     public function fields(): array
     {
-        $fields = $this->getConfig('fields');
+        /** @var array $fields */
+        $fields = $this->getConfig('fields', []);
         $config = $this->getConfig();
 
         $schema = $this->_model()->getSchema();
