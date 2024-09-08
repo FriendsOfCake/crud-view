@@ -85,7 +85,7 @@ class CrudViewHelperTest extends TestCase
         $dateTime = new Time('14:00:00');
 
         $result = $this->CrudView->formatDateTime('field', $dateTime, []);
-        $this->assertEquals('2:00 PM', $result);
+        $this->assertEquals('2:00 PM', str_replace(' ', ' ', $result));
 
         Time::setToStringFormat('KK:mm:ss a');
         $result = $this->CrudView->formatDateTime('field', $dateTime, []);
@@ -93,6 +93,6 @@ class CrudViewHelperTest extends TestCase
 
         $dateTime = new DateTime('2021-01-20 14:00:00');
         $result = $this->CrudView->formatDateTime('field', $dateTime, []);
-        $this->assertEquals('1/20/21, 2:00 PM', $result);
+        $this->assertEquals('1/20/21, 2:00 PM', str_replace(' ', ' ', $result));
     }
 }
