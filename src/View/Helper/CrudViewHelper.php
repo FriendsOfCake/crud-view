@@ -217,18 +217,18 @@ class CrudViewHelper extends Helper
         }
 
         if ($value instanceof Date) {
-            return $value->i18nFormat($options['format'] ?? $this->getConfig('dateFormat'));
+            return (string)$value->i18nFormat($options['format'] ?? $this->getConfig('dateFormat'));
         }
 
         if ($value instanceof Time) {
-            return $value->i18nFormat($options['format'] ?? $this->getConfig('timeFormat'));
+            return (string)$value->i18nFormat($options['format'] ?? $this->getConfig('timeFormat'));
         }
 
         if ($value instanceof ChronosDate || $value instanceof ChronosTime) {
             return (string)$value;
         }
 
-        return $this->Time->i18nFormat($value, $options['format'] ?? $this->getConfig('dateTimeFormat'), '')
+        return (string)$this->Time->i18nFormat($value, $options['format'] ?? $this->getConfig('dateTimeFormat'), '')
             ?: $this->Html->badge(__d('crud', 'N/A'), ['class' => 'info']);
     }
 
@@ -389,9 +389,12 @@ class CrudViewHelper extends Helper
      */
     public function createViewLink(string $title, array $options = []): string
     {
+        $entity = $this->getContext()->entity();
+        assert($entity instanceof EntityInterface);
+
         return $this->Html->link(
             $title,
-            ['action' => 'view', $this->getContext()->entity()->get($this->getViewVar('primaryKey'))],
+            ['action' => 'view', $entity->get($this->getViewVar('primaryKey'))],
             $options
         );
     }
