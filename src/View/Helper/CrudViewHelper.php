@@ -148,7 +148,13 @@ class CrudViewHelper extends Helper
         if (isset($fieldFormatters[$type])) {
             /** @psalm-suppress PossiblyNullArrayOffset */
             if (is_callable($fieldFormatters[$type])) {
-                return $fieldFormatters[$type]($field, $value, $this->getContext()->entity(), $options, $this->getView());
+                return $fieldFormatters[$type](
+                    $field,
+                    $value,
+                    $this->getContext()->entity(),
+                    $options,
+                    $this->getView()
+                );
             }
 
             /** @psalm-suppress PossiblyNullArrayOffset */
