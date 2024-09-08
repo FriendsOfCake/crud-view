@@ -4,10 +4,14 @@ declare(strict_types=1);
 namespace CrudView\View\Helper;
 
 use BackedEnum;
+use Cake\Chronos\ChronosDate;
+use Cake\Chronos\ChronosTime;
 use Cake\Core\Exception\CakeException;
 use Cake\Database\Type\EnumLabelInterface;
 use Cake\Datasource\EntityInterface;
 use Cake\Datasource\SchemaInterface;
+use Cake\I18n\Date;
+use Cake\I18n\Time;
 use Cake\Utility\Inflector;
 use Cake\Utility\Text;
 use Cake\View\Form\EntityContext;
@@ -44,6 +48,9 @@ class CrudViewHelper extends Helper
      */
     protected array $_defaultConfig = [
         'fieldFormatters' => null,
+        'dateTimeFormat' => null,
+        'dateFormat' => null,
+        'timeFormat' => null,
     ];
 
     /**
@@ -152,12 +159,8 @@ class CrudViewHelper extends Helper
             return $this->formatBoolean($field, $value, $options);
         }
 
-        if (in_array($type, ['datetime', 'date', 'timestamp'])) {
-            return $this->formatDate($field, $value, $options);
-        }
-
-        if ($type === 'time') {
-            return $this->formatTime($field, $value, $options);
+        if (in_array($type, ['datetime', 'date', 'time', 'timestamp'], true)) {
+            return $this->formatDateTime($field, $value, $options);
         }
 
         if ($type !== null && str_starts_with($type, 'enum-')) {
@@ -207,33 +210,26 @@ class CrudViewHelper extends Helper
      * @param array $options Options array.
      * @return string
      */
-    public function formatDate(string $field, mixed $value, array $options): string
+    public function formatDateTime(string $field, mixed $value, array $options): string
     {
         if ($value === null) {
             return $this->Html->badge(__d('crud', 'N/A'), ['class' => 'info']);
         }
 
-        return $this->Time->timeAgoInWords($value, $options);
-    }
-
-    /**
-     * Format a time for display
-     *
-     * @param string $field Name of field.
-     * @param mixed $value Value of field.
-     * @param array $options Options array.
-     * @return string
-     */
-    public function formatTime(string $field, mixed $value, array $options): string
-    {
-        $format = $options['format'] ?? 'KK:mm:ss a';
-        /** @var string $value */
-        $value = $this->Time->format($value, $format, '');
-        if ($value === '') {
-            return $this->Html->badge(__d('crud', 'N/A'), ['class' => 'info']);
+        if ($value instanceof Date) {
+            return $value->i18nFormat($options['format'] ?? $this->getConfig('dateFormat'));
         }
 
-        return $value;
+        if ($value instanceof Time) {
+            return $value->i18nFormat($options['format'] ?? $this->getConfig('timeFormat'));
+        }
+
+        if ($value instanceof ChronosDate || $value instanceof ChronosTime) {
+            return (string)$value;
+        }
+
+        return $this->Time->i18nFormat($value, $options['format'] ?? $this->getConfig('dateTimeFormat'), '')
+            ?: $this->Html->badge(__d('crud', 'N/A'), ['class' => 'info']);
     }
 
     /**

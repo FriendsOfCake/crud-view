@@ -8,6 +8,6 @@ use Cake\TestSuite\Fixture\TestFixture;
 class UsersFixture extends TestFixture
 {
     public array $records = [
-        ['username' => 'ADmad', 'birth_date' => '2000-01-01'],
+        ['username' => 'ADmad', 'birth_date' => '2000-01-15'],
     ];
 }
