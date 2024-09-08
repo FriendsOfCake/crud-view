@@ -84,7 +84,7 @@ class ViewSearchListener extends BaseListener
      */
     public function fields(): array
     {
-        $fields = Hash::normalize($this->getConfig('fields'), default: []) ?: [];
+        $fields = $this->getConfig('fields');
         $config = $this->getConfig();
 
         $schema = $this->_model()->getSchema();
@@ -119,13 +119,14 @@ class ViewSearchListener extends BaseListener
 
             $input['value'] = $request->getQuery($field);
 
-            if (empty($input['options']) && $schema->getColumnType($field) === 'boolean') {
-                $input['options'] = [__d('crud', 'No'), __d('crud', 'Yes')];
+            if (!isset($input['options']) && $schema->getColumnType($field) === 'boolean') {
+                $input['options'] = [1 => __d('crud', 'Yes'), 0 => __d('crud', 'No')];
                 $input['type'] = 'select';
             }
 
-            if (!empty($input['options'])) {
+            if (isset($input['options'])) {
                 $input['empty'] ??= $this->getPlaceholder($field);
+
                 if (empty($input['class']) && !$config['select2']) {
                     $input['class'] = 'no-select2';
                 }
@@ -135,7 +136,7 @@ class ViewSearchListener extends BaseListener
                 continue;
             }
 
-            if (empty($input['class']) && $config['autocomplete']) {
+            if ($input['type'] === 'select' && empty($input['class']) && $config['autocomplete']) {
                 $input['class'] = 'autocomplete';
             }
 
@@ -167,8 +168,11 @@ class ViewSearchListener extends BaseListener
                 $input['empty'] ??= $this->getPlaceholder($field);
             }
 
-            $urlArgs = [];
-            if (!isset($input['data-url'])) {
+            if (
+                !empty($input['class'])
+                && strpos($input['class'], 'autocomplete') !== false
+                && !isset($input['data-url'])
+            ) {
                 $urlArgs = [];
 
                 $fieldKeys = $input['fields'] ?? ['id' => $field, 'value' => $field];
