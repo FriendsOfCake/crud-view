@@ -54,6 +54,9 @@ class CrudViewHelper extends Helper
         'timeFormat' => null,
     ];
 
+    /**
+     * @inheritDoc
+     */
     public function initialize(array $config): void
     {
         $this->setConfig(Configure::read('CrudView.helperConfig', []));
