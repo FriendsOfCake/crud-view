@@ -12,7 +12,7 @@
 </head>
 <body>
     <nav class="navbar navbar-light bg-light" role="navigation">
-        <button type="button" class="navbar-toggler mr-2" data-bs-toggle="collapse" data-bs-target=".navbar-ex1-collapse">
+        <button type="button" class="navbar-toggler ms-3 me-3" data-bs-toggle="collapse" data-bs-target=".navbar-ex1-collapse">
             <span class="navbar-toggler-icon"></span>
         </button>
         <?php
