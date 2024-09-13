@@ -123,11 +123,11 @@ class CrudViewHelper extends Helper
     /**
      * Get the current field value
      *
-     * @param \Cake\Datasource\EntityInterface|null $data The entity data.
      * @param string $field The field to extract, if null, the field from the entity context is used.
+     * @param \Cake\Datasource\EntityInterface|null $data The entity data.
      * @return mixed
      */
-    public function fieldValue(?EntityInterface $data, string $field): mixed
+    public function fieldValue(string $field, ?EntityInterface $data = null): mixed
     {
         if ($data === null) {
             return $this->getContext()->val($field, ['schemaDefault' => false]);
