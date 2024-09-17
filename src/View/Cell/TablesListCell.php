@@ -23,7 +23,7 @@ class TablesListCell extends Cell
             $connection = ConnectionManager::get('default');
             $schema = $connection->getSchemaCollection();
             $tables = $schema->listTables();
-            ksort($tables);
+            sort($tables);
 
             /** @psalm-suppress RiskyTruthyFalsyComparison */
             if (!empty($blacklist)) {
