@@ -23,12 +23,3 @@ If you happen to stumble upon a bug, please feel free to create a pull request w
 (optionally with a test), and a description of the bug and how it was resolved.
 
 You can also create an issue with a description to raise awareness of the bug.
-
-# Features
-
-If you have a good idea for a Crud View feature, please join us on IRC and let's discuss it. Pull
-requests are always more than welcome.
-
-# Support / Questions
-
-You can join us on IRC in the #FriendsOfCake freenode channel for any support or questions.
