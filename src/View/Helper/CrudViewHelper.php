@@ -3,13 +3,23 @@ declare(strict_types=1);
 
 namespace CrudView\View\Helper;
 
+use BackedEnum;
+use Cake\Chronos\ChronosDate;
+use Cake\Chronos\ChronosTime;
+use Cake\Core\Configure;
+use Cake\Core\Exception\CakeException;
+use Cake\Database\Type\EnumLabelInterface;
 use Cake\Datasource\EntityInterface;
 use Cake\Datasource\SchemaInterface;
+use Cake\I18n\Date;
+use Cake\I18n\Time;
 use Cake\Utility\Inflector;
 use Cake\Utility\Text;
+use Cake\View\Form\EntityContext;
 use Cake\View\Helper;
-use Cake\View\Helper\FormHelper;
-use DateTimeInterface;
+use UnitEnum;
+use function Cake\Core\h;
+use function Cake\I18n\__d;
 
 /**
  * @property \BootstrapUI\View\Helper\FormHelper $Form
@@ -23,23 +33,34 @@ class CrudViewHelper extends Helper
      *
      * @var array
      */
-    protected $helpers = ['Form', 'Html', 'Time'];
+    protected array $helpers = ['Form', 'Html', 'Time'];
 
     /**
-     * Context
+     * Entity context
      *
-     * @var \Cake\Datasource\EntityInterface
+     * @var \Cake\View\Form\EntityContext
      */
-    protected $_context;
+    protected EntityContext $_context;
 
     /**
      * Default config.
      *
      * @var array<string, mixed>
      */
-    protected $_defaultConfig = [
+    protected array $_defaultConfig = [
         'fieldFormatters' => null,
+        'dateTimeFormat' => null,
+        'dateFormat' => null,
+        'timeFormat' => null,
     ];
+
+    /**
+     * @inheritDoc
+     */
+    public function initialize(array $config): void
+    {
+        $this->setConfig(Configure::read('CrudView.helperConfig', []));
+    }
 
     /**
      * Set context
@@ -49,15 +70,15 @@ class CrudViewHelper extends Helper
      */
     public function setContext(EntityInterface $record): void
     {
-        $this->_context = $record;
+        $this->_context = new EntityContext(['entity' => $record]);
     }
 
     /**
      * Get context
      *
-     * @return \Cake\Datasource\EntityInterface
+     * @return \Cake\View\Form\EntityContext
      */
-    public function getContext(): EntityInterface
+    public function getContext(): EntityContext
     {
         return $this->_context;
     }
@@ -68,17 +89,17 @@ class CrudViewHelper extends Helper
      * @param string $field The field to process.
      * @param \Cake\Datasource\EntityInterface $data The entity data.
      * @param array $options Processing options.
-     * @return string|null|array|bool|int
+     * @return array|string|int|bool|null
      */
-    public function process(string $field, EntityInterface $data, array $options = [])
+    public function process(string $field, EntityInterface $data, array $options = []): string|array|bool|int|null
     {
         $this->setContext($data);
 
-        $value = $this->fieldValue($data, $field);
+        $value = $this->getContext()->val($field, ['schemaDefault' => false]);
         $options += ['formatter' => null];
 
         if ($options['formatter'] === 'element') {
-            $context = $this->getContext();
+            $context = $this->getContext()->entity();
 
             return $this->_View->element($options['element'], compact('context', 'field', 'value', 'options'));
         }
@@ -91,7 +112,7 @@ class CrudViewHelper extends Helper
         }
 
         if (is_callable($options['formatter'])) {
-            return $options['formatter']($field, $value, $this->getContext(), $options, $this->getView());
+            return $options['formatter']($field, $value, $this->getContext()->entity(), $options, $this->getView());
         }
 
         $value = $this->introspect($field, $value, $options);
@@ -102,14 +123,14 @@ class CrudViewHelper extends Helper
     /**
      * Get the current field value
      *
-     * @param \Cake\Datasource\EntityInterface|null $data The entity data.
      * @param string $field The field to extract, if null, the field from the entity context is used.
+     * @param \Cake\Datasource\EntityInterface|null $data The entity data.
      * @return mixed
      */
-    public function fieldValue(?EntityInterface $data, string $field)
+    public function fieldValue(string $field, ?EntityInterface $data = null): mixed
     {
-        if (empty($data)) {
-            $data = $this->getContext();
+        if ($data === null) {
+            return $this->getContext()->val($field, ['schemaDefault' => false]);
         }
 
         return $data->get($field);
@@ -121,9 +142,9 @@ class CrudViewHelper extends Helper
      * @param string $field Name of field.
      * @param mixed $value The value that the field should have within related data.
      * @param array $options Options array.
-     * @return array|bool|null|int|string
+     * @return array|string|int|bool|null
      */
-    public function introspect(string $field, $value, array $options = [])
+    public function introspect(string $field, mixed $value, array $options = []): array|bool|int|string|null
     {
         $output = $this->relation($field);
         if ($output) {
@@ -136,7 +157,13 @@ class CrudViewHelper extends Helper
         if (isset($fieldFormatters[$type])) {
             /** @psalm-suppress PossiblyNullArrayOffset */
             if (is_callable($fieldFormatters[$type])) {
-                return $fieldFormatters[$type]($field, $value, $this->getContext(), $options, $this->getView());
+                return $fieldFormatters[$type](
+                    $field,
+                    $value,
+                    $this->getContext()->entity(),
+                    $options,
+                    $this->getView()
+                );
             }
 
             /** @psalm-suppress PossiblyNullArrayOffset */
@@ -147,12 +174,12 @@ class CrudViewHelper extends Helper
             return $this->formatBoolean($field, $value, $options);
         }
 
-        if (in_array($type, ['datetime', 'date', 'timestamp'])) {
-            return $this->formatDate($field, $value, $options);
+        if (in_array($type, ['datetime', 'date', 'time', 'timestamp'], true)) {
+            return $this->formatDateTime($field, $value, $options);
         }
 
-        if ($type === 'time') {
-            return $this->formatTime($field, $value, $options);
+        if ($type !== null && str_starts_with($type, 'enum-')) {
+            return $this->formatEnum($field, $value, $options);
         }
 
         $value = $this->formatString($field, $value);
@@ -172,9 +199,7 @@ class CrudViewHelper extends Helper
      */
     public function columnType(string $field): ?string
     {
-        $schema = $this->schema();
-
-        return $schema->getColumnType($field);
+        return $this->getContext()->type($field);
     }
 
     /**
@@ -185,7 +210,7 @@ class CrudViewHelper extends Helper
      * @param array $options Options array
      * @return string
      */
-    public function formatBoolean(string $field, $value, array $options): string
+    public function formatBoolean(string $field, mixed $value, array $options): string
     {
         return (bool)$value ?
             $this->Html->badge(__d('crud', 'Yes'), ['class' => empty($options['inverted']) ? 'success' : 'danger']) :
@@ -200,41 +225,47 @@ class CrudViewHelper extends Helper
      * @param array $options Options array.
      * @return string
      */
-    public function formatDate(string $field, $value, array $options): string
+    public function formatDateTime(string $field, mixed $value, array $options): string
     {
         if ($value === null) {
-            return $this->Html->badge(__d('crud', 'N/A'), ['class' => 'info']);
+            return $this->nullValueDisplay();
         }
 
-        if (
-            is_int($value)
-            || is_string($value)
-            || $value instanceof DateTimeInterface
-        ) {
-            return $this->Time->timeAgoInWords($value, $options);
+        if ($value instanceof Date) {
+            return (string)$value->i18nFormat($options['format'] ?? $this->getConfig('dateFormat'));
         }
 
-        return $this->Html->badge(__d('crud', 'N/A'), ['class' => 'info']);
+        if ($value instanceof Time) {
+            return (string)$value->i18nFormat($options['format'] ?? $this->getConfig('timeFormat'));
+        }
+
+        if ($value instanceof ChronosDate || $value instanceof ChronosTime) {
+            return (string)$value;
+        }
+
+        return (string)$this->Time->i18nFormat($value, $options['format'] ?? $this->getConfig('dateTimeFormat'), '')
+            ?: $this->nullValueDisplay();
     }
 
     /**
-     * Format a time for display
+     * Format an enum for display
      *
      * @param string $field Name of field.
-     * @param mixed $value Value of field.
-     * @param array $options Options array.
+     * @param \UnitEnum|\BackedEnum|string|int|null $value Value of field.
      * @return string
      */
-    public function formatTime(string $field, $value, array $options): string
+    public function formatEnum(string $field, UnitEnum|BackedEnum|string|int|null $value, array $options): string
     {
-        $format = $options['format'] ?? 'KK:mm:ss a';
-        /** @var string $value */
-        $value = $this->Time->format($value, $format, '');
-        if ($value === '') {
-            return $this->Html->badge(__d('crud', 'N/A'), ['class' => 'info']);
+        if ($value === null) {
+            return $this->nullValueDisplay();
         }
 
-        return $value;
+        if (is_scalar($value)) {
+            return (string)$value;
+        }
+
+        return $value instanceof EnumLabelInterface ?
+            $value->label() : Inflector::humanize(Inflector::underscore($value->name));
     }
 
     /**
@@ -244,7 +275,7 @@ class CrudViewHelper extends Helper
      * @param mixed $value Value of field.
      * @return string
      */
-    public function formatString(string $field, $value): string
+    public function formatString(string $field, mixed $value): string
     {
         return h(Text::truncate((string)$value, 200));
     }
@@ -256,9 +287,19 @@ class CrudViewHelper extends Helper
      * @param array $options Options array.
      * @return string
      */
-    public function formatDisplayField($value, array $options): string
+    public function formatDisplayField(string $value, array $options): string
     {
         return $this->createViewLink($value, ['escape' => false]);
+    }
+
+    /**
+     * Display for `null` values
+     *
+     * @return string
+     */
+    protected function nullValueDisplay(): string
+    {
+        return $this->Html->badge(__d('crud', 'N/A'), ['class' => 'info']);
     }
 
     /**
@@ -267,14 +308,14 @@ class CrudViewHelper extends Helper
      * @param string $field Name of field.
      * @return mixed Array of data to output, false if no match found
      */
-    public function relation(string $field)
+    public function relation(string $field): mixed
     {
         $associations = $this->associations();
         if (empty($associations['manyToOne'])) {
             return false;
         }
 
-        $data = $this->getContext();
+        $data = $this->getContext()->entity();
 
         foreach ($associations['manyToOne'] as $alias => $details) {
             if ($field !== $details['foreignKey']) {
@@ -290,7 +331,7 @@ class CrudViewHelper extends Helper
 
             return [
                 'alias' => $alias,
-                'output' => $this->Html->link($entity->{$details['displayField']}, [
+                'output' => $this->Html->link((string)$entity->{$details['displayField']}, [
                     'plugin' => $details['plugin'],
                     'controller' => $details['controller'],
                     'action' => 'view',
@@ -326,11 +367,16 @@ class CrudViewHelper extends Helper
             return null;
         }
 
+        try {
+            $this->Form->unlockField('_redirect_url');
+        } catch (CakeException) {
+            // If FormProtectorComponent is not loaded, FormHelper::unlockField() throws an exception
+        }
+
         return $this->Form->hidden('_redirect_url', [
             'name' => '_redirect_url',
             'value' => $redirectUrl,
             'id' => null,
-            'secure' => FormHelper::SECURE_SKIP,
         ]);
     }
 
@@ -368,9 +414,12 @@ class CrudViewHelper extends Helper
      */
     public function createViewLink(string $title, array $options = []): string
     {
+        $entity = $this->getContext()->entity();
+        assert($entity instanceof EntityInterface);
+
         return $this->Html->link(
             $title,
-            ['action' => 'view', $this->getContext()->get($this->getViewVar('primaryKey'))],
+            ['action' => 'view', $entity->get($this->getViewVar('primaryKey'))],
             $options
         );
     }
@@ -421,7 +470,7 @@ class CrudViewHelper extends Helper
      * @param string $key View variable to get.
      * @return mixed
      */
-    public function getViewVar(string $key)
+    public function getViewVar(string $key): mixed
     {
         return $this->_View->get($key);
     }

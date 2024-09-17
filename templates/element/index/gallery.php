@@ -18,7 +18,7 @@ foreach ($fields as $field => $options) {
     <?php foreach (${$viewVar} as $singularVar) : ?>
         <div class="<?= $indexGalleryCssClasses ?>">
             <?php
-                $imageAltContent = $this->CrudView->fieldValue($singularVar, $indexTitleField);
+                $imageAltContent = $this->CrudView->fieldValue($indexTitleField, $singularVar);
                 $titleContent = $this->CrudView->process($indexTitleField, $singularVar, $titleOptions);
                 $bodyContent = $this->CrudView->process($indexBodyField, $singularVar, $bodyOptions);
                 $imageContent = $this->CrudView->process($indexImageField, $singularVar, $imageOptions);

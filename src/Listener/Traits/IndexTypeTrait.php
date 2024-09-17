@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace CrudView\Listener\Traits;
 
 use Cake\Controller\Controller;
+use Cake\Datasource\RepositoryInterface;
 use Crud\Action\BaseAction;
 use Crud\Action\IndexAction;
 
@@ -84,7 +85,7 @@ trait IndexTypeTrait
 
         $field = $action->getConfig('scaffold.index_title_field');
         if ($field === null) {
-            $field = $this->_table()->getDisplayField();
+            $field = $this->_model()->getDisplayField();
         }
 
         return $field;
@@ -154,5 +155,5 @@ trait IndexTypeTrait
     /**
      * @inheritDoc
      */
-    abstract protected function _table();
+    abstract protected function _model(): RepositoryInterface;
 }

@@ -39,5 +39,6 @@ return [
         'tablesBlacklist' => [
             'phinxlog',
         ],
+        'helperConfig' => [],
     ],
 ];

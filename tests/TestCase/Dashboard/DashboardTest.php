@@ -8,6 +8,8 @@ use Cake\Http\ServerRequest;
 use Cake\TestSuite\TestCase;
 use CrudView\Dashboard\Dashboard;
 use CrudView\View\Cell\DashboardTableCell;
+use InvalidArgumentException;
+use function Cake\I18n\__d;
 
 /**
  * DashboardTest class
@@ -33,7 +35,7 @@ class DashboardTest extends TestCase
 
     public function testInvalidConstruct()
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Valid columns value must be one of [1, 2, 3, 4, 6, 12]');
 
         new Dashboard(null, 0);

@@ -12,30 +12,30 @@
 </head>
 <body>
     <nav class="navbar navbar-light bg-light" role="navigation">
-            <button type="button" class="navbar-toggler mr-2" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <?php
-            $siteTitleContent = $siteTitle;
-            if (!empty($siteTitleImage)) {
-                $siteTitleContent = $this->Html->image($siteTitleImage, ['class' => 'navbar-brand mr-auto']);
-            }
-            if (empty($siteTitleLink)) {
-                echo $this->Html->tag(
-                    'span',
-                    $siteTitleContent,
-                    ['class' => 'navbar-brand mr-auto', 'escape' => false]
-                );
-            } else {
-                echo $this->Html->link(
-                    $siteTitleContent,
-                    $siteTitleLink,
-                    ['class' => 'navbar-brand mr-auto', 'escape' => false]
-                );
-            }
-            ?>
+        <button type="button" class="navbar-toggler ms-3 me-3" data-bs-toggle="collapse" data-bs-target=".navbar-ex1-collapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <?php
+        $siteTitleContent = $siteTitle;
+        if (!empty($siteTitleImage)) {
+            $siteTitleContent = $this->Html->image($siteTitleImage, ['class' => 'navbar-brand mr-auto']);
+        }
+        if (empty($siteTitleLink)) {
+            echo $this->Html->tag(
+                'span',
+                $siteTitleContent,
+                ['class' => 'navbar-brand mr-auto', 'escape' => false]
+            );
+        } else {
+            echo $this->Html->link(
+                $siteTitleContent,
+                $siteTitleLink,
+                ['class' => 'navbar-brand mr-auto', 'escape' => false]
+            );
+        }
+        ?>
 
-            <?= $this->element('topbar'); ?>
+        <?= $this->element('topbar'); ?>
     </nav>
 
     <div class="container-fluid">

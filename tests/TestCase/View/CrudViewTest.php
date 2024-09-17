@@ -30,6 +30,9 @@ class CrudViewTest extends TestCase
         $expected = [
             'className' => 'CrudView.CrudView',
             'fieldFormatters' => ['datetime' => 'formatTime'],
+            'dateTimeFormat' => null,
+            'dateFormat' => null,
+            'timeFormat' => null,
         ];
         $result = $CrudView->CrudView->getConfig();
         $this->assertEquals($expected, $result);

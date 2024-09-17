@@ -6,12 +6,13 @@ namespace CrudView\Action;
 use Crud\Action\BaseAction;
 use Crud\Traits\ViewTrait;
 use CrudView\Dashboard\Dashboard;
+use function Cake\I18n\__d;
 
 class DashboardAction extends BaseAction
 {
     use ViewTrait;
 
-    protected $_defaultConfig = [
+    protected array $_defaultConfig = [
         'enabled' => true,
         'view' => null,
     ];
@@ -21,7 +22,7 @@ class DashboardAction extends BaseAction
      *
      * @return void
      */
-    protected function _get()
+    protected function _get(): void
     {
         $pageTitle = $this->getConfig('scaffold.page_title', __d('CrudView', 'Dashboard'));
         $this->setConfig('scaffold.page_title', $pageTitle);

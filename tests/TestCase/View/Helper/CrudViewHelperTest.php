@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace CrudView\Test\TestCase\View\Helper;
 
-use Cake\I18n\FrozenTime;
-use Cake\ORM\Entity;
+use Cake\I18n\DateTime;
+use Cake\I18n\Time;
 use Cake\TestSuite\TestCase;
 use Cake\View\View;
 use CrudView\View\Helper\CrudViewHelper;
@@ -14,19 +14,11 @@ use CrudView\View\Helper\CrudViewHelper;
  */
 class CrudViewHelperTest extends TestCase
 {
-    /**
-     * Helper to be tested
-     *
-     * @var \Crud\View\Helper\CrudViewHelper
-     */
-    public $CrudView;
+    protected array $fixtures = ['plugin.CrudView.Blogs', 'plugin.CrudView.Users'];
 
-    /**
-     * Mocked view
-     *
-     * @var \Cake\View\View&\PHPUnit_Framework_MockObject_MockObject
-     */
-    public $View;
+    protected CrudViewHelper $CrudView;
+
+    protected View $View;
 
     /**
      * setUp method
@@ -43,42 +35,29 @@ class CrudViewHelperTest extends TestCase
             ],
         ]);
 
+        $this->CrudView = new CrudViewHelper($this->View);
+
+        $this->fetchTable('Blogs')->belongsTo('Users');
+
         static::setAppNamespace();
     }
 
-    public function testIntrospect()
+    public function testIntrospect(): void
     {
-        $this->CrudView = $this->getMockBuilder(CrudViewHelper::class)
-            ->setConstructorArgs([$this->View])
-            ->onlyMethods(['columnType', 'getContext'])
-            ->getMock();
+        $entity = $this->fetchTable('Blogs')->find()->first();
+        $entity->created = new DateTime();
 
-        $this->CrudView
-            ->expects($this->any())
-            ->method('getContext')
-            ->will($this->returnValue(new Entity()));
+        $this->CrudView->setContext($entity);
 
-        $this->CrudView
-            ->expects($this->any())
-            ->method('columnType')
-            ->with('created')
-            ->will($this->returnValue('datetime'));
-
-        $value = new FrozenTime();
+        $value = $entity->created;
         $result = $this->CrudView->introspect('created', $value);
-        $this->assertEquals('just now', $result);
-
-        $this->CrudView->setConfig('fieldFormatters', [
-            'datetime' => 'formatTime',
-        ]);
-        $result = $this->CrudView->introspect('created', $value);
-        $this->assertEquals($this->CrudView->Time->format($value, 'KK:mm:ss a'), $result);
+        $this->assertEquals($entity->created->i18nFormat(), $result);
 
         $result = $this->CrudView->introspect('created', 'invalid');
-        $this->assertEquals('<span class="badge-info badge">N/A</span>', $result);
+        $this->assertEquals('<span class="bg-info badge">N/A</span>', $result);
 
         $result = $this->CrudView->introspect('created', null);
-        $this->assertEquals('<span class="badge-info badge">N/A</span>', $result);
+        $this->assertEquals('<span class="bg-info badge">N/A</span>', $result);
 
         $this->CrudView->setConfig('fieldFormatters', [
             'datetime' => function () {
@@ -87,5 +66,33 @@ class CrudViewHelperTest extends TestCase
         ]);
         $result = $this->CrudView->introspect('created', $value);
         $this->assertEquals('formatted time', $result);
+    }
+
+    public function testProcess(): void
+    {
+        $entity = $this->fetchTable('Blogs')->find()
+            ->contain('Users')
+            ->first();
+
+        $this->assertSame(
+            '1/15/00',
+            $this->CrudView->process('user.birth_date', $entity)
+        );
+    }
+
+    public function testFormatDateTime(): void
+    {
+        $dateTime = new Time('14:00:00');
+
+        $result = $this->CrudView->formatDateTime('field', $dateTime, []);
+        $this->assertEquals('2:00 PM', str_replace(' ', ' ', $result));
+
+        Time::setToStringFormat('KK:mm:ss a');
+        $result = $this->CrudView->formatDateTime('field', $dateTime, []);
+        $this->assertEquals('02:00:00 PM', $result);
+
+        $dateTime = new DateTime('2021-01-20 14:00:00');
+        $result = $this->CrudView->formatDateTime('field', $dateTime, []);
+        $this->assertEquals('1/20/21, 2:00 PM', str_replace(' ', ' ', $result));
     }
 }

@@ -12,19 +12,19 @@ class ActionLinkItem extends LinkItem
      *
      * @var array
      **/
-    protected $actions = [];
+    protected array $actions = [];
 
     /**
      * Constructor
      *
-     * @param string|array $title The content to be wrapped by `<a>` tags.
+     * @param array|string $title The content to be wrapped by `<a>` tags.
      *   Can be an array if $url is null. If $url is null, $title will be used as both the URL and title.
-     * @param string|array|null $url Cake-relative URL or array of URL parameters, or
+     * @param array|string|null $url Cake-relative URL or array of URL parameters, or
      *   external URL (starts with http://)
      * @param array $options Array of options and HTML attributes.
      * @param array $actions Array of ActionItems
      */
-    public function __construct($title, $url, $options = [], array $actions = [])
+    public function __construct(string|array $title, string|array|null $url, array $options = [], array $actions = [])
     {
         parent::__construct($title, $url, $options);
         $this->set('actions', $actions);
@@ -36,7 +36,7 @@ class ActionLinkItem extends LinkItem
      * @param array $actions Array of options and HTML attributes.
      * @return array
      */
-    protected function _setActions($actions)
+    protected function _setActions(array $actions): array
     {
         return (new Collection($actions))->map(function ($value) {
             $options = (array)$value->get('options') + ['class' => ['btn btn-secondary']];

@@ -9,7 +9,7 @@ if ($sidebarNavigation === false) {
 }
 ?>
 
-<div class="collapse navbar-collapse show navbar-ex1-collapse navbar-left bs-sidebar">
+<div class="show navbar-ex1-collapse">
     <nav>
         <ul class="nav nav-pills flex-column bg-light">
             <?php if ($sidebarNavigation === null) : ?>

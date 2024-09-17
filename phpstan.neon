@@ -2,12 +2,11 @@ includes:
 	- phpstan-baseline.neon
 
 parameters:
-	level: 7
-	checkMissingIterableValueType: false
-	checkGenericClassInNonGenericObjectType: false
+	level: 8
 	paths:
 		- src
 	universalObjectCratesClasses:
 		- Crud\Event\Subject
-	bootstrapFiles:
-		- vendor/cakephp/cakephp/src/Database/Exception/DatabaseException.php
+	ignoreErrors:
+		- identifier: missingType.iterableValue
+		- identifier: missingType.generics

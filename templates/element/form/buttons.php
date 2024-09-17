@@ -1,5 +1,5 @@
 <?php if (!empty($formSubmitExtraLeftButtons)) : ?>
-<div class="float-left">
+<div class="col-md mb-3 order-last order-md-first">
     <?php
     $btns = [];
     foreach ($formSubmitExtraLeftButtons as $button) {
@@ -19,7 +19,7 @@
 </div>
 <?php endif ?>
 
-<div class="float-right">
+<div class="col-md mb-3 text-end">
     <?= $this->Form->button(
         $formSubmitButtonText,
         ['class' => 'btn btn-primary', 'name' => '_save', 'value' => '1']

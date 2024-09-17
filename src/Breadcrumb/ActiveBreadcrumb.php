@@ -11,7 +11,7 @@ class ActiveBreadcrumb extends Breadcrumb
      * @inheritDoc
      * @psalm-suppress MissingParamType
      */
-    public function __construct($title, $url = null, array $options = [])
+    public function __construct(string|array $title, string|array|null $url = null, array $options = [])
     {
         if (!isset($options['class'])) {
             $options['class'] = '';

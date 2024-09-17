@@ -15,17 +15,17 @@ use CrudView\Listener\ViewSearchListener;
  */
 class ViewSearchListenerTest extends TestCase
 {
-    protected $fixtures = ['plugin.CrudView.Blogs'];
+    protected array $fixtures = ['plugin.CrudView.Blogs'];
 
     /**
      * @var \Cake\Controller\Controller;
      */
-    protected $controller;
+    protected Controller $controller;
 
     /**
      * @var \CrudView\Listener\ViewSearchListener
      */
-    protected $listener;
+    protected ViewSearchListener $listener;
 
     public function setUp(): void
     {
@@ -39,7 +39,8 @@ class ViewSearchListenerTest extends TestCase
             'params' => ['controller' => 'Blogs', 'action' => 'index', 'plugin' => null, '_ext' => null],
         ]);
 
-        $this->controller = new Controller($request, null, 'Blogs');
+        $this->controller = new Controller($request, 'Blogs');
+        $this->controller->loadComponent('Crud.Crud');
 
         $this->listener = new ViewSearchListener($this->controller);
 
@@ -50,6 +51,7 @@ class ViewSearchListenerTest extends TestCase
     {
         $this->listener->setConfig(['fields' => [
             'name',
+            'auto' => ['class' => 'autocomplete'],
             'is_active',
             'user_id',
             'custom_select' => ['empty' => false, 'type' => 'select'],
@@ -59,40 +61,47 @@ class ViewSearchListenerTest extends TestCase
         $expected = [
             'name' => [
                 'required' => false,
+                'type' => 'text',
+                'value' => null,
+                'placeholder' => 'Name',
+            ],
+            'auto' => [
+                'class' => 'autocomplete',
+                'required' => false,
                 'type' => 'select',
                 'value' => null,
-                'class' => 'autocomplete',
-                'data-url' => '/blogs/lookup.json?id=name&value=name',
                 'data-input-type' => 'text',
                 'data-tags' => 'true',
                 'data-allow-clear' => 'true',
                 'data-placeholder' => '',
+                'empty' => 'Auto',
+                'data-url' => '/blogs/lookup.json?id=auto&value=auto',
             ],
             'is_active' => [
                 'required' => false,
                 'type' => 'select',
                 'value' => null,
-                'empty' => true,
-                'options' => ['No', 'Yes'],
+                'options' => [1 => 'Yes', 0 => 'No'],
+                'empty' => 'Is Active',
             ],
             'user_id' => [
                 'required' => false,
                 'type' => 'select',
-                'empty' => true,
                 'value' => null,
                 'class' => 'autocomplete',
+                'empty' => 'User',
                 'data-url' => '/blogs/lookup.json?id=user_id&value=user_id',
             ],
             'custom_select' => [
-                'required' => false,
-                'type' => 'select',
                 'empty' => false,
+                'type' => 'select',
+                'required' => false,
                 'value' => null,
                 'class' => 'autocomplete',
                 'data-url' => '/blogs/lookup.json?id=custom_select&value=custom_select',
             ],
         ];
-        $this->assertEquals($expected, $fields);
+        $this->assertSame($expected, $fields);
 
         $this->listener->setConfig([
             'fields' => ['name' => ['data-url' => '/custom']],
@@ -101,5 +110,32 @@ class ViewSearchListenerTest extends TestCase
         $fields = $this->listener->fields();
         $expected['name']['data-url'] = '/custom';
         $this->assertEquals($expected, $fields);
+
+        $this->listener->setConfig([
+            'autocomplete' => false,
+            'fields' => [
+                'user_id',
+                'custom_select' => ['empty' => false, 'type' => 'select', 'class' => 'autocomplete'],
+            ],
+        ], merge: false);
+
+        $fields = $this->listener->fields();
+        $expected = [
+            'user_id' => [
+                'required' => false,
+                'type' => 'select',
+                'value' => null,
+                'empty' => 'User',
+            ],
+            'custom_select' => [
+                'empty' => false,
+                'type' => 'select',
+                'class' => 'autocomplete',
+                'required' => false,
+                'value' => null,
+                'data-url' => '/blogs/lookup.json?id=custom_select&value=custom_select',
+            ],
+        ];
+        $this->assertSame($expected, $fields);
     }
 }

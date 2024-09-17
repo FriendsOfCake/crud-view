@@ -3,10 +3,11 @@ declare(strict_types=1);
 
 namespace CrudView\View\Widget;
 
+use BootstrapUI\View\Widget\DateTimeWidget as BUIDateTimeWidget;
 use Cake\Core\Configure;
 use Cake\View\Form\ContextInterface;
 
-class DateTimeWidget extends \BootstrapUI\View\Widget\DateTimeWidget
+class DateTimeWidget extends BUIDateTimeWidget
 {
     // phpcs:disable
     /**
@@ -122,6 +123,7 @@ class DateTimeWidget extends \BootstrapUI\View\Widget\DateTimeWidget
             $this->_templates->add(['datetimePicker' => $this->defaultTemplate]);
         }
 
+        /** @var array $data */
         $data = $this->_templates->addClass($data, 'form-control');
         $wrap = $datetimePicker['data-wrap'] === 'true';
         if ($wrap) {
@@ -135,13 +137,10 @@ class DateTimeWidget extends \BootstrapUI\View\Widget\DateTimeWidget
             }
         } else {
             $data += $datetimePicker;
+            /** @var array $data */
             $data = $this->_templates->addClass($data, 'flatpickr');
         }
 
-        /**
-         * @psalm-suppress PossiblyInvalidArrayOffset
-         * @psalm-suppress PossiblyInvalidArgument
-         */
         $input = $this->_templates->format('input', [
             'name' => $data['name'],
             'type' => 'text',
