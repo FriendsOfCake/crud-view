@@ -228,7 +228,7 @@ class CrudViewHelper extends Helper
     public function formatDateTime(string $field, mixed $value, array $options): string
     {
         if ($value === null) {
-            return $this->Html->badge(__d('crud', 'N/A'), ['class' => 'info']);
+            return $this->nullValueDisplay();
         }
 
         if ($value instanceof Date) {
@@ -244,7 +244,7 @@ class CrudViewHelper extends Helper
         }
 
         return (string)$this->Time->i18nFormat($value, $options['format'] ?? $this->getConfig('dateTimeFormat'), '')
-            ?: $this->Html->badge(__d('crud', 'N/A'), ['class' => 'info']);
+            ?: $this->nullValueDisplay();
     }
 
     /**
@@ -257,7 +257,7 @@ class CrudViewHelper extends Helper
     public function formatEnum(string $field, UnitEnum|BackedEnum|string|int|null $value, array $options): string
     {
         if ($value === null) {
-            return $this->Html->badge(__d('crud', 'N/A'), ['class' => 'info']);
+            return $this->nullValueDisplay();
         }
 
         if (is_scalar($value)) {
@@ -290,6 +290,16 @@ class CrudViewHelper extends Helper
     public function formatDisplayField(string $value, array $options): string
     {
         return $this->createViewLink($value, ['escape' => false]);
+    }
+
+    /**
+     * Display for `null` values
+     *
+     * @return string
+     */
+    protected function nullValueDisplay(): string
+    {
+        return $this->Html->badge(__d('crud', 'N/A'), ['class' => 'info']);
     }
 
     /**
