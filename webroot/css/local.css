@@ -60,8 +60,7 @@ h2 .actions {
 .search-filters .form-inline select:invalid,
 .search-filters .form-inline select:has(option[value=""]:checked),
 .search-filters .form-inline option[value=""] {
-    font-style: italic;
-    color: #777;
+    color: var(--bs-secondary-color);
 }
 
 .search-filters .form-inline select.autocomplete {
