@@ -82,6 +82,16 @@ var CrudView = {
         $('form[data-dirty-check=1]').dirtyForms();
     },
 
+    dropdown: function () {
+        // recommended hack to get dropdowns correctly work inside responsive table
+        $('.table-responsive').on('show.bs.dropdown', function () {
+            $('.table-responsive').css('overflow', 'inherit');
+        });
+        $('.table-responsive').on('hide.bs.dropdown', function () {
+            $('.table-responsive').css('overflow', 'auto');
+        });
+    },
+
     tooltip: function () {
         const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
         const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
@@ -93,6 +103,7 @@ var CrudView = {
         this.select2('select[multiple]:not(.no-select2), select.select2');
         this.autocomplete('input.autocomplete, select.autocomplete');
         this.dirtyForms();
+        this.dropdown();
         this.tooltip();
     }
 };
