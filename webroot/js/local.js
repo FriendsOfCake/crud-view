@@ -14,7 +14,9 @@ var CrudView = {
     },
 
     flatpickr: function (selector) {
-        $(selector).flatpickr();
+        if ($.flatpickr) {
+            $(selector).flatpickr();
+        }
     },
 
     select2: function (selector) {
@@ -78,8 +80,10 @@ var CrudView = {
     },
 
     dirtyForms: function () {
-        $.DirtyForms.dialog = false;
-        $('form[data-dirty-check=1]').dirtyForms();
+        if ($.DirtyForms) {
+            $.DirtyForms.dialog = false;
+            $('form[data-dirty-check=1]').dirtyForms();
+        }
     },
 
     dropdown: function () {
