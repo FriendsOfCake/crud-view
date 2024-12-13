@@ -31,7 +31,7 @@
     "require": {
         "cakephp/cakephp": "^5.0",
         "friendsofcake/crud": "^7.0",
-        "friendsofcake/bootstrap-ui": "^5.0"
+        "friendsofcake/bootstrap-ui": "^5.1"
     },
     "require-dev": {
         "friendsofcake/cakephp-test-utilities": "^3.0",

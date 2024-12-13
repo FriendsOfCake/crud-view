@@ -54,10 +54,10 @@ class CrudViewHelperTest extends TestCase
         $this->assertEquals($entity->created->i18nFormat(), $result);
 
         $result = $this->CrudView->introspect('created', 'invalid');
-        $this->assertEquals('<span class="bg-info badge">N/A</span>', $result);
+        $this->assertEquals('<span class="text-bg-info badge">N/A</span>', $result);
 
         $result = $this->CrudView->introspect('created', null);
-        $this->assertEquals('<span class="bg-info badge">N/A</span>', $result);
+        $this->assertEquals('<span class="text-bg-info badge">N/A</span>', $result);
 
         $this->CrudView->setConfig('fieldFormatters', [
             'datetime' => function () {
