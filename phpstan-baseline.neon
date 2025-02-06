@@ -1,26 +1,37 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Cannot unset offset mixed on array\\{\\}\\.$#"
+			message: '#^Trait CrudView\\Listener\\Traits\\DeprecatedConfigurationKeyTrait is used zero times and is not analysed\.$#'
+			identifier: trait.unused
+			count: 1
+			path: src/Listener/Traits/DeprecatedConfigurationKeyTrait.php
+
+		-
+			message: '#^Cannot unset offset mixed on array\{\}\.$#'
+			identifier: unset.offset
 			count: 2
 			path: src/Listener/ViewListener.php
 
 		-
-			message: "#^Offset \\(int\\|string\\) on array\\{\\} in isset\\(\\) does not exist\\.$#"
+			message: '#^Offset \(int\|string\) on array\{\} in isset\(\) does not exist\.$#'
+			identifier: isset.offset
 			count: 2
 			path: src/Listener/ViewListener.php
 
 		-
-			message: "#^Parameter \\#1 \\$field of method CrudView\\\\Listener\\\\ViewListener\\:\\:_deriveFieldFromContext\\(\\) expects string, array\\<int, string\\>\\|string\\|null given\\.$#"
+			message: '#^Parameter \#1 \$field of method CrudView\\Listener\\ViewListener\:\:_deriveFieldFromContext\(\) expects string, list\<string\>\|string\|null given\.$#'
+			identifier: argument.type
 			count: 1
 			path: src/Listener/ViewListener.php
 
 		-
-			message: "#^Result of \\|\\| is always false\\.$#"
+			message: '#^Result of \|\| is always false\.$#'
+			identifier: booleanOr.alwaysFalse
 			count: 1
 			path: src/Listener/ViewListener.php
 
 		-
-			message: "#^Call to an undefined method Cake\\\\ORM\\\\Table\\:\\:searchManager\\(\\)\\.$#"
+			message: '#^Call to an undefined method Cake\\ORM\\Table\:\:searchManager\(\)\.$#'
+			identifier: method.notFound
 			count: 1
 			path: src/Listener/ViewSearchListener.php
