@@ -123,6 +123,9 @@ class ViewSearchListener extends BaseListener
             if (!isset($input['options']) && $schema->getColumnType($field) === 'boolean') {
                 $input['options'] = [1 => __d('crud', 'Yes'), 0 => __d('crud', 'No')];
                 $input['type'] = 'select';
+                if ($config['select2']) {
+                    $input['class'] = 'no-select2';
+                }
             }
 
             if (isset($input['options'])) {
@@ -137,7 +140,7 @@ class ViewSearchListener extends BaseListener
                 continue;
             }
 
-            if ($input['type'] === 'select' && empty($input['class']) && $config['autocomplete']) {
+            if ($input['type'] === 'select' && $config['autocomplete'] && empty($input['class'])) {
                 $input['class'] = 'autocomplete';
             }
 
@@ -158,7 +161,7 @@ class ViewSearchListener extends BaseListener
                     'data-input-type' => 'text',
                     'data-tags' => 'true',
                     'data-allow-clear' => 'true',
-                    'data-placeholder' => '',
+                    'data-placeholder' => $this->getPlaceholder($field),
                 ];
             }
 
@@ -167,6 +170,9 @@ class ViewSearchListener extends BaseListener
             }
             if ($input['type'] === 'select') {
                 $input['empty'] ??= $this->getPlaceholder($field);
+                if ($config['select2']) {
+                    $input['data-placeholder'] ??= $this->getPlaceholder($field);
+                }
             }
 
             if (

@@ -73,7 +73,7 @@ class ViewSearchListenerTest extends TestCase
                 'data-input-type' => 'text',
                 'data-tags' => 'true',
                 'data-allow-clear' => 'true',
-                'data-placeholder' => '',
+                'data-placeholder' => 'Auto',
                 'empty' => 'Auto',
                 'data-url' => '/blogs/lookup.json?id=auto&value=auto',
             ],
@@ -82,6 +82,7 @@ class ViewSearchListenerTest extends TestCase
                 'type' => 'select',
                 'value' => null,
                 'options' => [1 => 'Yes', 0 => 'No'],
+                'class' => 'no-select2',
                 'empty' => 'Is Active',
             ],
             'user_id' => [
@@ -90,6 +91,7 @@ class ViewSearchListenerTest extends TestCase
                 'value' => null,
                 'class' => 'autocomplete',
                 'empty' => 'User',
+                'data-placeholder' => 'User',
                 'data-url' => '/blogs/lookup.json?id=user_id&value=user_id',
             ],
             'custom_select' => [
@@ -98,6 +100,7 @@ class ViewSearchListenerTest extends TestCase
                 'required' => false,
                 'value' => null,
                 'class' => 'autocomplete',
+                'data-placeholder' => 'Custom Select',
                 'data-url' => '/blogs/lookup.json?id=custom_select&value=custom_select',
             ],
         ];
@@ -126,6 +129,7 @@ class ViewSearchListenerTest extends TestCase
                 'type' => 'select',
                 'value' => null,
                 'empty' => 'User',
+                'data-placeholder' => 'User',
             ],
             'custom_select' => [
                 'empty' => false,
@@ -133,6 +137,7 @@ class ViewSearchListenerTest extends TestCase
                 'class' => 'autocomplete',
                 'required' => false,
                 'value' => null,
+                'data-placeholder' => 'Custom Select',
                 'data-url' => '/blogs/lookup.json?id=custom_select&value=custom_select',
             ],
         ];
