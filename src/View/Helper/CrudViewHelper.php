@@ -401,7 +401,7 @@ class CrudViewHelper extends Helper
                     '_redirect_url' => $this->getView()->getRequest()->getUri()->getPath(),
                 ],
             ],
-            $options
+            $options,
         );
     }
 
@@ -420,7 +420,7 @@ class CrudViewHelper extends Helper
         return $this->Html->link(
             $title,
             ['action' => 'view', $entity->get($this->getViewVar('primaryKey'))],
-            $options
+            $options,
         );
     }
 
@@ -497,8 +497,8 @@ class CrudViewHelper extends Helper
                     sprintf('scaffold-%s-%s', $pluralVar, $action),
                 ],
                 $args,
-                $viewClasses
-            ))
+                $viewClasses,
+            )),
         );
     }
 }

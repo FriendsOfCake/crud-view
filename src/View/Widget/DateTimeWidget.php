@@ -95,7 +95,7 @@ class DateTimeWidget extends BUIDateTimeWidget
         // This is the format that will be display to user
         if (isset($datetimePicker['data-alt-format'])) {
             $datetimePicker['data-alt-format'] = $this->convertPHPToDatePickerFormat(
-                $datetimePicker['data-alt-format']
+                $datetimePicker['data-alt-format'],
             );
             $datetimePicker['data-alt-input'] = 'true';
         }
@@ -147,7 +147,7 @@ class DateTimeWidget extends BUIDateTimeWidget
             'templateVars' => $data['templateVars'],
             'attrs' => $this->_templates->formatAttributes(
                 $data,
-                ['name', 'type']
+                ['name', 'type'],
             ),
         ]);
 
@@ -163,7 +163,7 @@ class DateTimeWidget extends BUIDateTimeWidget
             'templateVars' => $data['templateVars'],
             'attrs' => $this->_templates->formatAttributes(
                 $datetimePicker,
-                ['toggleIcon', 'clearIcon']
+                ['toggleIcon', 'clearIcon'],
             ),
         ]);
     }

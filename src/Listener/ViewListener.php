@@ -229,7 +229,7 @@ class ViewListener extends BaseListener
                 foreach ($associationTypes as $assocType) {
                     $associations = array_merge(
                         $associations,
-                        $this->_model()->associations()->getByType($assocType)
+                        $this->_model()->associations()->getByType($assocType),
                     );
                 }
             }
@@ -273,7 +273,7 @@ class ViewListener extends BaseListener
         $data = [
             'modelClass' => $modelClass,
             'singularHumanName' => Inflector::humanize(
-                Inflector::underscore(Inflector::singularize($modelClass))
+                Inflector::underscore(Inflector::singularize($modelClass)),
             ),
             'pluralHumanName' => Inflector::humanize(Inflector::underscore($controller->getName())),
             'singularVar' => Inflector::singularize($controller->getName()),
@@ -310,7 +310,7 @@ class ViewListener extends BaseListener
         $action = $this->_action();
         $scaffoldFields = Hash::normalize(
             (array)$action->getConfig('scaffold.fields'),
-            default: []
+            default: [],
         );
 
         if (empty($scaffoldFields) || $action->getConfig('scaffold.autoFields')) {
@@ -342,7 +342,7 @@ class ViewListener extends BaseListener
 
         $fieldSettings = Hash::normalize(
             (array)$action->getConfig('scaffold.field_settings'),
-            default: []
+            default: [],
         );
         $fieldSettings = array_intersect_key($fieldSettings, $scaffoldFields);
         $scaffoldFields = Hash::merge($scaffoldFields, $fieldSettings);
@@ -467,7 +467,7 @@ class ViewListener extends BaseListener
             'method' => $method,
             'options' => array_diff_key(
                 $config,
-                array_flip(['method', 'scope', 'link_title', 'url', 'scaffold', 'callback'])
+                array_flip(['method', 'scope', 'link_title', 'url', 'scaffold', 'callback']),
             ),
         ];
         if (!empty($config['callback'])) {
@@ -493,7 +493,7 @@ class ViewListener extends BaseListener
 
         $allActions = array_merge(
             Hash::normalize($actions, default: []),
-            Hash::normalize($extraActions, default: [])
+            Hash::normalize($extraActions, default: []),
         );
 
         $blacklist = (array)$this->_action()->getConfig('scaffold.actions_blacklist');
@@ -547,13 +547,13 @@ class ViewListener extends BaseListener
             $associationConfiguration[$type][$assocKey]['plugin'] = pluginSplit($association->getClassName())[0];
             $associationConfiguration[$type][$assocKey]['controller'] = $assocKey;
             $associationConfiguration[$type][$assocKey]['entity'] = Inflector::singularize(
-                Inflector::underscore($assocKey)
+                Inflector::underscore($assocKey),
             );
             $associationConfiguration[$type][$assocKey]['entities'] = Inflector::underscore($assocKey);
 
             $associationConfiguration[$type][$assocKey] = array_merge(
                 $associationConfiguration[$type][$assocKey],
-                $this->_action()->getConfig('association.' . $assocKey) ?: []
+                $this->_action()->getConfig('association.' . $assocKey) ?: [],
             );
         }
 

@@ -76,7 +76,7 @@ class CrudViewHelperTest extends TestCase
 
         $this->assertSame(
             '1/15/00',
-            $this->CrudView->process('user.birth_date', $entity)
+            $this->CrudView->process('user.birth_date', $entity),
         );
     }
 

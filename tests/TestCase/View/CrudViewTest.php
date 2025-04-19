@@ -24,7 +24,7 @@ class CrudViewTest extends TestCase
                         'fieldFormatters' => ['datetime' => 'formatTime'],
                     ],
                 ],
-            ]
+            ],
         );
 
         $expected = [
