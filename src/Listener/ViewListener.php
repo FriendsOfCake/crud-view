@@ -42,7 +42,7 @@ class ViewListener extends BaseListener
      *
      * @param \Cake\Event\EventInterface $event Event.
      * @return void
-     * @psalm-param \Cake\Event\EventInterface<\Crud\Event\Subject> $event
+     * @phpstan-param \Cake\Event\EventInterface<\Crud\Event\Subject> $event
      */
     public function beforeFind(EventInterface $event): void
     {
@@ -63,7 +63,7 @@ class ViewListener extends BaseListener
      *
      * @param \Cake\Event\EventInterface $event Event.
      * @return void
-     * @psalm-param \Cake\Event\EventInterface<\Crud\Event\Subject> $event
+     * @phpstan-param \Cake\Event\EventInterface<\Crud\Event\Subject> $event
      */
     public function beforePaginate(EventInterface $event): void
     {
@@ -84,7 +84,7 @@ class ViewListener extends BaseListener
      *
      * @param \Cake\Event\EventInterface $event Event.
      * @return void
-     * @psalm-param \Cake\Event\EventInterface<\Crud\Event\Subject> $event
+     * @phpstan-param \Cake\Event\EventInterface<\Crud\Event\Subject> $event
      */
     public function beforeRender(EventInterface $event): void
     {
@@ -96,7 +96,6 @@ class ViewListener extends BaseListener
             $this->_entity = $event->getSubject()->entity;
         }
 
-        /** @psalm-suppress RedundantPropertyInitializationCheck */
         if (!isset($this->associations)) {
             $this->associations = $this->_associations(array_keys($this->_getRelatedModels()));
         }
@@ -134,12 +133,11 @@ class ViewListener extends BaseListener
      *
      * @param \Cake\Event\EventInterface $event Event.
      * @return void
-     * @psalm-param \Cake\Event\EventInterface<\Crud\Event\Subject> $event
+     * @phpstan-param \Cake\Event\EventInterface<\Crud\Event\Subject> $event
      */
     public function setFlash(EventInterface $event): void
     {
         unset($event->getSubject()->params['class']);
-        /** @psalm-suppress UndefinedPropertyAssignment */
         $event->getSubject()->element = ltrim($event->getSubject()->type);
     }
 
@@ -181,11 +179,11 @@ class ViewListener extends BaseListener
             $displayFieldValue === null
             || $this->_model()->getDisplayField() === $this->_model()->getPrimaryKey()
         ) {
-            /** @psalm-var string $primaryKeyValue */
+            /** @phpstan-var string $primaryKeyValue */
             return sprintf('%s %s #%s', $actionName, $controllerName, $primaryKeyValue);
         }
 
-        /** @psalm-var string $primaryKeyValue */
+        /** @phpstan-var string $primaryKeyValue */
         return sprintf('%s %s #%s: %s', $actionName, $controllerName, $primaryKeyValue, $displayFieldValue);
     }
 
@@ -410,9 +408,7 @@ class ViewListener extends BaseListener
         }
 
         foreach ($actionBlacklist as $actionName) {
-            /** @psalm-suppress EmptyArrayAccess */
             unset($table[$actionName]);
-            /** @psalm-suppress EmptyArrayAccess */
             unset($entity[$actionName]);
         }
 
@@ -440,7 +436,6 @@ class ViewListener extends BaseListener
         if ($this->_crud()->isActionMapped($realAction)) {
             $action = $this->_action($realAction);
             $class = get_class($action);
-            /** @psalm-suppress PossiblyFalseOperand */
             $class = substr($class, strrpos($class, '\\') + 1);
 
             if ($class === 'DeleteAction') {
@@ -591,7 +586,6 @@ class ViewListener extends BaseListener
      */
     protected function _displayFieldValue(): string|int|null
     {
-        /** @psalm-suppress PossiblyInvalidArgument */
         return $this->_deriveFieldFromContext($this->_model()->getDisplayField());
     }
 

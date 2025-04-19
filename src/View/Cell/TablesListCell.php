@@ -25,7 +25,6 @@ class TablesListCell extends Cell
             $tables = $schema->listTables();
             sort($tables);
 
-            /** @psalm-suppress RiskyTruthyFalsyComparison */
             if (!empty($blacklist)) {
                 $tables = array_diff($tables, $blacklist);
             }

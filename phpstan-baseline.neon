@@ -19,7 +19,7 @@ parameters:
 			path: src/Listener/ViewListener.php
 
 		-
-			message: '#^Parameter \#1 \$field of method CrudView\\Listener\\ViewListener\:\:_deriveFieldFromContext\(\) expects string, list\<string\>\|string\|null given\.$#'
+			message: '#^Parameter \#1 \$field of method CrudView\\Listener\\ViewListener\:\:_deriveFieldFromContext\(\) expects string, array\<string\>\|string\|null given\.$#'
 			identifier: argument.type
 			count: 1
 			path: src/Listener/ViewListener.php
