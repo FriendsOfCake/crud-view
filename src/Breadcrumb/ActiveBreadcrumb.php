@@ -9,7 +9,6 @@ class ActiveBreadcrumb extends Breadcrumb
     /**
      * // phpcs:ignore
      * @inheritDoc
-     * @psalm-suppress MissingParamType
      */
     public function __construct(string|array $title, string|array|null $url = null, array $options = [])
     {

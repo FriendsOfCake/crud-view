@@ -15,6 +15,17 @@ foreach ($groups as $key => $group) {
 ?>
 
 <?php foreach ($groups as $key => $group) : ?>
+    <?php
+    if (count($group) === 1) {
+        $subaction = key($group);
+        if (is_numeric($subaction)) {
+            $subaction = $group[$subaction];
+        }
+
+        echo $this->element('action-button', ['config' => $links[$subaction]]);
+        continue;
+    }
+    ?>
     <div class='btn-group' role="group">
         <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
             <?= $key ?>

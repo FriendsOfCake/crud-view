@@ -111,7 +111,6 @@ class DateTimeWidget extends BUIDateTimeWidget
 
         $clearIcon = $this->clearIcon;
         $toggleIcon = $this->calendarIcon;
-        /** @psalm-suppress PossiblyUndefinedArrayOffset */
         if (isset($datetimePicker['iconClass'])) {
             $toggleIcon = $datetimePicker['iconClass'];
             unset($datetimePicker['iconClass']);
@@ -155,7 +154,6 @@ class DateTimeWidget extends BUIDateTimeWidget
             return $input;
         }
 
-        /** @psalm-suppress PossiblyInvalidArrayOffset */
         return $this->_templates->format('datetimePicker', [
             'input' => $input,
             'toggleIcon' => $toggleIcon,

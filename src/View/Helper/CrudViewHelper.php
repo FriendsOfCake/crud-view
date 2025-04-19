@@ -155,7 +155,6 @@ class CrudViewHelper extends Helper
 
         $fieldFormatters = $this->getConfig('fieldFormatters');
         if (isset($fieldFormatters[$type])) {
-            /** @psalm-suppress PossiblyNullArrayOffset */
             if (is_callable($fieldFormatters[$type])) {
                 return $fieldFormatters[$type](
                     $field,
@@ -166,7 +165,6 @@ class CrudViewHelper extends Helper
                 );
             }
 
-            /** @psalm-suppress PossiblyNullArrayOffset */
             return $this->{$fieldFormatters[$type]}($field, $value, $options);
         }
 

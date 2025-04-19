@@ -144,7 +144,6 @@ class ViewSearchListener extends BaseListener
                 $input['class'] = 'autocomplete';
             }
 
-            /** @psalm-suppress PossiblyUndefinedArrayOffset */
             if (
                 !empty($input['class'])
                 && strpos($input['class'], 'autocomplete') !== false
@@ -156,7 +155,6 @@ class ViewSearchListener extends BaseListener
                     $input['options'][$input['value']] = $input['value'];
                 }
 
-                /** @psalm-suppress PossiblyInvalidOperand */
                 $input += [
                     'data-input-type' => 'text',
                     'data-tags' => 'true',
