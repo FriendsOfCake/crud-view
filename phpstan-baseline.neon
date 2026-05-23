@@ -29,9 +29,3 @@ parameters:
 			identifier: booleanOr.alwaysFalse
 			count: 1
 			path: src/Listener/ViewListener.php
-
-		-
-			message: '#^Call to an undefined method Cake\\ORM\\Table\:\:searchManager\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: src/Listener/ViewSearchListener.php
