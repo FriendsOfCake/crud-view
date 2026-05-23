@@ -94,7 +94,11 @@ class ViewSearchListener extends BaseListener
         if ($fields) {
             $fields = Hash::normalize($fields, default: []);
         } else {
-            $filters = $this->_model()->searchManager()->getFilters($config['collection']);
+            /** @var \Search\Model\Behavior\SearchBehavior $behavior */
+            $behavior = $this->_model()->getBehavior('Search');
+            $filters = $behavior
+                ->searchManager()
+                ->getFilters($config['collection']);
 
             foreach ($filters as $filter) {
                 $opts = $filter->getConfig('form');

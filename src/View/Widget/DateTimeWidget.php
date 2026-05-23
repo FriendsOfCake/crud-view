@@ -48,7 +48,7 @@ class DateTimeWidget extends BUIDateTimeWidget
     /**
      * Render flatpickr
      *
-     * @param array $data Data
+     * @param array<string, mixed> $data Data
      * @param \Cake\View\Form\ContextInterface $context Context.
      * @return string
      */
