@@ -31,7 +31,7 @@ class CrudViewHelper extends Helper
     /**
      * List of helpers used by this helper
      *
-     * @var array
+     * @var array<int, string>
      */
     protected array $helpers = ['Form', 'Html', 'Time'];
 
@@ -40,14 +40,14 @@ class CrudViewHelper extends Helper
      *
      * @var \Cake\View\Form\EntityContext
      */
-    protected EntityContext $_context;
+    protected EntityContext $context;
 
     /**
      * Default config.
      *
      * @var array<string, mixed>
      */
-    protected array $_defaultConfig = [
+    protected array $defaultConfig = [
         'fieldFormatters' => null,
         'dateTimeFormat' => null,
         'dateFormat' => null,
@@ -70,7 +70,7 @@ class CrudViewHelper extends Helper
      */
     public function setContext(EntityInterface $record): void
     {
-        $this->_context = new EntityContext(['entity' => $record]);
+        $this->context = new EntityContext(['entity' => $record]);
     }
 
     /**
@@ -80,7 +80,7 @@ class CrudViewHelper extends Helper
      */
     public function getContext(): EntityContext
     {
-        return $this->_context;
+        return $this->context;
     }
 
     /**
@@ -101,7 +101,7 @@ class CrudViewHelper extends Helper
         if ($options['formatter'] === 'element') {
             $context = $this->getContext()->entity();
 
-            return $this->_View->element($options['element'], compact('context', 'field', 'value', 'options'));
+            return $this->View->element($options['element'], compact('context', 'field', 'value', 'options'));
         }
 
         if ($options['formatter'] === 'relation') {
@@ -470,7 +470,7 @@ class CrudViewHelper extends Helper
      */
     public function getViewVar(string $key): mixed
     {
-        return $this->_View->get($key);
+        return $this->View->get($key);
     }
 
     /**

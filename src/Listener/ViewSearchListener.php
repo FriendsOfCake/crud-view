@@ -11,7 +11,7 @@ use Crud\Listener\BaseListener;
 use function Cake\I18n\__d;
 
 /**
- * @method \Cake\ORM\Table _model()
+ * @method \Cake\ORM\Table model()
  */
 class ViewSearchListener extends BaseListener
 {
@@ -30,7 +30,7 @@ class ViewSearchListener extends BaseListener
      *
      * @var array
      */
-    protected array $_defaultConfig = [
+    protected array $defaultConfig = [
         'enabled' => null,
         'autocomplete' => true,
         'select2' => true,
@@ -61,18 +61,18 @@ class ViewSearchListener extends BaseListener
      */
     public function afterPaginate(EventInterface $event): void
     {
-        if (!$this->_model()->behaviors()->has('Search')) {
+        if (!$this->model()->behaviors()->has('Search')) {
             return;
         }
 
-        $enabled = $this->getConfig('enabled') ?: !$this->_request()->is('api');
+        $enabled = $this->getConfig('enabled') ?: !$this->request()->is('api');
         if (!$enabled) {
             return;
         }
 
         $fields = $this->fields();
 
-        $this->_controller()->viewBuilder()
+        $this->controller()->viewBuilder()
             ->setVar('searchInputs', $fields)
             ->setHelpers(['Search.Search']);
     }
@@ -88,14 +88,14 @@ class ViewSearchListener extends BaseListener
         $fields = $this->getConfig('fields', []);
         $config = $this->getConfig();
 
-        $schema = $this->_model()->getSchema();
-        $request = $this->_request();
+        $schema = $this->model()->getSchema();
+        $request = $this->request();
 
         if ($fields) {
             $fields = Hash::normalize($fields, default: []);
         } else {
             /** @var \Search\Model\Behavior\SearchBehavior $behavior */
-            $behavior = $this->_model()->getBehavior('Search');
+            $behavior = $this->model()->getBehavior('Search');
             $filters = $behavior
                 ->searchManager()
                 ->getFilters($config['collection']);

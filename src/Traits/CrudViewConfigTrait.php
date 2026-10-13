@@ -21,6 +21,8 @@ trait CrudViewConfigTrait
             return true;
         }
 
-        return Configure::load('CrudView.defaults');
+        Configure::load('CrudView.defaults');
+
+        return true;
     }
 }

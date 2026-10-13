@@ -17,18 +17,18 @@ trait IndexTypeTrait
      */
     public function beforeRenderIndexType(): void
     {
-        if (!($this->_action() instanceof IndexAction)) {
+        if (!($this->action() instanceof IndexAction)) {
             return;
         }
 
-        $controller = $this->_controller();
-        $controller->set('indexFinderScopes', $this->_getIndexFinderScopes());
-        $controller->set('indexFormats', $this->_getIndexFormats());
-        $controller->set('indexType', $this->_getIndexType());
-        $controller->set('indexTitleField', $this->_getIndexTitleField());
-        $controller->set('indexBodyField', $this->_getIndexBodyField());
-        $controller->set('indexImageField', $this->_getIndexImageField());
-        $controller->set('indexGalleryCssClasses', $this->_getIndexGalleryCssClasses());
+        $controller = $this->controller();
+        $controller->set('indexFinderScopes', $this->getIndexFinderScopes());
+        $controller->set('indexFormats', $this->getIndexFormats());
+        $controller->set('indexType', $this->getIndexType());
+        $controller->set('indexTitleField', $this->getIndexTitleField());
+        $controller->set('indexBodyField', $this->getIndexBodyField());
+        $controller->set('indexImageField', $this->getIndexImageField());
+        $controller->set('indexGalleryCssClasses', $this->getIndexGalleryCssClasses());
     }
 
     /**
@@ -37,9 +37,9 @@ trait IndexTypeTrait
      *
      * @return array
      */
-    protected function _getIndexFinderScopes(): array
+    protected function getIndexFinderScopes(): array
     {
-        $action = $this->_action();
+        $action = $this->action();
 
         return $action->getConfig('scaffold.index_finder_scopes') ?: [];
     }
@@ -50,9 +50,9 @@ trait IndexTypeTrait
      *
      * @return array
      */
-    protected function _getIndexFormats(): array
+    protected function getIndexFormats(): array
     {
-        $action = $this->_action();
+        $action = $this->action();
 
         return $action->getConfig('scaffold.index_formats') ?: [];
     }
@@ -62,9 +62,9 @@ trait IndexTypeTrait
      *
      * @return string
      */
-    protected function _getIndexType(): string
+    protected function getIndexType(): string
     {
-        $action = $this->_action();
+        $action = $this->action();
 
         $indexType = $action->getConfig('scaffold.index_type');
         if (empty($indexType)) {
@@ -79,13 +79,13 @@ trait IndexTypeTrait
      *
      * @return string
      */
-    protected function _getIndexTitleField(): string
+    protected function getIndexTitleField(): string
     {
-        $action = $this->_action();
+        $action = $this->action();
 
         $field = $action->getConfig('scaffold.index_title_field');
         if ($field === null) {
-            $field = $this->_model()->getDisplayField();
+            $field = $this->model()->getDisplayField();
         }
 
         return $field;
@@ -96,9 +96,9 @@ trait IndexTypeTrait
      *
      * @return string
      */
-    protected function _getIndexBodyField(): string
+    protected function getIndexBodyField(): string
     {
-        $action = $this->_action();
+        $action = $this->action();
 
         $field = $action->getConfig('scaffold.index_body_field');
         if ($field === null) {
@@ -113,9 +113,9 @@ trait IndexTypeTrait
      *
      * @return string
      */
-    protected function _getIndexImageField(): string
+    protected function getIndexImageField(): string
     {
-        $action = $this->_action();
+        $action = $this->action();
 
         $field = $action->getConfig('scaffold.index_image_field');
         if (empty($field)) {
@@ -130,9 +130,9 @@ trait IndexTypeTrait
      *
      * @return string
      */
-    protected function _getIndexGalleryCssClasses(): string
+    protected function getIndexGalleryCssClasses(): string
     {
-        $action = $this->_action();
+        $action = $this->action();
 
         $field = $action->getConfig('scaffold.index_gallery_css_classes');
         if (empty($field)) {
@@ -145,15 +145,15 @@ trait IndexTypeTrait
     /**
      * @inheritDoc
      */
-    abstract protected function _controller(): Controller;
+    abstract protected function controller(): Controller;
 
     /**
      * @inheritDoc
      */
-    abstract protected function _action(?string $name = null): BaseAction;
+    abstract protected function action(?string $name = null): BaseAction;
 
     /**
      * @inheritDoc
      */
-    abstract protected function _model(): RepositoryInterface;
+    abstract protected function model(): RepositoryInterface;
 }

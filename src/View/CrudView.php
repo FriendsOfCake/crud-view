@@ -40,10 +40,10 @@ class CrudView extends View implements EventListenerInterface
     {
         parent::initialize();
 
-        $this->getEventManager()->on($this, ['priority' => 9]);
+        $this->getEventManager()->on($this, options: ['priority' => 9]);
         $this->ensureConfig();
-        $this->_setupPaths();
-        $this->_setupHelpers();
+        $this->setupPaths();
+        $this->setupHelpers();
     }
 
     /**
@@ -65,7 +65,7 @@ class CrudView extends View implements EventListenerInterface
      */
     public function beforeLayout(): void
     {
-        $this->_loadAssets();
+        $this->loadAssets();
     }
 
     /**
@@ -75,7 +75,7 @@ class CrudView extends View implements EventListenerInterface
      *
      * @return void
      */
-    protected function _loadAssets(): void
+    protected function loadAssets(): void
     {
         if (Configure::read('CrudView.useAssetCompress')) {
             $this->AssetCompress->css('CrudView.crudview', ['block' => true]);
@@ -106,7 +106,7 @@ class CrudView extends View implements EventListenerInterface
      *
      * @return void
      */
-    protected function _setupHelpers(): void
+    protected function setupHelpers(): void
     {
         $helpers = [
             'Html' => ['className' => 'BootstrapUI.Html'],
@@ -134,7 +134,7 @@ class CrudView extends View implements EventListenerInterface
      *
      * @return void
      */
-    protected function _setupPaths(): void
+    protected function setupPaths(): void
     {
         $paths = Configure::read('App.paths.templates');
 
@@ -161,7 +161,7 @@ class CrudView extends View implements EventListenerInterface
         $viewblock = '';
         $viewblocks = $this->get('viewblocks', []);
         if (!empty($viewblocks[$name])) {
-            $viewblock = $this->_createViewblock($viewblocks[$name]);
+            $viewblock = $this->createViewblock($viewblocks[$name]);
         }
 
         $internal = $this->Blocks->get($name, $default);
@@ -188,7 +188,7 @@ class CrudView extends View implements EventListenerInterface
      * @param array $data ViewBlock data
      * @return string
      */
-    protected function _createViewblock(array $data): string
+    protected function createViewblock(array $data): string
     {
         $output = '';
         foreach ($data as $key => $type) {
@@ -213,21 +213,21 @@ class CrudView extends View implements EventListenerInterface
      * @return string Template filename
      * @throws \Cake\View\Exception\MissingTemplateException When a view file could not be found.
      */
-    protected function _getTemplateFileName(?string $name = null): string
+    protected function getTemplateFileName(?string $name = null): string
     {
         if ($this->templatePath === 'Error') {
-            return parent::_getTemplateFileName($name);
+            return parent::getTemplateFileName($name);
         }
         try {
-            return parent::_getTemplateFileName($name);
+            return parent::getTemplateFileName($name);
         } catch (MissingTemplateException $exception) {
             $this->subDir = '';
             $this->templatePath = 'scaffold';
         }
         try {
-            return parent::_getTemplateFileName($this->template);
+            return parent::getTemplateFileName($this->template);
         } catch (MissingTemplateException $exception) {
-            return parent::_getTemplateFileName($name);
+            return parent::getTemplateFileName($name);
         }
     }
 }

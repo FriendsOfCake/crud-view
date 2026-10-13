@@ -16,8 +16,8 @@ trait UtilityNavigationTrait
      */
     public function beforeRenderUtilityNavigation(): void
     {
-        $controller = $this->_controller();
-        $controller->set('utilityNavigation', $this->_getUtilityNavigation());
+        $controller = $this->controller();
+        $controller->set('utilityNavigation', $this->getUtilityNavigation());
     }
 
     /**
@@ -25,9 +25,9 @@ trait UtilityNavigationTrait
      *
      * @return array
      */
-    protected function _getUtilityNavigation(): array
+    protected function getUtilityNavigation(): array
     {
-        $action = $this->_action();
+        $action = $this->action();
 
         $utilityNavigation = $action->getConfig('scaffold.utility_navigation');
         if ($utilityNavigation === null) {
@@ -43,10 +43,10 @@ trait UtilityNavigationTrait
     /**
      * @inheritDoc
      */
-    abstract protected function _controller(): Controller;
+    abstract protected function controller(): Controller;
 
     /**
      * @inheritDoc
      */
-    abstract protected function _action(?string $name = null): BaseAction;
+    abstract protected function action(?string $name = null): BaseAction;
 }

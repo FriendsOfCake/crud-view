@@ -12,37 +12,37 @@ use CrudView\Dashboard\Module\LinkItem;
  */
 class ActionLinkItemTest extends TestCase
 {
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $item = new ActionLinkItem('Title', 'https://google.com');
 
         $expected = 'Title';
-        $this->assertEquals($expected, $item->get('title'));
+        $this->assertEquals($expected, $item->title);
 
         $expected = 'https://google.com';
-        $this->assertEquals($expected, $item->get('url'));
+        $this->assertEquals($expected, $item->url);
 
         $expected = ['target' => '_blank'];
-        $this->assertEquals($expected, $item->get('options'));
+        $this->assertEquals($expected, $item->options);
 
         $expected = [];
-        $this->assertEquals($expected, $item->get('actions'));
+        $this->assertEquals($expected, $item->actions);
     }
 
-    public function testActions()
+    public function testActions(): void
     {
         $item = new ActionLinkItem('Title', 'https://google.com');
         $expected = 0;
-        $this->assertCount($expected, $item->get('actions'));
+        $this->assertCount($expected, $item->actions);
 
         $linkItem = new LinkItem('Add', ['controller' => 'Posts', 'action' => 'add']);
         $item = new ActionLinkItem('Posts', ['controller' => 'Posts'], [], [$linkItem]);
 
         $expected = [$linkItem];
-        $this->assertEquals($expected, $item->get('actions'));
+        $this->assertEquals($expected, $item->actions);
 
-        $actions = $item->get('actions');
+        $actions = $item->actions;
         $expected = ['class' => ['btn btn-secondary']];
-        $this->assertEquals($expected, $actions[0]->get('options'));
+        $this->assertEquals($expected, $actions[0]->options);
     }
 }

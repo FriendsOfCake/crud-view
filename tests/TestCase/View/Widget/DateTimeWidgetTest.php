@@ -35,7 +35,7 @@ class DateTimeWidgetTest extends TestCase
      * @param array $data
      */
     #[DataProvider('renderProvider')]
-    public function testRenderSimple($compareFileName, $data)
+    public function testRenderSimple($compareFileName, $data): void
     {
         /** @var \Cake\View\Form\ContextInterface $context */
         $context = $this->createStub(ContextInterface::class);
@@ -56,7 +56,7 @@ class DateTimeWidgetTest extends TestCase
      *
      * @return array
      */
-    public static function renderProvider()
+    public static function renderProvider(): array
     {
         return [
             [

@@ -15,8 +15,8 @@ trait SidebarNavigationTrait
      */
     public function beforeRenderSidebarNavigation(): void
     {
-        $controller = $this->_controller();
-        $sidebarNavigation = $this->_getSidebarNavigation();
+        $controller = $this->controller();
+        $sidebarNavigation = $this->getSidebarNavigation();
         $controller->set('disableSidebar', $sidebarNavigation === false ? true : false);
         $controller->set('sidebarNavigation', $sidebarNavigation);
     }
@@ -26,9 +26,9 @@ trait SidebarNavigationTrait
      *
      * @return string|false|null
      */
-    protected function _getSidebarNavigation(): string|false|null
+    protected function getSidebarNavigation(): string|false|null
     {
-        $action = $this->_action();
+        $action = $this->action();
 
         return $action->getConfig('scaffold.sidebar_navigation');
     }
@@ -36,10 +36,10 @@ trait SidebarNavigationTrait
     /**
      * @inheritDoc
      */
-    abstract protected function _controller(): Controller;
+    abstract protected function controller(): Controller;
 
     /**
      * @inheritDoc
      */
-    abstract protected function _action(?string $name = null): BaseAction;
+    abstract protected function action(?string $name = null): BaseAction;
 }

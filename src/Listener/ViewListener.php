@@ -19,7 +19,7 @@ use function Cake\Core\pluginSplit;
 use function Cake\I18n\__d;
 
 /**
- * @method \Cake\ORM\Table _model()
+ * @method \Cake\ORM\Table model()
  */
 class ViewListener extends BaseListener
 {
@@ -46,15 +46,20 @@ class ViewListener extends BaseListener
      */
     public function beforeFind(EventInterface $event): void
     {
-        $related = $this->_getRelatedModels();
+        $related = $this->getRelatedModels();
         if ($related === []) {
             $this->associations = [];
         } else {
-            $this->associations = $this->_associations(array_keys($related));
+            $this->associations = $this->associations(array_keys($related));
         }
 
-        if (!$event->getSubject()->query->getContain()) {
-            $event->getSubject()->query->contain($related);
+        $subject = $event->getSubject();
+        if ($subject === null) {
+            return;
+        }
+
+        if (!$subject->query->getContain()) {
+            $subject->query->contain($related);
         }
     }
 
@@ -67,15 +72,20 @@ class ViewListener extends BaseListener
      */
     public function beforePaginate(EventInterface $event): void
     {
-        $related = $this->_getRelatedModels();
+        $related = $this->getRelatedModels();
         if ($related === []) {
             $this->associations = [];
         } else {
-            $this->associations = $this->_associations(array_keys($related));
+            $this->associations = $this->associations(array_keys($related));
         }
 
-        if (!$event->getSubject()->query->getContain()) {
-            $event->getSubject()->query->contain($this->_getRelatedModels(['belongsTo', 'hasOne']));
+        $subject = $event->getSubject();
+        if ($subject === null) {
+            return;
+        }
+
+        if (!$subject->query->getContain()) {
+            $subject->query->contain($this->getRelatedModels(['belongsTo', 'hasOne']));
         }
     }
 
@@ -88,16 +98,17 @@ class ViewListener extends BaseListener
      */
     public function beforeRender(EventInterface $event): void
     {
-        if ($this->_controller()->getName() === 'Error') {
+        if ($this->controller()->getName() === 'Error') {
             return;
         }
 
-        if (!empty($event->getSubject()->entity)) {
-            $this->_entity = $event->getSubject()->entity;
+        $subject = $event->getSubject();
+        if ($subject !== null && !empty($subject->entity)) {
+            $this->entity = $subject->entity;
         }
 
         if (!isset($this->associations)) {
-            $this->associations = $this->_associations(array_keys($this->_getRelatedModels()));
+            $this->associations = $this->associations(array_keys($this->getRelatedModels()));
         }
 
         $this->ensureConfig();
@@ -108,24 +119,24 @@ class ViewListener extends BaseListener
         $this->beforeRenderUtilityNavigation();
         $this->beforeRenderSidebarNavigation();
 
-        $controller = $this->_controller();
-        $controller->set('actionConfig', $this->_action()->getConfig());
-        $controller->set('title', $this->_getPageTitle());
-        $controller->set('breadcrumbs', $this->_getBreadcrumbs());
+        $controller = $this->controller();
+        $controller->set('actionConfig', $this->action()->getConfig());
+        $controller->set('title', $this->getPageTitle());
+        $controller->set('breadcrumbs', $this->getBreadcrumbs());
 
         $associations = $this->associations;
         $controller->set(compact('associations'));
 
-        $fields = $this->_scaffoldFields($associations);
+        $fields = $this->scaffoldFields($associations);
         $controller->set('fields', $fields);
-        $controller->set('formTabGroups', $this->_getFormTabGroups($fields));
+        $controller->set('formTabGroups', $this->getFormTabGroups($fields));
 
-        $controller->set('blacklist', $this->_blacklist());
-        $controller->set('actions', $this->_getControllerActions());
-        $controller->set('bulkActions', $this->_getBulkActions());
-        $controller->set('viewblocks', $this->_getViewBlocks());
-        $controller->set('actionGroups', $this->_getActionGroups());
-        $controller->set($this->_getPageVariables());
+        $controller->set('blacklist', $this->blacklist());
+        $controller->set('actions', $this->getControllerActions());
+        $controller->set('bulkActions', $this->getBulkActions());
+        $controller->set('viewblocks', $this->getViewBlocks());
+        $controller->set('actionGroups', $this->getActionGroups());
+        $controller->set($this->getPageVariables());
     }
 
     /**
@@ -137,8 +148,13 @@ class ViewListener extends BaseListener
      */
     public function setFlash(EventInterface $event): void
     {
-        unset($event->getSubject()->params['class']);
-        $event->getSubject()->element = ltrim($event->getSubject()->type);
+        $subject = $event->getSubject();
+        if ($subject === null) {
+            return;
+        }
+
+        unset($subject->params['class']);
+        $subject->element = ltrim($subject->type);
     }
 
     /**
@@ -146,9 +162,9 @@ class ViewListener extends BaseListener
      *
      * @return string
      */
-    protected function _getPageTitle(): string
+    protected function getPageTitle(): string
     {
-        $action = $this->_action();
+        $action = $this->action();
 
         $title = $action->getConfig('scaffold.page_title');
         if (!empty($title)) {
@@ -157,9 +173,9 @@ class ViewListener extends BaseListener
 
         $scope = $action->getConfig('scope');
 
-        $request = $this->_request();
+        $request = $this->request();
         $actionName = Inflector::humanize(Inflector::underscore($request->getParam('action')));
-        $controllerName = $this->_controllerName();
+        $controllerName = $this->controllerName();
 
         if ($scope === 'table') {
             if ($actionName === 'Index') {
@@ -169,15 +185,15 @@ class ViewListener extends BaseListener
             return sprintf('%s %s', $controllerName, $actionName);
         }
 
-        $primaryKeyValue = $this->_primaryKeyValue();
+        $primaryKeyValue = $this->primaryKeyValue();
         if ($primaryKeyValue === null) {
             return sprintf('%s %s', $actionName, $controllerName);
         }
 
-        $displayFieldValue = $this->_displayFieldValue();
+        $displayFieldValue = $this->displayFieldValue();
         if (
             $displayFieldValue === null
-            || $this->_model()->getDisplayField() === $this->_model()->getPrimaryKey()
+            || $this->model()->getDisplayField() === $this->model()->getPrimaryKey()
         ) {
             /** @phpstan-var string $primaryKeyValue */
             return sprintf('%s %s #%s', $actionName, $controllerName, $primaryKeyValue);
@@ -192,9 +208,9 @@ class ViewListener extends BaseListener
      *
      * @return array
      */
-    protected function _getBreadcrumbs(): array
+    protected function getBreadcrumbs(): array
     {
-        $action = $this->_action();
+        $action = $this->action();
 
         return $action->getConfig('scaffold.breadcrumbs') ?: [];
     }
@@ -211,9 +227,9 @@ class ViewListener extends BaseListener
      * @param array<string> $associationTypes List of association types.
      * @return array
      */
-    protected function _getRelatedModels(array $associationTypes = []): array
+    protected function getRelatedModels(array $associationTypes = []): array
     {
-        $models = $this->_action()->getConfig('scaffold.relations');
+        $models = $this->action()->getConfig('scaffold.relations');
 
         if ($models === false) {
             return [];
@@ -222,12 +238,12 @@ class ViewListener extends BaseListener
         if (empty($models)) {
             $associations = [];
             if (empty($associationTypes)) {
-                $associations = $this->_model()->associations();
+                $associations = $this->model()->associations();
             } else {
                 foreach ($associationTypes as $assocType) {
                     $associations = array_merge(
                         $associations,
-                        $this->_model()->associations()->getByType($assocType),
+                        $this->model()->associations()->getByType($assocType),
                     );
                 }
             }
@@ -238,7 +254,7 @@ class ViewListener extends BaseListener
             }
         }
 
-        $blacklist = $this->_action()->getConfig('scaffold.relations_blacklist');
+        $blacklist = $this->action()->getConfig('scaffold.relations_blacklist');
         if (!empty($blacklist)) {
             $models = array_diff($models, $blacklist);
         }
@@ -251,9 +267,9 @@ class ViewListener extends BaseListener
      *
      * @return array
      */
-    protected function _blacklist(): array
+    protected function blacklist(): array
     {
-        return (array)$this->_action()->getConfig('scaffold.fields_blacklist');
+        return (array)$this->action()->getConfig('scaffold.fields_blacklist');
     }
 
     /**
@@ -261,12 +277,12 @@ class ViewListener extends BaseListener
      *
      * @return array
      */
-    protected function _getPageVariables(): array
+    protected function getPageVariables(): array
     {
-        $table = $this->_model();
+        $table = $this->model();
         $modelClass = $table->getAlias();
-        $controller = $this->_controller();
-        $scope = $this->_action()->getConfig('scope');
+        $controller = $this->controller();
+        $scope = $this->action()->getConfig('scope');
 
         $data = [
             'modelClass' => $modelClass,
@@ -290,7 +306,7 @@ class ViewListener extends BaseListener
 
         if ($scope === 'entity') {
             $data += [
-                'primaryKeyValue' => $this->_primaryKeyValue(),
+                'primaryKeyValue' => $this->primaryKeyValue(),
             ];
         }
 
@@ -303,16 +319,16 @@ class ViewListener extends BaseListener
      * @param array $associations Associations list.
      * @return array
      */
-    protected function _scaffoldFields(array $associations = []): array
+    protected function scaffoldFields(array $associations = []): array
     {
-        $action = $this->_action();
+        $action = $this->action();
         $scaffoldFields = Hash::normalize(
             (array)$action->getConfig('scaffold.fields'),
             default: [],
         );
 
         if (empty($scaffoldFields) || $action->getConfig('scaffold.autoFields')) {
-            $cols = $this->_model()->getSchema()->columns();
+            $cols = $this->model()->getSchema()->columns();
             $cols = Hash::normalize($cols, default: []);
 
             $scope = $action->getConfig('scope');
@@ -328,7 +344,7 @@ class ViewListener extends BaseListener
         }
 
         // Check for blacklisted fields
-        $blacklist = $this->_blacklist();
+        $blacklist = $this->blacklist();
         if ($blacklist) {
             $scaffoldFields = array_diff_key($scaffoldFields, array_combine($blacklist, $blacklist));
         }
@@ -353,18 +369,18 @@ class ViewListener extends BaseListener
      *
      * @return string
      */
-    protected function _controllerName(): string
+    protected function controllerName(): string
     {
         $inflections = [
             'underscore',
             'humanize',
         ];
 
-        if ($this->_action()->scope() === 'entity') {
+        if ($this->action()->scope() === 'entity') {
             $inflections[] = 'singularize';
         }
 
-        $baseName = $this->_controller()->getName();
+        $baseName = $this->controller()->getName();
         foreach ($inflections as $inflection) {
             $baseName = Inflector::$inflection($baseName);
         }
@@ -378,25 +394,25 @@ class ViewListener extends BaseListener
      *
      * @return array
      */
-    protected function _getControllerActions(): array
+    protected function getControllerActions(): array
     {
         $table = $entity = [];
 
-        $actions = $this->_getAllowedActions();
+        $actions = $this->getAllowedActions();
         foreach ($actions as $actionName => $config) {
-            [$scope, $actionConfig] = $this->_getControllerActionConfiguration($actionName, $config);
+            [$scope, $actionConfig] = $this->getControllerActionConfiguration($actionName, $config);
             ${$scope}[$actionName] = $actionConfig;
         }
 
         $actionBlacklist = [];
-        $groups = $this->_action()->getConfig('scaffold.action_groups') ?: [];
+        $groups = $this->action()->getConfig('scaffold.action_groups') ?: [];
         foreach ($groups as $group) {
             $group = Hash::normalize($group, default: []);
             foreach ($group as $actionName => $config) {
                 if (isset($table[$actionName]) || isset($entity[$actionName])) {
                     continue;
                 }
-                [$scope, $actionConfig] = $this->_getControllerActionConfiguration($actionName, $config);
+                [$scope, $actionConfig] = $this->getControllerActionConfiguration($actionName, $config);
                 $realAction = Hash::get($actionConfig, 'url.action', $actionName);
                 if (!isset(${$scope}[$realAction])) {
                     continue;
@@ -424,7 +440,7 @@ class ViewListener extends BaseListener
      * @param array $config Config array.
      * @return array
      */
-    protected function _getControllerActionConfiguration(string $actionName, array $config): array
+    protected function getControllerActionConfiguration(string $actionName, array $config): array
     {
         $realAction = Hash::get($config, 'url.action', $actionName);
         $url = ['action' => $realAction];
@@ -433,14 +449,14 @@ class ViewListener extends BaseListener
             $url = $config['url'] + $url;
         }
 
-        if ($this->_crud()->isActionMapped($realAction)) {
-            $action = $this->_action($realAction);
+        if ($this->crud()->isActionMapped($realAction)) {
+            $action = $this->action($realAction);
             $class = get_class($action);
             $class = substr($class, strrpos($class, '\\') + 1);
 
             if ($class === 'DeleteAction') {
                 $config += ['method' => 'DELETE'];
-                $url['?']['_redirect_url'] = $this->_request()->getRequestTarget();
+                $url['?']['_redirect_url'] = $this->request()->getRequestTarget();
             }
 
             if (!isset($config['scope'])) {
@@ -477,26 +493,26 @@ class ViewListener extends BaseListener
      *
      * @return array
      */
-    protected function _getAllowedActions(): array
+    protected function getAllowedActions(): array
     {
-        $actions = $this->_action()->getConfig('scaffold.actions');
+        $actions = $this->action()->getConfig('scaffold.actions');
         if ($actions === null) {
-            $actions = array_keys($this->_crud()->getConfig('actions'));
+            $actions = array_keys($this->crud()->getConfig('actions'));
         }
 
-        $extraActions = $this->_action()->getConfig('scaffold.extra_actions') ?: [];
+        $extraActions = $this->action()->getConfig('scaffold.extra_actions') ?: [];
 
         $allActions = array_merge(
             Hash::normalize($actions, default: []),
             Hash::normalize($extraActions, default: []),
         );
 
-        $blacklist = (array)$this->_action()->getConfig('scaffold.actions_blacklist');
+        $blacklist = (array)$this->action()->getConfig('scaffold.actions_blacklist');
         $blacklist = array_combine($blacklist, $blacklist);
-        foreach ($this->_crud()->getConfig('actions') as $action => $config) {
+        foreach ($this->crud()->getConfig('actions') as $action => $config) {
             if (
                 $config['className'] === 'Crud.Lookup' ||
-                !$this->_crud()->action($action)->enabled()
+                !$this->crud()->action($action)->enabled()
             ) {
                 $blacklist[$action] = $action;
             }
@@ -511,9 +527,9 @@ class ViewListener extends BaseListener
      * @param array $whitelist Whitelist of associations to return.
      * @return array Associations for model
      */
-    protected function _associations(array $whitelist = []): array
+    protected function associations(array $whitelist = []): array
     {
-        $table = $this->_model();
+        $table = $this->model();
 
         $associationConfiguration = [];
 
@@ -548,7 +564,7 @@ class ViewListener extends BaseListener
 
             $associationConfiguration[$type][$assocKey] = array_merge(
                 $associationConfiguration[$type][$assocKey],
-                $this->_action()->getConfig('association.' . $assocKey) ?: [],
+                $this->action()->getConfig('association.' . $assocKey) ?: [],
             );
         }
 
@@ -562,12 +578,12 @@ class ViewListener extends BaseListener
      *
      * @return array|string|int|null
      */
-    protected function _primaryKeyValue(): array|string|int|null
+    protected function primaryKeyValue(): array|string|int|null
     {
-        $fields = (array)$this->_model()->getPrimaryKey();
+        $fields = (array)$this->model()->getPrimaryKey();
         $values = [];
         foreach ($fields as $field) {
-            $values[] = $this->_deriveFieldFromContext($field);
+            $values[] = $this->deriveFieldFromContext($field);
         }
 
         if (count($values) === 1) {
@@ -584,9 +600,14 @@ class ViewListener extends BaseListener
      *
      * @return string|int|null
      */
-    protected function _displayFieldValue(): string|int|null
+    protected function displayFieldValue(): string|int|null
     {
-        return $this->_deriveFieldFromContext($this->_model()->getDisplayField());
+        $displayField = $this->model()->getDisplayField();
+        if (is_array($displayField)) {
+            $displayField = (string)array_key_first($displayField);
+        }
+
+        return $this->deriveFieldFromContext($displayField);
     }
 
     /**
@@ -596,12 +617,12 @@ class ViewListener extends BaseListener
      * @param string $field Name of field.
      * @return mixed
      */
-    protected function _deriveFieldFromContext(string $field): mixed
+    protected function deriveFieldFromContext(string $field): mixed
     {
-        $controller = $this->_controller();
-        $modelClass = $this->_model()->getAlias();
-        $entity = $this->_entity();
-        $request = $this->_request();
+        $controller = $this->controller();
+        $modelClass = $this->model()->getAlias();
+        $entity = $this->entity();
+        $request = $this->request();
         $value = $entity->get($field);
 
         if ($value !== null) {
@@ -626,9 +647,9 @@ class ViewListener extends BaseListener
      *
      * @return array
      */
-    protected function _getViewBlocks(): array
+    protected function getViewBlocks(): array
     {
-        $action = $this->_action();
+        $action = $this->action();
 
         return $action->getConfig('scaffold.viewblocks') ?: [];
     }
@@ -638,9 +659,9 @@ class ViewListener extends BaseListener
      *
      * @return array
      */
-    protected function _getBulkActions(): array
+    protected function getBulkActions(): array
     {
-        $action = $this->_action();
+        $action = $this->action();
 
         return $action->getConfig('scaffold.bulk_actions') ?: [];
     }
@@ -650,9 +671,9 @@ class ViewListener extends BaseListener
      *
      * @return array
      */
-    protected function _getActionGroups(): array
+    protected function getActionGroups(): array
     {
-        $action = $this->_action();
+        $action = $this->action();
         $groups = $action->getConfig('scaffold.action_groups') ?: [];
 
         $groupedActions = [];
@@ -662,7 +683,7 @@ class ViewListener extends BaseListener
 
         // add "primary" actions (primary should rendered as separate buttons)
         $groupedActions = (new Collection($groupedActions))->unfold()->toList();
-        $groups['primary'] = array_diff(array_keys($this->_getAllowedActions()), $groupedActions);
+        $groups['primary'] = array_diff(array_keys($this->getAllowedActions()), $groupedActions);
 
         return $groups;
     }
@@ -673,9 +694,9 @@ class ViewListener extends BaseListener
      * @param array $fields Form fields.
      * @return array
      */
-    protected function _getFormTabGroups(array $fields = []): array
+    protected function getFormTabGroups(array $fields = []): array
     {
-        $action = $this->_action();
+        $action = $this->action();
         /** @var array $groups */
         $groups = $action->getConfig('scaffold.form_tab_groups');
 

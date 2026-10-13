@@ -12,7 +12,7 @@ class DashboardAction extends BaseAction
 {
     use ViewTrait;
 
-    protected array $_defaultConfig = [
+    protected array $defaultConfig = [
         'enabled' => true,
         'view' => null,
     ];
@@ -22,7 +22,7 @@ class DashboardAction extends BaseAction
      *
      * @return void
      */
-    protected function _get(): void
+    protected function handleGet(): void
     {
         $pageTitle = $this->getConfig('scaffold.page_title', __d('CrudView', 'Dashboard'));
         $this->setConfig('scaffold.page_title', $pageTitle);
@@ -31,16 +31,16 @@ class DashboardAction extends BaseAction
         $this->setConfig('scaffold.actions', []);
 
         $dashboard = $this->getConfig('scaffold.dashboard', new Dashboard($pageTitle));
-        $subject = $this->_subject([
+        $subject = $this->subject([
             'success' => true,
             'dashboard' => $dashboard,
         ]);
 
-        $this->_trigger('beforeRender', $subject);
+        $this->trigger('beforeRender', $subject);
 
-        $controller = $this->_controller();
+        $controller = $this->controller();
         $controller->set('dashboard', $subject->dashboard);
         $controller->set('viewVar', 'dashboard');
-        $controller->set('title', $subject->dashboard->get('title'));
+        $controller->set('title', $subject->dashboard->title);
     }
 }

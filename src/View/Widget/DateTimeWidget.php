@@ -62,7 +62,7 @@ class DateTimeWidget extends BUIDateTimeWidget
             unset($data['datetimePicker']);
 
             if ($datetimePicker === false) {
-                return $this->_withInputGroup($data, $context);
+                return $this->withInputGroup($data, $context);
             }
 
             if (is_array($defaults)) {
@@ -71,7 +71,7 @@ class DateTimeWidget extends BUIDateTimeWidget
         }
 
         if ($datetimePicker === false) {
-            return $this->_withInputGroup($data, $context);
+            return $this->withInputGroup($data, $context);
         }
 
         $datetimePicker += [
@@ -118,12 +118,12 @@ class DateTimeWidget extends BUIDateTimeWidget
             $toggleIcon = $this->clockIcon;
         }
 
-        if ($this->_templates->get('datetimePicker') === null) {
-            $this->_templates->add(['datetimePicker' => $this->defaultTemplate]);
+        if ($this->templates->get('datetimePicker') === null) {
+            $this->templates->add(['datetimePicker' => $this->defaultTemplate]);
         }
 
         /** @var array $data */
-        $data = $this->_templates->addClass($data, 'form-control');
+        $data = $this->templates->addClass($data, 'form-control');
         $wrap = $datetimePicker['data-wrap'] === 'true';
         if ($wrap) {
             if (isset($data['class'])) {
@@ -137,14 +137,14 @@ class DateTimeWidget extends BUIDateTimeWidget
         } else {
             $data += $datetimePicker;
             /** @var array $data */
-            $data = $this->_templates->addClass($data, 'flatpickr');
+            $data = $this->templates->addClass($data, 'flatpickr');
         }
 
-        $input = $this->_templates->format('input', [
+        $input = $this->templates->format('input', [
             'name' => $data['name'],
             'type' => 'text',
             'templateVars' => $data['templateVars'],
-            'attrs' => $this->_templates->formatAttributes(
+            'attrs' => $this->templates->formatAttributes(
                 $data,
                 ['name', 'type'],
             ),
@@ -154,12 +154,12 @@ class DateTimeWidget extends BUIDateTimeWidget
             return $input;
         }
 
-        return $this->_templates->format('datetimePicker', [
+        return $this->templates->format('datetimePicker', [
             'input' => $input,
             'toggleIcon' => $toggleIcon,
             'clearIcon' => $clearIcon,
             'templateVars' => $data['templateVars'],
-            'attrs' => $this->_templates->formatAttributes(
+            'attrs' => $this->templates->formatAttributes(
                 $datetimePicker,
                 ['toggleIcon', 'clearIcon'],
             ),

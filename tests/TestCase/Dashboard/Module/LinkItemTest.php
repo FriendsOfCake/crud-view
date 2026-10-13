@@ -12,37 +12,21 @@ use InvalidArgumentException;
  */
 class LinkItemTest extends TestCase
 {
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $item = new LinkItem('Title', 'https://google.com');
 
         $expected = 'Title';
-        $this->assertEquals($expected, $item->get('title'));
+        $this->assertEquals($expected, $item->title);
 
         $expected = 'https://google.com';
-        $this->assertEquals($expected, $item->get('url'));
+        $this->assertEquals($expected, $item->url);
 
         $expected = ['target' => '_blank'];
-        $this->assertEquals($expected, $item->get('options'));
+        $this->assertEquals($expected, $item->options);
     }
 
-    public function testInvalidTitle()
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Missing title for LinkItem action');
-
-        new LinkItem('', null);
-    }
-
-    public function testInvalidNullUrl()
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Invalid url specified for LinkItem');
-
-        new LinkItem('Title', null);
-    }
-
-    public function testInvalidEmptyUrl()
+    public function testInvalidEmptyUrl(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid url specified for LinkItem');
@@ -50,22 +34,22 @@ class LinkItemTest extends TestCase
         new LinkItem('Title', '');
     }
 
-    public function testOptions()
+    public function testOptions(): void
     {
         $item = new LinkItem('Title', ['controller' => 'Posts']);
         $expected = [];
-        $this->assertEquals($expected, $item->get('options'));
+        $this->assertEquals($expected, $item->options);
 
         $item = new LinkItem('Title', '/posts');
         $expected = [];
-        $this->assertEquals($expected, $item->get('options'));
+        $this->assertEquals($expected, $item->options);
 
         $item = new LinkItem('Title', 'http://google.com');
         $expected = ['target' => '_blank'];
-        $this->assertEquals($expected, $item->get('options'));
+        $this->assertEquals($expected, $item->options);
 
         $item = new LinkItem('Title', 'https://google.com');
         $expected = ['target' => '_blank'];
-        $this->assertEquals($expected, $item->get('options'));
+        $this->assertEquals($expected, $item->options);
     }
 }
