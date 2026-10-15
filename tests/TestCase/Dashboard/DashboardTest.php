@@ -16,24 +16,24 @@ use function Cake\I18n\__d;
  */
 class DashboardTest extends TestCase
 {
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $dashboard = new Dashboard();
         $expected = __d('CrudView', 'Dashboard');
-        $this->assertEquals($expected, $dashboard->get('title'));
+        $this->assertEquals($expected, $dashboard->title);
 
         $expected = [];
-        $this->assertEquals($expected, $dashboard->get('children'));
+        $this->assertEquals($expected, $dashboard->children);
 
         $expected = 1;
-        $this->assertEquals($expected, $dashboard->get('columns'));
+        $this->assertEquals($expected, $dashboard->columns);
 
         $dashboard = new Dashboard('Test Title');
         $expected = 'Test Title';
-        $this->assertEquals($expected, $dashboard->get('title'));
+        $this->assertEquals($expected, $dashboard->title);
     }
 
-    public function testInvalidConstruct()
+    public function testInvalidConstruct(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Valid columns value must be one of [1, 2, 3, 4, 6, 12]');
@@ -41,7 +41,7 @@ class DashboardTest extends TestCase
         new Dashboard(null, 0);
     }
 
-    public function testColumnChildren()
+    public function testColumnChildren(): void
     {
         $dashboard = new Dashboard();
         $expected = [];

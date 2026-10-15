@@ -11,7 +11,7 @@ use CrudView\View\CrudView;
  */
 class CrudViewTest extends TestCase
 {
-    public function testCreation()
+    public function testCreation(): void
     {
         $CrudView = new CrudView(
             null,

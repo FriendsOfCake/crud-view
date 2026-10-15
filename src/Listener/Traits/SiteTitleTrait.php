@@ -16,11 +16,11 @@ trait SiteTitleTrait
      */
     public function beforeRenderSiteTitle(): void
     {
-        $controller = $this->_controller();
+        $controller = $this->controller();
 
-        $controller->set('siteTitle', $this->_getSiteTitle());
-        $controller->set('siteTitleLink', $this->_getSiteTitleLink());
-        $controller->set('siteTitleImage', $this->_getSiteTitleImage());
+        $controller->set('siteTitle', $this->getSiteTitle());
+        $controller->set('siteTitleLink', $this->getSiteTitleLink());
+        $controller->set('siteTitleImage', $this->getSiteTitleImage());
     }
 
     /**
@@ -28,9 +28,9 @@ trait SiteTitleTrait
      *
      * @return string
      */
-    protected function _getSiteTitle(): string
+    protected function getSiteTitle(): string
     {
-        $action = $this->_action();
+        $action = $this->action();
 
         $title = $action->getConfig('scaffold.site_title');
         if (!empty($title)) {
@@ -45,9 +45,9 @@ trait SiteTitleTrait
      *
      * @return string
      */
-    protected function _getSiteTitleLink(): string
+    protected function getSiteTitleLink(): string
     {
-        $action = $this->_action();
+        $action = $this->action();
 
         $link = $action->getConfig('scaffold.site_title_link');
         if (empty($link)) {
@@ -62,9 +62,9 @@ trait SiteTitleTrait
      *
      * @return string
      */
-    protected function _getSiteTitleImage(): string
+    protected function getSiteTitleImage(): string
     {
-        $action = $this->_action();
+        $action = $this->action();
 
         $image = $action->getConfig('scaffold.site_title_image');
         if (empty($image)) {
@@ -77,10 +77,10 @@ trait SiteTitleTrait
     /**
      * @inheritDoc
      */
-    abstract protected function _controller(): Controller;
+    abstract protected function controller(): Controller;
 
     /**
      * @inheritDoc
      */
-    abstract protected function _action(?string $name = null): BaseAction;
+    abstract protected function action(?string $name = null): BaseAction;
 }

@@ -47,7 +47,7 @@ class ViewSearchListenerTest extends TestCase
         Router::setRequest($request);
     }
 
-    public function testFields()
+    public function testFields(): void
     {
         $this->listener->setConfig(['fields' => [
             'name',

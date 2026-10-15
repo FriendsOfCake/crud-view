@@ -29,15 +29,15 @@
         }
     ],
     "require": {
-        "cakephp/cakephp": "^5.0",
-        "friendsofcake/crud": "^7.0",
-        "friendsofcake/bootstrap-ui": "^5.1"
+        "cakephp/cakephp": "^6.0",
+        "friendsofcake/crud": "dev-cake6",
+        "friendsofcake/bootstrap-ui": "dev-cake6"
     },
     "require-dev": {
-        "friendsofcake/cakephp-test-utilities": "^3.0",
-        "friendsofcake/search": "^7.9",
-        "markstory/asset_compress": "^5.0",
-        "phpunit/phpunit": "^10.5.58 || ^11.5.3 || ^12.4 || ^13.0"
+        "friendsofcake/cakephp-test-utilities": "dev-cake6",
+        "friendsofcake/search": "dev-cake6",
+        "markstory/asset_compress": "^6.0",
+        "phpunit/phpunit": "^13.0"
     },
     "autoload": {
         "psr-4": {
@@ -51,14 +51,14 @@
     },
     "support": {
         "source": "https://github.com/FriendsOfCake/crud-view",
-        "issues": "https://github.com/FriendsOfCake/crud-view/issues",
-        "wiki": "http://cakephp.nu/cakephp-crud/",
-        "irc": "irc://irc.freenode.org/friendsofcake"
+        "issues": "https://github.com/FriendsOfCake/crud-view/issues"
     },
     "config": {
         "sort-packages": true,
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": true
         }
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }

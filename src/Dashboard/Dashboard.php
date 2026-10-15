@@ -3,14 +3,68 @@ declare(strict_types=1);
 
 namespace CrudView\Dashboard;
 
-use Cake\Datasource\EntityTrait;
 use Cake\View\Cell;
 use InvalidArgumentException;
 use function Cake\I18n\__d;
 
 class Dashboard
 {
-    use EntityTrait;
+    /**
+     * Supported number of columns mapped to the corresponding Bootstrap grid column width.
+     *
+     * @var array<int, int>
+     */
+    private const COLUMN_MAP = [
+        1 => 12,
+        2 => 6,
+        3 => 4,
+        4 => 3,
+        6 => 2,
+        12 => 1,
+    ];
+
+    /**
+     * The name of the dashboard.
+     *
+     * @var string
+     */
+    public string $title;
+
+    /**
+     * Modules added to each column, keyed by column number.
+     *
+     * @var array<int, array<int, \Cake\View\Cell>>
+     */
+    public array $children = [];
+
+    /**
+     * Bootstrap grid class for the columns, e.g. "col-md-6".
+     *
+     * @var string
+     */
+    public string $columnClass;
+
+    // PHPCS does not yet support property hooks (https://github.com/PHPCSStandards/PHP_CodeSniffer/issues/734),
+    // so the following sniffs emit false positives for hooked properties.
+    // phpcs:disable PSR2.Classes.PropertyDeclaration, Squiz.Scope.MemberVarScope, Generic.WhiteSpace.ScopeIndent
+    /**
+     * Number of columns in the dashboard.
+     *
+     * @var int
+     */
+    public int $columns {
+        set(int $value) {
+            if (!isset(self::COLUMN_MAP[$value])) {
+                throw new InvalidArgumentException('Valid columns value must be one of [1, 2, 3, 4, 6, 12]');
+            }
+
+            $this->columnClass = sprintf('col-md-%d', self::COLUMN_MAP[$value]);
+
+            $this->columns = $value;
+        }
+    }
+
+    // phpcs:enable
 
     /**
      * Constructor
@@ -24,9 +78,8 @@ class Dashboard
             $title = __d('CrudView', 'Dashboard');
         }
 
-        $this->set('title', $title);
-        $this->set('children', []);
-        $this->set('columns', $columns);
+        $this->title = $title;
+        $this->columns = $columns;
     }
 
     /**
@@ -37,12 +90,7 @@ class Dashboard
      */
     public function getColumnChildren(int $column): array
     {
-        $children = $this->get('children');
-        if (isset($children[$column])) {
-            return $children[$column];
-        }
-
-        return [];
+        return $this->children[$column] ?? [];
     }
 
     /**
@@ -52,38 +100,10 @@ class Dashboard
      * @param int $column a column number
      * @return $this
      */
-    public function addToColumn(Cell $module, int $column = 1)
+    public function addToColumn(Cell $module, int $column = 1): static
     {
-        $children = $this->get('children');
-        $children[$column][] = $module;
-        $this->set('children', $children);
+        $this->children[$column][] = $module;
 
         return $this;
-    }
-
-    /**
-     * columns property setter
-     *
-     * @param int $value A column count
-     * @return int
-     * @throws \InvalidArgumentException the column count is invalid
-     */
-    protected function _setColumns(int $value): int
-    {
-        $columnMap = [
-            1 => 12,
-            2 => 6,
-            3 => 4,
-            4 => 3,
-            6 => 2,
-            12 => 1,
-        ];
-        if (!in_array($value, [1, 2, 3, 4, 6, 12])) {
-            throw new InvalidArgumentException('Valid columns value must be one of [1, 2, 3, 4, 6, 12]');
-        }
-
-        $this->set('columnClass', sprintf('col-md-%d', $columnMap[$value]));
-
-        return $value;
     }
 }

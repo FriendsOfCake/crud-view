@@ -17,13 +17,13 @@ trait FormTypeTrait
      */
     protected function beforeRenderFormType(): void
     {
-        $controller = $this->_controller();
+        $controller = $this->controller();
 
-        $controller->set('formEnableDirtyCheck', $this->_getFormEnableDirtyCheck());
-        $controller->set('formSubmitButtonText', $this->_getFormSubmitButtonText());
-        $controller->set('formSubmitExtraButtons', $this->_getFormSubmitExtraButtons());
-        $controller->set('formSubmitExtraLeftButtons', $this->_getFormSubmitExtraLeftButtons());
-        $controller->set('formUrl', $this->_getFormUrl());
+        $controller->set('formEnableDirtyCheck', $this->getFormEnableDirtyCheck());
+        $controller->set('formSubmitButtonText', $this->getFormSubmitButtonText());
+        $controller->set('formSubmitExtraButtons', $this->getFormSubmitExtraButtons());
+        $controller->set('formSubmitExtraLeftButtons', $this->getFormSubmitExtraLeftButtons());
+        $controller->set('formUrl', $this->getFormUrl());
     }
 
     /**
@@ -31,9 +31,9 @@ trait FormTypeTrait
      *
      * @return bool
      */
-    protected function _getFormEnableDirtyCheck(): bool
+    protected function getFormEnableDirtyCheck(): bool
     {
-        $action = $this->_action();
+        $action = $this->action();
 
         return $action->getConfig('scaffold.form_enable_dirty_check') ?: false;
     }
@@ -43,9 +43,9 @@ trait FormTypeTrait
      *
      * @return string
      */
-    protected function _getFormSubmitButtonText(): string
+    protected function getFormSubmitButtonText(): string
     {
-        $action = $this->_action();
+        $action = $this->action();
 
         return $action->getConfig('scaffold.form_submit_button_text') ?: __d('crud', 'Save');
     }
@@ -55,9 +55,9 @@ trait FormTypeTrait
      *
      * @return array
      */
-    protected function _getFormSubmitExtraButtons(): array
+    protected function getFormSubmitExtraButtons(): array
     {
-        $action = $this->_action();
+        $action = $this->action();
         $buttons = $action->getConfig('scaffold.form_submit_extra_buttons');
 
         if ($buttons === false) {
@@ -65,7 +65,7 @@ trait FormTypeTrait
         }
 
         if ($buttons === null || $buttons === true) {
-            $buttons = $this->_getDefaultExtraButtons();
+            $buttons = $this->getDefaultExtraButtons();
         }
 
         return $buttons;
@@ -76,9 +76,9 @@ trait FormTypeTrait
      *
      * @return array
      */
-    protected function _getFormSubmitExtraLeftButtons(): array
+    protected function getFormSubmitExtraLeftButtons(): array
     {
-        $action = $this->_action();
+        $action = $this->action();
         $buttons = $action->getConfig('scaffold.form_submit_extra_left_buttons');
 
         if ($buttons === false) {
@@ -86,7 +86,7 @@ trait FormTypeTrait
         }
 
         if ($buttons === null || $buttons === true) {
-            $buttons = $this->_getDefaultExtraLeftButtons();
+            $buttons = $this->getDefaultExtraLeftButtons();
         }
 
         return $buttons;
@@ -97,7 +97,7 @@ trait FormTypeTrait
      *
      * @return array
      */
-    protected function _getDefaultExtraButtons(): array
+    protected function getDefaultExtraButtons(): array
     {
         return [
             'save_and_continue' => [
@@ -127,17 +127,17 @@ trait FormTypeTrait
      *
      * @return array
      */
-    protected function _getDefaultExtraLeftButtons(): array
+    protected function getDefaultExtraLeftButtons(): array
     {
         $buttons = [];
 
-        $action = $this->_action();
+        $action = $this->action();
         if ($action instanceof EditAction) {
             $blacklist = $action->getConfig('scaffold.actions_blacklist', []);
             if (
                 !in_array('delete', $blacklist, true) &&
-                $this->_crud()->isActionMapped('delete') &&
-                $this->_crud()->action('delete')->enabled()
+                $this->crud()->isActionMapped('delete') &&
+                $this->crud()->action('delete')->enabled()
             ) {
                 $buttons[] = [
                     'title' => __d('crud', 'Delete'),
@@ -163,9 +163,9 @@ trait FormTypeTrait
      *
      * @return array|string|null
      */
-    protected function _getFormUrl(): array|string|null
+    protected function getFormUrl(): array|string|null
     {
-        $action = $this->_action();
+        $action = $this->action();
 
         return $action->getConfig('scaffold.form_action') ?: null;
     }
@@ -173,10 +173,10 @@ trait FormTypeTrait
     /**
      * @inheritDoc
      */
-    abstract protected function _controller(): Controller;
+    abstract protected function controller(): Controller;
 
     /**
      * @inheritDoc
      */
-    abstract protected function _action(?string $name = null): BaseAction;
+    abstract protected function action(?string $name = null): BaseAction;
 }
