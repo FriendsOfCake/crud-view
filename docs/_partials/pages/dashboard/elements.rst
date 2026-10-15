@@ -11,6 +11,6 @@ original implementation from
 ``vendor/friendsofcake/crud-view/templates/element``
 
 action-header
-  Create ``templates/element/action-header.ctp`` to have full control over
+  Create ``templates/element/action-header.php`` to have full control over
   what is displayed at the top of the page. This is shared across all page
   types.

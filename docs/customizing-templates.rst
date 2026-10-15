@@ -43,19 +43,28 @@ This does use the template provided by the edit action:
 
 .. code-block:: php
 
-    public function account() {
+    public function account()
+    {
         $this->Crud->mapAction('account', [
             'className' => 'Crud.Edit',
             'view' => 'edit',
         ]);
-        return $this->Crud->execute(null, $this->Auth->user('id'));
+
+        // The second argument of `execute()` is passed to the mapped Crud
+        // action. Here we edit the record belonging to the current user,
+        // e.g. fetched from the identity set by the Authentication plugin.
+        $identity = $this->request->getAttribute('identity');
+
+        return $this->Crud->execute(null, [$identity->getIdentifier()]);
     }
 
-By default, it can be overwritten by providing a custom ``register.ctp``:
+By default, it can be overwritten by providing a custom ``register.php``
+template:
 
 .. code-block:: php
 
-    public function register() {
+    public function register()
+    {
         $this->Crud->mapAction('register', [
             'className' => 'Crud.Add',
         ]);

@@ -46,29 +46,35 @@ csv files at the CakePHP view layer.
 
 .. code-block:: bash
 
-  composer require friendsofcake/cakephp-csvview:~3.0
+  composer require friendsofcake/cakephp-csvview
+  bin/cake plugin load CsvView
 
 Next, the ``csv`` extension must be connected so that it can be properly parsed.
-This can be done by modifying the ``config/routes.php`` file. Below is a
-semi-complete example:
+This can be done by modifying the ``config/routes.php`` file:
 
 .. code-block:: php
 
-    Router::scope('/', function (RouteBuilder $routes) {
-        $routes->extensions(['csv']);
-        // other routes go here
-    });
+    // config/routes.php
+    /** @var \Cake\Routing\RouteBuilder $routes */
+    $routes->setExtensions(['csv']);
+    // other routes go here
 
-To complete the initial setup, the RequestHandler should be notified to use the
-``CsvView.View`` class whenever an extension of ``csv`` is detected. The
-following can be added to the ``AppController::initialize()`` to do
-application-wide:
+To complete the initial setup, the CsvView view class has to be registered with
+the controllers which should be able to render csv. CakePHP picks the view class
+for a request based on the registered view classes, the request's ``Accept``
+header and the ``_ext`` route parameter. The following can be added to the
+``AppController::initialize()`` to do it application-wide:
 
 .. code-block:: php
 
-    $this->loadComponent('RequestHandler', [
-        'viewClassMap' => ['csv' => 'CsvView.Csv']
-    ]);
+    use CsvView\View\CsvView;
+
+    public function initialize(): void
+    {
+        parent::initialize();
+
+        $this->addViewClasses([CsvView::class]);
+    }
 
 Once the initial setup of the CsvView plugin is complete, the ``index()`` action
 can be modified to add a CSV Download Link.

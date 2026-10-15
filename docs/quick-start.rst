@@ -8,7 +8,7 @@ After :doc:`installation<installation>`, you are ready to CRUD-ify your app.
 App Controller
 ~~~~~~~~~~~~~~
 
-First, configure the `Crud <http://crud.readthedocs.org/en/latest/quick-start.html>`_ plugin.
+First, configure the `Crud <https://crud.readthedocs.io/en/latest/quick-start.html>`_ plugin.
 
 Configuring the AppController
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -31,7 +31,6 @@ If you haven't configured the CRUD plugin already, add the following lines to yo
         {
             parent::initialize();
 
-            $this->loadComponent('RequestHandler');
             $this->loadComponent('Flash');
 
             $this->loadComponent('Crud.Crud', [
@@ -59,10 +58,10 @@ If you haven't configured the CRUD plugin already, add the following lines to yo
         /**
          * Before render callback.
          *
-         * @param \Cake\Event\Event $event The beforeRender event.
+         * @param \Cake\Event\EventInterface $event The beforeRender event.
          * @return void
          */
-        public function beforeRender(\Cake\Event\EventInterface $event)
+        public function beforeRender(\Cake\Event\EventInterface $event): void
         {
             if ($this->viewBuilder()->getClassName() === null) {
                 $this->viewBuilder()->setClassName('CrudView\View\CrudView');

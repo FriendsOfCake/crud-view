@@ -1,10 +1,6 @@
 Breadcrumbs
 ===========
 
-.. note::
-
-    This functionality is only available for CakePHP 3.3.6 and up.
-
 You can indicate the current page's location within a navigational hierarchy
 called a breadcrumb. *CrudView* does not output breadcrumbs by default, but they
 may be enabled via the ``scaffold.breadcrumbs`` configuration key.
@@ -25,7 +21,7 @@ The ``scaffold.breadcrumbs`` configuration key takes an array of
     use CrudView\Breadcrumb\Breadcrumb;
 
     $this->Crud->action()->setConfig('scaffold.breadcrumbs', [
-        new BreadCrumb('Home'),
+        new Breadcrumb('Home'),
     ]);
 
 By default, ``CrudView\Breadcrumb\Breadcrumb`` objects will output plain-text
@@ -36,7 +32,7 @@ breadcrumb entries. However, they also take ``url`` and ``options`` arrays:
     use CrudView\Breadcrumb\Breadcrumb;
 
     $this->Crud->action()->setConfig('scaffold.breadcrumbs', [
-        new BreadCrumb('Home', ['controller' => 'Posts', 'action' => 'index'], ['class' => 'derp']),
+        new Breadcrumb('Home', ['controller' => 'Posts', 'action' => 'index'], ['class' => 'derp']),
     ]);
 
 Active Breadcrumb
@@ -44,7 +40,7 @@ Active Breadcrumb
 
 You may also set any given breadcrumb to "active" by either setting the
 ``class`` option to 'active' or using a
-``CrudView\Breadcrumb\ActiveBreadCrumb`` object:
+``CrudView\Breadcrumb\ActiveBreadcrumb`` object:
 
 .. code-block:: php
 
@@ -52,14 +48,14 @@ You may also set any given breadcrumb to "active" by either setting the
     use CrudView\Breadcrumb\Breadcrumb;
 
     $this->Crud->action()->setConfig('scaffold.breadcrumbs', [
-        new BreadCrumb('Home', '#', ['class' => 'active']),
+        new Breadcrumb('Home', '#', ['class' => 'active']),
     ]);
 
-    // Using the ActiveBreadCrumb method:
-    use CrudView\Breadcrumb\ActiveBreadCrumb;
+    // Using the ActiveBreadcrumb method:
+    use CrudView\Breadcrumb\ActiveBreadcrumb;
 
     $this->Crud->action()->setConfig('scaffold.breadcrumbs', [
-        new ActiveBreadCrumb('Home', '#'),
+        new ActiveBreadcrumb('Home', '#'),
     ]);
 
 Custom Layouts with Breadcrumbs
@@ -72,4 +68,4 @@ like so:
 
 .. code-block:: php
 
-    <?= $this->element('breadcrumbs') ?>
+    <?= $this->element('CrudView.breadcrumbs') ?>

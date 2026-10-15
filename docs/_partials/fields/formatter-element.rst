@@ -29,7 +29,7 @@ it is just a matter of creating the element file with the right content:
 
 .. code-block:: php
 
-    // templates/element/search/published_time.ctp
+    // templates/element/search/published_time.php
 
     echo $this->Html->link($value->timeAgoInWords(), [
         'action' => $options['action'],

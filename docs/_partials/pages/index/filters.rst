@@ -2,7 +2,7 @@ Index Filters
 -------------
 
 The ``ViewSearch`` listener generates filter inputs for filtering records on your
-index action. It requries `friendsofcake/search <https://packagist.org/packages/friendsofcake/search>`
+index action. It requires `friendsofcake/search <https://packagist.org/packages/friendsofcake/search>`_
 to be installed and filters configured for your model using the search manager.
 
 .. code-block:: php
@@ -18,9 +18,10 @@ to be installed and filters configured for your model using the search manager.
         public function initialize(): void
         {
             parent::initialize();
-            // Enable PrgComponent so search form submissions
-            // properly populate querystring parameters for the SearchListener
-            $this->loadComponent('Search.Prg', [
+            // Enable the Search component so search form submissions
+            // are redirected to querystring parameters which are then
+            // processed by the SearchListener (PRG pattern)
+            $this->loadComponent('Search.Search', [
                 'actions' => [
                     'index',
                 ],
@@ -46,11 +47,12 @@ to be installed and filters configured for your model using the search manager.
                 // http://crud.readthedocs.io/en/latest/actions/lookup.html
                 'autocomplete' => true,
 
-                // Whether to use selectize for select fields. Default `true`.
-                'selectize' => true,
+                // Whether to use select2 for select fields. Default `true`.
+                'select2' => true,
 
                 // The search behavior collection to use. Default "default".
-                'collection' => 'default',
+                // Should match the collection used by the SearchListener above.
+                'collection' => 'admin',
 
                 // Config for generating filter controls. If `null` the
                 // filter controls will be derived based on filter collection.
@@ -97,7 +99,7 @@ Here's an e.g. of how configure filter controls options through search manager i
                 ->add('category_id', 'Search.Value', [
                     'form' => [
                         'type' => 'select',
-                        'class' => 'no-selectize'
+                        'class' => 'no-select2'
                     ]
                 ]);
         }
