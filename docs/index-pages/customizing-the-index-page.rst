@@ -25,5 +25,5 @@ in scope. To limit the fields used, simply specify an array of fields:
 .. include:: /_partials/pages/index/filters.rst
 .. include:: /_partials/pages/index/multiple-pages.rst
 .. include:: /_partials/pages/index/download-format-links.rst
-.. include:: /_partials/pages/form/viewblocks.rst
-.. include:: /_partials/pages/form/elements.rst
+.. include:: /_partials/pages/index/viewblocks.rst
+.. include:: /_partials/pages/index/elements.rst

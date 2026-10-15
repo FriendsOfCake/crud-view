@@ -28,7 +28,7 @@ action to the ``Crud`` component and the ``CrudView.View`` as a listener.
         ]);
     }
 
-There is no need to have an ```index()`` function in your controller. But you
+There is no need to have an ``index()`` function in your controller. But you
 can implement it to customize both the behavior and looks of the index listing
 page.
 
@@ -71,7 +71,7 @@ By default all ``belongsTo`` and ``hasOne`` associations are fetched in the
 pagination query for the index view. If you wanted to ``blacklist`` one of those
 associations.
 
-Fore example you may want to not fetch the ``Authors`` association of the
+For example you may want to not fetch the ``Authors`` association of the
 ``Articles`` as you don't plan to show it in the index table:
 
 .. code-block:: php
@@ -182,12 +182,12 @@ If you have read this far, you know almost everything there is to know about
 configuring any type of action using *CrudView*, but being explicit about what
 is available in all of them will not hurt.
 
-Implementing the ``Add`` action is done by adding the ``Crud.View`` action to
+Implementing the ``Add`` action is done by adding the ``Crud.Add`` action to
 the ``Crud`` component configuration:
 
 .. code-block:: php
 
-    public function initialize()
+    public function initialize(): void
     {
         $this->loadComponent('Crud.Crud', [
             'actions' => [
@@ -196,8 +196,8 @@ the ``Crud`` component configuration:
             ],
             'listeners' => [
                 'CrudView.View',
-                'Crud.Redirect'
-                'Crud.RelatedModels'
+                'Crud.Redirect',
+                'Crud.RelatedModels',
                 // ...
             ]
         ]);
@@ -298,7 +298,7 @@ the select box for the ``category_id`` field.
 
 
 For a full explanation on ``RelatedModels`` please visit the `CRUD Documentation
-for the RelatedModelsListener <http://crud.readthedocs.org/en/latest/listeners/related-models.html>`_.
+for the RelatedModelsListener <https://crud.readthedocs.io/en/latest/listeners/related-models.html>`_.
 
 If you want to alter the query that is used for an association in particular,
 you can use the ``relatedModels`` event:
@@ -307,8 +307,8 @@ you can use the ``relatedModels`` event:
 
     public function add()
     {
-        $this->Crud->on('relatedModel', function(\Cake\Event\Event $event) {
-            if ($event->getSubject()->association->name() === 'Categories') {
+        $this->Crud->on('relatedModel', function (\Cake\Event\EventInterface $event) {
+            if ($event->getSubject()->association->getName() === 'Categories') {
                 $event->getSubject()->query->limit(3);
                 $event->getSubject()->query->where(['is_active' => true]);
             }
@@ -335,7 +335,7 @@ to be saved. For this case, you may use the ``scaffold.relations`` and
 
     public function edit()
     {
-        $action $this->Crud->action();
+        $action = $this->Crud->action();
         // Only fetch association info for Categories and Tags
         $action->setConfig('scaffold.relations', ['Categories', 'Tags']);
         return $this->Crud->execute();
@@ -348,7 +348,7 @@ specify those association that should not be added to ``contain()``:
 
     public function edit()
     {
-        $action $this->Crud->action();
+        $action = $this->Crud->action();
         // Only fetch association info for Categories and Tags
         $action->setConfig('scaffold.relations_blacklist', ['Authors']);
         return $this->Crud->execute();
@@ -379,7 +379,7 @@ a record, including its associations is also achieved via configuring the
 
 .. code-block:: php
 
-    public function initialize()
+    public function initialize(): void
     {
         $this->loadComponent('Crud.Crud', [
             'actions' => [
@@ -435,7 +435,7 @@ By default all associations are fetched so they can be displayed in the view act
 Similarly to the ``Index`` action, you can use the ``scaffold.relations`` and
 the ``scaffold.relations_blacklist``
 
-Fore example you may want to not fetch the ``Authors`` association of the
+For example you may want to not fetch the ``Authors`` association of the
 ``Articles`` as it may be implicit by the currently logged-in user:
 
 .. code-block:: php
@@ -459,7 +459,7 @@ the ``scaffold.relations`` configuration key:
         return $this->Crud->execute();
     }
 
-Alternatively, you can use the ``Crud`` plugin's ``beforePaginate`` method to
+Alternatively, you can use the ``Crud`` plugin's ``beforeFind`` method to
 alter the ``contain()`` list for the pagination query:
 
 .. code-block:: php

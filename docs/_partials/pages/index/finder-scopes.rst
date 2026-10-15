@@ -71,7 +71,7 @@ result-set. This can be done in the mapped action as follows:
 
         // We don't need to check for `all` as it is the default findMethod
         if (in_array($this->request->getQuery('finder'), ['active', 'inactive'])) {
-            $this->Crud->action()->config('findMethod', $this->request->getQuery('finder'));
+            $this->Crud->action()->setConfig('findMethod', $this->request->getQuery('finder'));
         }
         return $this->Crud->execute();
     }
@@ -81,19 +81,19 @@ must be created in the ``PostsTable`` class.
 
 .. code-block:: php
 
-    use Cake\ORM\Query;
+    use Cake\ORM\Query\SelectQuery;
     use Cake\ORM\Table;
 
     class PostsTable extends Table
     {
-        public function findActive(Query $query, array $options)
+        public function findActive(SelectQuery $query, array $options): SelectQuery
         {
             $query->where([$this->aliasField('active') => true]);
 
             return $query;
         }
 
-        public function findInactive(Query $query, array $options)
+        public function findInactive(SelectQuery $query, array $options): SelectQuery
         {
             $query->where([$this->aliasField('active') => false]);
 

@@ -11,7 +11,7 @@ in scope. To limit the fields used, simply specify an array of fields.
     $action->setConfig('scaffold.fields', ['title', 'description']);
 
 You may also specify an options array. For forms, *CrudView* makes use of the
-``FormHelper::inputs()`` method and will pass your array values as options when
+``FormHelper::controls()`` method and will pass your array values as options when
 generating the output.
 
 .. code-block:: php

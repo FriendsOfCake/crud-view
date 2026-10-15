@@ -6,7 +6,7 @@ Render your index page as a set of posts.
 .. code-block:: php
 
     $action = $this->Crud->action();
-    $action->config('scaffold.index_type', 'blog');
+    $action->setConfig('scaffold.index_type', 'blog');
 
 Customizing the Blog fields
 ---------------------------

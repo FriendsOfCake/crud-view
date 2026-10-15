@@ -6,14 +6,14 @@ Installing CRUD view requires only a few steps
 Requirements
 ------------
 
-* CakePHP 4.x
+* CakePHP 6.x
 
 Getting the Code
 ----------------
 
 The recommended installation method for this plugin is by using composer.
 
-In your aplication forlder execute:
+In your application folder execute:
 
 .. code-block:: bash
 

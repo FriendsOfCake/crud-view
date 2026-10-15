@@ -11,11 +11,12 @@ original implementation from
 ``vendor/friendsofcake/crud-view/templates/element``
 
 action-header
-  Create ``templates/element/action-header.ctp`` to have full control over
+  Create ``templates/element/action-header.php`` to have full control over
   what is displayed at the top of the page. This is shared across all page
   types.
 
 form/buttons
-  Create ``templates/element/form/buttons.ctp`` to change what is displayed
-  for form submission. You can expect the ``$formSubmitButtonText`` and
-  ``$formSubmitExtraButtons`` variables to be available
+  Create ``templates/element/form/buttons.php`` to change what is displayed
+  for form submission. You can expect the ``$formSubmitButtonText``,
+  ``$formSubmitExtraButtons`` and ``$formSubmitExtraLeftButtons`` variables to
+  be available
